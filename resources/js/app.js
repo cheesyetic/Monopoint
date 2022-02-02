@@ -23,7 +23,10 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+import routes from './router/index'
+
+Vue.component('navigation', require('./components/navigation.vue').default);
+Vue.component('sidebar', require('./components/RightSidebar.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -33,4 +36,5 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 const app = new Vue({
     el: '#app',
+    router: new VueRouter(routes)
 });
