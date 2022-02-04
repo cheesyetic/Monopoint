@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AccountingPeriodController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +19,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+//Accounting Period
+Route::resource('/accountingperiod', AccountingPeriodController::class)->except('create', 'edit');
+//User
+Route::resource('/user', UserController::class)->except('create', 'edit');
