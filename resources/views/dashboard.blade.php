@@ -11,12 +11,15 @@
         <!-- App favicon -->
         <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
 
+        <!-- VUE -->
+        {{-- <link rel="stylesheet" href="{{ mix('css/app.css') }}" type="text/css"> --}}
         <!-- Bootstrap Css -->
         <link href="{{ asset('assets/css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
         <!-- Icons Css -->
         <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
         <!-- App Css-->
         <link href="{{ asset('assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
+
 
     </head>
 
@@ -28,9 +31,6 @@
             <div id="layout-wrapper">
 
                 <navigation></navigation>
-
-
-
                 <!-- ============================================================== -->
                 <!-- Start right Content here -->
                 <!-- ============================================================== -->
@@ -771,7 +771,7 @@
         <script src="{{ asset('assets/js/app.js') }}"></script>
 
         {{-- VUE --}}
-        <script src="/js/app.js"></script>
+        <script src="{{ mix('js/app.js') }}"></script>
 
     </body>
 </html>
