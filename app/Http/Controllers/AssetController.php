@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AccountingPeriod;
+use App\Models\Asset;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
-class AccountingPeriodController extends Controller
+class AssetController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +17,11 @@ class AccountingPeriodController extends Controller
      */
     public function index()
     {
-        $accountingperiod = AccountingPeriod::get();
+        $asset = Asset::get();
+
         $response = [
-            'message' => 'List Accounting Period',
-            'data' => $accountingperiod
+            'message' => 'List Asset',
+            'data' => $asset
         ];
 
         return response()->json($response, Response::HTTP_OK);
@@ -35,9 +36,9 @@ class AccountingPeriodController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'max:200'],
-            'start' => ['required'],
-            'end' => ['required']
+            'name' => ['required', 'max:45'],
+            'value' => ['required'],
+            'buy_time' => ['required']
         ]);
 
         if($validator->fails()){
@@ -46,20 +47,19 @@ class AccountingPeriodController extends Controller
         }
 
         try {
-            $accountingperiod = AccountingPeriod::create($request->all());
+            $asset = Asset::create($request->all());
             $response = [
-                'message' => 'A new accounting period row created',
-                'data' => $accountingperiod
+                'message' => 'A new asset row created',
+                'data' => $asset
             ];
 
             return response()->json($response, Response::HTTP_CREATED);
-
+            
         } catch (QueryException $e) {
             return response()->json([
                 'message' => "Failed " . $e->errorInfo
             ]);
         }
-
     }
 
     /**
@@ -70,11 +70,11 @@ class AccountingPeriodController extends Controller
      */
     public function show($id)
     {
-        $accountingperiod = AccountingPeriod::findOrFail($id);
+        $asset = Asset::findOrFail($id);
 
         $response = [
-            'message' => 'An accounting period row shown',
-            'data' => $accountingperiod
+            'message' => 'An asset row shown',
+            'data' => $asset
         ];
 
         return response()->json($response, Response::HTTP_OK);
@@ -89,13 +89,12 @@ class AccountingPeriodController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        $accountingperiod = AccountingPeriod::findOrFail($id);
+        $asset = Asset::findOrFail($id);
 
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'max:200'],
-            'start' => ['required'],
-            'end' => ['required']
+            'name' => ['required', 'max:45'],
+            'value' => ['required'],
+            'buy_time' => ['required']
         ]);
 
         if($validator->fails()){
@@ -104,14 +103,14 @@ class AccountingPeriodController extends Controller
         }
 
         try {
-            $accountingperiod->update($request->all());
+            $asset->update($request->all());
             $response = [
-                'message' => 'An accounting period row updated',
-                'data' => $accountingperiod
+                'message' => 'An asset row updated',
+                'data' => $asset
             ];
 
             return response()->json($response, Response::HTTP_OK);
-
+            
         } catch (QueryException $e) {
             return response()->json([
                 'message' => "Failed " . $e->errorInfo
@@ -127,17 +126,17 @@ class AccountingPeriodController extends Controller
      */
     public function destroy($id)
     {
-
-        $accountingperiod = AccountingPeriod::findOrFail($id);
+        $asset = Asset::findOrFail($id);
 
         try {
-            $accountingperiod->delete();
+            $asset->delete();
             $response = [
-                'message' => 'An accounting period row deleted'
+                'message' => 'An asset row deleted',
+                'data' => $asset
             ];
 
             return response()->json($response, Response::HTTP_OK);
-
+            
         } catch (QueryException $e) {
             return response()->json([
                 'message' => "Failed " . $e->errorInfo

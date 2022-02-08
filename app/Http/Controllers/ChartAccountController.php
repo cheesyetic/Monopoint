@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AccountingPeriod;
+use App\Models\ChartAccount;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
-class AccountingPeriodController extends Controller
+class ChartAccountController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +17,11 @@ class AccountingPeriodController extends Controller
      */
     public function index()
     {
-        $accountingperiod = AccountingPeriod::get();
+        $chartacc = ChartAccount::get();
+
         $response = [
-            'message' => 'List Accounting Period',
-            'data' => $accountingperiod
+            'message' => 'List Chart Account',
+            'data' => $chartacc
         ];
 
         return response()->json($response, Response::HTTP_OK);
@@ -36,8 +37,8 @@ class AccountingPeriodController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'max:200'],
-            'start' => ['required'],
-            'end' => ['required']
+            'code' => ['required', 'max:45'],
+            'type' => ['required']
         ]);
 
         if($validator->fails()){
@@ -46,20 +47,19 @@ class AccountingPeriodController extends Controller
         }
 
         try {
-            $accountingperiod = AccountingPeriod::create($request->all());
+            $chartacc = ChartAccount::create($request->all());
             $response = [
-                'message' => 'A new accounting period row created',
-                'data' => $accountingperiod
+                'message' => 'A new chart account row created',
+                'data' => $chartacc
             ];
 
             return response()->json($response, Response::HTTP_CREATED);
-
+            
         } catch (QueryException $e) {
             return response()->json([
                 'message' => "Failed " . $e->errorInfo
             ]);
         }
-
     }
 
     /**
@@ -70,11 +70,11 @@ class AccountingPeriodController extends Controller
      */
     public function show($id)
     {
-        $accountingperiod = AccountingPeriod::findOrFail($id);
+        $chartacc = ChartAccount::findOrFail($id);
 
         $response = [
-            'message' => 'An accounting period row shown',
-            'data' => $accountingperiod
+            'message' => 'A chart account row shown',
+            'data' => $chartacc
         ];
 
         return response()->json($response, Response::HTTP_OK);
@@ -89,13 +89,12 @@ class AccountingPeriodController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        $accountingperiod = AccountingPeriod::findOrFail($id);
+        $chartacc = ChartAccount::findOrFail($id);
 
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'max:200'],
-            'start' => ['required'],
-            'end' => ['required']
+            'code' => ['required', 'max:45'],
+            'type' => ['required']
         ]);
 
         if($validator->fails()){
@@ -104,14 +103,14 @@ class AccountingPeriodController extends Controller
         }
 
         try {
-            $accountingperiod->update($request->all());
+            $chartacc = ChartAccount::create($request->all());
             $response = [
-                'message' => 'An accounting period row updated',
-                'data' => $accountingperiod
+                'message' => 'A chart account row updated',
+                'data' => $chartacc
             ];
 
             return response()->json($response, Response::HTTP_OK);
-
+            
         } catch (QueryException $e) {
             return response()->json([
                 'message' => "Failed " . $e->errorInfo
@@ -127,17 +126,17 @@ class AccountingPeriodController extends Controller
      */
     public function destroy($id)
     {
-
-        $accountingperiod = AccountingPeriod::findOrFail($id);
+        $chartacc = ChartAccount::findOrFail($id);
 
         try {
-            $accountingperiod->delete();
+            $chartacc->delete();
             $response = [
-                'message' => 'An accounting period row deleted'
+                'message' => 'A chart account row deleted',
+                'data' => $chartacc
             ];
 
             return response()->json($response, Response::HTTP_OK);
-
+            
         } catch (QueryException $e) {
             return response()->json([
                 'message' => "Failed " . $e->errorInfo

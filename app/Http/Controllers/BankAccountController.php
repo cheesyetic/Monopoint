@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AccountingPeriod;
+use App\Models\BankAccount;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
-class AccountingPeriodController extends Controller
+class BankAccountController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,12 +17,11 @@ class AccountingPeriodController extends Controller
      */
     public function index()
     {
-        $accountingperiod = AccountingPeriod::get();
+        $bankacc = BankAccount::get();
         $response = [
-            'message' => 'List Accounting Period',
-            'data' => $accountingperiod
+            'message' => 'List Bank Account',
+            'data' => $bankacc
         ];
-
         return response()->json($response, Response::HTTP_OK);
     }
 
@@ -35,9 +34,8 @@ class AccountingPeriodController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'max:200'],
-            'start' => ['required'],
-            'end' => ['required']
+            'name' => ['required', 'max:45'],
+            'account_number' => ['required', 'max:45']
         ]);
 
         if($validator->fails()){
@@ -46,20 +44,19 @@ class AccountingPeriodController extends Controller
         }
 
         try {
-            $accountingperiod = AccountingPeriod::create($request->all());
+            $bankacc = BankAccount::create($request->all());
             $response = [
-                'message' => 'A new accounting period row created',
-                'data' => $accountingperiod
+                'message' => 'A new bank account row created',
+                'data' => $bankacc
             ];
 
             return response()->json($response, Response::HTTP_CREATED);
-
+            
         } catch (QueryException $e) {
             return response()->json([
                 'message' => "Failed " . $e->errorInfo
             ]);
         }
-
     }
 
     /**
@@ -70,11 +67,11 @@ class AccountingPeriodController extends Controller
      */
     public function show($id)
     {
-        $accountingperiod = AccountingPeriod::findOrFail($id);
-
+        $bankacc = BankAccount::findOrFail($id);
+        
         $response = [
-            'message' => 'An accounting period row shown',
-            'data' => $accountingperiod
+            'message' => 'A bank account row shown',
+            'data' => $bankacc
         ];
 
         return response()->json($response, Response::HTTP_OK);
@@ -90,12 +87,11 @@ class AccountingPeriodController extends Controller
     public function update(Request $request, $id)
     {
 
-        $accountingperiod = AccountingPeriod::findOrFail($id);
+        $bankacc = BankAccount::findOrFail($id);
 
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'max:200'],
-            'start' => ['required'],
-            'end' => ['required']
+            'name' => ['required', 'max:45'],
+            'account_number' => ['required', 'max:45']
         ]);
 
         if($validator->fails()){
@@ -104,14 +100,14 @@ class AccountingPeriodController extends Controller
         }
 
         try {
-            $accountingperiod->update($request->all());
+            $bankacc->update($request->all());
             $response = [
-                'message' => 'An accounting period row updated',
-                'data' => $accountingperiod
+                'message' => 'A new bank account row updated',
+                'data' => $bankacc
             ];
 
             return response()->json($response, Response::HTTP_OK);
-
+            
         } catch (QueryException $e) {
             return response()->json([
                 'message' => "Failed " . $e->errorInfo
@@ -127,17 +123,17 @@ class AccountingPeriodController extends Controller
      */
     public function destroy($id)
     {
-
-        $accountingperiod = AccountingPeriod::findOrFail($id);
+        $bankacc = BankAccount::findOrFail($id);
 
         try {
-            $accountingperiod->delete();
+            $bankacc->delete();
             $response = [
-                'message' => 'An accounting period row deleted'
+                'message' => 'A bank account row deleted',
+                'data' => $bankacc
             ];
 
             return response()->json($response, Response::HTTP_OK);
-
+            
         } catch (QueryException $e) {
             return response()->json([
                 'message' => "Failed " . $e->errorInfo

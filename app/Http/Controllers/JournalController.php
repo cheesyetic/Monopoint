@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AccountingPeriod;
+use App\Models\Journal;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
-class AccountingPeriodController extends Controller
+class JournalController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,12 +17,12 @@ class AccountingPeriodController extends Controller
      */
     public function index()
     {
-        $accountingperiod = AccountingPeriod::get();
-        $response = [
-            'message' => 'List Accounting Period',
-            'data' => $accountingperiod
-        ];
+        $journal = Journal::get();
 
+        $response =[
+            'message' => 'List Journal',
+            'data' => $journal
+        ];
         return response()->json($response, Response::HTTP_OK);
     }
 
@@ -35,9 +35,16 @@ class AccountingPeriodController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'max:200'],
-            'start' => ['required'],
-            'end' => ['required']
+            'title' => ['required', 'max:45'],
+            'date' => ['required'],
+            'remark' => ['max:1000'],
+            'ref' => ['max:45'],
+            'is_reimburse' => ['required'],
+            'chart_account_id' => ['required'],
+            'accounting_period_id' => ['required'],
+            'bank_account_id' => ['required'],
+            'project_id' => ['required'],
+            'user_id' => ['required'] 
         ]);
 
         if($validator->fails()){
@@ -46,20 +53,19 @@ class AccountingPeriodController extends Controller
         }
 
         try {
-            $accountingperiod = AccountingPeriod::create($request->all());
+            $journal = Journal::create($request->all());
             $response = [
-                'message' => 'A new accounting period row created',
-                'data' => $accountingperiod
+                'message' => 'A new journal row created',
+                'data' => $journal
             ];
 
             return response()->json($response, Response::HTTP_CREATED);
-
+            
         } catch (QueryException $e) {
             return response()->json([
                 'message' => "Failed " . $e->errorInfo
             ]);
         }
-
     }
 
     /**
@@ -70,13 +76,11 @@ class AccountingPeriodController extends Controller
      */
     public function show($id)
     {
-        $accountingperiod = AccountingPeriod::findOrFail($id);
-
+        $journal = Journal::findOrFail($id);
         $response = [
-            'message' => 'An accounting period row shown',
-            'data' => $accountingperiod
+            'message' => 'A journal row shown',
+            'data' => $journal
         ];
-
         return response()->json($response, Response::HTTP_OK);
     }
 
@@ -89,13 +93,19 @@ class AccountingPeriodController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        $accountingperiod = AccountingPeriod::findOrFail($id);
+        $journal = Journal::findOrFail($id);
 
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'max:200'],
-            'start' => ['required'],
-            'end' => ['required']
+            'title' => ['required', 'max:45'],
+            'date' => ['required'],
+            'remark' => ['max:1000'],
+            'ref' => ['max:45'],
+            'is_reimburse' => ['required'],
+            'chart_account_id' => ['required'],
+            'accounting_period_id' => ['required'],
+            'bank_account_id' => ['required'],
+            'project_id' => ['required'],
+            'user_id' => ['required'] 
         ]);
 
         if($validator->fails()){
@@ -104,14 +114,14 @@ class AccountingPeriodController extends Controller
         }
 
         try {
-            $accountingperiod->update($request->all());
+            $journal->update($request->all());
             $response = [
-                'message' => 'An accounting period row updated',
-                'data' => $accountingperiod
+                'message' => 'A journal row updated',
+                'data' => $journal
             ];
 
             return response()->json($response, Response::HTTP_OK);
-
+            
         } catch (QueryException $e) {
             return response()->json([
                 'message' => "Failed " . $e->errorInfo
@@ -127,17 +137,17 @@ class AccountingPeriodController extends Controller
      */
     public function destroy($id)
     {
-
-        $accountingperiod = AccountingPeriod::findOrFail($id);
+        $journal = Journal::findOrFail($id);
 
         try {
-            $accountingperiod->delete();
+            $journal->delete();
             $response = [
-                'message' => 'An accounting period row deleted'
+                'message' => 'A journal row deleted',
+                'data' => $journal
             ];
 
             return response()->json($response, Response::HTTP_OK);
-
+            
         } catch (QueryException $e) {
             return response()->json([
                 'message' => "Failed " . $e->errorInfo

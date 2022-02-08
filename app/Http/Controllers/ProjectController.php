@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AccountingPeriod;
+use App\Models\Project;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
-class AccountingPeriodController extends Controller
+class ProjectController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +17,11 @@ class AccountingPeriodController extends Controller
      */
     public function index()
     {
-        $accountingperiod = AccountingPeriod::get();
+        $project = Project::get();
+
         $response = [
-            'message' => 'List Accounting Period',
-            'data' => $accountingperiod
+            'message' => 'List Project',
+            'data' => $project
         ];
 
         return response()->json($response, Response::HTTP_OK);
@@ -35,9 +36,8 @@ class AccountingPeriodController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'max:200'],
-            'start' => ['required'],
-            'end' => ['required']
+            'name' => ['required', 'max:45'],
+            'status' => ['required', 'max:45']
         ]);
 
         if($validator->fails()){
@@ -46,20 +46,19 @@ class AccountingPeriodController extends Controller
         }
 
         try {
-            $accountingperiod = AccountingPeriod::create($request->all());
+            $project = Project::create($request->all());
             $response = [
-                'message' => 'A new accounting period row created',
-                'data' => $accountingperiod
+                'message' => 'A new project row created',
+                'data' => $project
             ];
 
             return response()->json($response, Response::HTTP_CREATED);
-
+            
         } catch (QueryException $e) {
             return response()->json([
                 'message' => "Failed " . $e->errorInfo
             ]);
         }
-
     }
 
     /**
@@ -70,13 +69,12 @@ class AccountingPeriodController extends Controller
      */
     public function show($id)
     {
-        $accountingperiod = AccountingPeriod::findOrFail($id);
+        $project = Project::findOrFail($id);
 
-        $response = [
-            'message' => 'An accounting period row shown',
-            'data' => $accountingperiod
+        $response=[
+            'message' => 'A project row shown',
+            'data' => $project
         ];
-
         return response()->json($response, Response::HTTP_OK);
     }
 
@@ -89,13 +87,11 @@ class AccountingPeriodController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        $accountingperiod = AccountingPeriod::findOrFail($id);
+        $project = Project::findOrFail($id);
 
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'max:200'],
-            'start' => ['required'],
-            'end' => ['required']
+            'name' => ['required', 'max:45'],
+            'status' => ['required', 'max:45']
         ]);
 
         if($validator->fails()){
@@ -104,14 +100,14 @@ class AccountingPeriodController extends Controller
         }
 
         try {
-            $accountingperiod->update($request->all());
+            $project->update($request->all());
             $response = [
-                'message' => 'An accounting period row updated',
-                'data' => $accountingperiod
+                'message' => 'A project row updated',
+                'data' => $project
             ];
 
             return response()->json($response, Response::HTTP_OK);
-
+            
         } catch (QueryException $e) {
             return response()->json([
                 'message' => "Failed " . $e->errorInfo
@@ -127,17 +123,17 @@ class AccountingPeriodController extends Controller
      */
     public function destroy($id)
     {
-
-        $accountingperiod = AccountingPeriod::findOrFail($id);
+        $project = Project::findOrFail($id);
 
         try {
-            $accountingperiod->delete();
+            $project->delete();
             $response = [
-                'message' => 'An accounting period row deleted'
+                'message' => 'A project row deleted',
+                'data' => $project
             ];
 
             return response()->json($response, Response::HTTP_OK);
-
+            
         } catch (QueryException $e) {
             return response()->json([
                 'message' => "Failed " . $e->errorInfo

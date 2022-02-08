@@ -34,7 +34,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'max:45'],
             'email' => ['required', 'email', 'unique:users,email'],
@@ -56,7 +56,7 @@ class UserController extends Controller
             ];
 
             return response()->json($response, Response::HTTP_CREATED);
-            
+
         } catch (QueryException $e) {
             return response()->json([
                 'message' => "Failed " . $e->errorInfo
@@ -92,9 +92,9 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $user = User::findOrFail($id);
-        
+
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'max:45'],
             'email' => ['required', 'email', 'unique:users,email'],
@@ -115,8 +115,8 @@ class UserController extends Controller
                 'data' => $user
             ];
 
-            return response()->json($response, Response::HTTP_CREATED);
-            
+            return response()->json($response, Response::HTTP_OK);
+
         } catch (QueryException $e) {
             return response()->json([
                 'message' => "Failed " . $e->errorInfo
@@ -133,7 +133,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        
+
         $user = User::findOrFail($id);
 
         try {
@@ -143,8 +143,8 @@ class UserController extends Controller
                 'data' => $user
             ];
 
-            return response()->json($response, Response::HTTP_CREATED);
-            
+            return response()->json($response, Response::HTTP_OK);
+
         } catch (QueryException $e) {
             return response()->json([
                 'message' => "Failed " . $e->errorInfo

@@ -18,7 +18,7 @@ class CreateAppointmentsTable extends Migration
             $table->string('name', 200)->nullable(true);
             $table->dateTime('date');
             $table->string('remark', 1000)->nullable(true);
-            $table->integer('user_id');
+            $table->integer('user_id')->nullable(true);
             $table->timestamps();
         });
     }

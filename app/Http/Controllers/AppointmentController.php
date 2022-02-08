@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AccountingPeriod;
+use App\Models\Appointment;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
-class AccountingPeriodController extends Controller
+class AppointmentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +17,10 @@ class AccountingPeriodController extends Controller
      */
     public function index()
     {
-        $accountingperiod = AccountingPeriod::get();
+        $appointment = Appointment::get();
         $response = [
-            'message' => 'List Accounting Period',
-            'data' => $accountingperiod
+            'message' => 'List Appointment',
+            'data' => $appointment
         ];
 
         return response()->json($response, Response::HTTP_OK);
@@ -36,8 +36,9 @@ class AccountingPeriodController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'max:200'],
-            'start' => ['required'],
-            'end' => ['required']
+            'date' => ['required'],
+            'remark' => ['max:1000'],
+            'user_id' => ['required']
         ]);
 
         if($validator->fails()){
@@ -46,20 +47,19 @@ class AccountingPeriodController extends Controller
         }
 
         try {
-            $accountingperiod = AccountingPeriod::create($request->all());
+            $appointment = Appointment::create($request->all());
             $response = [
-                'message' => 'A new accounting period row created',
-                'data' => $accountingperiod
+                'message' => 'A new appointment row created',
+                'data' => $appointment
             ];
 
             return response()->json($response, Response::HTTP_CREATED);
-
+            
         } catch (QueryException $e) {
             return response()->json([
                 'message' => "Failed " . $e->errorInfo
             ]);
         }
-
     }
 
     /**
@@ -70,11 +70,11 @@ class AccountingPeriodController extends Controller
      */
     public function show($id)
     {
-        $accountingperiod = AccountingPeriod::findOrFail($id);
+        $appointment = Appointment::findOrFail($id);
 
         $response = [
-            'message' => 'An accounting period row shown',
-            'data' => $accountingperiod
+            'message' => 'An appointment row shown',
+            'data' => $appointment
         ];
 
         return response()->json($response, Response::HTTP_OK);
@@ -89,13 +89,13 @@ class AccountingPeriodController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        $accountingperiod = AccountingPeriod::findOrFail($id);
+        $appointment = Appointment::findOrFail($id);
 
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'max:200'],
-            'start' => ['required'],
-            'end' => ['required']
+            'date' => ['required'],
+            'remark' => ['max:1000'],
+            'user_id' => ['required']
         ]);
 
         if($validator->fails()){
@@ -104,14 +104,14 @@ class AccountingPeriodController extends Controller
         }
 
         try {
-            $accountingperiod->update($request->all());
+            $appointment->update($request->all());
             $response = [
-                'message' => 'An accounting period row updated',
-                'data' => $accountingperiod
+                'message' => 'An appointment row updated',
+                'data' => $appointment
             ];
 
             return response()->json($response, Response::HTTP_OK);
-
+            
         } catch (QueryException $e) {
             return response()->json([
                 'message' => "Failed " . $e->errorInfo
@@ -127,17 +127,17 @@ class AccountingPeriodController extends Controller
      */
     public function destroy($id)
     {
-
-        $accountingperiod = AccountingPeriod::findOrFail($id);
+        $appointment = Appointment::findOrFail($id);
 
         try {
-            $accountingperiod->delete();
+            $appointment->delete();
             $response = [
-                'message' => 'An accounting period row deleted'
+                'message' => 'An appointment row deleted',
+                'data' => $appointment
             ];
 
             return response()->json($response, Response::HTTP_OK);
-
+            
         } catch (QueryException $e) {
             return response()->json([
                 'message' => "Failed " . $e->errorInfo

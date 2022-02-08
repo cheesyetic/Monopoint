@@ -22,6 +22,7 @@ class CreateJournalsTable extends Migration
             $table->double('uang_masuk')->nullable(true);
             $table->double('uang_keluar')->nullable(true);
             $table->integer('is_reimburse');
+            $table->string('filebukti');
             $table->timestamps();
             $table->integer('chart_account_id');
             $table->integer('accounting_period_id');
