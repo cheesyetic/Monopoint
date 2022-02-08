@@ -4,18 +4,11 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-// require('./bootstrap');
-
-
-window.axios = require('axios');
-
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+require('./bootstrap');
 
 window.Vue = require('vue').default;
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Toasted from 'vue-toasted'
-import moment from 'moment'
 
 /**
  * The following block of code may be used to automatically register your
@@ -28,13 +21,7 @@ import moment from 'moment'
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-
-Vue.use(Toasted)
 Vue.use(VueRouter)
-Vue.use(moment)
-
-window.moment = require('moment');
-window.moment.locale('id');
 
 import routes from './router/index'
 

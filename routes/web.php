@@ -18,12 +18,10 @@ use Illuminate\Support\Facades\Route;
 // });
 
 
-Auth::routes();
+// Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('{any?}', function () {
+Route::get('vue/{any?}', function () {
     return view('dashboard');
-})->where('any', '.*');
-
-Route::view('/{any?}', 'dashboard')->where('any', '.*');
+});
