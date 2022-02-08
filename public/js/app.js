@@ -6618,11 +6618,11 @@ __webpack_require__.r(__webpack_exports__);
   mode: 'history',
   linkActiveClass: 'active',
   routes: [{
-    path: '/',
+    path: 'vue/',
     name: 'dashboard',
     component: _views_home__WEBPACK_IMPORTED_MODULE_0__["default"]
   }, {
-    path: '/register',
+    path: 'vue/register',
     name: 'dashboard.one',
     component: _views_register__WEBPACK_IMPORTED_MODULE_1__["default"]
   }]
@@ -31144,7 +31144,7 @@ var staticRenderFns = [
                       _c("i", { staticClass: "mdi mdi-arrow-up-bold me-1" }),
                       _vm._v("2.65%"),
                     ]),
-                    _vm._v(" since last week\n                            "),
+                    _vm._v(" since last week\r\n                            "),
                   ]),
                 ]),
               ]),
@@ -31174,7 +31174,7 @@ var staticRenderFns = [
                       _c("i", { staticClass: "mdi mdi-arrow-down-bold me-1" }),
                       _vm._v("0.82%"),
                     ]),
-                    _vm._v(" since last week\n                            "),
+                    _vm._v(" since last week\r\n                            "),
                   ]),
                 ]),
               ]),
@@ -31204,7 +31204,7 @@ var staticRenderFns = [
                       _c("i", { staticClass: "mdi mdi-arrow-down-bold me-1" }),
                       _vm._v("6.24%"),
                     ]),
-                    _vm._v(" since last week\n                            "),
+                    _vm._v(" since last week\r\n                            "),
                   ]),
                 ]),
               ]),
@@ -31236,7 +31236,7 @@ var staticRenderFns = [
                       _c("i", { staticClass: "mdi mdi-arrow-up-bold me-1" }),
                       _vm._v("10.51%"),
                     ]),
-                    _vm._v(" since last week\n                            "),
+                    _vm._v(" since last week\r\n                            "),
                   ]),
                 ]),
               ]),
@@ -32351,11 +32351,11 @@ var staticRenderFns = [
                           _vm._v(" "),
                           _c("p", { staticClass: "mb-0" }, [
                             _vm._v(
-                              "Andrei Coman magna sed porta finibus, risus\n                                            posted a new article: "
+                              "Andrei Coman magna sed porta finibus, risus\r\n                                            posted a new article: "
                             ),
                             _c("span", { staticClass: "text-primary" }, [
                               _vm._v(
-                                "Forget UX\n                                                Rowland"
+                                "Forget UX\r\n                                                Rowland"
                               ),
                             ]),
                           ]),
@@ -32400,7 +32400,7 @@ var staticRenderFns = [
                         _vm._v(" "),
                         _c("p", { staticClass: "mb-0" }, [
                           _vm._v(
-                            "Zack Wetass, sed porta finibus, risus Chris Wallace\n                                        Commented "
+                            "Zack Wetass, sed porta finibus, risus Chris Wallace\r\n                                        Commented "
                           ),
                           _c("span", { staticClass: "text-primary" }, [
                             _vm._v(" Developer Moreno"),
@@ -32446,7 +32446,7 @@ var staticRenderFns = [
                         _vm._v(" "),
                         _c("p", { staticClass: "mb-0" }, [
                           _vm._v(
-                            "Zack Wetass, sed porta finibus, risus Chris Wallace\n                                        Commented "
+                            "Zack Wetass, sed porta finibus, risus Chris Wallace\r\n                                        Commented "
                           ),
                           _c("span", { staticClass: "text-primary" }, [
                             _vm._v(" Developer Moreno"),
@@ -32811,13 +32811,13 @@ var staticRenderFns = [
                             _vm._v(" "),
                             _c("td", [
                               _vm._v(
-                                "\n                                                07 Oct, 2019\n                                            "
+                                "\r\n                                                07 Oct, 2019\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
                             _c("td", [
                               _vm._v(
-                                "\n                                                $400\n                                            "
+                                "\r\n                                                $400\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
@@ -32837,7 +32837,7 @@ var staticRenderFns = [
                                 staticClass: "fab fa-cc-mastercard me-1",
                               }),
                               _vm._v(
-                                " Mastercard\n                                            "
+                                " Mastercard\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
@@ -32851,7 +32851,7 @@ var staticRenderFns = [
                                 },
                                 [
                                   _vm._v(
-                                    "\n                                                    View Details\n                                                "
+                                    "\r\n                                                    View Details\r\n                                                "
                                   ),
                                 ]
                               ),
@@ -32899,13 +32899,13 @@ var staticRenderFns = [
                             _vm._v(" "),
                             _c("td", [
                               _vm._v(
-                                "\n                                                07 Oct, 2019\n                                            "
+                                "\r\n                                                07 Oct, 2019\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
                             _c("td", [
                               _vm._v(
-                                "\n                                                $380\n                                            "
+                                "\r\n                                                $380\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
@@ -32923,7 +32923,7 @@ var staticRenderFns = [
                             _c("td", [
                               _c("i", { staticClass: "fab fa-cc-visa me-1" }),
                               _vm._v(
-                                " Visa\n                                            "
+                                " Visa\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
@@ -32937,7 +32937,7 @@ var staticRenderFns = [
                                 },
                                 [
                                   _vm._v(
-                                    "\n                                                    View Details\n                                                "
+                                    "\r\n                                                    View Details\r\n                                                "
                                   ),
                                 ]
                               ),
@@ -32985,13 +32985,13 @@ var staticRenderFns = [
                             _vm._v(" "),
                             _c("td", [
                               _vm._v(
-                                "\n                                                06 Oct, 2019\n                                            "
+                                "\r\n                                                06 Oct, 2019\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
                             _c("td", [
                               _vm._v(
-                                "\n                                                $384\n                                            "
+                                "\r\n                                                $384\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
@@ -33009,7 +33009,7 @@ var staticRenderFns = [
                             _c("td", [
                               _c("i", { staticClass: "fab fa-cc-paypal me-1" }),
                               _vm._v(
-                                " Paypal\n                                            "
+                                " Paypal\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
@@ -33023,7 +33023,7 @@ var staticRenderFns = [
                                 },
                                 [
                                   _vm._v(
-                                    "\n                                                    View Details\n                                                "
+                                    "\r\n                                                    View Details\r\n                                                "
                                   ),
                                 ]
                               ),
@@ -33071,13 +33071,13 @@ var staticRenderFns = [
                             _vm._v(" "),
                             _c("td", [
                               _vm._v(
-                                "\n                                                05 Oct, 2019\n                                            "
+                                "\r\n                                                05 Oct, 2019\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
                             _c("td", [
                               _vm._v(
-                                "\n                                                $412\n                                            "
+                                "\r\n                                                $412\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
@@ -33097,7 +33097,7 @@ var staticRenderFns = [
                                 staticClass: "fab fa-cc-mastercard me-1",
                               }),
                               _vm._v(
-                                " Mastercard\n                                            "
+                                " Mastercard\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
@@ -33111,7 +33111,7 @@ var staticRenderFns = [
                                 },
                                 [
                                   _vm._v(
-                                    "\n                                                    View Details\n                                                "
+                                    "\r\n                                                    View Details\r\n                                                "
                                   ),
                                 ]
                               ),
@@ -33159,13 +33159,13 @@ var staticRenderFns = [
                             _vm._v(" "),
                             _c("td", [
                               _vm._v(
-                                "\n                                                04 Oct, 2019\n                                            "
+                                "\r\n                                                04 Oct, 2019\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
                             _c("td", [
                               _vm._v(
-                                "\n                                                $404\n                                            "
+                                "\r\n                                                $404\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
@@ -33183,7 +33183,7 @@ var staticRenderFns = [
                             _c("td", [
                               _c("i", { staticClass: "fab fa-cc-visa me-1" }),
                               _vm._v(
-                                " Visa\n                                            "
+                                " Visa\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
@@ -33197,7 +33197,7 @@ var staticRenderFns = [
                                 },
                                 [
                                   _vm._v(
-                                    "\n                                                    View Details\n                                                "
+                                    "\r\n                                                    View Details\r\n                                                "
                                   ),
                                 ]
                               ),
@@ -33245,13 +33245,13 @@ var staticRenderFns = [
                             _vm._v(" "),
                             _c("td", [
                               _vm._v(
-                                "\n                                                04 Oct, 2019\n                                            "
+                                "\r\n                                                04 Oct, 2019\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
                             _c("td", [
                               _vm._v(
-                                "\n                                                $392\n                                            "
+                                "\r\n                                                $392\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
@@ -33269,7 +33269,7 @@ var staticRenderFns = [
                             _c("td", [
                               _c("i", { staticClass: "fab fa-cc-paypal me-1" }),
                               _vm._v(
-                                " Paypal\n                                            "
+                                " Paypal\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
@@ -33283,7 +33283,7 @@ var staticRenderFns = [
                                 },
                                 [
                                   _vm._v(
-                                    "\n                                                    View Details\n                                                "
+                                    "\r\n                                                    View Details\r\n                                                "
                                   ),
                                 ]
                               ),
@@ -33304,12 +33304,12 @@ var staticRenderFns = [
         _c("div", { staticClass: "container-fluid" }, [
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-sm-6" }, [
-              _vm._v("\n                     © Minible.\n                "),
+              _vm._v("\r\n                     © Minible.\r\n                "),
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-sm-6" }, [
               _c("div", { staticClass: "text-sm-end d-none d-sm-block" }, [
-                _vm._v("\n                        Crafted with "),
+                _vm._v("\r\n                        Crafted with "),
                 _c("i", { staticClass: "mdi mdi-heart text-danger" }),
                 _vm._v(" by "),
                 _c(
