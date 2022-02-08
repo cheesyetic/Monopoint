@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Project;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
-class UserController extends Controller
+class ProjectController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +17,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::get();
+        $project = Project::get();
+
         $response = [
-            'message' => 'List User',
-            'data' => $user
+            'message' => 'List Project',
+            'data' => $project
         ];
 
         return response()->json($response, Response::HTTP_OK);
@@ -34,13 +35,9 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'max:45'],
-            'email' => ['required', 'email', 'unique:users,email'],
-            'phone_number' => ['required', 'unique:users,phone_number'],
-            'type' => ['required'],
-            'password' => ['required', 'min:8']
+            'status' => ['required', 'max:45']
         ]);
 
         if($validator->fails()){
@@ -49,10 +46,10 @@ class UserController extends Controller
         }
 
         try {
-            $user = User::create($request->all());
+            $project = Project::create($request->all());
             $response = [
-                'message' => 'A new user row created',
-                'data' => $user
+                'message' => 'A new project row created',
+                'data' => $project
             ];
 
             return response()->json($response, Response::HTTP_CREATED);
@@ -62,7 +59,6 @@ class UserController extends Controller
                 'message' => "Failed " . $e->errorInfo
             ]);
         }
-
     }
 
     /**
@@ -73,13 +69,12 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::findOrFail($id);
+        $project = Project::findOrFail($id);
 
-        $response = [
-            'message' => 'An user row shown',
-            'data' => $user
+        $response=[
+            'message' => 'A project row shown',
+            'data' => $project
         ];
-
         return response()->json($response, Response::HTTP_OK);
     }
 
@@ -92,15 +87,11 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
-        $user = User::findOrFail($id);
-        
+        $project = Project::findOrFail($id);
+
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'max:45'],
-            'email' => ['required', 'email', 'unique:users,email'],
-            'phone_number' => ['required', 'unique:users,phone_number'],
-            'type' => ['required'],
-            'password' => ['required', 'min:8']
+            'status' => ['required', 'max:45']
         ]);
 
         if($validator->fails()){
@@ -109,10 +100,10 @@ class UserController extends Controller
         }
 
         try {
-            $user->update($request->all());
+            $project->update($request->all());
             $response = [
-                'message' => 'An user row updated',
-                'data' => $user
+                'message' => 'A project row updated',
+                'data' => $project
             ];
 
             return response()->json($response, Response::HTTP_OK);
@@ -122,7 +113,6 @@ class UserController extends Controller
                 'message' => "Failed " . $e->errorInfo
             ]);
         }
-
     }
 
     /**
@@ -133,14 +123,13 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        
-        $user = User::findOrFail($id);
+        $project = Project::findOrFail($id);
 
         try {
-            $user->delete();
+            $project->delete();
             $response = [
-                'message' => 'An user row deleted',
-                'data' => $user
+                'message' => 'A project row deleted',
+                'data' => $project
             ];
 
             return response()->json($response, Response::HTTP_OK);
@@ -150,6 +139,5 @@ class UserController extends Controller
                 'message' => "Failed " . $e->errorInfo
             ]);
         }
-
     }
 }

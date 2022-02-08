@@ -16,8 +16,8 @@ class CreateAccountingPeriodsTable extends Migration
         Schema::create('accounting_periods', function (Blueprint $table) {
             $table->id();
             $table->string('name', 200);
-            $table->dateTime('start');
-            $table->dateTime('end');
+            $table->date('start');
+            $table->date('end');
             $table->timestamps();
         });
     }

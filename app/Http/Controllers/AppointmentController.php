@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Appointment;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
-class UserController extends Controller
+class AppointmentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +17,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::get();
+        $appointment = Appointment::get();
         $response = [
-            'message' => 'List User',
-            'data' => $user
+            'message' => 'List Appointment',
+            'data' => $appointment
         ];
 
         return response()->json($response, Response::HTTP_OK);
@@ -34,13 +34,11 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'max:45'],
-            'email' => ['required', 'email', 'unique:users,email'],
-            'phone_number' => ['required', 'unique:users,phone_number'],
-            'type' => ['required'],
-            'password' => ['required', 'min:8']
+            'name' => ['required', 'max:200'],
+            'date' => ['required'],
+            'remark' => ['max:1000'],
+            'user_id' => ['required']
         ]);
 
         if($validator->fails()){
@@ -49,10 +47,10 @@ class UserController extends Controller
         }
 
         try {
-            $user = User::create($request->all());
+            $appointment = Appointment::create($request->all());
             $response = [
-                'message' => 'A new user row created',
-                'data' => $user
+                'message' => 'A new appointment row created',
+                'data' => $appointment
             ];
 
             return response()->json($response, Response::HTTP_CREATED);
@@ -62,7 +60,6 @@ class UserController extends Controller
                 'message' => "Failed " . $e->errorInfo
             ]);
         }
-
     }
 
     /**
@@ -73,11 +70,11 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::findOrFail($id);
+        $appointment = Appointment::findOrFail($id);
 
         $response = [
-            'message' => 'An user row shown',
-            'data' => $user
+            'message' => 'An appointment row shown',
+            'data' => $appointment
         ];
 
         return response()->json($response, Response::HTTP_OK);
@@ -92,15 +89,13 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
-        $user = User::findOrFail($id);
-        
+        $appointment = Appointment::findOrFail($id);
+
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'max:45'],
-            'email' => ['required', 'email', 'unique:users,email'],
-            'phone_number' => ['required', 'unique:users,phone_number'],
-            'type' => ['required'],
-            'password' => ['required', 'min:8']
+            'name' => ['required', 'max:200'],
+            'date' => ['required'],
+            'remark' => ['max:1000'],
+            'user_id' => ['required']
         ]);
 
         if($validator->fails()){
@@ -109,10 +104,10 @@ class UserController extends Controller
         }
 
         try {
-            $user->update($request->all());
+            $appointment->update($request->all());
             $response = [
-                'message' => 'An user row updated',
-                'data' => $user
+                'message' => 'An appointment row updated',
+                'data' => $appointment
             ];
 
             return response()->json($response, Response::HTTP_OK);
@@ -122,7 +117,6 @@ class UserController extends Controller
                 'message' => "Failed " . $e->errorInfo
             ]);
         }
-
     }
 
     /**
@@ -133,14 +127,13 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        
-        $user = User::findOrFail($id);
+        $appointment = Appointment::findOrFail($id);
 
         try {
-            $user->delete();
+            $appointment->delete();
             $response = [
-                'message' => 'An user row deleted',
-                'data' => $user
+                'message' => 'An appointment row deleted',
+                'data' => $appointment
             ];
 
             return response()->json($response, Response::HTTP_OK);
@@ -150,6 +143,5 @@ class UserController extends Controller
                 'message' => "Failed " . $e->errorInfo
             ]);
         }
-
     }
 }

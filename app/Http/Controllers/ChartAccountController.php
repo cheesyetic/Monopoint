@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\ChartAccount;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
-class UserController extends Controller
+class ChartAccountController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +17,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::get();
+        $chartacc = ChartAccount::get();
+
         $response = [
-            'message' => 'List User',
-            'data' => $user
+            'message' => 'List Chart Account',
+            'data' => $chartacc
         ];
 
         return response()->json($response, Response::HTTP_OK);
@@ -34,13 +35,10 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'max:45'],
-            'email' => ['required', 'email', 'unique:users,email'],
-            'phone_number' => ['required', 'unique:users,phone_number'],
-            'type' => ['required'],
-            'password' => ['required', 'min:8']
+            'name' => ['required', 'max:200'],
+            'code' => ['required', 'max:45'],
+            'type' => ['required']
         ]);
 
         if($validator->fails()){
@@ -49,10 +47,10 @@ class UserController extends Controller
         }
 
         try {
-            $user = User::create($request->all());
+            $chartacc = ChartAccount::create($request->all());
             $response = [
-                'message' => 'A new user row created',
-                'data' => $user
+                'message' => 'A new chart account row created',
+                'data' => $chartacc
             ];
 
             return response()->json($response, Response::HTTP_CREATED);
@@ -62,7 +60,6 @@ class UserController extends Controller
                 'message' => "Failed " . $e->errorInfo
             ]);
         }
-
     }
 
     /**
@@ -73,11 +70,11 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::findOrFail($id);
+        $chartacc = ChartAccount::findOrFail($id);
 
         $response = [
-            'message' => 'An user row shown',
-            'data' => $user
+            'message' => 'A chart account row shown',
+            'data' => $chartacc
         ];
 
         return response()->json($response, Response::HTTP_OK);
@@ -92,15 +89,12 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
-        $user = User::findOrFail($id);
-        
+        $chartacc = ChartAccount::findOrFail($id);
+
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'max:45'],
-            'email' => ['required', 'email', 'unique:users,email'],
-            'phone_number' => ['required', 'unique:users,phone_number'],
-            'type' => ['required'],
-            'password' => ['required', 'min:8']
+            'name' => ['required', 'max:200'],
+            'code' => ['required', 'max:45'],
+            'type' => ['required']
         ]);
 
         if($validator->fails()){
@@ -109,10 +103,10 @@ class UserController extends Controller
         }
 
         try {
-            $user->update($request->all());
+            $chartacc = ChartAccount::create($request->all());
             $response = [
-                'message' => 'An user row updated',
-                'data' => $user
+                'message' => 'A chart account row updated',
+                'data' => $chartacc
             ];
 
             return response()->json($response, Response::HTTP_OK);
@@ -122,7 +116,6 @@ class UserController extends Controller
                 'message' => "Failed " . $e->errorInfo
             ]);
         }
-
     }
 
     /**
@@ -133,14 +126,13 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        
-        $user = User::findOrFail($id);
+        $chartacc = ChartAccount::findOrFail($id);
 
         try {
-            $user->delete();
+            $chartacc->delete();
             $response = [
-                'message' => 'An user row deleted',
-                'data' => $user
+                'message' => 'A chart account row deleted',
+                'data' => $chartacc
             ];
 
             return response()->json($response, Response::HTTP_OK);
@@ -150,6 +142,5 @@ class UserController extends Controller
                 'message' => "Failed " . $e->errorInfo
             ]);
         }
-
     }
 }

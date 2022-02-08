@@ -13,7 +13,6 @@ class ChartAccount extends Model
         'name',
         'code',
         'type',
-        'balance'
     ];
 
 }

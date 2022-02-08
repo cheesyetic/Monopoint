@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Asset;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
-class UserController extends Controller
+class AssetController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +17,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::get();
+        $asset = Asset::get();
+
         $response = [
-            'message' => 'List User',
-            'data' => $user
+            'message' => 'List Asset',
+            'data' => $asset
         ];
 
         return response()->json($response, Response::HTTP_OK);
@@ -34,13 +35,10 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'max:45'],
-            'email' => ['required', 'email', 'unique:users,email'],
-            'phone_number' => ['required', 'unique:users,phone_number'],
-            'type' => ['required'],
-            'password' => ['required', 'min:8']
+            'value' => ['required'],
+            'buy_time' => ['required']
         ]);
 
         if($validator->fails()){
@@ -49,10 +47,10 @@ class UserController extends Controller
         }
 
         try {
-            $user = User::create($request->all());
+            $asset = Asset::create($request->all());
             $response = [
-                'message' => 'A new user row created',
-                'data' => $user
+                'message' => 'A new asset row created',
+                'data' => $asset
             ];
 
             return response()->json($response, Response::HTTP_CREATED);
@@ -62,7 +60,6 @@ class UserController extends Controller
                 'message' => "Failed " . $e->errorInfo
             ]);
         }
-
     }
 
     /**
@@ -73,11 +70,11 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::findOrFail($id);
+        $asset = Asset::findOrFail($id);
 
         $response = [
-            'message' => 'An user row shown',
-            'data' => $user
+            'message' => 'An asset row shown',
+            'data' => $asset
         ];
 
         return response()->json($response, Response::HTTP_OK);
@@ -92,15 +89,12 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
-        $user = User::findOrFail($id);
-        
+        $asset = Asset::findOrFail($id);
+
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'max:45'],
-            'email' => ['required', 'email', 'unique:users,email'],
-            'phone_number' => ['required', 'unique:users,phone_number'],
-            'type' => ['required'],
-            'password' => ['required', 'min:8']
+            'value' => ['required'],
+            'buy_time' => ['required']
         ]);
 
         if($validator->fails()){
@@ -109,10 +103,10 @@ class UserController extends Controller
         }
 
         try {
-            $user->update($request->all());
+            $asset->update($request->all());
             $response = [
-                'message' => 'An user row updated',
-                'data' => $user
+                'message' => 'An asset row updated',
+                'data' => $asset
             ];
 
             return response()->json($response, Response::HTTP_OK);
@@ -122,7 +116,6 @@ class UserController extends Controller
                 'message' => "Failed " . $e->errorInfo
             ]);
         }
-
     }
 
     /**
@@ -133,14 +126,13 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        
-        $user = User::findOrFail($id);
+        $asset = Asset::findOrFail($id);
 
         try {
-            $user->delete();
+            $asset->delete();
             $response = [
-                'message' => 'An user row deleted',
-                'data' => $user
+                'message' => 'An asset row deleted',
+                'data' => $asset
             ];
 
             return response()->json($response, Response::HTTP_OK);
@@ -150,6 +142,5 @@ class UserController extends Controller
                 'message' => "Failed " . $e->errorInfo
             ]);
         }
-
     }
 }

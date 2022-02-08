@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Journal;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
-class UserController extends Controller
+class JournalController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,12 +17,12 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::get();
-        $response = [
-            'message' => 'List User',
-            'data' => $user
-        ];
+        $journal = Journal::get();
 
+        $response =[
+            'message' => 'List Journal',
+            'data' => $journal
+        ];
         return response()->json($response, Response::HTTP_OK);
     }
 
@@ -34,13 +34,17 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'max:45'],
-            'email' => ['required', 'email', 'unique:users,email'],
-            'phone_number' => ['required', 'unique:users,phone_number'],
-            'type' => ['required'],
-            'password' => ['required', 'min:8']
+            'title' => ['required', 'max:45'],
+            'date' => ['required'],
+            'remark' => ['max:1000'],
+            'ref' => ['max:45'],
+            'is_reimburse' => ['required'],
+            'chart_account_id' => ['required'],
+            'accounting_period_id' => ['required'],
+            'bank_account_id' => ['required'],
+            'project_id' => ['required'],
+            'user_id' => ['required'] 
         ]);
 
         if($validator->fails()){
@@ -49,10 +53,10 @@ class UserController extends Controller
         }
 
         try {
-            $user = User::create($request->all());
+            $journal = Journal::create($request->all());
             $response = [
-                'message' => 'A new user row created',
-                'data' => $user
+                'message' => 'A new journal row created',
+                'data' => $journal
             ];
 
             return response()->json($response, Response::HTTP_CREATED);
@@ -62,7 +66,6 @@ class UserController extends Controller
                 'message' => "Failed " . $e->errorInfo
             ]);
         }
-
     }
 
     /**
@@ -73,13 +76,11 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::findOrFail($id);
-
+        $journal = Journal::findOrFail($id);
         $response = [
-            'message' => 'An user row shown',
-            'data' => $user
+            'message' => 'A journal row shown',
+            'data' => $journal
         ];
-
         return response()->json($response, Response::HTTP_OK);
     }
 
@@ -92,15 +93,19 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
-        $user = User::findOrFail($id);
-        
+        $journal = Journal::findOrFail($id);
+
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'max:45'],
-            'email' => ['required', 'email', 'unique:users,email'],
-            'phone_number' => ['required', 'unique:users,phone_number'],
-            'type' => ['required'],
-            'password' => ['required', 'min:8']
+            'title' => ['required', 'max:45'],
+            'date' => ['required'],
+            'remark' => ['max:1000'],
+            'ref' => ['max:45'],
+            'is_reimburse' => ['required'],
+            'chart_account_id' => ['required'],
+            'accounting_period_id' => ['required'],
+            'bank_account_id' => ['required'],
+            'project_id' => ['required'],
+            'user_id' => ['required'] 
         ]);
 
         if($validator->fails()){
@@ -109,10 +114,10 @@ class UserController extends Controller
         }
 
         try {
-            $user->update($request->all());
+            $journal->update($request->all());
             $response = [
-                'message' => 'An user row updated',
-                'data' => $user
+                'message' => 'A journal row updated',
+                'data' => $journal
             ];
 
             return response()->json($response, Response::HTTP_OK);
@@ -122,7 +127,6 @@ class UserController extends Controller
                 'message' => "Failed " . $e->errorInfo
             ]);
         }
-
     }
 
     /**
@@ -133,14 +137,13 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        
-        $user = User::findOrFail($id);
+        $journal = Journal::findOrFail($id);
 
         try {
-            $user->delete();
+            $journal->delete();
             $response = [
-                'message' => 'An user row deleted',
-                'data' => $user
+                'message' => 'A journal row deleted',
+                'data' => $journal
             ];
 
             return response()->json($response, Response::HTTP_OK);
@@ -150,6 +153,5 @@ class UserController extends Controller
                 'message' => "Failed " . $e->errorInfo
             ]);
         }
-
     }
 }
