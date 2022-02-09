@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\JournalsExport;
+use App\Imports\JournalsImport;
+use App\Mail\JournalChange;
+use App\Models\AdjustingHistory;
 use App\Models\Journal;
+use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\Response;
 
 class JournalController extends Controller
@@ -15,9 +22,32 @@ class JournalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $journal = Journal::get();
+        $query = Journal::with(['user', 'chartAccount', 'accountingPeriod', 'project', 'asset', 'bankAccount']);
+        if($request->keyword){
+            $query->where('title','LIKE','%'.$request->keyword.'%');
+        }
+
+        if($request->category){
+
+        }
+
+        if($request->chart){
+            $query->whereHas('chartAccount', function($query) use($request){
+                $query->where('chart_account_id', $request->chart);
+            });
+        }
+
+        if($request->reimburse){
+            $query->where('is_reimburse','LIKE','%'.$request->reimburse.'%');
+        }
+
+        if($request->date){
+            $query->whereMonth('date','=', date($request->date));
+        }
+
+        $journal = $query->get();
 
         $response =[
             'message' => 'List Journal',
@@ -34,11 +64,15 @@ class JournalController extends Controller
      */
     public function store(Request $request)
     {
+
+        $input = $request->all();
+
         $validator = Validator::make($request->all(), [
             'title' => ['required', 'max:45'],
             'date' => ['required'],
             'remark' => ['max:1000'],
             'ref' => ['max:45'],
+            'filebukti' => ['required', 'mimes:png,jpg,jpeg,doc,docx,pdf,txt,csv', 'max:2048'],
             'is_reimburse' => ['required'],
             'chart_account_id' => ['required'],
             'accounting_period_id' => ['required'],
@@ -52,20 +86,24 @@ class JournalController extends Controller
             Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        try {
-            $journal = Journal::create($request->all());
+     
+
+            if($file = $request->file('filebukti')){
+                $path = $file->store('public/files');
+                $name = $file->getClientOriginalName();
+                $file->move($path, $name);
+                $input['filebukti'] = "$name";
+            }
+
+            $journal = Journal::create($input);
+
             $response = [
                 'message' => 'A new journal row created',
                 'data' => $journal
             ];
 
             return response()->json($response, Response::HTTP_CREATED);
-            
-        } catch (QueryException $e) {
-            return response()->json([
-                'message' => "Failed " . $e->errorInfo
-            ]);
-        }
+
     }
 
     /**
@@ -91,16 +129,18 @@ class JournalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+ 
     public function update(Request $request, $id)
-    {
+    { 
         $journal = Journal::findOrFail($id);
 
         $validator = Validator::make($request->all(), [
-            'title' => ['required', 'max:45'],
+           'title' => ['required', 'max:45'],
             'date' => ['required'],
             'remark' => ['max:1000'],
             'ref' => ['max:45'],
             'is_reimburse' => ['required'],
+            'filebukti' => ['required', 'mimes:png,jpg,jpeg,doc,docx,pdf,txt,csv', 'max:2048'],
             'chart_account_id' => ['required'],
             'accounting_period_id' => ['required'],
             'bank_account_id' => ['required'],
@@ -113,8 +153,19 @@ class JournalController extends Controller
             Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
+        $input = $request->all();
+
         try {
-            $journal->update($request->all());
+            if($file = $request->file('filebukti')){
+                $path = $file->store('public/files');
+                $name = $file->getClientOriginalName();
+                $file->move($path, $name);
+                $input['filebukti'] = "$name";
+            }
+
+            $journal->update($input);
+            AdjustingHistory::create($input);
+
             $response = [
                 'message' => 'A journal row updated',
                 'data' => $journal
@@ -153,5 +204,75 @@ class JournalController extends Controller
                 'message' => "Failed " . $e->errorInfo
             ]);
         }
+    }
+
+    public function validationStatus($id){
+        $journal = Journal::findOrFail($id);
+
+        $journal->status = 2;
+        $journal->save();
+
+        $response = [
+            'message' => 'A journal has been verified',
+            'data' => $journal
+        ];
+
+        return response()->json($response, Response::HTTP_OK);
+    }
+
+    public function validationImage(Request $request, $id){
+        $journal = Journal::findOrFail($id);
+
+        $input = $request->all();
+        if($file = $request->file('buktireimburse')){
+            $path = $file->store('public/files');
+            $name = $file->getClientOriginalName();
+            $file->move($path, $name);
+            $input['buktireimburse'] = "$name";
+        }
+
+        $journal->update($input);
+
+        $response = [
+            'message' => 'The file has been uploaded',
+            'data' => $journal
+        ];
+
+        return response()->json($response, Response::HTTP_OK);
+    }
+
+    public function export(){
+        $expexc = Excel::download(new JournalsExport, 'journals.xlsx');
+        dd($expexc);
+        $response = [
+            'message' => 'The file has been downloaded',
+            'data' => $expexc
+        ];
+
+        return response()->json($response, Response::HTTP_OK);
+    }
+
+    public function import(){
+        Excel::import(new JournalsImport, 'journals.xlsx');
+
+        $response = [
+            'message' => 'The file has been downloaded'
+        ];
+
+        return response()->json($response, Response::HTTP_OK);
+    }
+    public function sendEmail(){
+        //$user = User::findOrFail();
+        //$user = $user->email;
+        $details=[
+            'title' => 'This is an email from Monopoint.',
+            'body' => 'This is just an email to test the feature.'
+        ];
+
+        Mail::to("dimasrenggana06@gmail.com")->send(new JournalChange($details));
+        $response = [
+            'message' => 'The email successfully sent!'
+        ];
+        return response()->json($response, Response::HTTP_OK);
     }
 }
