@@ -50,7 +50,7 @@ export default {
             component: PeriodeCreate
         },
         {
-            path: '/admin/periode/:id',
+            path: '/admin/periode/:token',
             name: 'periode.edit',
             component: PeriodeEdit
         },

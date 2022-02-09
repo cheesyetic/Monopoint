@@ -16,6 +16,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Toasted from 'vue-toasted'
 import moment from 'moment'
+import 'animate.css'
 
 /**
  * The following block of code may be used to automatically register your

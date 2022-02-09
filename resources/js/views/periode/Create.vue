@@ -1,58 +1,46 @@
 <template>
- <div class="main-content">
-    <div class="page-content">
-        <div class="container-fluid">
-            <!-- start page title -->
-            <div class="row">
-                <div class="col-12">
-                    <div class="page-title-box d-flex align-items-center justify-content-between">
-                        <h4 class="mb-0">Buat Periode</h4>
-
-                        <div class="page-title-right">
-                            <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item m-auto"><router-link :to="{ name: 'dashboard' }">Dashboard</router-link></li>
-                                <li class="breadcrumb-item m-auto"><router-link :to="{ name: 'periode' }">Periode</router-link></li>
-                                <li class="breadcrumb-item m-auto active">Create</li>
-                            </ol>
+<div id="createModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Buat Periode Baru</h5>
+                <button ref="close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <form class="" method="pos" @submit.prevent="store">
+                <div class="modal-body">
+                        <div class="mb-3 row">
+                            <label for="example-text-input" class="col-md-2 col-form-label">Name</label>
+                            <div class="col-md-10">
+                                <input class="form-control" type="text" v-model="periodeCreate.name" name="name">
+                                <div v-if="theErrors.name" class="mt-1 text-danger">{{ theErrors.name[0] }}</div>
+                            </div>
                         </div>
+                        <div class="mb-3 row">
+                            <label for="example-date-input" class="col-md-2 col-form-label">Start Date</label>
+                            <div class="col-md-10">
+                                <input class="form-control" type="date" v-model="periodeCreate.start" value="2019-02-19">
+                                <div v-if="theErrors.start" class="mt-1 text-danger">{{ theErrors.start[0] }}</div>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="example-date-input" class="col-md-2 col-form-label">End Date</label>
+                            <div class="col-md-10">
+                                <input class="form-control" type="date" v-model="periodeCreate.end" value="2019-08-19">
+                                <div v-if="theErrors.end" class="mt-1 text-danger">{{ theErrors.end[0] }}</div>
+                            </div>
+                        </div>
+                        <!-- <button class="btn btn-primary" type="submit">Create</button> -->
 
-                    </div>
                 </div>
-            </div>
-            <!-- end page title -->
-
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <form class="card-body" method="pos" @submit.prevent="store">
-                            <div class="mb-3 row">
-                                <label for="example-text-input" class="col-md-2 col-form-label">Name</label>
-                                <div class="col-md-10">
-                                    <input class="form-control" type="text" v-model="periode.name">
-                                    <div v-if="theErrors.name" class="mt-1 text-danger">{{ theErrors.name[0] }}</div>
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="example-date-input" class="col-md-2 col-form-label">Start Date</label>
-                                <div class="col-md-10">
-                                    <input class="form-control" type="date" v-model="periode.start" value="2019-02-19">
-                                    <div v-if="theErrors.start" class="mt-1 text-danger">{{ theErrors.start[0] }}</div>
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="example-date-input" class="col-md-2 col-form-label">End Date</label>
-                                <div class="col-md-10">
-                                    <input class="form-control" type="date" v-model="periode.end" value="2019-08-19">
-                                    <div v-if="theErrors.end" class="mt-1 text-danger">{{ theErrors.end[0] }}</div>
-                                </div>
-                            </div>
-                            <button class="btn btn-primary" type="submit">Create</button>
-                        </form>
-                    </div>
-                </div> <!-- end col -->
-            </div>
-        </div>
-    </div>
+                <div class="modal-footer">
+                    <!-- <button type="button" class="btn btn-light waves-effect" data-bs-dismiss="modal">Close</button> -->
+                    <button class="btn btn-primary waves-effect waves-light" type="submit" ref="createModal">Create</button>
+                    <!-- <button type="button" class="btn btn-primary waves-effect waves-light">Save changes</button> -->
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
 </div>
 </template>
 
@@ -60,7 +48,7 @@
 export default {
     data() {
         return {
-            periode: {
+            periodeCreate: {
                 name: '',
                 start: '',
                 end: '',
@@ -73,28 +61,30 @@ export default {
     methods: {
         async store() {
             try {
-                let response = await axios.post('/api/accountingperiod', this.periode)
-                console.log(response.status)
-                if (response.status == 201) {
-                    this.periode.name = ""
-                    this.periode.start = ""
-                    this.periode.end = ""
+                let responseCreate = await axios.post('/api/accountingperiod', this.periodeCreate)
+                // console.log(responseCreate.status)
+                if (responseCreate.status == 201) {
+                    this.periodeCreate.name = ""
+                    this.periodeCreate.start = ""
+                    this.periodeCreate.end = ""
                     this.theErrors = []
 
-                    this.$toasted.show(response.data.message, {
+                    this.$toasted.show(responseCreate.data.message, {
                         type: 'success',
                         duration: 3000,
                         position: 'top-center',
                     })
-                    this.$router.push({ name: 'periode' })
+                    // this.$parent.key++;
+                    this.$parent.getPeriod();
+                    this.$refs.close.click();
                 }
             } catch (e) {
-                this.$toasted.show("Something went wrong", {
+                this.$toasted.show("Something went wrong : " + e, {
                         type: 'error',
                         duration: 3000,
                         position: 'top-center',
                     })
-                this.theErrors = e.response.data;
+                this.theErrors = e.responseCreate.data;
             }
         }
     }

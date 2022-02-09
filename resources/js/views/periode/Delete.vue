@@ -1,38 +1,49 @@
 <template>
-  <button class="btn btn-danger" @click="destroyPeriod">Delete</button>
+    <button class="btn btn-danger" ref="deletePeriod" @click="destroyPeriod">Delete</button>
 </template>
 
 <script>
 export default {
     props: ['endpoint'],
-    mounted() {
-        console.log(this.endpoint)
-    },
+    // mounted() {
+    //     console.log(this.endpoint)
+    // },
 
     methods: {
-        destroyPeriod() {
-            console.log(this.endpoint)
+        async destroyPeriod() {
+            // console.log(this.endpoint)
             try {
-                let response = axios.delete('/api/accountingperiod/' + this.endpoint)
-                console.log(response.status)
-                if (response.status == 200) {
-                    this.theErrors = []
+                let q = window.confirm("Are you sure you want to delete this period?")
+                if (q) {
+                    let responseDelete = await axios.delete(`/api/accountingperiod/${this.endpoint}`)
+                    // console.log(responseDelete.status)
+                    // console.log(responseDelete.data.message)
+                    // console.log(responseDelete)
+                    if (responseDelete.status == 200) {
+                        this.$toasted.show(responseDelete.data.message, {
+                            type: 'success',
+                            duration: 3000,
+                            position: 'top-center',
+                        })
 
-                    this.$toasted.show(response.data.message, {
-                        type: 'success',
-                        duration: 3000,
-                        position: 'top-center',
-                    })
-
-                    this.$router.push({ name: 'periode' })
+                        this.$refs.deletePeriod.parentElement.parentElement.parentElement.remove()
+                    }
+                    else {
+                        this.$toasted.show("Error deleting period", {
+                            type: 'error',
+                            duration: 3000,
+                            position: 'top-center',
+                        })
+                    }
                 }
+
             } catch (e) {
-                this.$toasted.show("Something went wrong", {
+                // console.log(e)
+                this.$toasted.show("Something went wrong : " + e, {
                         type: 'error',
                         duration: 3000,
                         position: 'top-center',
                     })
-                this.theErrors = e.response.data;
             }
         }
     }

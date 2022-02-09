@@ -21,7 +21,22 @@
             </div>
             <!-- end page title -->
 
-            <div class="row">
+            <transition
+                tag="div"
+                mode="out-in"
+                enter-active-class="animate__animated animate__fadeIn animate__faster"
+                leave-active-class="animate__animated animate__fadeOut animate__faster"
+                v-if="loading" class="row card p-4 col-md-6 col-xl-3">
+               <loading/>
+            </transition>
+            <transition
+                v-else
+                class="row"
+                tag="div"
+                mode="out-in"
+                enter-active-class="animate__animated animate__fadeIn"
+                leave-active-class="animate__animated animate__fadeOut"
+                >
                 <div class="col-12">
                     <div class="card">
                         <form class="card-body" method="post" @submit.prevent="store">
@@ -50,14 +65,18 @@
                         </form>
                     </div>
                 </div> <!-- end col -->
-            </div>
+            </transition>
         </div>
     </div>
 </div>
 </template>
 
 <script>
+import Loading from '../../components/loading'
 export default {
+    components: {
+        Loading
+    },
     data() {
         return {
             periode: {
@@ -66,7 +85,8 @@ export default {
                 end: '',
             },
             // successMessage: [],
-            theErrors: []
+            theErrors: [],
+            loading: true,
         }
     },
 
@@ -76,16 +96,23 @@ export default {
 
     methods: {
         async findPeriod() {
-            let response = await axios.get('/api/accountingperiod/' + this.$route.params.id)
+            let response = await axios.get('/api/accountingperiod/' + this.$route.params.token)
             if (response.status === 200) {
                 this.periode = response.data.data
+                this.loading = false
+            } else {
+                this.$toasted.show("Something went wrong, please try again later", {
+                        type: 'error',
+                        duration: 3000,
+                        position: 'top-center',
+                    })
             }
-            console.log(response.data.data)
+            // console.log(response.data.data)
         },
         async store() {
             try {
-                let response = await axios.patch('/api/accountingperiod/' + this.$route.params.id, this.periode)
-                console.log(response.status)
+                let response = await axios.patch('/api/accountingperiod/' + this.$route.params.token, this.periode)
+                // console.log(response.status)
                 if (response.status == 200) {
                     this.theErrors = []
 
