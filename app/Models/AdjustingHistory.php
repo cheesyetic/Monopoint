@@ -24,4 +24,23 @@ class AdjustingHistory extends Model
         'user_id'
     ];
     
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+    public function chartAccount(){
+        return $this->belongsTo(ChartAccount::class);
+    }
+    public function accountingPeriod(){
+        return $this->belongsTo(AccountingPeriod::class);
+    }
+    public function bankAccount(){
+        return $this->belongsTo(BankAccount::class);
+    }
+    public function project(){
+        return $this->belongsTo(Project::class);
+    }
+    public function asset(){
+        return $this->belongsTo(Asset::class);
+    }
+
 }

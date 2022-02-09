@@ -26,16 +26,28 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 //Accounting Period
-Route::resource('/accountingperiod', AccountingPeriodController::class)->except('create', 'edit');
+Route::resource('/accountingperiod', AccountingPeriodController::class)->except('update', 'create', 'edit');
+Route::post('/accountingperiod/{id}', [AccountingPeriodController::class, 'update']);
 //User
-Route::resource('/user', UserController::class)->except('create', 'edit');
+Route::resource('/user', UserController::class)->except('update', 'create', 'edit');
+Route::post('/user/{id}', [UserController::class, 'update']);
 //Appointment
-Route::resource('/appointment', AppointmentController::class)->except('create', 'edit');
+Route::resource('/appointment', AppointmentController::class)->except('update', 'create', 'edit');
+Route::post('/appointment/{id}', [AppointmentController::class, 'update']);
 //BankAccount
-Route::resource('/bankaccount', BankAccountController::class)->except('create', 'edit');
+Route::resource('/bankaccount', BankAccountController::class)->except('update', 'create', 'edit');
+Route::post('/bankaccount/{id}', [BankAccountController::class, 'update']);
 //ChartAccount
-Route::resource('/chartaccount', ChartAccountController::class)->except('create', 'edit');
+Route::resource('/chartaccount', ChartAccountController::class)->except('update', 'create', 'edit');
+Route::post('/chartaccount/{id}', [ChartAccountController::class, 'update']);
 //Project
-Route::resource('/project', ProjectController::class)->except('create', 'edit');
+Route::resource('/project', ProjectController::class)->except('update', 'create', 'edit');
+Route::post('/project/{id}', [ProjectController::class, 'update']);
 //Journal
-Route::resource('/journal', JournalController::class)->except('create', 'edit');
+Route::get('/journal/export/', [JournalController::class, 'export']);
+Route::resource('/journal', JournalController::class)->except('update', 'create', 'edit');
+Route::post('/journal/{id}', [JournalController::class, 'update']);
+Route::post('/verifjournal/{id}', [JournalController::class, 'validationStatus']);
+Route::post('/validjournal/{id}', [JournalController::class, 'validationImage']);
+Route::get('sendemail', [JournalController::class, 'sendEmail']);
+
