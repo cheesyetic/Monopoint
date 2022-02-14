@@ -30,6 +30,6 @@ class JournalChange extends Mailable
      */
     public function build()
     {
-        return $this->subject('A test email from Monopoint')->view('emails.journalemail');
+        return $this->subject('Just a test email from Monopoint')->markdown('mail.journal-change');
     }
 }

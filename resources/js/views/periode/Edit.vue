@@ -111,7 +111,7 @@ export default {
         },
         async store() {
             try {
-                let response = await axios.patch('/api/accountingperiod/' + this.$route.params.token, this.periode)
+                let response = await axios.post('/api/accountingperiod/' + this.$route.params.token, this.periode)
                 // console.log(response.status)
                 if (response.status == 200) {
                     this.theErrors = []

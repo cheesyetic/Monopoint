@@ -77,7 +77,6 @@ class JournalController extends Controller
             'chart_account_id' => ['required'],
             'accounting_period_id' => ['required'],
             'bank_account_id' => ['required'],
-            'project_id' => ['required'],
             'user_id' => ['required'] 
         ]);
 
@@ -85,8 +84,6 @@ class JournalController extends Controller
             return response()->json($validator->errors(),
             Response::HTTP_UNPROCESSABLE_ENTITY);
         }
-
-     
 
             if($file = $request->file('filebukti')){
                 $path = $file->store('public/files');
@@ -144,7 +141,6 @@ class JournalController extends Controller
             'chart_account_id' => ['required'],
             'accounting_period_id' => ['required'],
             'bank_account_id' => ['required'],
-            'project_id' => ['required'],
             'user_id' => ['required'] 
         ]);
 
@@ -164,6 +160,8 @@ class JournalController extends Controller
             }
 
             $journal->update($input);
+            $this->sendEmail($id);
+
             AdjustingHistory::create($input);
 
             $response = [
@@ -261,18 +259,18 @@ class JournalController extends Controller
 
         return response()->json($response, Response::HTTP_OK);
     }
-    public function sendEmail(){
-        //$user = User::findOrFail();
-        //$user = $user->email;
+    public function sendEmail($id){
+        $jurnal = Journal::findOrFail($id);
+        $iduser = $jurnal->user_id;
+        $user = User::findOrFail($iduser);
+        $email = $user->email;
+
         $details=[
             'title' => 'This is an email from Monopoint.',
             'body' => 'This is just an email to test the feature.'
         ];
 
-        Mail::to("dimasrenggana06@gmail.com")->send(new JournalChange($details));
-        $response = [
-            'message' => 'The email successfully sent!'
-        ];
-        return response()->json($response, Response::HTTP_OK);
+        Mail::to($email)->send(new JournalChange($details));
     }
+
 }
