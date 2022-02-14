@@ -6,12 +6,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-flex align-items-center justify-content-between">
-                        <h4 class="mb-0"><i class="uil-calendar-alt"></i> Edit Periode</h4>
+                        <h4 class="mb-0"><i class="uil-bag"></i> Edit Chart Account</h4>
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item m-auto"><router-link :to="{ name: 'dashboard' }">Dashboard</router-link></li>
-                                <li class="breadcrumb-item m-auto"><router-link :to="{ name: 'periode' }">Periode</router-link></li>
+                                <li class="breadcrumb-item m-auto"><router-link :to="{ name: 'chart' }">Chart Account</router-link></li>
                                 <li class="breadcrumb-item m-auto active">Edit</li>
                             </ol>
                         </div>
@@ -41,27 +41,27 @@
                     <div class="card">
                         <form class="card-body" method="post" @submit.prevent="store">
                             <div class="mb-3 row">
-                                <label for="example-text-input" class="col-md-2 col-form-label">Name</label>
+                                <label for="example-text-input" class="col-md-2 col-form-label">Nama</label>
                                 <div class="col-md-10">
-                                    <input class="form-control" type="text" v-model="periode.name">
+                                    <input class="form-control" type="text" v-model="chart.name">
                                     <div v-if="theErrors.name" class="mt-1 text-danger">{{ theErrors.name[0] }}</div>
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="example-date-input" class="col-md-2 col-form-label">Start Date</label>
+                                <label for="example-text-input" class="col-md-2 col-form-label">Kode</label>
                                 <div class="col-md-10">
-                                    <input class="form-control" type="date" v-model="periode.start" value="2019-02-19">
-                                    <div v-if="theErrors.start" class="mt-1 text-danger">{{ theErrors.start[0] }}</div>
+                                    <input class="form-control" type="text" v-model="chart.code">
+                                    <div v-if="theErrors.code" class="mt-1 text-danger">{{ theErrors.code[0] }}</div>
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="example-date-input" class="col-md-2 col-form-label">End Date</label>
+                                <label for="example-text-input" class="col-md-2 col-form-label">Tipe</label>
                                 <div class="col-md-10">
-                                    <input class="form-control" type="date" v-model="periode.end" value="2019-08-19">
-                                    <div v-if="theErrors.end" class="mt-1 text-danger">{{ theErrors.end[0] }}</div>
+                                    <input class="form-control" type="text" v-model="chart.type">
+                                    <div v-if="theErrors.type" class="mt-1 text-danger">{{ theErrors.type[0] }}</div>
                                 </div>
                             </div>
-                            <button class="btn btn-primary" type="submit">Edit</button>
+                            <button class="btn btn-primary" type="submit"><i class="uil-edit-alt"></i> Edit</button>
                         </form>
                     </div>
                 </div> <!-- end col -->
@@ -79,10 +79,9 @@ export default {
     },
     data() {
         return {
-            periode: {
+            chart: {
                 name: '',
-                start: '',
-                end: '',
+                account_number: '',
             },
             // successMessage: [],
             theErrors: [],
@@ -91,14 +90,14 @@ export default {
     },
 
     mounted() {
-        this.findPeriod()
+        this.findChart()
     },
 
     methods: {
-        async findPeriod() {
-            let response = await axios.get('/api/accountingperiod/' + this.$route.params.token)
+        async findChart() {
+            let response = await axios.get('/api/chartaccount/' + this.$route.params.token)
             if (response.status === 200) {
-                this.periode = response.data.data
+                this.chart = response.data.data
                 this.loading = false
             } else {
                 this.$toasted.show("Something went wrong, please try again later", {
@@ -111,7 +110,7 @@ export default {
         },
         async store() {
             try {
-                let response = await axios.post('/api/accountingperiod/' + this.$route.params.token, this.periode)
+                let response = await axios.post('/api/chartaccount/' + this.$route.params.token, this.chart)
                 // console.log(response.status)
                 if (response.status == 200) {
                     this.theErrors = []
@@ -122,7 +121,7 @@ export default {
                         position: 'top-center',
                     })
 
-                    this.$router.push({ name: 'periode' })
+                    this.$router.push({ name: 'rekening' })
                 }
             } catch (e) {
                 this.$toasted.show("Something went wrong", {

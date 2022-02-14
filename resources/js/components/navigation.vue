@@ -28,12 +28,12 @@
             </button>
 
             <!-- App Search-->
-            <form class="app-search d-none d-lg-block">
+            <!-- <form class="app-search d-none d-lg-block">
                 <div class="position-relative">
                     <input type="text" class="form-control" placeholder="Search...">
                     <span class="uil-search"></span>
                 </div>
-            </form>
+            </form> -->
         </div>
 
         <div class="d-flex">
@@ -100,13 +100,15 @@
                                 <router-link :to="{name: 'periode'}" class="dropdown-item">Periode</router-link>
                                 <router-link :to="{name: 'rekening'}" class="dropdown-item">Rekening</router-link>
                                 <router-link :to="{name: 'project'}" class="dropdown-item">Project</router-link>
+                                <router-link :to="{name: 'asset'}" class="dropdown-item">Asset</router-link>
+                                <router-link :to="{name: 'chart'}" class="dropdown-item">Chart Account</router-link>
 
                             </div>
                         </li>
 
 
                         <li class="nav-item">
-                            <router-link class="nav-link" exact :to="{name: 'jurnal'}">
+                            <router-link class="nav-link" :to="{name: 'jurnal'}">
                                 <i class="uil-home-alt me-2"></i> Jurnal
                             </router-link>
                         </li>

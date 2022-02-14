@@ -17,6 +17,9 @@ import VueRouter from 'vue-router'
 import Toasted from 'vue-toasted'
 import moment from 'moment'
 import 'animate.css'
+import vSelect from "vue-select";
+import "vue-select/dist/vue-select.css";
+
 
 /**
  * The following block of code may be used to automatically register your
@@ -41,6 +44,7 @@ import routes from './router/index'
 
 Vue.component('navigation', require('./components/navigation.vue').default);
 Vue.component('sidebar', require('./components/RightSidebar.vue').default);
+Vue.component('v-select', vSelect)
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -50,5 +54,5 @@ Vue.component('sidebar', require('./components/RightSidebar.vue').default);
 
 const app = new Vue({
     el: '#app',
-    router: new VueRouter(routes)
+    router: new VueRouter(routes),
 });

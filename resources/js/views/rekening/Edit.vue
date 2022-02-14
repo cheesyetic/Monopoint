@@ -6,12 +6,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-flex align-items-center justify-content-between">
-                        <h4 class="mb-0"><i class="uil-calendar-alt"></i> Edit Periode</h4>
+                        <h4 class="mb-0">Edit Rekening</h4>
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item m-auto"><router-link :to="{ name: 'dashboard' }">Dashboard</router-link></li>
-                                <li class="breadcrumb-item m-auto"><router-link :to="{ name: 'periode' }">Periode</router-link></li>
+                                <li class="breadcrumb-item m-auto"><router-link :to="{ name: 'rekening' }">Rekening</router-link></li>
                                 <li class="breadcrumb-item m-auto active">Edit</li>
                             </ol>
                         </div>
@@ -41,24 +41,17 @@
                     <div class="card">
                         <form class="card-body" method="post" @submit.prevent="store">
                             <div class="mb-3 row">
-                                <label for="example-text-input" class="col-md-2 col-form-label">Name</label>
+                                <label for="example-text-input" class="col-md-2 col-form-label">Nama</label>
                                 <div class="col-md-10">
-                                    <input class="form-control" type="text" v-model="periode.name">
+                                    <input class="form-control" type="text" v-model="bank.name">
                                     <div v-if="theErrors.name" class="mt-1 text-danger">{{ theErrors.name[0] }}</div>
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="example-date-input" class="col-md-2 col-form-label">Start Date</label>
+                                <label for="example-text-input" class="col-md-2 col-form-label">No Rekening</label>
                                 <div class="col-md-10">
-                                    <input class="form-control" type="date" v-model="periode.start" value="2019-02-19">
-                                    <div v-if="theErrors.start" class="mt-1 text-danger">{{ theErrors.start[0] }}</div>
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="example-date-input" class="col-md-2 col-form-label">End Date</label>
-                                <div class="col-md-10">
-                                    <input class="form-control" type="date" v-model="periode.end" value="2019-08-19">
-                                    <div v-if="theErrors.end" class="mt-1 text-danger">{{ theErrors.end[0] }}</div>
+                                    <input class="form-control" type="text" v-model="bank.account_number">
+                                    <div v-if="theErrors.account_number" class="mt-1 text-danger">{{ theErrors.account_number[0] }}</div>
                                 </div>
                             </div>
                             <button class="btn btn-primary" type="submit">Edit</button>
@@ -79,10 +72,9 @@ export default {
     },
     data() {
         return {
-            periode: {
+            bank: {
                 name: '',
-                start: '',
-                end: '',
+                account_number: '',
             },
             // successMessage: [],
             theErrors: [],
@@ -91,14 +83,14 @@ export default {
     },
 
     mounted() {
-        this.findPeriod()
+        this.findBank()
     },
 
     methods: {
-        async findPeriod() {
-            let response = await axios.get('/api/accountingperiod/' + this.$route.params.token)
+        async findBank() {
+            let response = await axios.get('/api/bankaccount/' + this.$route.params.token)
             if (response.status === 200) {
-                this.periode = response.data.data
+                this.bank = response.data.data
                 this.loading = false
             } else {
                 this.$toasted.show("Something went wrong, please try again later", {
@@ -111,7 +103,7 @@ export default {
         },
         async store() {
             try {
-                let response = await axios.post('/api/accountingperiod/' + this.$route.params.token, this.periode)
+                let response = await axios.post('/api/bankaccount/' + this.$route.params.token, this.bank)
                 // console.log(response.status)
                 if (response.status == 200) {
                     this.theErrors = []
@@ -122,7 +114,7 @@ export default {
                         position: 'top-center',
                     })
 
-                    this.$router.push({ name: 'periode' })
+                    this.$router.push({ name: 'rekening' })
                 }
             } catch (e) {
                 this.$toasted.show("Something went wrong", {

@@ -34,9 +34,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <!-- <button type="button" class="btn btn-light waves-effect" data-bs-dismiss="modal">Close</button> -->
-                    <button class="btn btn-primary waves-effect waves-light" type="submit" ref="createModal">Create</button>
-                    <!-- <button type="button" class="btn btn-primary waves-effect waves-light">Save changes</button> -->
+                    <button class="btn btn-primary waves-effect waves-light" type="submit" ref="createModal"><i class="uil-plus"></i> Buat</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->
