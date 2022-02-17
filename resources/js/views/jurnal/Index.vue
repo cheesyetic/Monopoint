@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-flex align-items-center justify-content-between">
-                        <h4 class="mb-0">Jurnal</h4>
+                        <h4 class="mb-0"><i class="uil-file-landscape"></i> Jurnal</h4>
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
@@ -41,19 +41,19 @@
                                             <th>View Details</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <!-- <tbody> -->
                                         <!-- end page title -->
                                         <transition
-                                            tag="div"
+                                            tag="tbody"
                                             mode="out-in"
                                             enter-active-class="animate__animated animate__fadeIn animate__faster"
                                             leave-active-class="animate__animated animate__fadeOut animate__faster"
-                                            v-if="loading" class="row card p-4 col-md-6 col-xl-3">
+                                            v-if="loading" class="row ">
                                         <loading/>
                                         </transition>
                                         <transition
                                             v-else
-                                            tag="div"
+                                            tag="tbody"
                                             mode="out-in"
                                             enter-active-class="animate__animated animate__fadeIn"
                                             leave-active-class="animate__animated animate__fadeOut"
@@ -66,33 +66,37 @@
 
                                             <transition-group
                                                 v-else
-                                                tag="tr"
-                                                class="row"
-                                                v-for="journal in journals"
-                                                :key="journal.token"
+                                                tag="tbody"
                                                 >
-                                                <td><a href="javascript: void(0);" class="text-body fw-bold">{{ journal.title }}</a> </td>
-                                                <td>{{ journal.date }}</td>
-                                                <td>
-                                                    {{ journal.remark }}
-                                                </td>
-                                                <td>
-                                                    {{ journal.ref }}
-                                                </td>
-                                                <td>
-                                                    <span class="badge rounded-pill bg-soft-success font-size-12">{{ journal.project_id }}</span>
-                                                </td>
-                                                <td>
-                                                    <i class="fab fa-cc-mastercard me-1"></i> {{ journal.user_id }}
-                                                </td>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
-                                                        View Details
-                                                    </button>
-                                                </td>
+                                                <tr
+                                                    v-for="journal in journals"
+                                                    :key="journal.token"
+                                                    >
+                                                    <td><a href="javascript: void(0);" class="text-body fw-bold">{{ journal.title }}</a> </td>
+                                                    <td>{{ journal.date }}</td>
+                                                    <td>
+                                                        {{ journal.remark }}
+                                                    </td>
+                                                    <td>
+                                                        {{ journal.ref }}
+                                                    </td>
+                                                    <td>
+                                                        <span class="badge rounded-pill bg-soft-success font-size-12">{{ journal.project_id }}</span>
+                                                    </td>
+                                                    <td>
+                                                        <i class="fab fa-cc-mastercard me-1"></i> {{ journal.user_id }}
+                                                    </td>
+                                                    <td>
+                                                        <router-link :to="{ name: 'jurnal.edit', params: { token: journal.token }}" class="btn btn-primary"><i class="uil-edit-alt"></i> Edit</router-link>
+                                                        <delete-journal :endpoint="journal.token"/>
+                                                        <!-- <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
+                                                            View Details
+                                                        </button> -->
+                                                    </td>
+                                                </tr>
                                             </transition-group>
                                         </transition>
-                                    </tbody>
+                                    <!-- </tbody> -->
                                 </table>
                             </div>
                             <!-- end table-responsive -->
@@ -108,12 +112,12 @@
 
 <script>
 
-import DeleteJurnal from './Delete'
+import DeleteJournal from './Delete'
 // import CreateJurnal from './Create'
 import Loading from '../../components/loading'
 export default {
     components: {
-        DeleteJurnal,
+        DeleteJournal,
         // CreateJurnal,
         Loading
     },
@@ -139,6 +143,7 @@ export default {
             if (response.status === 200) {
                 this.journals = response.data.data
             }
+            console.log(this.journals)
             this.loading = false
         },
         format_date(value){

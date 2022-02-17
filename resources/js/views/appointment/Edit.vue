@@ -6,12 +6,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-flex align-items-center justify-content-between">
-                        <h4 class="mb-0"><i class="uil-bag"></i> Edit Chart Account</h4>
+                        <h4 class="mb-0"><i class="uil-bag"></i> Edit Appointment</h4>
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item m-auto"><router-link :to="{ name: 'dashboard' }">Dashboard</router-link></li>
-                                <li class="breadcrumb-item m-auto"><router-link :to="{ name: 'chart' }">Chart Account</router-link></li>
+                                <li class="breadcrumb-item m-auto"><router-link :to="{ name: 'appointment' }">Appointment</router-link></li>
                                 <li class="breadcrumb-item m-auto active">Edit</li>
                             </ol>
                         </div>
@@ -43,22 +43,22 @@
                             <div class="mb-3 row">
                                 <label for="example-text-input" class="col-md-2 col-form-label">Nama</label>
                                 <div class="col-md-10">
-                                    <input class="form-control" type="text" v-model="chart.name">
+                                    <input class="form-control" type="text" v-model="appointment.name">
                                     <div v-if="theErrors.name" class="mt-1 text-danger">{{ theErrors.name[0] }}</div>
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="example-text-input" class="col-md-2 col-form-label">Kode</label>
+                                <label for="example-text-input" class="col-md-2 col-form-label">Tanggal</label>
                                 <div class="col-md-10">
-                                    <input class="form-control" type="text" v-model="chart.code">
-                                    <div v-if="theErrors.code" class="mt-1 text-danger">{{ theErrors.code[0] }}</div>
+                                    <input class="form-control" type="datetime-local" v-model="appointment.date">
+                                    <div v-if="theErrors.date" class="mt-1 text-danger">{{ theErrors.date[0] }}</div>
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="example-text-input" class="col-md-2 col-form-label">Tipe</label>
+                                <label for="example-text-input" class="col-md-2 col-form-label">Remark</label>
                                 <div class="col-md-10">
-                                    <input class="form-control" type="text" v-model="chart.type">
-                                    <div v-if="theErrors.type" class="mt-1 text-danger">{{ theErrors.type[0] }}</div>
+                                    <input class="form-control" type="text" v-model="appointment.remark">
+                                    <div v-if="theErrors.remark" class="mt-1 text-danger">{{ theErrors.remark[0] }}</div>
                                 </div>
                             </div>
                             <button class="btn btn-primary" type="submit"><i class="uil-edit-alt"></i> Edit</button>
@@ -79,7 +79,7 @@ export default {
     },
     data() {
         return {
-            chart: {
+            appointment: {
                 name: '',
                 account_number: '',
             },
@@ -90,14 +90,14 @@ export default {
     },
 
     mounted() {
-        this.findChart()
+        this.findAppointment()
     },
 
     methods: {
-        async findChart() {
-            let response = await axios.get('/api/chartaccount/' + this.$route.params.token)
+        async findAppointment() {
+            let response = await axios.get('/api/appointment/' + this.$route.params.token)
             if (response.status === 200) {
-                this.chart = response.data.data
+                this.appointment = response.data.data
                 this.loading = false
             } else {
                 this.$toasted.show("Something went wrong, please try again later", {
@@ -110,7 +110,7 @@ export default {
         },
         async store() {
             try {
-                let response = await axios.post('/api/chartaccount/' + this.$route.params.token, this.chart)
+                let response = await axios.post('/api/appointment/' + this.$route.params.token, this.appointment)
                 // console.log(response.status)
                 if (response.status == 200) {
                     this.theErrors = []
@@ -121,7 +121,7 @@ export default {
                         position: 'top-center',
                     })
 
-                    this.$router.push({ name: 'chart' })
+                    this.$router.push({ name: 'appointment' })
                 }
             } catch (e) {
                 this.$toasted.show("Something went wrong", {

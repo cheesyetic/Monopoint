@@ -23,7 +23,7 @@ export default {
                         this.$refs.deleteChart.parentElement.parentElement.parentElement.parentElement.remove()
                     }
                     else {
-                        this.$toasted.show("Error deleting period", {
+                        this.$toasted.show("Error deleting chart", {
                             type: 'error',
                             duration: 3000,
                             position: 'top-center',

@@ -1,6 +1,9 @@
 import Dashboard from '../views/home'
 import Register from '../views/register'
-import Appoinment from '../views/Appoinment'
+
+import Appointment from '../views/appointment/Index'
+import AppointmentEdit from '../views/appointment/Edit'
+import AppointmentCreate from '../views/appointment/Create'
 
 import Jurnal from '../views/jurnal/Index'
 import JurnalEdit from '../views/jurnal/Edit'
@@ -11,6 +14,7 @@ import Karyawan from '../views/Karyawan'
 import Rekening from '../views/rekening/Index'
 import RekeningEdit from '../views/rekening/Edit'
 import RekeningCreate from '../views/rekening/Create'
+
 import Periode from '../views/periode/Index'
 import PeriodeEdit from '../views/periode/Edit'
 
@@ -36,11 +40,25 @@ export default {
             name: 'dashboard',
             component: Dashboard
         },
+
+        // APPOINTMENT
         {
-            path: '/appoinment',
-            name: 'appoinment',
-            component: Appoinment
+            path: '/appointment',
+            name: 'appointment',
+            component: Appointment
         },
+        {
+            path: '/appointment/edit/:token',
+            name: 'appointment.edit',
+            component: AppointmentEdit
+        },
+        {
+            path: '/appointment/create',
+            name: 'appointment.create',
+            component: AppointmentCreate
+        },
+
+        // JURNAL
         {
             path: '/jurnal',
             name: 'jurnal',
@@ -48,7 +66,7 @@ export default {
         },
         {
             path: '/jurnal/edit/:token',
-            name: 'jurnalEdit',
+            name: 'jurnal.edit',
             component: JurnalEdit
         },
         {

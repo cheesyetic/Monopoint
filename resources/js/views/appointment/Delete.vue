@@ -1,5 +1,5 @@
 <template>
-    <button class="btn btn-danger" ref="deleteJournal" @click="destroyJournal"><i class="uil-trash"></i> Delete</button>
+    <button class="btn btn-danger" ref="deleteChart" @click="destroyChart"><i class="uil-trash"></i> Delete</button>
 </template>
 
 <script>
@@ -7,12 +7,12 @@ export default {
     props: ['endpoint'],
 
     methods: {
-        async destroyJournal() {
+        async destroyChart() {
             // console.log(this.endpoint)
             try {
-                let q = window.confirm("Are you sure you want to delete this journal?")
+                let q = window.confirm("Are you sure you want to delete this chart account?")
                 if (q) {
-                    let responseDelete = await axios.delete(`/api/journal/${this.endpoint}`)
+                    let responseDelete = await axios.delete(`/api/chartaccount/${this.endpoint}`)
                     if (responseDelete.status == 200) {
                         this.$toasted.show(responseDelete.data.message, {
                             type: 'success',
@@ -20,10 +20,10 @@ export default {
                             position: 'top-center',
                         })
 
-                        this.$refs.deleteJournal.parentElement.parentElement.remove()
+                        this.$refs.deleteChart.parentElement.parentElement.parentElement.parentElement.remove()
                     }
                     else {
-                        this.$toasted.show("Error deleting journal", {
+                        this.$toasted.show("Error deleting period", {
                             type: 'error',
                             duration: 3000,
                             position: 'top-center',

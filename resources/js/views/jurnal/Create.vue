@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-flex align-items-center justify-content-between">
-                        <h4 class="mb-0">Buat Jurnal Baru</h4>
+                        <h4 class="mb-0"><i class="uil-file-landscape"></i> Buat Jurnal Baru</h4>
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
@@ -36,7 +36,7 @@
                                 <label for="example-date-input" class="col-md-2 col-form-label">Date</label>
                                 <div class="col-md-10">
                                     <!-- <Datepicker></Datepicker> -->
-                                    <input class="form-control" type="date" v-model="journalCreate.date" value="2019-02-19">
+                                    <input class="form-control" type="datetime-local" v-model="journalCreate.date">
                                     <div v-if="theErrors.date" class="mt-1 text-danger">{{ theErrors.date[0] }}</div>
                                 </div>
                             </div>
@@ -59,13 +59,13 @@
                                 <div class="col-md-10">
                                     <div class="vstack gap-2">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" value="1" v-model="journalCreate.is_reimburse">
+                                            <input name="is_reimburse" class="form-check-input" type="radio" value="1" v-model="journalCreate.is_reimburse">
                                             <label class="form-check-label" for="formRadios1">
                                                 Ya
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" value="0" v-model="journalCreate.is_reimburse">
+                                            <input name="is_reimburse" class="form-check-input" type="radio" value="0" v-model="journalCreate.is_reimburse">
                                             <label class="form-check-label" for="formRadios2">
                                                 Tidak
                                             </label>
@@ -259,39 +259,59 @@ export default {
             }
         },
 
-        async store() {
+        async store(event) {
             try {
-                console.log(this.journalCreate)
-                // journalCreateStore = this.journalCreate
-                // journalCreateStore.accounting_period_id = this.journalCreate.accounting_period_id.id
-                let responseCreate = await axios.post('/api/journal', this.journalCreate, {
+                let formdata = new FormData()
+                formdata.append('title', this.journalCreate.title)
+                formdata.append('date', this.journalCreate.date)
+                formdata.append('remark', this.journalCreate.remark)
+                formdata.append('ref', this.journalCreate.ref)
+                formdata.append('filebukti', this.journalCreate.filebukti)
+                formdata.append('is_reimburse', this.journalCreate.is_reimburse)
+                formdata.append('chart_account_id', this.journalCreate.chart_account_id)
+                formdata.append('accounting_period_id', this.journalCreate.accounting_period_id)
+                formdata.append('bank_account_id', this.journalCreate.bank_account_id)
+                formdata.append('project_id', this.journalCreate.project_id)
+                formdata.append('user_id', this.journalCreate.user_id)
+                await axios.post('/api/journal',  formdata, {
                         headers: {
                             'Content-Type': 'multipart/form-data'
                         }
-                })
-                // console.log(responseCreate.status)
-                if (responseCreate.status == 201) {
-                    this.journalCreate.title = ''
-                    this.journalCreate.date = ''
-                    this.journalCreate.remark = ''
-                    this.journalCreate.ref = ''
-                    this.journalCreate.filebukti = ''
-                    this.journalCreate.is_reimburse = ''
-                    this.journalCreate.chart_account_id = ''
-                    this.journalCreate.accounting_period_id = ''
-                    this.journalCreate.bank_account_id = ''
-                    this.journalCreate.project_id = ''
-                    this.journalCreate.user_id = ''
-                    this.theErrors = []
+                }).then(
+                    response => {
+                        this.journalCreate.title = ''
+                        this.journalCreate.date = ''
+                        this.journalCreate.remark = ''
+                        this.journalCreate.ref = ''
+                        this.journalCreate.filebukti = ''
+                        this.journalCreate.is_reimburse = ''
+                        this.journalCreate.chart_account_id = ''
+                        this.journalCreate.accounting_period_id = ''
+                        this.journalCreate.bank_account_id = ''
+                        this.journalCreate.project_id = ''
+                        this.journalCreate.user_id = ''
+                        this.theErrors = []
 
-                    this.$router.push({ name: 'jurnal' })
+                        this.$router.push({ name: 'jurnal' })
 
-                    this.$toasted.show(responseCreate.data.message, {
-                        type: 'success',
+                        this.$toasted.show("Sukses menambah jurnal", {
+                            type: 'success',
+                            duration: 3000,
+                            position: 'top-center',
+                        })
+                    }
+                ).catch((error) => {
+                    console.log("responseCreate gagal")
+                    this.$toasted.show("Something went wrong : " + e, {
+                        type: 'error',
                         duration: 3000,
                         position: 'top-center',
                     })
-                }
+                    console.log(e)
+                    console.log("responseCreate gagal")
+                    console.log("ERRR:: ", e.response.data)
+                })
+
             } catch (e) {
                 this.$toasted.show("Something went wrong : " + e, {
                         type: 'error',
@@ -299,6 +319,8 @@ export default {
                         position: 'top-center',
                     })
                     console.log(e)
+                    console.log("responseCreate gagal")
+                    console.log("ERRR:: ", e.response.data)
                 // this.theErrors = e.responseCreate.data;
             }
         }

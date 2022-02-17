@@ -119,7 +119,7 @@ export default {
             if (value) {
                 return moment(String(value)).format('Do MMMM YYYY')
             }
-      },
+        },
     }
 }
 </script>

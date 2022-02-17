@@ -109,13 +109,13 @@
 
                         <li class="nav-item">
                             <router-link class="nav-link" :to="{name: 'jurnal'}">
-                                <i class="uil-home-alt me-2"></i> Jurnal
+                                <i class="uil-file-landscape me-2"></i> Jurnal
                             </router-link>
                         </li>
 
                         <li class="nav-item">
-                            <router-link class="nav-link" exact :to="{name: 'appoinment'}">
-                                <i class="uil-home-alt me-2"></i> Appoinment
+                            <router-link class="nav-link" :to="{name: 'appointment'}">
+                                <i class="uil-meeting-board me-2"></i> Appointment
                             </router-link>
                         </li>
 

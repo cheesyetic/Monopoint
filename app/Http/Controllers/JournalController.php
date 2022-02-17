@@ -68,6 +68,8 @@ class JournalController extends Controller
      */
     public function store(Request $request)
     {
+        // return response()->json($request, Response::HTTP_CREATED);
+
         $input = $request->all();
 
         $validator = Validator::make($request->all(), [
@@ -105,7 +107,7 @@ class JournalController extends Controller
                 'data' => $journal
             ];
 
-            return response()->json($response, Response::HTTP_CREATED);
+            // return response()->json($response, Response::HTTP_CREATED);
 
     }
 
