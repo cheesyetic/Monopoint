@@ -137,7 +137,7 @@ class JournalController extends Controller
             'remark' => ['max:1000'],
             'ref' => ['max:45'],
             'is_reimburse' => ['required'],
-            'filebukti' => ['required', 'mimes:png,jpg,jpeg,doc,docx,pdf,txt,csv', 'max:2048'],
+            'filebukti' => ['mimes:png,jpg,jpeg,doc,docx,pdf,txt,csv', 'max:2048'],
             'chart_account_id' => ['required'],
             'accounting_period_id' => ['required'],
             'bank_account_id' => ['required'],
@@ -157,6 +157,9 @@ class JournalController extends Controller
                 $name = $file->getClientOriginalName();
                 $file->move($path, $name);
                 $input['filebukti'] = "$name";
+            }
+            else{
+                $input['filebukti'] = "$journal->filebukti";
             }
 
             $journal->update($input);
