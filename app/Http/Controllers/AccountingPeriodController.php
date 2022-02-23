@@ -149,4 +149,47 @@ class AccountingPeriodController extends Controller
             ]);
         }
     }
+    public function activateDeactivate($id){
+        $accountingperiod = AccountingPeriod::findOrFail($id);
+        $status = $accountingperiod->status;
+
+        if($status == 0){
+            try{
+                $activests = 1;
+                $query = AccountingPeriod::select("*")->where('status', '=', $activests)->get();
+                foreach ($query as $value) {
+                    $value->status=0;
+                    $value->save();
+                }
+                $accountingperiod->status = 1;
+                $accountingperiod->save();
+                $response = [
+                    'message' => 'This period has been activated.',
+                    'data' => $accountingperiod
+                ];
+    
+                return response()->json($response, Response::HTTP_OK);
+            } catch(QueryException $e){
+                return response()->json([
+                    'message' => "Failed " . $e->errorInfo
+                ]);
+            }
+        }
+        else{
+            try{
+                $accountingperiod->status = 0;
+                $accountingperiod->save();
+                $response = [
+                    'message' => 'This period has been deactivated.'
+                ];
+    
+                return response()->json($response, Response::HTTP_OK);
+                } catch(QueryException $e){
+                return response()->json([
+                    'message' => "Failed " . $e->errorInfo
+                ]);
+            }
+        }
+        
+    }
 }

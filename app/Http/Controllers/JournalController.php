@@ -6,6 +6,7 @@ use App\Exports\JournalsExport;
 use App\Imports\JournalsImport;
 use App\Mail\JournalChange;
 use App\Models\AdjustingHistory;
+use App\Models\ChartAccount;
 use App\Models\Journal;
 use App\Models\User;
 use Illuminate\Database\QueryException;
@@ -77,7 +78,8 @@ class JournalController extends Controller
             'date' => ['required'],
             'remark' => ['max:1000'],
             'ref' => ['max:45'],
-            'filebukti' => ['mimes:png,jpg,jpeg,doc,docx,pdf,txt,csv', 'max:2048'],
+            'filebukti' => ['required', 'mimes:png,jpg,jpeg,doc,docx,pdf,txt,csv', 'max:2048'],
+            'balance' => ['required'],
             'is_reimburse' => ['required'],
             'chart_account_id' => ['required'],
             'accounting_period_id' => ['required'],
@@ -101,6 +103,13 @@ class JournalController extends Controller
             }
 
             $journal = Journal::create($input);
+            AdjustingHistory::create($input);
+
+            //balance in ca
+            $idchartacc = $input['chart_account_id'];
+            $ca = ChartAccount::findOrFail($idchartacc);
+            $ca->balance = $ca->balance + $input['balance'];
+            $ca->save();
 
             $response = [
                 'message' => 'A new journal row created',
@@ -147,7 +156,7 @@ class JournalController extends Controller
             'remark' => ['max:1000'],
             'ref' => ['max:45'],
             'is_reimburse' => ['required'],
-            'filebukti' => ['required', 'mimes:png,jpg,jpeg,doc,docx,pdf,txt,csv', 'max:2048'],
+            'filebukti' => ['mimes:png,jpg,jpeg,doc,docx,pdf,txt,csv', 'max:2048'],
             'chart_account_id' => ['required'],
             'accounting_period_id' => ['required'],
             'bank_account_id' => ['required'],
@@ -169,8 +178,13 @@ class JournalController extends Controller
                 $file->move($path, $name);
                 $input['filebukti'] = "$name";
             }
+            else{
+                $input['filebukti'] = "$journal->filebukti";
+            }
 
             $journal->update($input);
+            $this->sendEmail($id);
+
             AdjustingHistory::create($input);
 
             $response = [
@@ -269,18 +283,18 @@ class JournalController extends Controller
 
         return response()->json($response, Response::HTTP_OK);
     }
-    public function sendEmail(){
-        //$user = User::findOrFail();
-        //$user = $user->email;
+    public function sendEmail($id){
+        $jurnal = Journal::findOrFail($id);
+        $iduser = $jurnal->user_id;
+        $user = User::findOrFail($iduser);
+        $email = $user->email;
+
         $details=[
             'title' => 'This is an email from Monopoint.',
             'body' => 'This is just an email to test the feature.'
         ];
 
-        Mail::to("dimasrenggana06@gmail.com")->send(new JournalChange($details));
-        $response = [
-            'message' => 'The email successfully sent!'
-        ];
-        return response()->json($response, Response::HTTP_OK);
+        Mail::to($email)->send(new JournalChange($details));
     }
+
 }

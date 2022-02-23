@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\AccountingPeriodController;
+use App\Http\Controllers\AdjustingHistoryController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\AssetController;
 use App\Http\Controllers\BankAccountController;
 use App\Http\Controllers\ChartAccountController;
 use App\Http\Controllers\JournalController;
@@ -33,6 +35,7 @@ Route::get('/logout', [LoginController::class, 'logout']);
 //Accounting Period
 Route::resource('/accountingperiod', AccountingPeriodController::class)->except('update', 'create', 'edit');
 Route::post('/accountingperiod/{id}', [AccountingPeriodController::class, 'update']);
+Route::post('/periodstatus/{id}', [AccountingPeriodController::class, 'activateDeactivate']);
 //User
 Route::resource('/account', UserController::class)->except('update', 'create', 'edit');
 Route::post('/account/{id}', [UserController::class, 'update']);
@@ -50,9 +53,15 @@ Route::resource('/project', ProjectController::class)->except('update', 'create'
 Route::post('/project/{id}', [ProjectController::class, 'update']);
 //Journal
 Route::get('/journal/export/', [JournalController::class, 'export']);
-Route::resource('/journal', JournalController::class)->except('update', 'create', 'edit');
-Route::post('/journal/{id}', [JournalController::class, 'update']);
 Route::post('/verifjournal/{id}', [JournalController::class, 'validationStatus']);
 Route::post('/validjournal/{id}', [JournalController::class, 'validationImage']);
-Route::get('sendemail', [JournalController::class, 'sendEmail']);
+Route::resource('/journal', JournalController::class)->except('update', 'create', 'edit');
+Route::post('/journal/{id}', [JournalController::class, 'update']);
+Route::get('/sendemail', [JournalController::class, 'sendEmail']);
+//Asset
+Route::resource('/asset', AssetController::class)->except('update', 'create', 'edit');
+Route::post('/asset/{id}', [JournalController::class, 'update']);
+//AdjustingHistory
+Route::resource('/adjustinghistory', AdjustingHistoryController::class)->except('update', 'create', 'edit');
+Route::post('/adjustinghistory/{id}', [AdjustingHistoryController::class, 'update']);
 

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdjustingHistory;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class AdjustingHistoryController extends Controller
 {
@@ -13,17 +15,14 @@ class AdjustingHistoryController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $adjustinghistory = AdjustingHistory::get();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $response = [
+            'message' => 'List Adjusting History',
+            'data' => $adjustinghistory
+        ];
+
+        return response()->json($response, Response::HTTP_OK);
     }
 
     /**
@@ -34,7 +33,13 @@ class AdjustingHistoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $adjustinghistory = AdjustingHistory::create($request);
+        $response = [
+            'message' => 'A new journal row created',
+            'data' => $adjustinghistory
+        ];
+
+        return response()->json($response, Response::HTTP_CREATED);
     }
 
     /**
@@ -45,18 +50,12 @@ class AdjustingHistoryController extends Controller
      */
     public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        $adjustinghistory = AdjustingHistory::findOrFail($id);
+        $response = [
+            'message' => 'A journal row shown',
+            'data' => $adjustinghistory
+        ];
+        return response()->json($response, Response::HTTP_OK);
     }
 
     /**
