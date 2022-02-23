@@ -33,9 +33,25 @@
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="example-date-input" class="col-md-2 col-form-label">Status</label>
-                                <div class="col-md-10">
-                                    <input class="form-control" type="text" v-model="projectCreate.status">
+                                <label for="example-text-input" class="col-md-2 col-form-label">Status</label>
+                                <div class="col md-10 wrapper">
+                                    <input value="In Progress" type="radio" name="select" id="option-1" v-model="projectCreate.status">
+                                    <label for="option-1" class="option option-1" style="margin-left:0">
+                                        <div class="dot"></div>
+                                        <span>In Progress</span>
+                                    </label>
+
+                                    <input value="Pending" type="radio" name="select" id="option-2" v-model="projectCreate.status">
+                                    <label for="option-2" class="option option-2">
+                                        <div class="dot"></div>
+                                        <span>Pending</span>
+                                    </label>
+
+                                    <input value="Done" type="radio" name="select" id="option-3" v-model="projectCreate.status">
+                                    <label for="option-3" class="option option-3">
+                                        <div class="dot"></div>
+                                        <span>Done</span>
+                                    </label>
                                     <div v-if="theErrors.status" class="mt-1 text-danger">{{ theErrors.status[0] }}</div>
                                 </div>
                             </div>
@@ -51,10 +67,12 @@
 
 <script>
 import Loading from '../../components/loading'
+import Radio from '../../components/Radio'
 
 export default {
     components: {
-        Loading
+        Loading,
+        Radio
     },
     data() {
         return {
@@ -67,6 +85,9 @@ export default {
         }
     },
     methods: {
+        selectId(e, target) {
+            this.projectCreate[target] = e.value
+        },
         async store() {
             try {
                 console.log(this.projectCreate)

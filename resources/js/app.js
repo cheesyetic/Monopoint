@@ -10,6 +10,7 @@
 window.axios = require('axios');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.withCredentials = true
 
 window.Vue = require('vue').default;
 import Vue from 'vue'
@@ -19,7 +20,6 @@ import moment from 'moment'
 import 'animate.css'
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
-
 
 /**
  * The following block of code may be used to automatically register your
@@ -41,6 +41,8 @@ window.moment = require('moment');
 window.moment.locale('id');
 
 import routes from './router/index'
+// import router from './router'
+// import store from './store'
 
 Vue.component('navigation', require('./components/navigation.vue').default);
 Vue.component('sidebar', require('./components/RightSidebar.vue').default);
@@ -55,4 +57,6 @@ Vue.component('v-select', vSelect)
 const app = new Vue({
     el: '#app',
     router: new VueRouter(routes),
+    // router:router,
+    // store:store,
 });

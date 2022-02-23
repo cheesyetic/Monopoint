@@ -7,13 +7,13 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-flex align-items-center justify-content-between">
-                        <h4 class="mb-0"><i class="uil-meeting-board"></i> Appointment</h4>
+                        <h4 class="mb-0"><i class="uil-users-alt"></i> Karyawan</h4>
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item m-auto"><router-link :to="{ name: 'dashboard' }">Dashboard</router-link></li>
-                                <li class="breadcrumb-item m-auto active">Appointment</li>
-                                <router-link exact :to="{ name: 'appointment.create'}" class="btn btn-primary mx-2"><i class="uil-plus"></i> Buat Appointment Baru</router-link>
+                                <li class="breadcrumb-item m-auto active">Karyawan</li>
+                                <router-link exact :to="{ name: 'karyawan.create'}" class="btn btn-primary mx-2"><i class="uil-plus"></i> Tambah Karyawan Baru</router-link>
                             </ol>
                         </div>
 
@@ -32,8 +32,9 @@
                                     <thead class="table-light">
                                         <tr>
                                             <th>Nama</th>
-                                            <th>Tanggal</th>
-                                            <th>Remark</th>
+                                            <th>Email</th>
+                                            <th>Telepon</th>
+                                            <th>Tipe</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -53,7 +54,7 @@
                                         leave-active-class="animate__animated animate__fadeOut"
                                         >
 
-                                        <tr v-if="!appointments.length" class="row">
+                                        <tr v-if="!users.length" class="row">
                                             <td class="m-0" colspan="5">No data available</td>
                                         </tr>
 
@@ -63,17 +64,23 @@
                                             :key="key"
                                             >
                                             <tr
-                                                v-for="appointment in appointments"
-                                                :key="appointment.token"
+                                                v-for="user in users"
+                                                :key="user.token"
                                                 class="">
-                                                    <td>{{ appointment.name }}</td>
-                                                    <td>{{ format_date(appointment.date) }}</td>
+                                                    <td>{{ user.name }}</td>
+                                                    <td>{{ user.email }}</td>
+                                                    <td>{{ user.phone_number }}</td>
                                                     <td>
-                                                        {{ appointment.remark }}
+                                                        <span v-if="user.type == 0" class="badge rounded-pill bg-soft-danger font-size-13">Admin</span>
+                                                        <span v-if="user.type == 1" class="badge rounded-pill bg-soft-warning font-size-13">Keuangan</span>
+                                                        <span v-if="user.type == 2" class="badge rounded-pill bg-soft-success font-size-13">Staff</span>
                                                     </td>
                                                     <td>
-                                                        <router-link :to="{ name: 'appointment.edit', params: { token: appointment.token }}" class="btn btn-primary"><i class="uil-edit-alt"></i> Edit</router-link>
-                                                        <delete-appointment :endpoint="appointment.token"/>
+                                                        <router-link :to="{ name: 'karyawan.edit', params: { token: user.token }}" class="btn btn-primary"><i class="uil-edit-alt"></i> Edit</router-link>
+                                                        <delete-user :endpoint="user.token"/>
+                                                        <!-- <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
+                                                            Edit
+                                                        </button> -->
                                                     </td>
                                             </tr>
                                         </transition-group>
@@ -93,17 +100,17 @@
 
 <script>
 
-import DeleteAppointment from './Delete'
+import DeleteUser from './Delete'
 import Loading from '../../components/loading'
 export default {
     props: ['auth'],
     components: {
-        DeleteAppointment,
+        DeleteUser,
         Loading
     },
     data() {
         return  {
-            appointments: {},
+            users: {},
             loading: true,
             key: 0
         };
@@ -113,20 +120,21 @@ export default {
         if(!this.auth.loggedIn) {
             return this.$router.push({ name: 'login' })
         }
-        this.getChart()
+        this.getUser()
     },
 
     created: function () {
-        this.getChart()
+        this.getUser()
     },
 
     methods: {
-        async getChart() {
-            let response = await axios.get('/api/appointment')
+        async getUser() {
+            let response = await axios.get('/api/account')
             if (response.status === 200) {
-                this.appointments = response.data.data
+                this.users = response.data.data
             }
             console.log(response.data.data)
+            console.log("sukses get user")
             this.loading = false
         },
         format_date(value){

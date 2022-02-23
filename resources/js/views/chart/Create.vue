@@ -40,12 +40,29 @@
                                 </div>
                             </div>
                             <div class="mb-3 row">
+                                <label for="example-text-input" class="col-md-2 col-form-label">Tipe</label>
+                                <div class="col md-10 wrapper">
+                                    <input value="1" type="radio" name="select" id="option-1" v-model="chartCreate.type">
+                                    <label for="option-1" class="option option-1" style="margin-left:0">
+                                        <div class="dot"></div>
+                                        <span>Pemasukan</span>
+                                    </label>
+
+                                    <input value="0" type="radio" name="select" id="option-2" v-model="chartCreate.type">
+                                    <label for="option-2" class="option option-2">
+                                        <div class="dot"></div>
+                                        <span>Pengeluaran</span>
+                                    </label>
+                                    <div v-if="theErrors.type" class="mt-1 text-danger">{{ theErrors.type[0] }}</div>
+                                </div>
+                            </div>
+                            <!-- <div class="mb-3 row">
                                 <label for="example-date-input" class="col-md-2 col-form-label">Tipe</label>
                                 <div class="col-md-10">
                                     <input class="form-control" type="text" v-model="chartCreate.type" name="number">
                                     <div v-if="theErrors.type" class="mt-1 text-danger">{{ theErrors.type[0] }}</div>
                                 </div>
-                            </div>
+                            </div> -->
                             <button class="btn btn-primary" type="submit"><i class="uil-plus"></i> Buat</button>
                         </form>
                     </div>
@@ -58,10 +75,12 @@
 
 <script>
 import Loading from '../../components/loading'
+import Radio from '../../components/Radio'
 
 export default {
     components: {
-        Loading
+        Loading,
+        Radio
     },
     data() {
         return {
@@ -77,7 +96,7 @@ export default {
     methods: {
         async store() {
             try {
-                console.log(this.chartCreate)
+                // console.log(this.chartCreate)
                 let responseCreate = await axios.post('/api/chartaccount', this.chartCreate)
                 if (responseCreate.status == 201) {
                     this.chartCreate.name = ''

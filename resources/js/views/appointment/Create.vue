@@ -42,8 +42,22 @@
                             <div class="mb-3 row">
                                 <label for="example-date-input" class="col-md-2 col-form-label">Remark</label>
                                 <div class="col-md-10">
-                                    <input class="form-control" type="text" v-model="appointmentCreate.remark" name="number">
+                                    <input class="form-control" type="text" v-model="appointmentCreate.remark">
                                     <div v-if="theErrors.remark" class="mt-1 text-danger">{{ theErrors.remark[0] }}</div>
+                                </div>
+                            </div>
+                            <!-- <div class="mb-3 row">
+                                <label for="example-date-input" class="col-md-2 col-form-label">Partner</label>
+                                <div class="col-md-10">
+                                    <input class="form-control" type="text">
+                                    <div v-if="theErrors.remark" class="mt-1 text-danger">{{ theErrors.remark[0] }}</div>
+                                </div>
+                            </div> -->
+                            <div class="mb-3 row">
+                                <label for="example-date-input" class="col-md-2 col-form-label">Partner</label>
+                                <div class="col-md-10">
+                                    <v-select :options="partnerOptions" @input="selectId($event, 'friend_id')" v-model="appointmentCreate.friend_id" multiple :disabled="partnerLoading"></v-select>
+                                    <div v-if="theErrors.friend_id" class="mt-1 text-danger">{{ theErrors.friend_id[0] }}</div>
                                 </div>
                             </div>
                             <button class="btn btn-primary" type="submit"><i class="uil-plus"></i> Buat</button>
@@ -69,13 +83,36 @@ export default {
                 name: '',
                 date: '',
                 remark: '',
+                friend_id: [],
                 user_id: '1',
             },
+            partnerLoading: false,
+            partnerOptions: [
+                {
+                    value: 1,
+                    label: 'Partner 1'
+                },
+                {
+                    value: 2,
+                    label: 'Partner 2'
+                },
+                {
+                    value: 3,
+                    label: 'Partner 3'
+                },
+                {
+                    value: 4,
+                    label: 'Partner 4'
+                },
+            ],
             // successMessage: [],
             theErrors: []
         }
     },
     methods: {
+        // selectId(e, target) {
+        //     this.appointmentCreate[target] = e.id
+        // },
         async store() {
             try {
                 console.log(this.appointmentCreate)

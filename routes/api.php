@@ -7,6 +7,7 @@ use App\Http\Controllers\ChartAccountController;
 use App\Http\Controllers\JournalController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Api\LoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,12 +26,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+//AUTH
+Route::post('/login', [LoginController::class, 'index']);
+Route::get('/logout', [LoginController::class, 'logout']);
+
 //Accounting Period
 Route::resource('/accountingperiod', AccountingPeriodController::class)->except('update', 'create', 'edit');
 Route::post('/accountingperiod/{id}', [AccountingPeriodController::class, 'update']);
 //User
-Route::resource('/user', UserController::class)->except('update', 'create', 'edit');
-Route::post('/user/{id}', [UserController::class, 'update']);
+Route::resource('/account', UserController::class)->except('update', 'create', 'edit');
+Route::post('/account/{id}', [UserController::class, 'update']);
 //Appointment
 Route::resource('/appointment', AppointmentController::class)->except('update', 'create', 'edit');
 Route::post('/appointment/{id}', [AppointmentController::class, 'update']);

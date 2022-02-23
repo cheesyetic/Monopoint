@@ -14,7 +14,7 @@
                                 <li class="breadcrumb-item m-auto"><router-link :to="{ name: 'dashboard' }">Dashboard</router-link></li>
                                 <li class="breadcrumb-item m-auto active">Jurnal</li>
                                 <!-- <button type="button" class="btn btn-primary waves-effect waves-light mx-2" data-bs-toggle="modal" data-bs-target="#createModal">Buat Jurnal Baru</button> -->
-                                <router-link exact :to="{ name: 'jurnal.create'}" class="btn btn-primary mx-2">Buat Jurnal Baru</router-link>
+                                <router-link exact :to="{ name: 'jurnal.create'}" class="btn btn-primary mx-2"><i class="uil-plus"></i> Buat Jurnal Baru</router-link>
                             </ol>
                         </div>
 
@@ -73,7 +73,7 @@
                                                     :key="journal.token"
                                                     >
                                                     <td><a href="javascript: void(0);" class="text-body fw-bold">{{ journal.title }}</a> </td>
-                                                    <td>{{ journal.date }}</td>
+                                                    <td>{{ format_date(journal.date) }}</td>
                                                     <td>
                                                         {{ journal.remark }}
                                                     </td>
@@ -87,8 +87,16 @@
                                                         <i class="fab fa-cc-mastercard me-1"></i> {{ journal.user_id }}
                                                     </td>
                                                     <td>
-                                                        <router-link :to="{ name: 'jurnal.edit', params: { token: journal.token }}" class="btn btn-primary"><i class="uil-edit-alt"></i> Edit</router-link>
-                                                        <delete-journal :endpoint="journal.token"/>
+                                                        <div class="btn-group">
+                                                            <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu <i class="uil-angle-down"></i></button>
+                                                            <div class="dropdown-menu" style="">
+                                                                <router-link :to="{ name: 'jurnal.edit', params: { token: journal.token }}" class="dropdown-item"><i class="uil-history-alt"></i> Histori</router-link>
+                                                                <router-link :to="{ name: 'jurnal.verif', params: { token: journal.token }}" class="dropdown-item" v-if="auth.user.type != 2"><i class="uil-file-check"></i> Verifikasi</router-link>
+                                                                <div class="dropdown-divider"></div>
+                                                                <router-link :to="{ name: 'jurnal.edit', params: { token: journal.token }}" class="dropdown-item"><i class="uil-edit-alt"></i> Edit</router-link>
+                                                                <delete-journal :endpoint="journal.token"/>
+                                                            </div>
+                                                        </div>
                                                         <!-- <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
                                                             View Details
                                                         </button> -->
@@ -116,6 +124,7 @@ import DeleteJournal from './Delete'
 // import CreateJurnal from './Create'
 import Loading from '../../components/loading'
 export default {
+    props: ['auth'],
     components: {
         DeleteJournal,
         // CreateJurnal,
@@ -148,7 +157,7 @@ export default {
         },
         format_date(value){
          if (value) {
-           return moment(String(value)).format('Do MMMM YYYY')
+           return moment(String(value)).format('hh:mm - Do MMM YYYY')
           }
       },
     }
