@@ -18,6 +18,7 @@ class CreateAccountingPeriodsTable extends Migration
             $table->string('name', 200);
             $table->date('start');
             $table->date('end');
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }

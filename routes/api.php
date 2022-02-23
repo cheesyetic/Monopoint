@@ -30,6 +30,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //Accounting Period
 Route::resource('/accountingperiod', AccountingPeriodController::class)->except('update', 'create', 'edit');
 Route::post('/accountingperiod/{id}', [AccountingPeriodController::class, 'update']);
+Route::post('/periodstatus/{id}', [AccountingPeriodController::class, 'activateDeactivate']);
 //User
 Route::resource('/user', UserController::class)->except('update', 'create', 'edit');
 Route::post('/user/{id}', [UserController::class, 'update']);

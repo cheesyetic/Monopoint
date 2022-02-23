@@ -12,7 +12,8 @@ class AccountingPeriod extends Model
     protected $fillable = [
         'name',
         'start',
-        'end'
+        'end',
+        'status'
     ];
     
 }

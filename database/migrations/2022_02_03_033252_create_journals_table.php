@@ -19,12 +19,11 @@ class CreateJournalsTable extends Migration
             $table->dateTime('date');
             $table->string('remark', 1000)->nullable(true);
             $table->string('ref', 45)->nullable(true);
-            $table->double('uang_masuk')->nullable(true);
-            $table->double('uang_keluar')->nullable(true);
+            $table->double('balance')->nullable(true);
             $table->integer('is_reimburse');
             $table->string('filebukti');
             $table->string('buktireimburse')->nullable(true);
-            $table->integer('status')->nullable(true)->default('1');
+            $table->integer('status')->nullable(true)->default('0');
             $table->timestamps();
             $table->integer('chart_account_id');
             $table->integer('accounting_period_id');
