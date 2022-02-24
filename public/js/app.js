@@ -5394,6 +5394,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['auth'],
   components: {
     Loading: _components_loading__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
@@ -5649,7 +5650,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 formdata.append('accounting_period_id', _this5.journalCreate.accounting_period_id);
                 formdata.append('bank_account_id', _this5.journalCreate.bank_account_id);
                 formdata.append('project_id', _this5.journalCreate.project_id);
-                formdata.append('user_id', _this5.journalCreate.user_id);
+                formdata.append('user_id', _this5.auth.user.id);
                 _context5.next = 15;
                 return axios.post('/api/journal', formdata, {
                   headers: {
@@ -5678,7 +5679,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     duration: 3000,
                     position: 'top-center'
                   });
-                })["catch"](function (error) {
+                })["catch"](function (e) {
                   console.log("responseCreate gagal");
 
                   _this5.$toasted.show("Something went wrong : " + e, {
@@ -5974,11 +5975,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['auth'],
   components: {
     Loading: _components_loading__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
@@ -6257,7 +6256,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 formdata.append('accounting_period_id', _this6.journal.accounting_period_id);
                 formdata.append('bank_account_id', _this6.journal.bank_account_id);
                 formdata.append('project_id', _this6.journal.project_id);
-                formdata.append('user_id', _this6.journal.user_id);
+                formdata.append('user_id', _this6.auth.user.id);
                 _context6.next = 15;
                 return axios.post('/api/journal/' + _this6.$route.params.token, formdata, {
                   headers: {
@@ -6286,7 +6285,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     duration: 3000,
                     position: 'top-center'
                   });
-                })["catch"](function (error) {
+                })["catch"](function (e) {
                   console.log("responseCreate gagal");
 
                   _this6.$toasted.show("Something went wrong : " + e, {
@@ -6335,6 +6334,103 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /*!**************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/Index.vue?vue&type=script&lang=js& ***!
   \**************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _TabDraft__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TabDraft */ "./resources/js/views/jurnal/TabDraft.vue");
+/* harmony import */ var _TabProses__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TabProses */ "./resources/js/views/jurnal/TabProses.vue");
+/* harmony import */ var _TabVerif__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TabVerif */ "./resources/js/views/jurnal/TabVerif.vue");
+/* harmony import */ var _Delete__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Delete */ "./resources/js/views/jurnal/Delete.vue");
+/* harmony import */ var _components_loading__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/loading */ "./resources/js/components/loading.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['auth'],
+  components: {
+    DeleteJournal: _Delete__WEBPACK_IMPORTED_MODULE_3__["default"],
+    TabDraft: _TabDraft__WEBPACK_IMPORTED_MODULE_0__["default"],
+    TabProses: _TabProses__WEBPACK_IMPORTED_MODULE_1__["default"],
+    TabVerif: _TabVerif__WEBPACK_IMPORTED_MODULE_2__["default"],
+    Loading: _components_loading__WEBPACK_IMPORTED_MODULE_4__["default"]
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/TabDraft.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/TabDraft.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -6434,52 +6530,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
- // import CreateJurnal from './Create'
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['auth'],
   components: {
     DeleteJournal: _Delete__WEBPACK_IMPORTED_MODULE_1__["default"],
-    // CreateJurnal,
     Loading: _components_loading__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
@@ -6506,7 +6562,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get('/api/journal');
+                return axios.get('/api/journal?category=0');
 
               case 2:
                 response = _context.sent;
@@ -6533,6 +6589,44 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   }
 });
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/TabProses.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/TabProses.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/TabVerif.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/TabVerif.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
 
 /***/ }),
 
@@ -33772,6 +33866,123 @@ component.options.__file = "resources/js/views/jurnal/Index.vue"
 
 /***/ }),
 
+/***/ "./resources/js/views/jurnal/TabDraft.vue":
+/*!************************************************!*\
+  !*** ./resources/js/views/jurnal/TabDraft.vue ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _TabDraft_vue_vue_type_template_id_1188d83a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TabDraft.vue?vue&type=template&id=1188d83a& */ "./resources/js/views/jurnal/TabDraft.vue?vue&type=template&id=1188d83a&");
+/* harmony import */ var _TabDraft_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TabDraft.vue?vue&type=script&lang=js& */ "./resources/js/views/jurnal/TabDraft.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _TabDraft_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _TabDraft_vue_vue_type_template_id_1188d83a___WEBPACK_IMPORTED_MODULE_0__.render,
+  _TabDraft_vue_vue_type_template_id_1188d83a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/views/jurnal/TabDraft.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/views/jurnal/TabProses.vue":
+/*!*************************************************!*\
+  !*** ./resources/js/views/jurnal/TabProses.vue ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _TabProses_vue_vue_type_template_id_49d03a6a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TabProses.vue?vue&type=template&id=49d03a6a& */ "./resources/js/views/jurnal/TabProses.vue?vue&type=template&id=49d03a6a&");
+/* harmony import */ var _TabProses_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TabProses.vue?vue&type=script&lang=js& */ "./resources/js/views/jurnal/TabProses.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _TabProses_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _TabProses_vue_vue_type_template_id_49d03a6a___WEBPACK_IMPORTED_MODULE_0__.render,
+  _TabProses_vue_vue_type_template_id_49d03a6a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/views/jurnal/TabProses.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/views/jurnal/TabVerif.vue":
+/*!************************************************!*\
+  !*** ./resources/js/views/jurnal/TabVerif.vue ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _TabVerif_vue_vue_type_template_id_80e6e1ce___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TabVerif.vue?vue&type=template&id=80e6e1ce& */ "./resources/js/views/jurnal/TabVerif.vue?vue&type=template&id=80e6e1ce&");
+/* harmony import */ var _TabVerif_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TabVerif.vue?vue&type=script&lang=js& */ "./resources/js/views/jurnal/TabVerif.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _TabVerif_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _TabVerif_vue_vue_type_template_id_80e6e1ce___WEBPACK_IMPORTED_MODULE_0__.render,
+  _TabVerif_vue_vue_type_template_id_80e6e1ce___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/views/jurnal/TabVerif.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/views/jurnal/Verif.vue":
 /*!*********************************************!*\
   !*** ./resources/js/views/jurnal/Verif.vue ***!
@@ -34860,6 +35071,54 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/views/jurnal/TabDraft.vue?vue&type=script&lang=js&":
+/*!*************************************************************************!*\
+  !*** ./resources/js/views/jurnal/TabDraft.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TabDraft_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./TabDraft.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/TabDraft.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TabDraft_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/views/jurnal/TabProses.vue?vue&type=script&lang=js&":
+/*!**************************************************************************!*\
+  !*** ./resources/js/views/jurnal/TabProses.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TabProses_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./TabProses.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/TabProses.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TabProses_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/views/jurnal/TabVerif.vue?vue&type=script&lang=js&":
+/*!*************************************************************************!*\
+  !*** ./resources/js/views/jurnal/TabVerif.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TabVerif_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./TabVerif.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/TabVerif.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TabVerif_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/views/jurnal/Verif.vue?vue&type=script&lang=js&":
 /*!**********************************************************************!*\
   !*** ./resources/js/views/jurnal/Verif.vue?vue&type=script&lang=js& ***!
@@ -35578,6 +35837,57 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_template_id_bbf1e4d8___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_template_id_bbf1e4d8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Index.vue?vue&type=template&id=bbf1e4d8& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/Index.vue?vue&type=template&id=bbf1e4d8&");
+
+
+/***/ }),
+
+/***/ "./resources/js/views/jurnal/TabDraft.vue?vue&type=template&id=1188d83a&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/views/jurnal/TabDraft.vue?vue&type=template&id=1188d83a& ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TabDraft_vue_vue_type_template_id_1188d83a___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TabDraft_vue_vue_type_template_id_1188d83a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TabDraft_vue_vue_type_template_id_1188d83a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./TabDraft.vue?vue&type=template&id=1188d83a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/TabDraft.vue?vue&type=template&id=1188d83a&");
+
+
+/***/ }),
+
+/***/ "./resources/js/views/jurnal/TabProses.vue?vue&type=template&id=49d03a6a&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/views/jurnal/TabProses.vue?vue&type=template&id=49d03a6a& ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TabProses_vue_vue_type_template_id_49d03a6a___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TabProses_vue_vue_type_template_id_49d03a6a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TabProses_vue_vue_type_template_id_49d03a6a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./TabProses.vue?vue&type=template&id=49d03a6a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/TabProses.vue?vue&type=template&id=49d03a6a&");
+
+
+/***/ }),
+
+/***/ "./resources/js/views/jurnal/TabVerif.vue?vue&type=template&id=80e6e1ce&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/views/jurnal/TabVerif.vue?vue&type=template&id=80e6e1ce& ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TabVerif_vue_vue_type_template_id_80e6e1ce___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TabVerif_vue_vue_type_template_id_80e6e1ce___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TabVerif_vue_vue_type_template_id_80e6e1ce___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./TabVerif.vue?vue&type=template&id=80e6e1ce& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/TabVerif.vue?vue&type=template&id=80e6e1ce&");
 
 
 /***/ }),
@@ -42143,113 +42453,112 @@ var render = function () {
                               "label",
                               {
                                 staticClass: "col-md-2 col-form-label",
-                                attrs: { for: "example-date-input" },
+                                attrs: { for: "example-text-input" },
                               },
                               [_vm._v("Reimburse")]
                             ),
                             _vm._v(" "),
-                            _c("div", { staticClass: "col-md-10" }, [
-                              _c("div", { staticClass: "vstack gap-2" }, [
-                                _c("div", { staticClass: "form-check" }, [
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.journal.is_reimburse,
-                                        expression: "journal.is_reimburse",
-                                      },
-                                    ],
-                                    staticClass: "form-check-input",
-                                    attrs: {
-                                      name: "is_reimburse",
-                                      type: "radio",
-                                      value: "1",
-                                    },
-                                    domProps: {
-                                      checked: _vm._q(
-                                        _vm.journal.is_reimburse,
-                                        "1"
-                                      ),
-                                    },
-                                    on: {
-                                      change: function ($event) {
-                                        return _vm.$set(
-                                          _vm.journal,
-                                          "is_reimburse",
-                                          "1"
-                                        )
-                                      },
-                                    },
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "label",
-                                    {
-                                      staticClass: "form-check-label",
-                                      attrs: { for: "formRadios1" },
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                                                Ya\n                                            "
-                                      ),
-                                    ]
+                            _c("div", { staticClass: "col md-10 wrapper" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.journal.is_reimburse,
+                                    expression: "journal.is_reimburse",
+                                  },
+                                ],
+                                attrs: {
+                                  value: "1",
+                                  type: "radio",
+                                  name: "select",
+                                  id: "option-1",
+                                },
+                                domProps: {
+                                  checked: _vm._q(
+                                    _vm.journal.is_reimburse,
+                                    "1"
                                   ),
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "form-check" }, [
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.journal.is_reimburse,
-                                        expression: "journal.is_reimburse",
-                                      },
-                                    ],
-                                    staticClass: "form-check-input",
-                                    attrs: {
-                                      name: "is_reimburse",
-                                      type: "radio",
-                                      value: "0",
-                                    },
-                                    domProps: {
-                                      checked: _vm._q(
-                                        _vm.journal.is_reimburse,
-                                        "0"
-                                      ),
-                                    },
-                                    on: {
-                                      change: function ($event) {
-                                        return _vm.$set(
-                                          _vm.journal,
-                                          "is_reimburse",
-                                          "0"
-                                        )
-                                      },
-                                    },
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "label",
-                                    {
-                                      staticClass: "form-check-label",
-                                      attrs: { for: "formRadios2" },
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                                                Tidak\n                                            "
-                                      ),
-                                    ]
-                                  ),
-                                ]),
-                              ]),
+                                },
+                                on: {
+                                  change: function ($event) {
+                                    return _vm.$set(
+                                      _vm.journal,
+                                      "is_reimburse",
+                                      "1"
+                                    )
+                                  },
+                                },
+                              }),
                               _vm._v(" "),
-                              _vm.theErrors.remark
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "option option-1",
+                                  staticStyle: { "margin-left": "0" },
+                                  attrs: { for: "option-1" },
+                                },
+                                [
+                                  _c("div", { staticClass: "dot" }),
+                                  _vm._v(" "),
+                                  _c("span", [_vm._v("Ya")]),
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.journal.is_reimburse,
+                                    expression: "journal.is_reimburse",
+                                  },
+                                ],
+                                attrs: {
+                                  value: "0",
+                                  type: "radio",
+                                  name: "select",
+                                  id: "option-3",
+                                },
+                                domProps: {
+                                  checked: _vm._q(
+                                    _vm.journal.is_reimburse,
+                                    "0"
+                                  ),
+                                },
+                                on: {
+                                  change: function ($event) {
+                                    return _vm.$set(
+                                      _vm.journal,
+                                      "is_reimburse",
+                                      "0"
+                                    )
+                                  },
+                                },
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "option option-3",
+                                  attrs: { for: "option-3" },
+                                },
+                                [
+                                  _c("div", { staticClass: "dot" }),
+                                  _vm._v(" "),
+                                  _c("span", [_vm._v("Tidak")]),
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _vm.theErrors.is_reimburse
                                 ? _c(
                                     "div",
                                     { staticClass: "mt-1 text-danger" },
-                                    [_vm._v(_vm._s(_vm.theErrors.remark[0]))]
+                                    [
+                                      _vm._v(
+                                        _vm._s(_vm.theErrors.is_reimburse[0])
+                                      ),
+                                    ]
                                   )
                                 : _vm._e(),
                             ]),
@@ -42512,7 +42821,7 @@ var render = function () {
                               staticClass: "btn btn-primary",
                               attrs: { type: "submit" },
                             },
-                            [_vm._v("Create")]
+                            [_vm._v("Edit")]
                           ),
                         ]
                       ),
@@ -42617,260 +42926,43 @@ var render = function () {
           ]),
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-lg-12" }, [
-            _c("div", { staticClass: "card" }, [
-              _c("div", { staticClass: "card-body" }, [
-                _c("h4", { staticClass: "card-title mb-4" }, [
-                  _vm._v("Latest Transaction"),
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "table-responsive" }, [
-                  _c(
-                    "table",
-                    { staticClass: "table table-centered table-nowrap mb-0" },
-                    [
-                      _vm._m(1),
-                      _vm._v(" "),
-                      _vm.loading
-                        ? _c(
-                            "transition",
-                            {
-                              staticClass: "row ",
-                              attrs: {
-                                tag: "tbody",
-                                mode: "out-in",
-                                "enter-active-class":
-                                  "animate__animated animate__fadeIn animate__faster",
-                                "leave-active-class":
-                                  "animate__animated animate__fadeOut animate__faster",
-                              },
-                            },
-                            [_c("loading")],
-                            1
-                          )
-                        : _c(
-                            "transition",
-                            {
-                              attrs: {
-                                tag: "tbody",
-                                mode: "out-in",
-                                "enter-active-class":
-                                  "animate__animated animate__fadeIn",
-                                "leave-active-class":
-                                  "animate__animated animate__fadeOut",
-                              },
-                            },
-                            [
-                              !_vm.journals.length
-                                ? _c("tr", [
-                                    _c("td", { attrs: { colspan: "7" } }, [
-                                      _vm._v("No data available"),
-                                    ]),
-                                  ])
-                                : _c(
-                                    "transition-group",
-                                    { attrs: { tag: "tbody" } },
-                                    _vm._l(_vm.journals, function (journal) {
-                                      return _c("tr", { key: journal.token }, [
-                                        _c("td", [
-                                          _c(
-                                            "a",
-                                            {
-                                              staticClass: "text-body fw-bold",
-                                              attrs: {
-                                                href: "javascript: void(0);",
-                                              },
-                                            },
-                                            [_vm._v(_vm._s(journal.title))]
-                                          ),
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _vm._v(
-                                            _vm._s(
-                                              _vm.format_date(journal.date)
-                                            )
-                                          ),
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _vm._v(
-                                            "\n                                                      " +
-                                              _vm._s(journal.remark) +
-                                              "\n                                                  "
-                                          ),
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _vm._v(
-                                            "\n                                                      " +
-                                              _vm._s(journal.ref) +
-                                              "\n                                                  "
-                                          ),
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _c(
-                                            "span",
-                                            {
-                                              staticClass:
-                                                "badge rounded-pill bg-soft-success font-size-12",
-                                            },
-                                            [_vm._v(_vm._s(journal.project_id))]
-                                          ),
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _c("i", {
-                                            staticClass:
-                                              "fab fa-cc-mastercard me-1",
-                                          }),
-                                          _vm._v(
-                                            " " +
-                                              _vm._s(journal.user_id) +
-                                              "\n                                                  "
-                                          ),
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _c(
-                                            "div",
-                                            { staticClass: "btn-group" },
-                                            [
-                                              _c(
-                                                "button",
-                                                {
-                                                  staticClass:
-                                                    "btn btn-primary dropdown-toggle waves-effect waves-light",
-                                                  attrs: {
-                                                    type: "button",
-                                                    "data-bs-toggle":
-                                                      "dropdown",
-                                                    "aria-haspopup": "true",
-                                                    "aria-expanded": "false",
-                                                  },
-                                                },
-                                                [
-                                                  _vm._v("Menu "),
-                                                  _c("i", {
-                                                    staticClass:
-                                                      "uil-angle-down",
-                                                  }),
-                                                ]
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "div",
-                                                {
-                                                  staticClass: "dropdown-menu",
-                                                },
-                                                [
-                                                  _c(
-                                                    "router-link",
-                                                    {
-                                                      staticClass:
-                                                        "dropdown-item",
-                                                      attrs: {
-                                                        to: {
-                                                          name: "jurnal.edit",
-                                                          params: {
-                                                            token:
-                                                              journal.token,
-                                                          },
-                                                        },
-                                                      },
-                                                    },
-                                                    [
-                                                      _c("i", {
-                                                        staticClass:
-                                                          "uil-history-alt",
-                                                      }),
-                                                      _vm._v(" Histori"),
-                                                    ]
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _vm.auth.user.type != 2
-                                                    ? _c(
-                                                        "router-link",
-                                                        {
-                                                          staticClass:
-                                                            "dropdown-item",
-                                                          attrs: {
-                                                            to: {
-                                                              name: "jurnal.verif",
-                                                              params: {
-                                                                token:
-                                                                  journal.token,
-                                                              },
-                                                            },
-                                                          },
-                                                        },
-                                                        [
-                                                          _c("i", {
-                                                            staticClass:
-                                                              "uil-file-check",
-                                                          }),
-                                                          _vm._v(" Verifikasi"),
-                                                        ]
-                                                      )
-                                                    : _vm._e(),
-                                                  _vm._v(" "),
-                                                  _c("div", {
-                                                    staticClass:
-                                                      "dropdown-divider",
-                                                  }),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "router-link",
-                                                    {
-                                                      staticClass:
-                                                        "dropdown-item",
-                                                      attrs: {
-                                                        to: {
-                                                          name: "jurnal.edit",
-                                                          params: {
-                                                            token:
-                                                              journal.token,
-                                                          },
-                                                        },
-                                                      },
-                                                    },
-                                                    [
-                                                      _c("i", {
-                                                        staticClass:
-                                                          "uil-edit-alt",
-                                                      }),
-                                                      _vm._v(" Edit"),
-                                                    ]
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c("delete-journal", {
-                                                    attrs: {
-                                                      endpoint: journal.token,
-                                                    },
-                                                  }),
-                                                ],
-                                                1
-                                              ),
-                                            ]
-                                          ),
-                                        ]),
-                                      ])
-                                    }),
-                                    0
-                                  ),
-                            ],
-                            1
-                          ),
-                    ],
-                    1
-                  ),
-                ]),
-              ]),
-            ]),
-          ]),
-        ]),
+        _vm._m(1),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "tab-content p-3 text-muted card border-top-0" },
+          [
+            _c(
+              "div",
+              {
+                staticClass: "tab-pane active",
+                attrs: { id: "home1", role: "tabpanel" },
+              },
+              [_c("tab-draft", { attrs: { auth: _vm.auth } })],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "tab-pane",
+                attrs: { id: "profile1", role: "tabpanel" },
+              },
+              [_c("tab-proses")],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "tab-pane",
+                attrs: { id: "messages1", role: "tabpanel" },
+              },
+              [_c("tab-verif")],
+              1
+            ),
+          ]
+        ),
       ]),
     ]),
   ])
@@ -42885,6 +42977,319 @@ var staticRenderFns = [
       _vm._v(" Jurnal"),
     ])
   },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "ul",
+      {
+        staticClass: "nav nav-tabs nav-tabs nav-justified",
+        attrs: { role: "tablist" },
+      },
+      [
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link active",
+              attrs: {
+                "data-bs-toggle": "tab",
+                href: "#home1",
+                role: "tab",
+                "aria-selected": "true",
+              },
+            },
+            [
+              _c("span", { staticClass: "d-block d-sm-none" }, [
+                _c("i", { staticClass: "fas fa-home" }),
+              ]),
+              _vm._v(" "),
+              _c("span", { staticClass: "d-none d-sm-block" }, [
+                _vm._v("Draft"),
+              ]),
+            ]
+          ),
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link",
+              attrs: {
+                "data-bs-toggle": "tab",
+                href: "#profile1",
+                role: "tab",
+                "aria-selected": "false",
+              },
+            },
+            [
+              _c("span", { staticClass: "d-block d-sm-none" }, [
+                _c("i", { staticClass: "far fa-user" }),
+              ]),
+              _vm._v(" "),
+              _c("span", { staticClass: "d-none d-sm-block" }, [
+                _vm._v("Diproses"),
+              ]),
+            ]
+          ),
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link",
+              attrs: {
+                "data-bs-toggle": "tab",
+                href: "#messages1",
+                role: "tab",
+                "aria-selected": "false",
+              },
+            },
+            [
+              _c("span", { staticClass: "d-block d-sm-none" }, [
+                _c("i", { staticClass: "far fa-envelope" }),
+              ]),
+              _vm._v(" "),
+              _c("span", { staticClass: "d-none d-sm-block" }, [
+                _vm._v("Terverif"),
+              ]),
+            ]
+          ),
+        ]),
+      ]
+    )
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/TabDraft.vue?vue&type=template&id=1188d83a&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/TabDraft.vue?vue&type=template&id=1188d83a& ***!
+  \**********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "table-responsive" }, [
+    _c(
+      "table",
+      { staticClass: "table table-centered table-nowrap mb-0" },
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _vm.loading
+          ? _c(
+              "transition",
+              {
+                staticClass: "row ",
+                attrs: {
+                  tag: "tbody",
+                  mode: "out-in",
+                  "enter-active-class":
+                    "animate__animated animate__fadeIn animate__faster",
+                  "leave-active-class":
+                    "animate__animated animate__fadeOut animate__faster",
+                },
+              },
+              [_c("loading")],
+              1
+            )
+          : _c(
+              "transition",
+              {
+                attrs: {
+                  tag: "tbody",
+                  mode: "out-in",
+                  "enter-active-class": "animate__animated animate__fadeIn",
+                  "leave-active-class": "animate__animated animate__fadeOut",
+                },
+              },
+              [
+                !_vm.journals.length
+                  ? _c("tr", [
+                      _c("td", { attrs: { colspan: "7" } }, [
+                        _vm._v("No data available"),
+                      ]),
+                    ])
+                  : _c(
+                      "transition-group",
+                      { attrs: { tag: "tbody" } },
+                      _vm._l(_vm.journals, function (journal) {
+                        return _c("tr", { key: journal.token }, [
+                          _c("td", [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "text-body fw-bold",
+                                attrs: { href: "javascript: void(0);" },
+                              },
+                              [_vm._v(_vm._s(journal.title))]
+                            ),
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(_vm.format_date(journal.date))),
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(journal.remark) +
+                                "\n                        "
+                            ),
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(journal.ref) +
+                                "\n                        "
+                            ),
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "badge rounded-pill bg-soft-success font-size-12",
+                              },
+                              [_vm._v(_vm._s(journal.project_id))]
+                            ),
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("i", {
+                              staticClass: "fab fa-cc-mastercard me-1",
+                            }),
+                            _vm._v(
+                              " " +
+                                _vm._s(journal.user_id) +
+                                "\n                        "
+                            ),
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("div", { staticClass: "btn-group" }, [
+                              _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "btn btn-primary dropdown-toggle waves-effect waves-light",
+                                  attrs: {
+                                    type: "button",
+                                    "data-bs-toggle": "dropdown",
+                                    "aria-haspopup": "true",
+                                    "aria-expanded": "false",
+                                  },
+                                },
+                                [
+                                  _vm._v("Menu "),
+                                  _c("i", { staticClass: "uil-angle-down" }),
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "dropdown-menu" },
+                                [
+                                  _c(
+                                    "router-link",
+                                    {
+                                      staticClass: "dropdown-item",
+                                      attrs: {
+                                        to: {
+                                          name: "jurnal.edit",
+                                          params: { token: journal.token },
+                                        },
+                                      },
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "uil-history-alt",
+                                      }),
+                                      _vm._v(" Histori"),
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _vm.auth.user.type != 2
+                                    ? _c(
+                                        "router-link",
+                                        {
+                                          staticClass: "dropdown-item",
+                                          attrs: {
+                                            to: {
+                                              name: "jurnal.verif",
+                                              params: { token: journal.token },
+                                            },
+                                          },
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "uil-file-check",
+                                          }),
+                                          _vm._v(" Verifikasi"),
+                                        ]
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _c("div", {
+                                    staticClass: "dropdown-divider",
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "router-link",
+                                    {
+                                      staticClass: "dropdown-item",
+                                      attrs: {
+                                        to: {
+                                          name: "jurnal.edit",
+                                          params: { token: journal.token },
+                                        },
+                                      },
+                                    },
+                                    [
+                                      _c("i", { staticClass: "uil-edit-alt" }),
+                                      _vm._v(" Edit"),
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("delete-journal", {
+                                    attrs: { endpoint: journal.token },
+                                  }),
+                                ],
+                                1
+                              ),
+                            ]),
+                          ]),
+                        ])
+                      }),
+                      0
+                    ),
+              ],
+              1
+            ),
+      ],
+      1
+    ),
+  ])
+}
+var staticRenderFns = [
   function () {
     var _vm = this
     var _h = _vm.$createElement
@@ -42908,6 +43313,56 @@ var staticRenderFns = [
     ])
   },
 ]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/TabProses.vue?vue&type=template&id=49d03a6a&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/TabProses.vue?vue&type=template&id=49d03a6a& ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("h1", [_vm._v("PROSES")])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/TabVerif.vue?vue&type=template&id=80e6e1ce&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/TabVerif.vue?vue&type=template&id=80e6e1ce& ***!
+  \**********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("h1", [_vm._v("VERIF")])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 

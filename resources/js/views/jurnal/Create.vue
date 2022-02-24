@@ -132,6 +132,7 @@
 import Loading from '../../components/loading'
 
 export default {
+    props: ['auth'],
     components: {
         Loading
     },
@@ -276,7 +277,7 @@ export default {
                 formdata.append('accounting_period_id', this.journalCreate.accounting_period_id)
                 formdata.append('bank_account_id', this.journalCreate.bank_account_id)
                 formdata.append('project_id', this.journalCreate.project_id)
-                formdata.append('user_id', this.journalCreate.user_id)
+                formdata.append('user_id', this.auth.user.id)
                 await axios.post('/api/journal',  formdata, {
                         headers: {
                             'Content-Type': 'multipart/form-data'
@@ -304,7 +305,7 @@ export default {
                             position: 'top-center',
                         })
                     }
-                ).catch((error) => {
+                ).catch((e) => {
                     console.log("responseCreate gagal")
                     this.$toasted.show("Something went wrong : " + e, {
                         type: 'error',

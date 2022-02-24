@@ -32,7 +32,7 @@ class JournalController extends Controller
         }
 
         if($request->category){
-
+            $query->where('status','=',$request->category);
         }
 
         if($request->chart){

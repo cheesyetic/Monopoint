@@ -69,24 +69,21 @@
                                 </div>
                             </div>
 
+
                             <div class="mb-3 row">
-                                <label for="example-date-input" class="col-md-2 col-form-label">Reimburse</label>
-                                <div class="col-md-10">
-                                    <div class="vstack gap-2">
-                                        <div class="form-check">
-                                            <input name="is_reimburse" class="form-check-input" type="radio" value="1" v-model="journal.is_reimburse">
-                                            <label class="form-check-label" for="formRadios1">
-                                                Ya
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input name="is_reimburse" class="form-check-input" type="radio" value="0" v-model="journal.is_reimburse">
-                                            <label class="form-check-label" for="formRadios2">
-                                                Tidak
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div v-if="theErrors.remark" class="mt-1 text-danger">{{ theErrors.remark[0] }}</div>
+                                <label for="example-text-input" class="col-md-2 col-form-label">Reimburse</label>
+                                <div class="col md-10 wrapper">
+                                    <input value="1" type="radio" name="select" id="option-1" v-model="journal.is_reimburse">
+                                    <label for="option-1" class="option option-1" style="margin-left:0">
+                                        <div class="dot"></div>
+                                        <span>Ya</span>
+                                    </label>
+                                    <input value="0" type="radio" name="select" id="option-3" v-model="journal.is_reimburse">
+                                    <label for="option-3" class="option option-3">
+                                        <div class="dot"></div>
+                                        <span>Tidak</span>
+                                    </label>
+                                    <div v-if="theErrors.is_reimburse" class="mt-1 text-danger">{{ theErrors.is_reimburse[0] }}</div>
                                 </div>
                             </div>
 
@@ -129,7 +126,7 @@
                                     <div v-if="theErrors.project_id" class="mt-1 text-danger">{{ theErrors.project_id[0] }}</div>
                                 </div>
                             </div>
-                            <button class="btn btn-primary" type="submit">Create</button>
+                            <button class="btn btn-primary" type="submit">Edit</button>
                         </form>
                     </div>
                 </div> <!-- end col -->
@@ -142,6 +139,7 @@
 <script>
 import Loading from '../../components/loading'
 export default {
+    props: ['auth'],
     components: {
         Loading
     },
@@ -287,7 +285,7 @@ export default {
                 formdata.append('accounting_period_id', this.journal.accounting_period_id)
                 formdata.append('bank_account_id', this.journal.bank_account_id)
                 formdata.append('project_id', this.journal.project_id)
-                formdata.append('user_id', this.journal.user_id)
+                formdata.append('user_id', this.auth.user.id)
                 await axios.post('/api/journal/' + this.$route.params.token,  formdata, {
                         headers: {
                             'Content-Type': 'multipart/form-data'
@@ -315,7 +313,7 @@ export default {
                             position: 'top-center',
                         })
                     }
-                ).catch((error) => {
+                ).catch((e) => {
                     console.log("responseCreate gagal")
                     this.$toasted.show("Something went wrong : " + e, {
                         type: 'error',
