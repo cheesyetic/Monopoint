@@ -53,8 +53,10 @@ Route::resource('/project', ProjectController::class)->except('update', 'create'
 Route::post('/project/{id}', [ProjectController::class, 'update']);
 //Journal
 Route::get('/journal/export/', [JournalController::class, 'export']);
+Route::get('/journal/import/', [JournalController::class, 'import']);
+Route::post('/validjournal/{id}', [JournalController::class, 'draftToProcess']);
 Route::post('/verifjournal/{id}', [JournalController::class, 'validationStatus']);
-Route::post('/validjournal/{id}', [JournalController::class, 'validationImage']);
+Route::post('/validjournal/{id}', [JournalController::class, 'declineStatus']);
 Route::resource('/journal', JournalController::class)->except('update', 'create', 'edit');
 Route::post('/journal/{id}', [JournalController::class, 'update']);
 Route::get('/sendemail', [JournalController::class, 'sendEmail']);

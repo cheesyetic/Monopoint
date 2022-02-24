@@ -23,7 +23,7 @@ class CreateJournalsTable extends Migration
             $table->integer('is_reimburse');
             $table->string('filebukti');
             $table->string('buktireimburse')->nullable(true);
-            $table->integer('status')->nullable(true)->default('0');
+            $table->integer('status')->nullable(true)->default('1');
             $table->timestamps();
             $table->integer('chart_account_id');
             $table->integer('accounting_period_id');

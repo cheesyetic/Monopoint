@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
@@ -108,8 +109,8 @@ class UserController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'max:45'],
-            'email' => ['required', 'email', 'unique:users,email'],
-            'phone_number' => ['required', 'unique:users,phone_number'],
+            'email' => ['required', 'email', Rule::unique('users')->ignore($user->id)],
+            'phone_number' => ['required', Rule::unique('users')->ignore($user->id)],
             'type' => ['required'],
         ]);
 

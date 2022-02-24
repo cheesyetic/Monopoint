@@ -8,6 +8,7 @@ use App\Mail\JournalChange;
 use App\Models\AdjustingHistory;
 use App\Models\ChartAccount;
 use App\Models\Journal;
+use App\Models\Project;
 use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -27,12 +28,17 @@ class JournalController extends Controller
     public function index(Request $request)
     {
         $query = Journal::with(['user', 'chartAccount', 'accountingPeriod', 'project', 'asset', 'bankAccount']);
+
         if($request->keyword){
             $query->where('title','LIKE','%'.$request->keyword.'%');
         }
 
-        if($request->category){
-            $query->where('status','=',$request->category);
+        if($request->category > 2){
+            $query->where('status','>=', $request->category);
+        }
+
+        if($request->category <= 2){
+            $query->where('status','=', $request->category);
         }
 
         if($request->chart){
@@ -42,7 +48,7 @@ class JournalController extends Controller
         }
 
         if($request->reimburse){
-            $query->where('is_reimburse','LIKE','%'.$request->reimburse.'%');
+            $query->where('is_reimburse','=', $request->reimburse);
         }
 
         if($request->date){
@@ -51,9 +57,14 @@ class JournalController extends Controller
 
         $journal = $query->get();
 
-        foreach ($journal as $key => $value) {
-            $journal[$key]->token = Crypt::encryptString($journal[$key]->id);
+        foreach($journal as $value){
+            $value->project_id = Project::findOrFail($value->project_id)->name;
         }
+
+        foreach($journal as $value){
+            $value->user_id = User::findOrFail($value->user_id)->name;
+        }
+
         $response =[
             'message' => 'List Journal',
             'data' => $journal
@@ -105,7 +116,7 @@ class JournalController extends Controller
             $journal = Journal::create($input);
             AdjustingHistory::create($input);
 
-            //balance in ca
+            // balance in ca
             $idchartacc = $input['chart_account_id'];
             $ca = ChartAccount::findOrFail($idchartacc);
             $ca->balance = $ca->balance + $input['balance'];
@@ -178,14 +189,29 @@ class JournalController extends Controller
                 $file->move($path, $name);
                 $input['filebukti'] = "$name";
             }
-            else{
-                $input['filebukti'] = "$journal->filebukti";
-            }
+        else{
+            $input['filebukti'] = "$journal->filebukti";
+        }
 
-            $journal->update($input);
-            $this->sendEmail($id);
+        if($input['balance'] > $journal->balance){
+            $res = $input['balance'] - $journal->balance;
+            $idchartacc = $input['chart_account_id'];
+            $ca = ChartAccount::findOrFail($idchartacc);
+            $ca->balance = $ca->balance + $res;
+            $ca->save();
+        }
 
-            AdjustingHistory::create($input);
+        elseif ($input['balance'] < $journal->balance) {
+            $res = $journal->balance - $input['balance'] ;
+            $idchartacc = $input['chart_account_id'];
+            $ca = ChartAccount::findOrFail($idchartacc);
+            $ca->balance = $ca->balance - $res;
+            $ca->save();
+        }
+
+        $journal->update($input);
+        $this->sendEmail($id);
+        AdjustingHistory::create($input);
 
             $response = [
                 'message' => 'A journal row updated',
@@ -228,11 +254,37 @@ class JournalController extends Controller
         }
     }
 
-    public function validationStatus($id){
+    public function draftToProcess($id){
         $journal = Journal::findOrFail($id);
 
         $journal->status = 2;
         $journal->save();
+        $this->sendEmail($id);
+
+        $response = [
+            'message' => 'A journal has been moved into process phase',
+            'data' => $journal
+        ];
+
+        return response()->json($response, Response::HTTP_OK);
+    }
+
+    public function validationStatus(Request $request, $id){
+        $journal = Journal::findOrFail($id);
+
+        $journal->status = 3;
+        if($journal->is_reimburse = 1){
+            $input = $request->all();
+            if($file = $request->file('buktireimburse')){
+                $path = $file->store('public/files');
+                $name = $file->getClientOriginalName();
+                $file->move($path, $name);
+                $input['buktireimburse'] = "$name";
+            }
+            $journal->buktireimburse = $input;
+        }
+        $journal->save();
+        $this->sendEmail($id);
 
         $response = [
             'message' => 'A journal has been verified',
@@ -242,21 +294,15 @@ class JournalController extends Controller
         return response()->json($response, Response::HTTP_OK);
     }
 
-    public function validationImage(Request $request, $id){
+    public function declineStatus($id){
         $journal = Journal::findOrFail($id);
 
-        $input = $request->all();
-        if($file = $request->file('buktireimburse')){
-            $path = $file->store('public/files');
-            $name = $file->getClientOriginalName();
-            $file->move($path, $name);
-            $input['buktireimburse'] = "$name";
-        }
-
-        $journal->update($input);
+        $journal->status = 4;
+        $journal->save();
+        $this->sendEmail($id);
 
         $response = [
-            'message' => 'The file has been uploaded',
+            'message' => 'A journal has been declined',
             'data' => $journal
         ];
 
@@ -278,7 +324,7 @@ class JournalController extends Controller
         Excel::import(new JournalsImport, 'journals.xlsx');
 
         $response = [
-            'message' => 'The file has been downloaded'
+            'message' => 'The file has been uploaded'
         ];
 
         return response()->json($response, Response::HTTP_OK);
@@ -290,8 +336,8 @@ class JournalController extends Controller
         $email = $user->email;
 
         $details=[
-            'title' => 'This is an email from Monopoint.',
-            'body' => 'This is just an email to test the feature.'
+            'title' => 'Announcement about journal update',
+            'body' => 'Your journal has been updated.'
         ];
 
         Mail::to($email)->send(new JournalChange($details));

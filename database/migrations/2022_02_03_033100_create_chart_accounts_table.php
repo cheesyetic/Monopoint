@@ -18,7 +18,7 @@ class CreateChartAccountsTable extends Migration
             $table->string('name', 200);
             $table->string('code', 45);
             $table->integer('type');
-            $table->double('balance')->nullable(true);
+            $table->double('balance')->default(0);
             $table->timestamps();
         });
     }
