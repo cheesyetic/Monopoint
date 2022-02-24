@@ -10019,7 +10019,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.wrapper{\n  display: inline-flex;\n  align-items: center;\n  justify-content: space-evenly;\n  border-radius: 5px;\n}\n.option{\n  background: #fff;\n  height: 100%;\n  width: 100%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: .5rem;\n  margin: 0 8px;\n  border-radius: 5px;\n  cursor: pointer;\n  /* padding: 0 10px; */\n  border: 2px solid lightgrey;\n  transition: all 0.3s ease;\n}\n.option:first-child {\n  margin-left: 0;\n}\n.option:last-child {\n  margin-right: 0;\n}\n.option .dot{\n  height: 16px;\n  width: 16px;\n  background: #d9d9d9;\n  border-radius: 50%;\n  position: relative;\n}\n.option .dot::before{\n  position: absolute;\n  content: \"\";\n  top: 4px;\n  left: 4px;\n  width: 8px;\n  height: 8px;\n  background: #0069d9;\n  border-radius: 50%;\n  opacity: 0;\n  transform: scale(1.5);\n  transition: all 0.3s ease;\n}\ninput[type=\"radio\"]{\n  display: none;\n}\n#option-1:checked:checked ~ .option-1,\n#option-2:checked:checked ~ .option-2,\n#option-3:checked:checked ~ .option-3{\n  border-color: #0069d9;\n  background: #0069d9;\n}\n#option-1:checked:checked ~ .option-1 .dot,\n#option-2:checked:checked ~ .option-2 .dot,\n#option-3:checked:checked ~ .option-3 .dot{\n  background: #fff;\n}\n#option-1:checked:checked ~ .option-1 .dot::before,\n#option-2:checked:checked ~ .option-2 .dot::before,\n#option-3:checked:checked ~ .option-3 .dot::before{\n  opacity: 1;\n  transform: scale(1);\n}\n.option span{\n  font-size: 16px;\n  color: #808080;\n}\n#option-1:checked:checked ~ .option-1 span,\n#option-2:checked:checked ~ .option-2 span,\n#option-3:checked:checked ~ .option-3 span{\n  color: #fff;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.wrapper{\r\n  display: inline-flex;\r\n  align-items: center;\r\n  justify-content: space-evenly;\r\n  border-radius: 5px;\n}\n.option{\r\n  background: #fff;\r\n  height: 100%;\r\n  width: 100%;\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  gap: .5rem;\r\n  margin: 0 8px;\r\n  border-radius: 5px;\r\n  cursor: pointer;\r\n  /* padding: 0 10px; */\r\n  border: 2px solid lightgrey;\r\n  transition: all 0.3s ease;\n}\n.option:first-child {\r\n  margin-left: 0;\n}\n.option:last-child {\r\n  margin-right: 0;\n}\n.option .dot{\r\n  height: 16px;\r\n  width: 16px;\r\n  background: #d9d9d9;\r\n  border-radius: 50%;\r\n  position: relative;\n}\n.option .dot::before{\r\n  position: absolute;\r\n  content: \"\";\r\n  top: 4px;\r\n  left: 4px;\r\n  width: 8px;\r\n  height: 8px;\r\n  background: #0069d9;\r\n  border-radius: 50%;\r\n  opacity: 0;\r\n  transform: scale(1.5);\r\n  transition: all 0.3s ease;\n}\ninput[type=\"radio\"]{\r\n  display: none;\n}\n#option-1:checked:checked ~ .option-1,\r\n#option-2:checked:checked ~ .option-2,\r\n#option-3:checked:checked ~ .option-3{\r\n  border-color: #0069d9;\r\n  background: #0069d9;\n}\n#option-1:checked:checked ~ .option-1 .dot,\r\n#option-2:checked:checked ~ .option-2 .dot,\r\n#option-3:checked:checked ~ .option-3 .dot{\r\n  background: #fff;\n}\n#option-1:checked:checked ~ .option-1 .dot::before,\r\n#option-2:checked:checked ~ .option-2 .dot::before,\r\n#option-3:checked:checked ~ .option-3 .dot::before{\r\n  opacity: 1;\r\n  transform: scale(1);\n}\n.option span{\r\n  font-size: 16px;\r\n  color: #808080;\n}\n#option-1:checked:checked ~ .option-1 span,\r\n#option-2:checked:checked ~ .option-2 span,\r\n#option-3:checked:checked ~ .option-3 span{\r\n  color: #fff;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -10043,7 +10043,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n:root {\n  /* --animate-duration: 800ms; */\n  transition-delay: 0.9s;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n:root {\r\n  /* --animate-duration: 800ms; */\r\n  transition-delay: 0.9s;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -38626,7 +38626,7 @@ var render = function () {
                                   { staticClass: "mt-2 alert alert-danger" },
                                   [
                                     _vm._v(
-                                      "\n                                                Masukkan Email\n                                            "
+                                      "\r\n                                                Masukkan Email\r\n                                            "
                                     ),
                                   ]
                                 )
@@ -38673,7 +38673,7 @@ var render = function () {
                                   { staticClass: "mt-2 alert alert-danger" },
                                   [
                                     _vm._v(
-                                      "\n                                                Masukkan Password\n                                            "
+                                      "\r\n                                                Masukkan Password\r\n                                            "
                                     ),
                                   ]
                                 )
@@ -39801,7 +39801,7 @@ var staticRenderFns = [
                       _c("i", { staticClass: "mdi mdi-arrow-up-bold me-1" }),
                       _vm._v("2.65%"),
                     ]),
-                    _vm._v(" since last week\n                            "),
+                    _vm._v(" since last week\r\n                            "),
                   ]),
                 ]),
               ]),
@@ -39831,7 +39831,7 @@ var staticRenderFns = [
                       _c("i", { staticClass: "mdi mdi-arrow-down-bold me-1" }),
                       _vm._v("0.82%"),
                     ]),
-                    _vm._v(" since last week\n                            "),
+                    _vm._v(" since last week\r\n                            "),
                   ]),
                 ]),
               ]),
@@ -39861,7 +39861,7 @@ var staticRenderFns = [
                       _c("i", { staticClass: "mdi mdi-arrow-down-bold me-1" }),
                       _vm._v("6.24%"),
                     ]),
-                    _vm._v(" since last week\n                            "),
+                    _vm._v(" since last week\r\n                            "),
                   ]),
                 ]),
               ]),
@@ -39893,7 +39893,7 @@ var staticRenderFns = [
                       _c("i", { staticClass: "mdi mdi-arrow-up-bold me-1" }),
                       _vm._v("10.51%"),
                     ]),
-                    _vm._v(" since last week\n                            "),
+                    _vm._v(" since last week\r\n                            "),
                   ]),
                 ]),
               ]),
@@ -40534,11 +40534,11 @@ var staticRenderFns = [
                           _vm._v(" "),
                           _c("p", { staticClass: "mb-0" }, [
                             _vm._v(
-                              "Andrei Coman magna sed porta finibus, risus\n                                            posted a new article: "
+                              "Andrei Coman magna sed porta finibus, risus\r\n                                            posted a new article: "
                             ),
                             _c("span", { staticClass: "text-primary" }, [
                               _vm._v(
-                                "Forget UX\n                                                Rowland"
+                                "Forget UX\r\n                                                Rowland"
                               ),
                             ]),
                           ]),
@@ -40583,7 +40583,7 @@ var staticRenderFns = [
                         _vm._v(" "),
                         _c("p", { staticClass: "mb-0" }, [
                           _vm._v(
-                            "Zack Wetass, sed porta finibus, risus Chris Wallace\n                                        Commented "
+                            "Zack Wetass, sed porta finibus, risus Chris Wallace\r\n                                        Commented "
                           ),
                           _c("span", { staticClass: "text-primary" }, [
                             _vm._v(" Developer Moreno"),
@@ -40629,7 +40629,7 @@ var staticRenderFns = [
                         _vm._v(" "),
                         _c("p", { staticClass: "mb-0" }, [
                           _vm._v(
-                            "Zack Wetass, sed porta finibus, risus Chris Wallace\n                                        Commented "
+                            "Zack Wetass, sed porta finibus, risus Chris Wallace\r\n                                        Commented "
                           ),
                           _c("span", { staticClass: "text-primary" }, [
                             _vm._v(" Developer Moreno"),
@@ -40994,13 +40994,13 @@ var staticRenderFns = [
                             _vm._v(" "),
                             _c("td", [
                               _vm._v(
-                                "\n                                                07 Oct, 2019\n                                            "
+                                "\r\n                                                07 Oct, 2019\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
                             _c("td", [
                               _vm._v(
-                                "\n                                                $400\n                                            "
+                                "\r\n                                                $400\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
@@ -41020,7 +41020,7 @@ var staticRenderFns = [
                                 staticClass: "fab fa-cc-mastercard me-1",
                               }),
                               _vm._v(
-                                " Mastercard\n                                            "
+                                " Mastercard\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
@@ -41034,7 +41034,7 @@ var staticRenderFns = [
                                 },
                                 [
                                   _vm._v(
-                                    "\n                                                    View Details\n                                                "
+                                    "\r\n                                                    View Details\r\n                                                "
                                   ),
                                 ]
                               ),
@@ -41082,13 +41082,13 @@ var staticRenderFns = [
                             _vm._v(" "),
                             _c("td", [
                               _vm._v(
-                                "\n                                                07 Oct, 2019\n                                            "
+                                "\r\n                                                07 Oct, 2019\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
                             _c("td", [
                               _vm._v(
-                                "\n                                                $380\n                                            "
+                                "\r\n                                                $380\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
@@ -41106,7 +41106,7 @@ var staticRenderFns = [
                             _c("td", [
                               _c("i", { staticClass: "fab fa-cc-visa me-1" }),
                               _vm._v(
-                                " Visa\n                                            "
+                                " Visa\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
@@ -41120,7 +41120,7 @@ var staticRenderFns = [
                                 },
                                 [
                                   _vm._v(
-                                    "\n                                                    View Details\n                                                "
+                                    "\r\n                                                    View Details\r\n                                                "
                                   ),
                                 ]
                               ),
@@ -41168,13 +41168,13 @@ var staticRenderFns = [
                             _vm._v(" "),
                             _c("td", [
                               _vm._v(
-                                "\n                                                06 Oct, 2019\n                                            "
+                                "\r\n                                                06 Oct, 2019\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
                             _c("td", [
                               _vm._v(
-                                "\n                                                $384\n                                            "
+                                "\r\n                                                $384\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
@@ -41192,7 +41192,7 @@ var staticRenderFns = [
                             _c("td", [
                               _c("i", { staticClass: "fab fa-cc-paypal me-1" }),
                               _vm._v(
-                                " Paypal\n                                            "
+                                " Paypal\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
@@ -41206,7 +41206,7 @@ var staticRenderFns = [
                                 },
                                 [
                                   _vm._v(
-                                    "\n                                                    View Details\n                                                "
+                                    "\r\n                                                    View Details\r\n                                                "
                                   ),
                                 ]
                               ),
@@ -41254,13 +41254,13 @@ var staticRenderFns = [
                             _vm._v(" "),
                             _c("td", [
                               _vm._v(
-                                "\n                                                05 Oct, 2019\n                                            "
+                                "\r\n                                                05 Oct, 2019\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
                             _c("td", [
                               _vm._v(
-                                "\n                                                $412\n                                            "
+                                "\r\n                                                $412\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
@@ -41280,7 +41280,7 @@ var staticRenderFns = [
                                 staticClass: "fab fa-cc-mastercard me-1",
                               }),
                               _vm._v(
-                                " Mastercard\n                                            "
+                                " Mastercard\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
@@ -41294,7 +41294,7 @@ var staticRenderFns = [
                                 },
                                 [
                                   _vm._v(
-                                    "\n                                                    View Details\n                                                "
+                                    "\r\n                                                    View Details\r\n                                                "
                                   ),
                                 ]
                               ),
@@ -41342,13 +41342,13 @@ var staticRenderFns = [
                             _vm._v(" "),
                             _c("td", [
                               _vm._v(
-                                "\n                                                04 Oct, 2019\n                                            "
+                                "\r\n                                                04 Oct, 2019\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
                             _c("td", [
                               _vm._v(
-                                "\n                                                $404\n                                            "
+                                "\r\n                                                $404\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
@@ -41366,7 +41366,7 @@ var staticRenderFns = [
                             _c("td", [
                               _c("i", { staticClass: "fab fa-cc-visa me-1" }),
                               _vm._v(
-                                " Visa\n                                            "
+                                " Visa\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
@@ -41380,7 +41380,7 @@ var staticRenderFns = [
                                 },
                                 [
                                   _vm._v(
-                                    "\n                                                    View Details\n                                                "
+                                    "\r\n                                                    View Details\r\n                                                "
                                   ),
                                 ]
                               ),
@@ -41428,13 +41428,13 @@ var staticRenderFns = [
                             _vm._v(" "),
                             _c("td", [
                               _vm._v(
-                                "\n                                                04 Oct, 2019\n                                            "
+                                "\r\n                                                04 Oct, 2019\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
                             _c("td", [
                               _vm._v(
-                                "\n                                                $392\n                                            "
+                                "\r\n                                                $392\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
@@ -41452,7 +41452,7 @@ var staticRenderFns = [
                             _c("td", [
                               _c("i", { staticClass: "fab fa-cc-paypal me-1" }),
                               _vm._v(
-                                " Paypal\n                                            "
+                                " Paypal\r\n                                            "
                               ),
                             ]),
                             _vm._v(" "),
@@ -41466,7 +41466,7 @@ var staticRenderFns = [
                                 },
                                 [
                                   _vm._v(
-                                    "\n                                                    View Details\n                                                "
+                                    "\r\n                                                    View Details\r\n                                                "
                                   ),
                                 ]
                               ),
@@ -41487,12 +41487,12 @@ var staticRenderFns = [
         _c("div", { staticClass: "container-fluid" }, [
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-sm-6" }, [
-              _vm._v("\n                     © Minible.\n                "),
+              _vm._v("\r\n                     © Minible.\r\n                "),
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-sm-6" }, [
               _c("div", { staticClass: "text-sm-end d-none d-sm-block" }, [
-                _vm._v("\n                        Crafted with "),
+                _vm._v("\r\n                        Crafted with "),
                 _c("i", { staticClass: "mdi mdi-heart text-danger" }),
                 _vm._v(" by "),
                 _c(
@@ -43172,17 +43172,17 @@ var render = function () {
                           _vm._v(" "),
                           _c("td", [
                             _vm._v(
-                              "\n                            " +
+                              "\r\n                            " +
                                 _vm._s(journal.remark) +
-                                "\n                        "
+                                "\r\n                        "
                             ),
                           ]),
                           _vm._v(" "),
                           _c("td", [
                             _vm._v(
-                              "\n                            " +
+                              "\r\n                            " +
                                 _vm._s(journal.ref) +
-                                "\n                        "
+                                "\r\n                        "
                             ),
                           ]),
                           _vm._v(" "),
@@ -43204,7 +43204,7 @@ var render = function () {
                             _vm._v(
                               " " +
                                 _vm._s(journal.user_id) +
-                                "\n                        "
+                                "\r\n                        "
                             ),
                           ]),
                           _vm._v(" "),
