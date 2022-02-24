@@ -1,13 +1,10 @@
 <template>
-    <button class="btn btn-danger" ref="deletePeriod" @click="destroyPeriod">Delete</button>
+    <button class="btn btn-danger" ref="deletePeriod" @click="destroyPeriod"><i class="uil-trash"></i> Delete</button>
 </template>
 
 <script>
 export default {
     props: ['endpoint'],
-    // mounted() {
-    //     console.log(this.endpoint)
-    // },
 
     methods: {
         async destroyPeriod() {
@@ -16,9 +13,6 @@ export default {
                 let q = window.confirm("Are you sure you want to delete this period?")
                 if (q) {
                     let responseDelete = await axios.delete(`/api/accountingperiod/${this.endpoint}`)
-                    // console.log(responseDelete.status)
-                    // console.log(responseDelete.data.message)
-                    // console.log(responseDelete)
                     if (responseDelete.status == 200) {
                         this.$toasted.show(responseDelete.data.message, {
                             type: 'success',

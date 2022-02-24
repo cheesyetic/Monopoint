@@ -12,6 +12,7 @@ use App\Models\Project;
 use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
@@ -39,7 +40,7 @@ class JournalController extends Controller
         if($request->category <= 2){
             $query->where('status','=', $request->category);
         }
-   
+
         if($request->chart){
             $query->whereHas('chartAccount', function($query) use($request){
                 $query->where('chart_account_id', $request->chart);
@@ -79,6 +80,7 @@ class JournalController extends Controller
      */
     public function store(Request $request)
     {
+        // return response()->json($request, Response::HTTP_CREATED);
 
         $input = $request->all();
 
@@ -93,13 +95,16 @@ class JournalController extends Controller
             'chart_account_id' => ['required'],
             'accounting_period_id' => ['required'],
             'bank_account_id' => ['required'],
-            'user_id' => ['required'] 
+            'project_id' => ['required'],
+            'user_id' => ['required']
         ]);
 
         if($validator->fails()){
             return response()->json($validator->errors(),
             Response::HTTP_UNPROCESSABLE_ENTITY);
         }
+
+
 
             if($file = $request->file('filebukti')){
                 $path = $file->store('public/files');
@@ -122,7 +127,7 @@ class JournalController extends Controller
                 'data' => $journal
             ];
 
-            return response()->json($response, Response::HTTP_CREATED);
+            // return response()->json($response, Response::HTTP_CREATED);
 
     }
 
@@ -132,8 +137,9 @@ class JournalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($token)
     {
+        $id = Crypt::decryptString($token);
         $journal = Journal::findOrFail($id);
         $response = [
             'message' => 'A journal row shown',
@@ -149,9 +155,10 @@ class JournalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
- 
-    public function update(Request $request, $id)
-    { 
+
+    public function update(Request $request, $token)
+    {
+        $id = Crypt::decryptString($token);
         $journal = Journal::findOrFail($id);
 
         $validator = Validator::make($request->all(), [
@@ -164,7 +171,8 @@ class JournalController extends Controller
             'chart_account_id' => ['required'],
             'accounting_period_id' => ['required'],
             'bank_account_id' => ['required'],
-            'user_id' => ['required'] 
+            'project_id' => ['required'],
+            'user_id' => ['required']
         ]);
 
         if($validator->fails()){
@@ -211,7 +219,7 @@ class JournalController extends Controller
             ];
 
             return response()->json($response, Response::HTTP_OK);
-            
+
         } catch (QueryException $e) {
             return response()->json([
                 'message' => "Failed " . $e->errorInfo
@@ -225,8 +233,9 @@ class JournalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($token)
     {
+        $id = Crypt::decryptString($token);
         $journal = Journal::findOrFail($id);
 
         try {
@@ -237,7 +246,7 @@ class JournalController extends Controller
             ];
 
             return response()->json($response, Response::HTTP_OK);
-            
+
         } catch (QueryException $e) {
             return response()->json([
                 'message' => "Failed " . $e->errorInfo

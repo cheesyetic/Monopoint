@@ -4,6 +4,8 @@
         <div class="container-fluid">
 
             <!-- start page title -->
+            <!-- <h1>Selamat Datang, <strong>{{ user.name }}</strong></h1> -->
+            <!-- <button class="btn-primary" @click="logout">Logout</button> -->
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-flex align-items-center justify-content-between">
@@ -545,10 +547,9 @@
 
 <script>
 export default {
-mounted() {
-    console.log('comp home mounted')
+
 }
-}
+
 </script>
 
 <style>

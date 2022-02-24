@@ -28,12 +28,12 @@
             </button>
 
             <!-- App Search-->
-            <form class="app-search d-none d-lg-block">
+            <!-- <form class="app-search d-none d-lg-block">
                 <div class="position-relative">
                     <input type="text" class="form-control" placeholder="Search...">
                     <span class="uil-search"></span>
                 </div>
-            </form>
+            </form> -->
         </div>
 
         <div class="d-flex">
@@ -62,15 +62,14 @@
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img class="rounded-circle header-profile-user" src="/assets/images/users/avatar-4.jpg"
-                        alt="Header Avatar">
-                    <span class="d-none d-xl-inline-block ms-1 fw-medium font-size-15">Marcus</span>
+                    <i class="uil-user"></i>
+                    <span class="d-none d-xl-inline-block ms-1 fw-medium font-size-15">{{ auth.user.name }}</span>
                     <i class="uil-angle-down d-none d-xl-inline-block font-size-15"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
                     <!-- item-->
                     <a class="dropdown-item" href="#"><i class="uil uil-user-circle font-size-18 align-middle text-muted me-1"></i> <span class="align-middle">Akun</span></a>
-                    <a class="dropdown-item" href="#"><i class="uil uil-sign-out-alt font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Sign out</span></a>
+                    <a class="dropdown-item" href="#" @click="logout"><i class="uil uil-sign-out-alt font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Sign out</span></a>
                 </div>
             </div>
 
@@ -90,9 +89,21 @@
                             </router-link>
                         </li>
 
-                        <li class="nav-item dropdown">
+                        <li class="nav-item">
+                            <router-link class="nav-link" :to="{name: 'appointment'}">
+                                <i class="uil-meeting-board me-2"></i> Appointment
+                            </router-link>
+                        </li>
+
+                        <li class="nav-item">
+                            <router-link class="nav-link" :to="{name: 'jurnal'}">
+                                <i class="uil-file-landscape me-2"></i> Jurnal
+                            </router-link>
+                        </li>
+
+                        <li class="nav-item dropdown" v-if="auth.user.type == 0">
                             <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-pages" role="button">
-                                <i class="uil-apps me-2"></i>Fitur Admin <div class="arrow-down"></div>
+                                <i class="uil-apps me-2"></i>Master Data <div class="arrow-down"></div>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="topnav-pages">
 
@@ -100,22 +111,14 @@
                                 <router-link :to="{name: 'periode'}" class="dropdown-item">Periode</router-link>
                                 <router-link :to="{name: 'rekening'}" class="dropdown-item">Rekening</router-link>
                                 <router-link :to="{name: 'project'}" class="dropdown-item">Project</router-link>
+                                <router-link :to="{name: 'asset'}" class="dropdown-item">Asset</router-link>
+                                <router-link :to="{name: 'chart'}" class="dropdown-item">Chart Account</router-link>
 
                             </div>
                         </li>
 
 
-                        <li class="nav-item">
-                            <router-link class="nav-link" exact :to="{name: 'jurnal'}">
-                                <i class="uil-home-alt me-2"></i> Jurnal
-                            </router-link>
-                        </li>
 
-                        <li class="nav-item">
-                            <router-link class="nav-link" exact :to="{name: 'appoinment'}">
-                                <i class="uil-home-alt me-2"></i> Appoinment
-                            </router-link>
-                        </li>
 
                     </ul>
                 </div>
@@ -127,7 +130,48 @@
 
 <script>
 export default {
+    props: ['auth'],
+    // data() {
+    //   return {
+    //     loggedIn: localStorage.getItem('loggedIn'),
+    //     token: localStorage.getItem('token'),
+    //     user: []
+    //   }
+    // },
 
+    // created() {
+    //     axios.get('http://localhost:8000/api/user', {headers: {'Authorization': 'Bearer '+this.token}})
+    //     .then(response => {
+    //         console.log(response)
+    //         this.user = response.data // assign response to state user
+    //     })
+    // },
+
+    methods: {
+    //   getLoggedIn() {
+    //     this.loggedIn = localStorage.getItem("loggedIn")
+    //   },
+      logout() {
+            axios.get('http://localhost:8000/api/logout')
+            .then(() => {
+                //remove localStorage
+                localStorage.removeItem("loggedIn")
+
+
+                //redirect
+                return this.$router.push({ name: 'login' })
+            })
+        }
+    },
+
+    // watch: {
+    //   $route: {
+    //     immediate: true,
+    //     handler() {
+    //       this.getLoggedIn()
+    //     }
+    //   }
+    // },
 }
 </script>
 

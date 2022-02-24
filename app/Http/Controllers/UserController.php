@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,6 +21,11 @@ class UserController extends Controller
     public function index()
     {
         $user = User::get();
+
+        foreach ($user as $key => $value) {
+            $user[$key]->token = Crypt::encryptString($user[$key]->id);
+        }
+
         $response = [
             'message' => 'List User',
             'data' => $user
@@ -44,6 +51,7 @@ class UserController extends Controller
             'password' => ['required', 'min:8']
         ]);
 
+
         if($validator->fails()){
             return response()->json($validator->errors(),
             Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -51,6 +59,8 @@ class UserController extends Controller
 
         try {
             $user = User::create($request->all());
+            $user->password = Hash::make($user->password);
+            $user->save();
             $response = [
                 'message' => 'A new user row created',
                 'data' => $user
@@ -72,8 +82,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($token)
     {
+        $id = Crypt::decryptString($token);
         $user = User::findOrFail($id);
 
         $response = [
@@ -91,9 +102,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $token)
     {
-
+        $id = Crypt::decryptString($token);
         $user = User::findOrFail($id);
 
         $validator = Validator::make($request->all(), [
@@ -101,7 +112,6 @@ class UserController extends Controller
             'email' => ['required', 'email', Rule::unique('users')->ignore($user->id)],
             'phone_number' => ['required', Rule::unique('users')->ignore($user->id)],
             'type' => ['required'],
-            'password' => ['required', 'min:8']
         ]);
 
         if($validator->fails()){
@@ -132,9 +142,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($token)
     {
-
+        $id = Crypt::decryptString($token);
         $user = User::findOrFail($id);
 
         try {
