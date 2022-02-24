@@ -60,8 +60,10 @@
                                         <div class="card-body row">
                                             <div class="col-9">
                                                 <h5 class="card-title">{{ chart.name }}</h5>
+                                                <h5 class="card-title">{{ chart.type }}</h5>
+                                                <p class="card-text" v-if="chart.type = 1"><i class="uil-import"></i> Pemasukan</p>
+                                                <p class="card-text" v-else><i class="uil-export"></i> Pengeluaran</p>
                                                 <p class="card-text">{{ chart.code }}</p>
-                                                <p class="card-text">{{ chart.type }}</p>
                                             </div>
                                             <div class="col-3 row">
                                                 <router-link :to="{ name: 'chart.edit', params: { token: chart.token }}" class="btn btn-primary mb-2"><i class="uil-edit-alt"></i> Edit</router-link>

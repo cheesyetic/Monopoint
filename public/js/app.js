@@ -4619,6 +4619,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -39613,15 +39615,37 @@ var render = function () {
                                             ),
                                             _vm._v(" "),
                                             _c(
-                                              "p",
-                                              { staticClass: "card-text" },
-                                              [_vm._v(_vm._s(chart.code))]
+                                              "h5",
+                                              { staticClass: "card-title" },
+                                              [_vm._v(_vm._s(chart.type))]
                                             ),
+                                            _vm._v(" "),
+                                            (chart.type = 1)
+                                              ? _c(
+                                                  "p",
+                                                  { staticClass: "card-text" },
+                                                  [
+                                                    _c("i", {
+                                                      staticClass: "uil-import",
+                                                    }),
+                                                    _vm._v(" Pemasukan"),
+                                                  ]
+                                                )
+                                              : _c(
+                                                  "p",
+                                                  { staticClass: "card-text" },
+                                                  [
+                                                    _c("i", {
+                                                      staticClass: "uil-export",
+                                                    }),
+                                                    _vm._v(" Pengeluaran"),
+                                                  ]
+                                                ),
                                             _vm._v(" "),
                                             _c(
                                               "p",
                                               { staticClass: "card-text" },
-                                              [_vm._v(_vm._s(chart.type))]
+                                              [_vm._v(_vm._s(chart.code))]
                                             ),
                                           ]),
                                           _vm._v(" "),
