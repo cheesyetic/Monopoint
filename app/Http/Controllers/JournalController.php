@@ -7,6 +7,7 @@ use App\Imports\JournalsImport;
 use App\Mail\JournalChange;
 use App\Models\AccountingPeriod;
 use App\Models\AdjustingHistory;
+use App\Models\BankAccount;
 use App\Models\ChartAccount;
 use App\Models\Journal;
 use App\Models\Project;
@@ -28,7 +29,9 @@ class JournalController extends Controller
      */
     public function index(Request $request)
     {
-        $id = Crypt::decryptString($request->token);
+        if($request->token){
+            $id = Crypt::decryptString($request->token);
+        }
         
         $query = Journal::with(['user', 'chartAccount', 'accountingPeriod', 'project', 'asset', 'bankAccount']);
 
@@ -152,8 +155,8 @@ class JournalController extends Controller
             $value->user_id = User::findOrFail($value->user_id)->name;
             $value->chart_account_id = ChartAccount::findOrFail($value->chart_account_id)->name;
             $value->accounting_period_id = AccountingPeriod::findOrFail($value->accounting_period_id)->name;
-            $value->bank_account_id = AccountingPeriod::findOrFail($value->bank_account_id)->name;
-            $value->project_id = AccountingPeriod::findOrFail($value->project_id)->name;
+            $value->bank_account_id = BankAccount::findOrFail($value->bank_account_id)->name;
+            $value->project_id = Project::findOrFail($value->project_id)->name;
         }
         $response = [
             'message' => 'A journal row shown',
@@ -337,23 +340,25 @@ class JournalController extends Controller
     }
 
     public function export(){
-        $expexc = Excel::download(new JournalsExport, 'journals.xlsx');
-        $response = [
-            'message' => 'The file has been downloaded',
-            'data' => $expexc
-        ];
+        // $expexc = Excel::download(new JournalsExport, 'journals.xlsx');
+        // $response = [
+        //     'message' => 'The file has been downloaded',
+        //     'data' => $expexc
+        // ];
 
-        return response()->json($response, Response::HTTP_OK);
+        // return response()->json($response, Response::HTTP_OK);
+        return Excel::download(new JournalsExport, 'journals.xlsx');
     }
 
     public function import(){
-        Excel::import(new JournalsImport, 'journals.xlsx');
+        Excel::import(new JournalsImport, request()->file('file'));
+        return back();
 
-        $response = [
-            'message' => 'The file has been uploaded'
-        ];
+        // $response = [
+        //     'message' => 'The file has been uploaded'
+        // ];
 
-        return response()->json($response, Response::HTTP_OK);
+        // return response()->json($response, Response::HTTP_OK);
     }
     public function sendEmail($id){
         $jurnal = Journal::findOrFail($id);
