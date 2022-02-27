@@ -23,6 +23,7 @@ class CreateAdjustingHistoriesTable extends Migration
             $table->double('uang_keluar')->nullable(true);
             $table->integer('is_reimburse');
             $table->timestamps();
+            $table->integer('journal_id');
             $table->integer('chart_account_id');
             $table->integer('accounting_period_id');
             $table->integer('bank_account_id');

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\AdjustingHistory;
+use App\Models\Journal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdjustingHistoryController extends Controller
@@ -13,9 +15,15 @@ class AdjustingHistoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($token)
     {
-        $adjustinghistory = AdjustingHistory::get();
+        $id = Crypt::decryptString($token);
+        $adjustinghistory = AdjustingHistory::where('journal_id', '=', $id)->get();
+
+        
+        foreach ($adjustinghistory as $value) {
+            $value->journal_id = Journal::findOrFail($value->journal_id)->title;
+        }
 
         $response = [
             'message' => 'List Adjusting History',
@@ -35,7 +43,7 @@ class AdjustingHistoryController extends Controller
     {
         $adjustinghistory = AdjustingHistory::create($request);
         $response = [
-            'message' => 'A new journal row created',
+            'message' => 'A new adjusting history row created',
             'data' => $adjustinghistory
         ];
 
@@ -48,8 +56,9 @@ class AdjustingHistoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($token)
     {
+        $id = Crypt::decrypt($token);
         $adjustinghistory = AdjustingHistory::findOrFail($id);
         $response = [
             'message' => 'A journal row shown',

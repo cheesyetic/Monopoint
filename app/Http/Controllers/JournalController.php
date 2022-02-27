@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\JournalsExport;
 use App\Imports\JournalsImport;
 use App\Mail\JournalChange;
+use App\Models\AccountingPeriod;
 use App\Models\AdjustingHistory;
 use App\Models\ChartAccount;
 use App\Models\Journal;
@@ -27,17 +28,26 @@ class JournalController extends Controller
      */
     public function index(Request $request)
     {
+        $id = Crypt::decryptString($request->token);
+        
         $query = Journal::with(['user', 'chartAccount', 'accountingPeriod', 'project', 'asset', 'bankAccount']);
 
+        if($request->token){
+            $user = User::where('id', '=', $id)->get();
+            if($user->type = 3){
+                $query->where('user_id', '=', $id);
+            }
+        }
+        
         if($request->keyword){
-            $query->where('title','LIKE','%'.$request->keyword.'%');
+            $query->where('title','ilike','%'.$request->keyword.'%');
         }
 
         if($request->category > 2){
             $query->where('status','>=', $request->category);
         }
 
-        if($request->category <= 2){
+        if($request->category <= 2 && $request->category > 0){
             $query->where('status','=', $request->category);
         }
 
@@ -46,11 +56,11 @@ class JournalController extends Controller
                 $query->where('chart_account_id', $request->chart);
             });
         }
-
+        
         if($request->reimburse){
             $query->where('is_reimburse','=', $request->reimburse);
         }
-
+        
         if($request->date){
             $query->whereMonth('date','=', date($request->date));
         }
@@ -59,9 +69,6 @@ class JournalController extends Controller
 
         foreach($journal as $value){
             $value->project_id = Project::findOrFail($value->project_id)->name;
-        }
-
-        foreach($journal as $value){
             $value->user_id = User::findOrFail($value->user_id)->name;
         }
 
@@ -103,9 +110,6 @@ class JournalController extends Controller
             return response()->json($validator->errors(),
             Response::HTTP_UNPROCESSABLE_ENTITY);
         }
-
-
-
             if($file = $request->file('filebukti')){
                 $path = $file->store('public/files');
                 $name = $file->getClientOriginalName();
@@ -114,20 +118,21 @@ class JournalController extends Controller
             }
 
             $journal = Journal::create($input);
-            AdjustingHistory::create($input);
+            $input['journal_id'] = $journal->id;
+            adjustingHistory::create($input);
 
             // balance in ca
-            $idchartacc = $input['chart_account_id'];
-            $ca = ChartAccount::findOrFail($idchartacc);
-            $ca->balance = $ca->balance + $input['balance'];
-            $ca->save();
+            // $idchartacc = $input['chart_account_id'];
+            // $ca = ChartAccount::findOrFail($idchartacc);
+            // $ca->balance = $ca->balance + $input['balance'];
+            // $ca->save();
 
             $response = [
                 'message' => 'A new journal row created',
                 'data' => $journal
             ];
 
-            // return response()->json($response, Response::HTTP_CREATED);
+            return response()->json($response, Response::HTTP_CREATED);
 
     }
 
@@ -141,6 +146,15 @@ class JournalController extends Controller
     {
         $id = Crypt::decryptString($token);
         $journal = Journal::findOrFail($id);
+
+        foreach($journal as $value){
+            $value->project_id = Project::findOrFail($value->project_id)->name;
+            $value->user_id = User::findOrFail($value->user_id)->name;
+            $value->chart_account_id = ChartAccount::findOrFail($value->chart_account_id)->name;
+            $value->accounting_period_id = AccountingPeriod::findOrFail($value->accounting_period_id)->name;
+            $value->bank_account_id = AccountingPeriod::findOrFail($value->bank_account_id)->name;
+            $value->project_id = AccountingPeriod::findOrFail($value->project_id)->name;
+        }
         $response = [
             'message' => 'A journal row shown',
             'data' => $journal
@@ -168,6 +182,7 @@ class JournalController extends Controller
             'ref' => ['max:45'],
             'is_reimburse' => ['required'],
             'filebukti' => ['mimes:png,jpg,jpeg,doc,docx,pdf,txt,csv', 'max:2048'],
+            'balance' => ['required'],
             'chart_account_id' => ['required'],
             'accounting_period_id' => ['required'],
             'bank_account_id' => ['required'],
@@ -193,24 +208,25 @@ class JournalController extends Controller
             $input['filebukti'] = "$journal->filebukti";
         }
 
-        if($input['balance'] > $journal->balance){
-            $res = $input['balance'] - $journal->balance;
-            $idchartacc = $input['chart_account_id'];
-            $ca = ChartAccount::findOrFail($idchartacc);
-            $ca->balance = $ca->balance + $res;
-            $ca->save();
-        }
+        // if($input['balance'] > $journal->balance){
+        //     $res = $input['balance'] - $journal->balance;
+        //     $idchartacc = $input['chart_account_id'];
+        //     $ca = ChartAccount::findOrFail($idchartacc);
+        //     $ca->balance = $ca->balance + $res;
+        //     $ca->save();
+        // }
 
-        elseif ($input['balance'] < $journal->balance) {
-            $res = $journal->balance - $input['balance'] ;
-            $idchartacc = $input['chart_account_id'];
-            $ca = ChartAccount::findOrFail($idchartacc);
-            $ca->balance = $ca->balance - $res;
-            $ca->save();
-        }
+        // elseif ($input['balance'] < $journal->balance) {
+        //     $res = $journal->balance - $input['balance'] ;
+        //     $idchartacc = $input['chart_account_id'];
+        //     $ca = ChartAccount::findOrFail($idchartacc);
+        //     $ca->balance = $ca->balance - $res;
+        //     $ca->save();
+        // }
 
         $journal->update($input);
         $this->sendEmail($id);
+        $input['journal_id'] = $journal->id;
         AdjustingHistory::create($input);
 
             $response = [
@@ -254,7 +270,9 @@ class JournalController extends Controller
         }
     }
 
-    public function draftToProcess($id){
+    public function draftToProcess($token)
+    {
+        $id = Crypt::decryptString($token);
         $journal = Journal::findOrFail($id);
 
         $journal->status = 2;
@@ -269,7 +287,8 @@ class JournalController extends Controller
         return response()->json($response, Response::HTTP_OK);
     }
 
-    public function validationStatus(Request $request, $id){
+    public function validationStatus(Request $request, $token){
+        $id = Crypt::decryptString($token);
         $journal = Journal::findOrFail($id);
 
         $journal->status = 3;
@@ -284,6 +303,13 @@ class JournalController extends Controller
             $journal->buktireimburse = $input;
         }
         $journal->save();
+
+        // balance in ca
+        $idchartacc = $journal->chart_account_id;
+        $ca = ChartAccount::findOrFail($idchartacc);
+        $ca->balance = $ca->balance + $journal->balance;
+        $ca->save();
+
         $this->sendEmail($id);
 
         $response = [
@@ -294,7 +320,8 @@ class JournalController extends Controller
         return response()->json($response, Response::HTTP_OK);
     }
 
-    public function declineStatus($id){
+    public function declineStatus($token){
+        $id = Crypt::decryptString($token);
         $journal = Journal::findOrFail($id);
 
         $journal->status = 4;
@@ -311,7 +338,6 @@ class JournalController extends Controller
 
     public function export(){
         $expexc = Excel::download(new JournalsExport, 'journals.xlsx');
-        dd($expexc);
         $response = [
             'message' => 'The file has been downloaded',
             'data' => $expexc
