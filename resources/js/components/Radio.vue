@@ -9,7 +9,7 @@ export default {
 </script>
 
 <style>
-
+/*
 .wrapper{
   display: inline-flex;
   align-items: center;
@@ -27,7 +27,6 @@ export default {
   margin: 0 8px;
   border-radius: 5px;
   cursor: pointer;
-  /* padding: 0 10px; */
   border: 2px solid lightgrey;
   transition: all 0.3s ease;
 }
@@ -51,7 +50,7 @@ export default {
   left: 4px;
   width: 8px;
   height: 8px;
-  background: #0069d9;
+  background: #5B73E8;
   border-radius: 50%;
   opacity: 0;
   transform: scale(1.5);
@@ -63,8 +62,8 @@ input[type="radio"]{
 #option-1:checked:checked ~ .option-1,
 #option-2:checked:checked ~ .option-2,
 #option-3:checked:checked ~ .option-3{
-  border-color: #0069d9;
-  background: #0069d9;
+  border-color: #5B73E8;
+  background: #5B73E8;
 }
 #option-1:checked:checked ~ .option-1 .dot,
 #option-2:checked:checked ~ .option-2 .dot,
@@ -85,5 +84,5 @@ input[type="radio"]{
 #option-2:checked:checked ~ .option-2 span,
 #option-3:checked:checked ~ .option-3 span{
   color: #fff;
-}
+} */
 </style>
