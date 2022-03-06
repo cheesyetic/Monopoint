@@ -87,9 +87,19 @@ export default {
 
                 // JURNAL
                 {
-                    path: '/jurnal',
+                    path: '/jurnal-draft',
                     name: 'jurnal',
-                    component: Jurnal,
+                    component: TabDraft,
+                },
+                {
+                    path: '/jurnal-proses',
+                    name: 'jurnalproses',
+                    component: TabProses,
+                },
+                {
+                    path: '/jurnal-verif',
+                    name: 'jurnalverif',
+                    component: TabVerif,
                 },
                 {
                     path: '/jurnal/edit/:token',

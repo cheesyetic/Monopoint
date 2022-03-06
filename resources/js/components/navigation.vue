@@ -88,17 +88,24 @@
                             </router-link>
                         </li>
 
-                        <li class="nav-item">
-                            <router-link class="nav-link" :to="{name: 'jurnal'}">
-                                <i class="uil-file-landscape me-2"></i> Jurnal
-                            </router-link>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-jurnal" role="button">
+                                <i class="uil-file-landscape me-2"></i>Jurnal <div class="arrow-down"></div>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="topnav-jurnal">
+
+                                <router-link :to="{name: 'jurnal'}" class="dropdown-item">Draft</router-link>
+                                <router-link :to="{name: 'jurnalproses'}" class="dropdown-item">Proses</router-link>
+                                <router-link :to="{name: 'jurnalverif'}" class="dropdown-item">Verif</router-link>
+
+                            </div>
                         </li>
 
                         <li class="nav-item dropdown" v-if="auth.user.type == 0">
-                            <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-pages" role="button">
+                            <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-admin" role="button">
                                 <i class="uil-apps me-2"></i>Master Data <div class="arrow-down"></div>
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="topnav-pages">
+                            <div class="dropdown-menu" aria-labelledby="topnav-admin">
 
                                 <router-link :to="{name: 'karyawan'}" class="dropdown-item">Karyawan</router-link>
                                 <router-link :to="{name: 'periode'}" class="dropdown-item">Periode</router-link>
