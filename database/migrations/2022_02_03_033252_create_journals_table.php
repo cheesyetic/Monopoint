@@ -28,7 +28,7 @@ class CreateJournalsTable extends Migration
             $table->integer('chart_account_id');
             $table->integer('accounting_period_id');
             $table->integer('bank_account_id');
-            $table->integer('project_id')->nullable(true);
+            $table->integer('project_id');
             $table->integer('user_id');
         });
     }
