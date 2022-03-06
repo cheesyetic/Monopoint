@@ -64,6 +64,7 @@ Route::get('/sendemail', [JournalController::class, 'sendEmail']);
 Route::resource('/asset', AssetController::class)->except('update', 'create', 'edit');
 Route::post('/asset/{id}', [JournalController::class, 'update']);
 //AdjustingHistory
-Route::resource('/adjustinghistory', AdjustingHistoryController::class)->except('update', 'create', 'edit');
+Route::resource('/adjustinghistory', AdjustingHistoryController::class)->except('index', 'update', 'create', 'edit');
+Route::get('/journalhistories/{id}', [AdjustingHistoryController::class, 'index']);
 Route::post('/adjustinghistory/{id}', [AdjustingHistoryController::class, 'update']);
 

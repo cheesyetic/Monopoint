@@ -2,8 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AccountingPeriod;
 use App\Models\AdjustingHistory;
+use App\Models\BankAccount;
+use App\Models\ChartAccount;
+use App\Models\Journal;
+use App\Models\Project;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdjustingHistoryController extends Controller
@@ -13,9 +20,14 @@ class AdjustingHistoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($token)
     {
-        $adjustinghistory = AdjustingHistory::get();
+        $id = Crypt::decryptString($token);
+        $adjustinghistory = AdjustingHistory::where('journal_id', '=', $id)->get();
+        
+        foreach ($adjustinghistory as $value) {
+            $value->journal_id = Journal::findOrFail($value->journal_id)->title;
+        }
 
         $response = [
             'message' => 'List Adjusting History',
@@ -35,7 +47,7 @@ class AdjustingHistoryController extends Controller
     {
         $adjustinghistory = AdjustingHistory::create($request);
         $response = [
-            'message' => 'A new journal row created',
+            'message' => 'A new adjusting history row created',
             'data' => $adjustinghistory
         ];
 
@@ -48,9 +60,21 @@ class AdjustingHistoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($token)
     {
+        $id = Crypt::decrypt($token);
         $adjustinghistory = AdjustingHistory::findOrFail($id);
+
+        foreach ($adjustinghistory as $value) {
+            $value->journal_id = Journal::findOrFail($value->journal_id)->title;
+            $value->project_id = Project::findOrFail($value->project_id)->name;
+            $value->user_id = User::findOrFail($value->user_id)->name;
+            $value->chart_account_id = ChartAccount::findOrFail($value->chart_account_id)->name;
+            $value->accounting_period_id = AccountingPeriod::findOrFail($value->accounting_period_id)->name;
+            $value->bank_account_id = BankAccount::findOrFail($value->bank_account_id)->name;
+            $value->project_id = Project::findOrFail($value->project_id)->name;
+        }
+
         $response = [
             'message' => 'A journal row shown',
             'data' => $adjustinghistory

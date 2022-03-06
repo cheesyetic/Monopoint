@@ -17,6 +17,7 @@ class AdjustingHistory extends Model
         'uang_masuk',
         'uang_keluar',
         'is_reimburse',
+        'journal_id',
         'chart_account_id',
         'accounting_period_id',
         'bank_account_id',
@@ -41,6 +42,9 @@ class AdjustingHistory extends Model
     }
     public function asset(){
         return $this->belongsTo(Asset::class);
+    }
+    public function journal(){
+        return $this->belongsTo(Journal::class);
     }
 
 }
