@@ -10880,7 +10880,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n/*\n.wrapper{\n  display: inline-flex;\n  align-items: center;\n  justify-content: space-evenly;\n  border-radius: 5px;\n}\n.option{\n  background: #fff;\n  height: 100%;\n  width: 100%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: .5rem;\n  margin: 0 8px;\n  border-radius: 5px;\n  cursor: pointer;\n  border: 2px solid lightgrey;\n  transition: all 0.3s ease;\n}\n.option:first-child {\n  margin-left: 0;\n}\n.option:last-child {\n  margin-right: 0;\n}\n.option .dot{\n  height: 16px;\n  width: 16px;\n  background: #d9d9d9;\n  border-radius: 50%;\n  position: relative;\n}\n.option .dot::before{\n  position: absolute;\n  content: \"\";\n  top: 4px;\n  left: 4px;\n  width: 8px;\n  height: 8px;\n  background: #5B73E8;\n  border-radius: 50%;\n  opacity: 0;\n  transform: scale(1.5);\n  transition: all 0.3s ease;\n}\ninput[type=\"radio\"]{\n  display: none;\n}\n#option-1:checked:checked ~ .option-1,\n#option-2:checked:checked ~ .option-2,\n#option-3:checked:checked ~ .option-3{\n  border-color: #5B73E8;\n  background: #5B73E8;\n}\n#option-1:checked:checked ~ .option-1 .dot,\n#option-2:checked:checked ~ .option-2 .dot,\n#option-3:checked:checked ~ .option-3 .dot{\n  background: #fff;\n}\n#option-1:checked:checked ~ .option-1 .dot::before,\n#option-2:checked:checked ~ .option-2 .dot::before,\n#option-3:checked:checked ~ .option-3 .dot::before{\n  opacity: 1;\n  transform: scale(1);\n}\n.option span{\n  font-size: 16px;\n  color: #808080;\n}\n#option-1:checked:checked ~ .option-1 span,\n#option-2:checked:checked ~ .option-2 span,\n#option-3:checked:checked ~ .option-3 span{\n  color: #fff;\n} */\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\r\n/*\r\n.wrapper{\r\n  display: inline-flex;\r\n  align-items: center;\r\n  justify-content: space-evenly;\r\n  border-radius: 5px;\r\n}\r\n.option{\r\n  background: #fff;\r\n  height: 100%;\r\n  width: 100%;\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  gap: .5rem;\r\n  margin: 0 8px;\r\n  border-radius: 5px;\r\n  cursor: pointer;\r\n  border: 2px solid lightgrey;\r\n  transition: all 0.3s ease;\r\n}\r\n.option:first-child {\r\n  margin-left: 0;\r\n}\r\n.option:last-child {\r\n  margin-right: 0;\r\n}\r\n.option .dot{\r\n  height: 16px;\r\n  width: 16px;\r\n  background: #d9d9d9;\r\n  border-radius: 50%;\r\n  position: relative;\r\n}\r\n.option .dot::before{\r\n  position: absolute;\r\n  content: \"\";\r\n  top: 4px;\r\n  left: 4px;\r\n  width: 8px;\r\n  height: 8px;\r\n  background: #5B73E8;\r\n  border-radius: 50%;\r\n  opacity: 0;\r\n  transform: scale(1.5);\r\n  transition: all 0.3s ease;\r\n}\r\ninput[type=\"radio\"]{\r\n  display: none;\r\n}\r\n#option-1:checked:checked ~ .option-1,\r\n#option-2:checked:checked ~ .option-2,\r\n#option-3:checked:checked ~ .option-3{\r\n  border-color: #5B73E8;\r\n  background: #5B73E8;\r\n}\r\n#option-1:checked:checked ~ .option-1 .dot,\r\n#option-2:checked:checked ~ .option-2 .dot,\r\n#option-3:checked:checked ~ .option-3 .dot{\r\n  background: #fff;\r\n}\r\n#option-1:checked:checked ~ .option-1 .dot::before,\r\n#option-2:checked:checked ~ .option-2 .dot::before,\r\n#option-3:checked:checked ~ .option-3 .dot::before{\r\n  opacity: 1;\r\n  transform: scale(1);\r\n}\r\n.option span{\r\n  font-size: 16px;\r\n  color: #808080;\r\n}\r\n#option-1:checked:checked ~ .option-1 span,\r\n#option-2:checked:checked ~ .option-2 span,\r\n#option-3:checked:checked ~ .option-3 span{\r\n  color: #fff;\r\n} */\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -44662,7 +44662,7 @@ var render = function () {
                               },
                               [
                                 _vm._v(
-                                  "\n                            " +
+                                  "\r\n                            " +
                                     _vm._s(
                                       journal.is_reimburse ? "Ya" : "Tidak"
                                     )
@@ -44673,17 +44673,17 @@ var render = function () {
                           _vm._v(" "),
                           _c("td", [
                             _vm._v(
-                              "\n                            " +
+                              "\r\n                            " +
                                 _vm._s(journal.remark) +
-                                "\n                        "
+                                "\r\n                        "
                             ),
                           ]),
                           _vm._v(" "),
                           _c("td", [
                             _vm._v(
-                              "\n                            " +
+                              "\r\n                            " +
                                 _vm._s(journal.user_id) +
-                                "\n                        "
+                                "\r\n                        "
                             ),
                           ]),
                           _vm._v(" "),
@@ -45179,7 +45179,7 @@ var render = function () {
                               },
                               [
                                 _vm._v(
-                                  "\n                            " +
+                                  "\r\n                            " +
                                     _vm._s(
                                       journal.is_reimburse ? "Ya" : "Tidak"
                                     )
@@ -45190,17 +45190,17 @@ var render = function () {
                           _vm._v(" "),
                           _c("td", [
                             _vm._v(
-                              "\n                            " +
+                              "\r\n                            " +
                                 _vm._s(journal.remark) +
-                                "\n                        "
+                                "\r\n                        "
                             ),
                           ]),
                           _vm._v(" "),
                           _c("td", [
                             _vm._v(
-                              "\n                            " +
+                              "\r\n                            " +
                                 _vm._s(journal.user_id) +
-                                "\n                        "
+                                "\r\n                        "
                             ),
                           ]),
                           _vm._v(" "),
@@ -45703,7 +45703,7 @@ var render = function () {
                               },
                               [
                                 _vm._v(
-                                  "\n                            " +
+                                  "\r\n                            " +
                                     _vm._s(
                                       journal.status == 3
                                         ? "Diterima"
@@ -45716,17 +45716,17 @@ var render = function () {
                           _vm._v(" "),
                           _c("td", [
                             _vm._v(
-                              "\n                            " +
+                              "\r\n                            " +
                                 _vm._s(journal.remark) +
-                                "\n                        "
+                                "\r\n                        "
                             ),
                           ]),
                           _vm._v(" "),
                           _c("td", [
                             _vm._v(
-                              "\n                            " +
+                              "\r\n                            " +
                                 _vm._s(journal.user_id) +
-                                "\n                        "
+                                "\r\n                        "
                             ),
                           ]),
                           _vm._v(" "),

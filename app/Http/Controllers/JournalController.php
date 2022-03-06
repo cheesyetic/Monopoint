@@ -47,7 +47,7 @@ class JournalController extends Controller
             });
         }
 
-        if($request->reimburse){
+        if($request->reimburse != null){
             $query = $query->where('is_reimburse','=', $request->reimburse);
         }
 
@@ -60,6 +60,7 @@ class JournalController extends Controller
         foreach($journal as $value){
             $value->project_id = Project::findOrFail($value->project_id)->name;
             $value->user_id = User::findOrFail($value->user_id)->name;
+            $value->chart_account_id = ChartAccount::findOrFail($value->chart_account_id)->name;
         }
 
         foreach ($journal as $key => $value) {
