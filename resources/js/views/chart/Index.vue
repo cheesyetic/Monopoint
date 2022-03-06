@@ -58,14 +58,13 @@
                                     class="col-sm-6 col-lg-4">
                                     <div class="card">
                                         <div class="card-body row">
-                                            <div class="col-9">
+                                            <div class="col-8">
                                                 <h5 class="card-title">{{ chart.name }}</h5>
-                                                <h5 class="card-title">{{ chart.type }}</h5>
-                                                <p class="card-text" v-if="chart.type = 1"><i class="uil-import"></i> Pemasukan</p>
-                                                <p class="card-text" v-else><i class="uil-export"></i> Pengeluaran</p>
-                                                <p class="card-text">{{ chart.code }}</p>
+                                                <p class="card-text text-success" v-if="chart.type == 1"><i class="uil-import"></i> Pemasukan</p>
+                                                <p class="card-text text-danger" v-else><i class="uil-export"></i> Pengeluaran</p>
+                                                <p class="card-text">Kode akun : {{ chart.code }}</p>
                                             </div>
-                                            <div class="col-3 row">
+                                            <div class="col-4 row">
                                                 <router-link :to="{ name: 'chart.edit', params: { token: chart.token }}" class="btn btn-primary mb-2"><i class="uil-edit-alt"></i> Edit</router-link>
                                                 <delete-chart :endpoint="chart.token"/>
                                             </div>

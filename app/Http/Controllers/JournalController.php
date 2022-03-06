@@ -30,14 +30,14 @@ class JournalController extends Controller
         $query = Journal::with(['user', 'chartAccount', 'accountingPeriod', 'project', 'asset', 'bankAccount']);
 
         if($request->keyword){
-            $query->where('title','LIKE','%'.$request->keyword.'%');
+            $query->where('title','ILIKE','%'.$request->keyword.'%');
         }
 
         if($request->category > 2){
             $query->where('status','>=', $request->category);
         }
 
-        if($request->category <= 2){
+        if($request->category <= 2 && $request->category > 0){
             $query->where('status','=', $request->category);
         }
 
@@ -48,7 +48,7 @@ class JournalController extends Controller
         }
 
         if($request->reimburse){
-            $query->where('is_reimburse','=', $request->reimburse);
+            $query = $query->where('is_reimburse','=', $request->reimburse);
         }
 
         if($request->date){
@@ -59,10 +59,11 @@ class JournalController extends Controller
 
         foreach($journal as $value){
             $value->project_id = Project::findOrFail($value->project_id)->name;
+            $value->user_id = User::findOrFail($value->user_id)->name;
         }
 
-        foreach($journal as $value){
-            $value->user_id = User::findOrFail($value->user_id)->name;
+        foreach ($journal as $key => $value) {
+            $journal[$key]->token = Crypt::encryptString($journal[$key]->id);
         }
 
         $response =[
@@ -254,13 +255,14 @@ class JournalController extends Controller
         }
     }
 
-    public function draftToProcess($id){
+    public function draftToProcess($token){
+        $id = Crypt::decryptString($token);
         $journal = Journal::findOrFail($id);
 
         $journal->status = 2;
         $journal->save();
-        $this->sendEmail($id);
 
+        $this->sendEmail($id);
         $response = [
             'message' => 'A journal has been moved into process phase',
             'data' => $journal
@@ -269,7 +271,8 @@ class JournalController extends Controller
         return response()->json($response, Response::HTTP_OK);
     }
 
-    public function validationStatus(Request $request, $id){
+    public function validationStatus(Request $request, $token){
+        $id = Crypt::decryptString($token);
         $journal = Journal::findOrFail($id);
 
         $journal->status = 3;
@@ -294,7 +297,8 @@ class JournalController extends Controller
         return response()->json($response, Response::HTTP_OK);
     }
 
-    public function declineStatus($id){
+    public function declineStatus($token){
+        $id = Crypt::decryptString($token);
         $journal = Journal::findOrFail($id);
 
         $journal->status = 4;
@@ -311,7 +315,7 @@ class JournalController extends Controller
 
     public function export(){
         $expexc = Excel::download(new JournalsExport, 'journals.xlsx');
-        dd($expexc);
+        // dd($expexc);
         $response = [
             'message' => 'The file has been downloaded',
             'data' => $expexc

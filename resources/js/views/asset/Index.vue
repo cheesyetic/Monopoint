@@ -13,7 +13,7 @@
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item m-auto"><router-link :to="{ name: 'dashboard' }">Dashboard</router-link></li>
                                 <li class="breadcrumb-item m-auto active">Asset</li>
-                                <router-link exact :to="{ name: 'project.create'}" class="btn btn-primary mx-2"><i class="uil-plus"></i> Buat Asset Baru</router-link>
+                                <router-link exact :to="{ name: 'asset.create'}" class="btn btn-primary mx-2"><i class="uil-plus"></i> Buat Asset Baru</router-link>
                             </ol>
                         </div>
 
@@ -42,7 +42,7 @@
                             leave-active-class="animate__animated animate__fadeOut"
                             >
 
-                            <div v-if="!projects.length" class="row card p-4">
+                            <div v-if="!assets.length" class="row card p-4">
                                 <h4 class="m-0">No data available</h4>
                             </div>
 
@@ -53,25 +53,25 @@
                                 :key="key"
                                 >
                                 <div
-                                    v-for="project in projects"
-                                    :key="project.token"
+                                    v-for="asset in assets"
+                                    :key="asset.token"
                                     class="col-sm-6 col-lg-4">
                                     <div class="card">
                                         <div class="card-body row">
                                             <div class="col-9">
-                                                <h5 class="card-title">{{ project.name }}</h5>
-                                                <p class="card-text">{{ project.status }}</p>
+                                                <h5 class="card-title">{{ asset.name }}</h5>
+                                                <p class="card-text">Jumlah :{{ asset.value }}</p>
+                                                <p class="card-text">Tgl Pembelian : {{ format_date(asset.buy_time) }}</p>
                                             </div>
                                             <div class="col-3 row">
-                                                <router-link :to="{ name: 'project.edit', params: { token: project.token }}" class="btn btn-primary mb-2"><i class="uil-edit-alt"></i> Edit</router-link>
-                                                <delete-project :endpoint="project.token"/>
+                                                <router-link :to="{ name: 'asset.edit', params: { token: asset.token }}" class="btn btn-primary mb-2"><i class="uil-edit-alt"></i> Edit</router-link>
+                                                <delete-asset :endpoint="asset.token"/>
                                             </div>
                                         </div>
                                     </div>
                                 </div><!-- end col -->
                             </transition-group>
                         </transition>
-                            <!-- end col -->
                     </div>
                 </div>
             </div>
@@ -82,34 +82,30 @@
 
 <script>
 
-import DeleteProject from './Delete'
+import DeleteAsset from './Delete'
 import Loading from '../../components/loading'
 export default {
     components: {
-        DeleteProject,
+        DeleteAsset,
         Loading
     },
     data() {
         return  {
-            projects: {},
+            assets: {},
             loading: true,
             key: 0
         };
     },
 
     mounted() {
-        this.getProject()
-    },
-
-    created: function () {
-        this.getProject()
+        this.getAsset()
     },
 
     methods: {
-        async getProject() {
-            let response = await axios.get('/api/project')
+        async getAsset() {
+            let response = await axios.get('/api/asset')
             if (response.status === 200) {
-                this.projects = response.data.data
+                this.assets = response.data.data
             }
             console.log(response.data.data)
             this.loading = false
@@ -118,7 +114,7 @@ export default {
             if (value) {
                 return moment(String(value)).format('Do MMMM YYYY')
             }
-      },
+        },
     }
 }
 </script>

@@ -6,12 +6,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-flex align-items-center justify-content-between">
-                        <h4 class="mb-0"><i class="uil-bag"></i> Buat Project Baru</h4>
+                        <h4 class="mb-0"><i class="uil-file-alt"></i> Buat Asset Baru</h4>
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item m-auto"><router-link :to="{ name: 'dashboard' }">Dashboard</router-link></li>
-                                <li class="breadcrumb-item m-auto"><router-link :to="{ name: 'project' }">Project</router-link></li>
+                                <li class="breadcrumb-item m-auto"><router-link :to="{ name: 'asset' }">Asset</router-link></li>
                                 <li class="breadcrumb-item m-auto active">Create</li>
                             </ol>
                         </div>
@@ -28,15 +28,22 @@
                             <div class="mb-3 row">
                                 <label for="example-text-input" class="col-md-2 col-form-label">Nama</label>
                                 <div class="col-md-10">
-                                    <input class="form-control" type="text" v-model="projectCreate.name">
+                                    <input class="form-control" type="text" v-model="assetCreate.name">
                                     <div v-if="theErrors.name" class="mt-1 text-danger">{{ theErrors.name[0] }}</div>
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="example-date-input" class="col-md-2 col-form-label">Status</label>
+                                <label for="example-date-input" class="col-md-2 col-form-label">Jumlah</label>
                                 <div class="col-md-10">
-                                    <input class="form-control" type="text" v-model="projectCreate.status">
-                                    <div v-if="theErrors.status" class="mt-1 text-danger">{{ theErrors.status[0] }}</div>
+                                    <input class="form-control" type="number" v-model="assetCreate.value">
+                                    <div v-if="theErrors.value" class="mt-1 text-danger">{{ theErrors.value[0] }}</div>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="example-date-input" class="col-md-2 col-form-label">Tanggal Pembelian</label>
+                                <div class="col-md-10">
+                                    <input class="form-control" type="datetime-local" v-model="assetCreate.buy_time">
+                                    <div v-if="theErrors.buy_time" class="mt-1 text-danger">{{ theErrors.buy_time[0] }}</div>
                                 </div>
                             </div>
                             <button class="btn btn-primary" type="submit"><i class="uil-plus"></i> Buat</button>
@@ -58,10 +65,7 @@ export default {
     },
     data() {
         return {
-            projectCreate: {
-                name: '',
-                status: '',
-            },
+            assetCreate: {},
             // successMessage: [],
             theErrors: []
         }
@@ -69,14 +73,10 @@ export default {
     methods: {
         async store() {
             try {
-                console.log(this.projectCreate)
-                let responseCreate = await axios.post('/api/project', this.projectCreate)
+                console.log(this.assetCreate)
+                let responseCreate = await axios.post('/api/asset', this.assetCreate)
                 if (responseCreate.status == 201) {
-                    this.projectCreate.name = ''
-                    this.projectCreate.status = ''
-                    this.theErrors = []
-
-                    this.$router.push({ name: 'project' })
+                    this.$router.push({ name: 'asset' })
 
                     this.$toasted.show(responseCreate.data.message, {
                         type: 'success',

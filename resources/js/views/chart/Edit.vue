@@ -63,7 +63,7 @@
                                         <span>Pemasukan</span>
                                     </label>
 
-                                    <input value="0" type="radio" name="select" id="option-2" v-model="chart.type">
+                                    <input value="2" type="radio" name="select" id="option-2" v-model="chart.type">
                                     <label for="option-2" class="option option-2">
                                         <div class="dot"></div>
                                         <span>Pengeluaran</span>
