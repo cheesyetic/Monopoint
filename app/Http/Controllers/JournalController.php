@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Exports\JournalsExport;
 use App\Imports\JournalsImport;
 use App\Mail\JournalChange;
+use App\Mail\JournalChangeFinance;
+use App\Mail\JournalDeclined;
+use App\Mail\JournalVerified;
 use App\Models\AccountingPeriod;
 use App\Models\AdjustingHistory;
 use App\Models\BankAccount;
@@ -14,6 +17,7 @@ use App\Models\Project;
 use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -29,18 +33,13 @@ class JournalController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->token){
-            $id = Crypt::decryptString($request->token);
-        }
+        $user = Auth::user();
+        dd($user);
         
         $query = Journal::with(['user', 'chartAccount', 'accountingPeriod', 'project', 'asset', 'bankAccount']);
 
-        if($request->token){
-            $user = User::where('id', '=', $id)->get();
-            if($user->type = 3){
-                $query->where('user_id', '=', $id);
-            }
-        }
+        if($user->type = 3){
+        $query->where('user_id', '=', $user->id);}
         
         if($request->keyword){
             $query->where('title','ilike','%'.$request->keyword.'%');
@@ -60,7 +59,7 @@ class JournalController extends Controller
             });
         }
         
-        if($request->reimburse){
+        if($request->reimburse != null){
             $query->where('is_reimburse','=', $request->reimburse);
         }
         
@@ -149,15 +148,14 @@ class JournalController extends Controller
     {
         $id = Crypt::decryptString($token);
         $journal = Journal::findOrFail($id);
+        // dd($journal);
 
-        foreach($journal as $value){
-            $value->project_id = Project::findOrFail($value->project_id)->name;
-            $value->user_id = User::findOrFail($value->user_id)->name;
-            $value->chart_account_id = ChartAccount::findOrFail($value->chart_account_id)->name;
-            $value->accounting_period_id = AccountingPeriod::findOrFail($value->accounting_period_id)->name;
-            $value->bank_account_id = BankAccount::findOrFail($value->bank_account_id)->name;
-            $value->project_id = Project::findOrFail($value->project_id)->name;
-        }
+        $journal->project_name = $journal->project->name;
+        $journal->user_name = $journal->user->name;
+        $journal->chart_account_name = $journal->chartaccount->name;
+        $journal->accounting_period_name = $journal->accountingperiod->name;
+        $journal->bank_account_name = $journal->bankaccount->name;
+
         $response = [
             'message' => 'A journal row shown',
             'data' => $journal
@@ -280,7 +278,8 @@ class JournalController extends Controller
 
         $journal->status = 2;
         $journal->save();
-        $this->sendEmail($id);
+        $this->sendEmailKeuanganPengajuan($id);
+        $this->sendEmailPengajuan($id);
 
         $response = [
             'message' => 'A journal has been moved into process phase',
@@ -313,7 +312,7 @@ class JournalController extends Controller
         $ca->balance = $ca->balance + $journal->balance;
         $ca->save();
 
-        $this->sendEmail($id);
+        $this->sendEmailVerifikasi($id);
 
         $response = [
             'message' => 'A journal has been verified',
@@ -323,13 +322,15 @@ class JournalController extends Controller
         return response()->json($response, Response::HTTP_OK);
     }
 
-    public function declineStatus($token){
+    public function declineStatus(Request $request, $token){
         $id = Crypt::decryptString($token);
         $journal = Journal::findOrFail($id);
 
+        $journal->note_decline = $request->note_decline;
         $journal->status = 4;
+        $journal->update($request);
         $journal->save();
-        $this->sendEmail($id);
+        $this->sendEmailPenolakan($id);
 
         $response = [
             'message' => 'A journal has been declined',
@@ -340,38 +341,82 @@ class JournalController extends Controller
     }
 
     public function export(){
-        // $expexc = Excel::download(new JournalsExport, 'journals.xlsx');
-        // $response = [
-        //     'message' => 'The file has been downloaded',
-        //     'data' => $expexc
-        // ];
-
-        // return response()->json($response, Response::HTTP_OK);
         return Excel::download(new JournalsExport, 'journals.xlsx');
     }
 
     public function import(){
         Excel::import(new JournalsImport, request()->file('file'));
         return back();
-
-        // $response = [
-        //     'message' => 'The file has been uploaded'
-        // ];
-
-        // return response()->json($response, Response::HTTP_OK);
     }
-    public function sendEmail($id){
+
+    public function sendEmailPengajuan($id){
         $jurnal = Journal::findOrFail($id);
         $iduser = $jurnal->user_id;
         $user = User::findOrFail($iduser);
         $email = $user->email;
 
         $details=[
-            'title' => 'Announcement about journal update',
-            'body' => 'Your journal has been updated.'
+            'name' => $user->name,
+            'journal_id' => $id,
+            'journal_name' => $jurnal->title,
+            'journal_date' => $jurnal->date,
+            'url' => env('APP_URL')
         ];
 
         Mail::to($email)->send(new JournalChange($details));
+    }
+
+    public function sendEmailKeuanganPengajuan($id){
+        $jurnal = Journal::findOrFail($id);
+        $user_name = $jurnal->user->name;
+        $user = User::where('type', '=', 2)->get();
+
+        foreach($user as $value){
+            $email = $value->email;
+            $details=[
+                'name' => $value->name,
+                'user_name' => $user_name,
+                'journal_id' => $id,
+                'journal_name' => $jurnal->title,
+                'journal_date' => $jurnal->date,
+                'url' => env('APP_URL')
+            ];
+            Mail::to($email)->send(new JournalChangeFinance($details));
+        }
+    }
+
+    public function sendEmailVerifikasi($id){
+        $jurnal = Journal::findOrFail($id);
+        $iduser = $jurnal->user_id;
+        $user = User::findOrFail($iduser);
+        $email = $user->email;
+
+        $details=[
+            'name' => $user->name,
+            'journal_id' => $id,
+            'journal_name' => $jurnal->title,
+            'journal_date' => $jurnal->date,
+            'url' => env('APP_URL')
+        ];
+
+        Mail::to($email)->send(new JournalVerified($details));
+    }
+
+    public function sendEmailPenolakan($id){
+        $jurnal = Journal::findOrFail($id);
+        $iduser = $jurnal->user_id;
+        $user = User::findOrFail($iduser);
+        $email = $user->email;
+
+        $details=[
+            'name' => $user->name,
+            'journal_id' => $id,
+            'journal_name' => $jurnal->title,
+            'journal_date' => $jurnal->date,
+            'url' => env('APP_URL')
+        ];
+
+        Mail::to($email)->send(new JournalDeclined($details));
     }
 
 }

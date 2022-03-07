@@ -7,10 +7,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class JournalChange extends Mailable
+class JournalChangeFinance extends Mailable
 {
     use Queueable, SerializesModels;
-
     public $details;
 
     /**
@@ -31,6 +30,6 @@ class JournalChange extends Mailable
     public function build()
     {
         return $this->subject('Pengumuman Mengenai Pengajuan Jurnal')
-        ->markdown('mail.journal-change')->with('details', $this->details);
+        ->markdown('mail.journal-change-finance')->with('details', $this->details);
     }
 }

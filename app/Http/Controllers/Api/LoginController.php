@@ -6,7 +6,9 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpFoundation\Response;
 
 class LoginController extends Controller
 {
@@ -32,15 +34,16 @@ class LoginController extends Controller
                 ], 404);
             }
 
-            $token = $user->createToken('ApiToken')->plainTextToken;
+            $token = $user->createToken('ApiToken')->plainTextToken;        
 
             $response = [
-                'success'   => true,
-                'user'      => $user,
-                'token'     => $token
+            'success'   => true,
+            'user'      => $user,
+            'token'     => $token,
+            'token_type' => 'Bearer',
             ];
-
-        return response($response, 201);
+    
+            return response()->json($response, Response::HTTP_OK);
     }
 
     /**
@@ -50,10 +53,11 @@ class LoginController extends Controller
      */
     public function logout()
     {
-        auth()->logout();
-        return response()->json([
-            'success'    => true
-        ], 200);
+        auth()->user()->tokens()->delete();
+        $response = [
+            'success'   => true,
+            ];
+        return response()->json($response, Response::HTTP_OK);
     }
 
 }

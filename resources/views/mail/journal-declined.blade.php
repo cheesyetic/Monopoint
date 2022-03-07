@@ -8,12 +8,12 @@
     <li>Judul : {{ $details['journal_name'] }}</li>
     <li>Tanggal : {{ $details['journal_date'] }}</li>
 </ul>
-<p>telah berhasil dipindahkan ke bagian diproses.</p>
+<p>telah selesai diproses oleh tim keuangan.</p>
 
-<p>Mohon ditunggu hingga proses verifikasi jurnal selesai dilaksanakan oleh bagian keuangan.</p>
+<p>Hasil dari proses tim keuangan adalah jurnal anda dinyatakan TERTOLAK. Silakan kunjungi website untuk melihat detil lebih lanjut mengenai alasan penolakan jurnal anda.</p>
 
 @component('mail::button', ['url' => {{ $details['url'] }}])
-Check Your Journal.
+Check The Detail Now.
 @endcomponent
 
 Thanks,<br>
