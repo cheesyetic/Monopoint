@@ -28,12 +28,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         return auth()->user();
     });
     Route::get('/logout', [LoginController::class, 'logout']);
-    
+
 });
 
 //AUTH
 Route::post('/login', [LoginController::class, 'index']);
-
+Route::get('/token/{id}', [LoginController::class, 'token']);
 
 //Accounting Period
 Route::resource('/accountingperiod', AccountingPeriodController::class)->except('update', 'create', 'edit');

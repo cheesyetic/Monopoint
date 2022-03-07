@@ -6,13 +6,13 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-flex align-items-center justify-content-between">
-                        <h4 class="mb-0"><i class="uil-bag"></i> Edit Rekening</h4>
+                        <h4 class="mb-0"><i class="uil-file-alt"></i> Edit Asset</h4>
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item m-auto"><router-link :to="{ name: 'dashboard' }">Dashboard</router-link></li>
-                                <li class="breadcrumb-item m-auto"><router-link :to="{ name: 'rekening' }">Rekening</router-link></li>
-                                <li class="breadcrumb-item m-auto active">Create</li>
+                                <li class="breadcrumb-item m-auto"><router-link :to="{ name: 'asset' }">Asset</router-link></li>
+                                <li class="breadcrumb-item m-auto active">Edit</li>
                             </ol>
                         </div>
 
@@ -43,15 +43,22 @@
                             <div class="mb-3 row">
                                 <label for="example-text-input" class="col-md-2 col-form-label">Nama</label>
                                 <div class="col-md-10">
-                                    <input class="form-control" type="text" v-model="bank.name">
+                                    <input class="form-control" type="text" v-model="asset.name">
                                     <div v-if="theErrors.name" class="mt-1 text-danger">{{ theErrors.name[0] }}</div>
                                 </div>
                             </div>
                             <div class="mb-3 row">
                                 <label for="example-text-input" class="col-md-2 col-form-label">No Rekening</label>
                                 <div class="col-md-10">
-                                    <input class="form-control" type="text" v-model="bank.account_number">
-                                    <div v-if="theErrors.account_number" class="mt-1 text-danger">{{ theErrors.account_number[0] }}</div>
+                                    <input class="form-control" type="text" v-model="asset.value">
+                                    <div v-if="theErrors.value" class="mt-1 text-danger">{{ theErrors.value[0] }}</div>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="example-text-input" class="col-md-2 col-form-label">Waktu Pembelian</label>
+                                <div class="col-md-10">
+                                    <input class="form-control" type="datetime-local" v-model="asset.buy_time">
+                                    <div v-if="theErrors.buy_time" class="mt-1 text-danger">{{ theErrors.buy_time[0] }}</div>
                                 </div>
                             </div>
                             <button class="btn btn-primary" type="submit">Edit</button>
@@ -72,10 +79,7 @@ export default {
     },
     data() {
         return {
-            bank: {
-                name: '',
-                account_number: '',
-            },
+            asset: {},
             // successMessage: [],
             theErrors: [],
             loading: true,
@@ -83,14 +87,15 @@ export default {
     },
 
     mounted() {
-        this.findBank()
+        this.findAsset()
     },
 
     methods: {
-        async findBank() {
-            let response = await axios.get('/api/bankaccount/' + this.$route.params.token)
+        async findAsset() {
+            let response = await axios.get('/api/asset/' + this.$route.params.token)
             if (response.status === 200) {
-                this.bank = response.data.data
+                this.asset = response.data.data
+                this.asset.buy_time = moment(String(this.asset.buy_time)).format('yyyy-MM-DD') + 'T' + moment(String(this.asset.buy_time)).format('hh:mm:ss')
                 this.loading = false
             } else {
                 this.$toasted.show("Something went wrong, please try again later", {
@@ -103,7 +108,7 @@ export default {
         },
         async store() {
             try {
-                let response = await axios.post('/api/bankaccount/' + this.$route.params.token, this.bank)
+                let response = await axios.post('/api/asset/' + this.$route.params.token, this.asset)
                 // console.log(response.status)
                 if (response.status == 200) {
                     this.theErrors = []
@@ -114,7 +119,7 @@ export default {
                         position: 'top-center',
                     })
 
-                    this.$router.push({ name: 'rekening' })
+                    this.$router.push({ name: 'asset' })
                 }
             } catch (e) {
                 this.$toasted.show("Something went wrong", {

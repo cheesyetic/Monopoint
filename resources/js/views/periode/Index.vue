@@ -55,9 +55,10 @@
                         >
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="card-title">{{ period.name }}</h4>
+                                    <h4 class="card-title">{{ period.name }} <span class="badge rounded-pill bg-soft-success" v-if="period.status"><i class="uil-label"></i> Aktif</span></h4>
                                     <p class="card-text mb-0">Start : {{ format_date(period.start) }}</p>
                                     <p class="card-text">End : {{ format_date(period.end) }}</p>
+                                    <button @click="enable(period.token)" class="btn btn-secondary" :class="period.status ? 'disabled' : ''"><i class="uil-message"></i> Aktifkan</button>
                                     <router-link :to="{ name: 'periode.edit', params: { token: period.token }}" class="btn btn-primary"><i class="uil-edit-alt"></i> Edit</router-link>
                                     <delete-period :endpoint="period.token"/>
                                 </div>
@@ -100,6 +101,31 @@ export default {
     },
 
     methods: {
+        enable(token) {
+            this.$swal.fire({
+                title: 'Yakin ingin mengaktifkan periode?',
+                showCancelButton: true,
+                confirmButtonText: 'Ya',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.enablePeriod(token)
+                    }
+            })
+        },
+        async enablePeriod(token) {
+            let response = await axios.post('/api/periodstatus/ ' + token)
+            if (response.status === 200) {
+                this.getPeriod()
+            }
+            else {
+                this.loading = false
+                this.$toasted.show("Error mengaktifkan periode", {
+                    type: 'error',
+                    duration: 3000,
+                    position: 'top-center',
+                })
+            }
+        },
         async getPeriod() {
             let response = await axios.get('/api/accountingperiod')
             if (response.status === 200) {

@@ -12,6 +12,10 @@ import Jurnal from '../views/jurnal/Index'
 import JurnalEdit from '../views/jurnal/Edit'
 import JurnalCreate from '../views/jurnal/Create'
 import JurnalVerif from '../views/jurnal/Verif'
+import JurnalDetail from '../views/jurnal/Detail'
+import TabDraft from '../views/jurnal/TabDraft'
+import TabProses from '../views/jurnal/TabProses'
+import TabVerif from '../views/jurnal/TabVerif'
 
 import Karyawan from '../views/karyawan/Index'
 import KaryawanEdit from '../views/karyawan/Edit'
@@ -83,9 +87,19 @@ export default {
 
                 // JURNAL
                 {
-                    path: '/jurnal',
+                    path: '/jurnal-draft',
                     name: 'jurnal',
-                    component: Jurnal
+                    component: TabDraft,
+                },
+                {
+                    path: '/jurnal-proses',
+                    name: 'jurnalproses',
+                    component: TabProses,
+                },
+                {
+                    path: '/jurnal-verif',
+                    name: 'jurnalverif',
+                    component: TabVerif,
                 },
                 {
                     path: '/jurnal/edit/:token',
@@ -98,7 +112,12 @@ export default {
                     component: JurnalCreate
                 },
                 {
-                    path: '/jurnal/verification',
+                    path: '/jurnal/detail/:token',
+                    name: 'jurnal.detail',
+                    component: JurnalDetail
+                },
+                {
+                    path: '/jurnal/verification/:token',
                     name: 'jurnal.verif',
                     component: JurnalVerif
                 },

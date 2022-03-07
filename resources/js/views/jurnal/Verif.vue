@@ -37,20 +37,38 @@
                 enter-active-class="animate__animated animate__fadeIn"
                 leave-active-class="animate__animated animate__fadeOut"
                 >
-                <div class="col-12">
-                    <div class="card">
+                <div class="row">
+                    <div class="card col-sm-4">
                         <form class="card-body" method="pos" @submit.prevent="store">
-                            <div class="mb-3 row">
-                                <label for="example-date-input" class="col-md-2 col-form-label">File Bukti Verifikasi</label>
-                                <div class="col-md-10">
+                            <h3>Verifikasi</h3>
+                            <div class="mb-3 row" v-if="journal.is_reimburse == 1">
+                                <label for="example-date-input" class="col-form-label">File Bukti Verifikasi</label>
+                                <div class="">
                                     <input type="file" class="form-control-file" v-on:change="pictureUpload">
                                     <div v-if="theErrors.ref" class="mt-1 text-danger">{{ theErrors.ref[0] }}</div>
                                 </div>
                             </div>
-                            <button class="btn btn-primary" type="submit">Create</button>
+                            <button class="btn btn-success" type="submit">Terima <loading size="22" fill="#fff" v-if="loadingAcc"/></button>.
+                            <button class="btn btn-danger" @click.prevent="decline()">Tolak <loading size="22" fill="#fff" v-if="loadingDcl"/></button>
                         </form>
                     </div>
-                </div> <!-- end col -->
+                    <div class="col-sm-8">
+                        <div class="card p-4">
+                            <h4>{{ journal.title }}</h4>
+                            <p class="mb-0">{{ journal.date }}</p>
+                            <hr>
+                            <p>Remark : {{ journal.remark }}</p>
+                            <p>Ref : {{ journal.ref }}</p>
+                            <p>Reimburse : {{ journal.is_reimburse }}</p>
+                            <p>Chart_account : {{ journal.chart_account_id }}</p>
+                            <p>Period : {{ journal.accounting_period_id }}</p>
+                            <p>Bank : {{ journal.bank_account_id }}</p>
+                            <p>Project : {{ journal.project_id }}</p>
+                            <p>User : {{ journal.user_id }}</p>
+                            <p>File : {{ journal.filebukti }}</p>
+                        </div>
+                    </div>
+                </div>
             </transition>
         </div>
     </div>
@@ -66,27 +84,17 @@ export default {
     },
     data() {
         return {
-            chartOptions: [],
-            chartLoading: true,
-            bankOptions: [],
-            bankLoading: true,
-            projectOptions: [],
-            projectLoading: true,
-            periodOptions: [],
-            periodLoading: true,
             journal: {},
             // successMessage: [],
             theErrors: [],
             loading: true,
+            loadingAcc: false,
+            loadingDcl: false,
         }
     },
 
     mounted() {
         this.findJurnal()
-        this.getChart()
-        this.getPeriod()
-        this.getProject()
-        this.getBank()
     },
 
     methods: {
@@ -99,161 +107,99 @@ export default {
             this.journal.filebukti = event.target.files[0]
         },
 
-        async getChart() {
-            let response = await axios.get('/api/chartaccount')
-            if (response.status === 200) {
-                // this.periodOptions = response.data.data
-                console.log(response.data.data.length)
-                for (var i = 0; i < response.data.data.length; i++) {
-                    let label = response.data.data[i].id + " - " + response.data.data[i].name + ' (' + response.data.data[i].code + ', ' + response.data.data[i].type + ')'
-                    let id = String(response.data.data[i].id)
-                    this.chartOptions.push({ label, id })
-                }
-                this.chartLoading = false
-            } else {8
-                this.$toasted.show("Failed to load period", {
-                        type: 'error',
-                        duration: 3000,
-                        position: 'top-center',
-                    })
-            }
-        },
-
-        async getPeriod() {
-            let response = await axios.get('/api/accountingperiod')
-            if (response.status === 200) {
-                // this.periodOptions = response.data.data
-                console.log(response.data.data.length)
-                for (var i = 0; i < response.data.data.length; i++) {
-                    let label = response.data.data[i].id + " - " + response.data.data[i].name + ' (' + response.data.data[i].start + ' - ' + response.data.data[i].end + ')'
-                    let id = String(response.data.data[i].id)
-                    this.periodOptions.push({ label, id })
-                }
-                this.periodLoading = false
-            } else {
-                this.$toasted.show("Failed to load period", {
-                        type: 'error',
-                        duration: 3000,
-                        position: 'top-center',
-                    })
-            }
-        },
-
-        async getProject() {
-            let response = await axios.get('/api/project')
-            if (response.status === 200) {
-                // this.periodOptions = response.data.data
-                console.log(response.data.data.length)
-                for (var i = 0; i < response.data.data.length; i++) {
-                    let label = response.data.data[i].id + " - " + response.data.data[i].name
-                    let id = String(response.data.data[i].id)
-                    this.projectOptions.push({ label, id })
-                }
-                this.projectLoading = false
-            } else {
-                this.$toasted.show("Failed to load project", {
-                        type: 'error',
-                        duration: 3000,
-                        position: 'top-center',
-                    })
-            }
-        },
-
-        async getBank() {
-            let response = await axios.get('/api/bankaccount')
-            if (response.status === 200) {
-                // this.periodOptions = response.data.data
-                console.log(response.data.data.length)
-                for (var i = 0; i < response.data.data.length; i++) {
-                    let label = response.data.data[i].id + " - " + response.data.data[i].name
-                    let id = String(response.data.data[i].id)
-                    this.bankOptions.push({ label, id })
-                }
-                this.bankLoading = false
-            } else {
-                this.$toasted.show("Failed to load project", {
-                        type: 'error',
-                        duration: 3000,
-                        position: 'top-center',
-                    })
-            }
-        },
         async findJurnal() {
             let response = await axios.get('/api/journal/' + this.$route.params.token)
             if (response.status === 200) {
                 this.journal = response.data.data
-                this.journal.date = moment(String(this.journal.date)).format('yyyy-MM-DD') + 'T' + moment(String(this.journal.date)).format('hh:mm:ss')
                 this.loading = false
             } else {
                 this.$toasted.show("Something went wrong, please try again later", {
-                        type: 'error',
-                        duration: 3000,
-                        position: 'top-center',
-                    })
+                    type: 'error',
+                    duration: 3000,
+                    position: 'top-center',
+                })
             }
             // console.log(response.data.data)
         },
-        async store() {
+        async decline() {
             try {
-                let formdata = new FormData()
-                formdata.append('title', this.journal.title)
-                formdata.append('date', this.journal.date)
-                formdata.append('remark', this.journal.remark)
-                formdata.append('ref', this.journal.ref)
-                formdata.append('filebukti', this.journal.filebukti)
-                formdata.append('is_reimburse', this.journal.is_reimburse)
-                formdata.append('chart_account_id', this.journal.chart_account_id)
-                formdata.append('accounting_period_id', this.journal.accounting_period_id)
-                formdata.append('bank_account_id', this.journal.bank_account_id)
-                formdata.append('project_id', this.journal.project_id)
-                formdata.append('user_id', this.journal.user_id)
-                await axios.post('/api/journal/' + this.$route.params.token,  formdata, {
-                        headers: {
-                            'Content-Type': 'multipart/form-data'
-                        }
-                }).then(
+                this.loadingDcl = true
+                await axios.post('/api/declinejournal/' + this.$route.params.token).then(
                     response => {
-                        this.journal.title = ''
-                        this.journal.date = ''
-                        this.journal.remark = ''
-                        this.journal.ref = ''
-                        this.journal.filebukti = ''
-                        this.journal.is_reimburse = ''
-                        this.journal.chart_account_id = ''
-                        this.journal.accounting_period_id = ''
-                        this.journal.bank_account_id = ''
-                        this.journal.project_id = ''
-                        this.journal.user_id = ''
                         this.theErrors = []
-
                         this.$router.push({ name: 'jurnal' })
 
-                        this.$toasted.show("Sukses menambah jurnal", {
+                        this.$toasted.show("Sukses menolak verifikasi jurnal", {
                             type: 'success',
                             duration: 3000,
                             position: 'top-center',
                         })
                     }
                 ).catch((error) => {
-                    console.log("responseCreate gagal")
                     this.$toasted.show("Something went wrong : " + e, {
                         type: 'error',
                         duration: 3000,
                         position: 'top-center',
                     })
                     console.log(e)
-                    console.log("responseCreate gagal")
+                    console.log("Gagal verifikasi jurnal")
                     console.log("ERRR:: ", e.response.data)
                 })
 
             } catch (e) {
+                this.loadingDcl = false
                 this.$toasted.show("Something went wrong : " + e, {
                         type: 'error',
                         duration: 3000,
                         position: 'top-center',
                     })
                     console.log(e)
-                    console.log("responseCreate gagal")
+                    console.log("Gagal verifikasi jurnal")
+                    console.log("ERRR:: ", e.response.data)
+                // this.theErrors = e.responseCreate.data;
+            }
+        },
+        async store() {
+            try {
+                this.loadingAcc = true
+                let formdata = new FormData()
+                formdata.append('filebukti', this.journal.filebukti)
+                await axios.post('/api/verifjournal/' + this.$route.params.token,  formdata, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                }).then(
+                    response => {
+                        this.journal.filebukti = ''
+                        this.theErrors = []
+                        this.$router.push({ name: 'jurnal' })
+
+                        this.$toasted.show("Sukses verifikasi jurnal", {
+                            type: 'success',
+                            duration: 3000,
+                            position: 'top-center',
+                        })
+                    }
+                ).catch((error) => {
+                    this.$toasted.show("Something went wrong : " + e, {
+                        type: 'error',
+                        duration: 3000,
+                        position: 'top-center',
+                    })
+                    console.log(e)
+                    console.log("Gagal verifikasi jurnal")
+                    console.log("ERRR:: ", e.response.data)
+                })
+
+            } catch (e) {
+                this.loadingAcc = false
+                this.$toasted.show("Something went wrong : " + e, {
+                        type: 'error',
+                        duration: 3000,
+                        position: 'top-center',
+                    })
+                    console.log(e)
+                    console.log("Gagal verifikasi jurnal")
                     console.log("ERRR:: ", e.response.data)
                 // this.theErrors = e.responseCreate.data;
             }

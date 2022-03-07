@@ -104,6 +104,15 @@
                             </div>
 
                             <div class="mb-3 row">
+                                <label for="example-date-input" class="col-md-2 col-form-label">Balance</label>
+                                <div class="col-md-10 d-flex align-items-center">
+                                    <p style="margin:0;margin-right: 1rem">IDR</p>
+                                    <input class="form-control flex-grow" type="number" v-model="journal.balance">
+                                <div v-if="theErrors.balance" class="mt-1 text-danger">{{ theErrors.balance[0] }}</div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
                                 <label for="example-date-input" class="col-md-2 col-form-label">Periode</label>
                                 <div class="col-md-10">
                                     <v-select v-model="journal.accounting_period_id" :options="periodOptions" @input="selectId($event, 'accounting_period_id')" :disabled="periodLoading"></v-select>
@@ -127,9 +136,10 @@
                                 </div>
                             </div>
                             <button class="btn btn-primary" type="submit">Edit</button>
+                            <loading v-if="loadingEdit"/>
                         </form>
                     </div>
-                </div> <!-- end col -->
+                </div>
             </transition>
         </div>
     </div>
@@ -157,6 +167,7 @@ export default {
             // successMessage: [],
             theErrors: [],
             loading: true,
+            loadingEdit: false,
         }
     },
 
@@ -262,6 +273,7 @@ export default {
             if (response.status === 200) {
                 this.journal = response.data.data
                 this.journal.date = moment(String(this.journal.date)).format('yyyy-MM-DD') + 'T' + moment(String(this.journal.date)).format('hh:mm:ss')
+                this.journal.filebukti = ''
                 this.loading = false
             } else {
                 this.$toasted.show("Something went wrong, please try again later", {
@@ -275,17 +287,22 @@ export default {
         async store() {
             try {
                 let formdata = new FormData()
+                console.log(this.journal.filebukti)
                 formdata.append('title', this.journal.title)
                 formdata.append('date', this.journal.date)
                 formdata.append('remark', this.journal.remark)
                 formdata.append('ref', this.journal.ref)
-                formdata.append('filebukti', this.journal.filebukti)
+                if (this.journal.filebukti) {
+                    formdata.append('filebukti', this.journal.filebukti)
+                }
                 formdata.append('is_reimburse', this.journal.is_reimburse)
                 formdata.append('chart_account_id', this.journal.chart_account_id)
                 formdata.append('accounting_period_id', this.journal.accounting_period_id)
+                formdata.append('balance', this.journal.balance)
                 formdata.append('bank_account_id', this.journal.bank_account_id)
                 formdata.append('project_id', this.journal.project_id)
                 formdata.append('user_id', this.auth.user.id)
+                this.loadingEdit = true
                 await axios.post('/api/journal/' + this.$route.params.token,  formdata, {
                         headers: {
                             'Content-Type': 'multipart/form-data'
@@ -307,21 +324,19 @@ export default {
 
                         this.$router.push({ name: 'jurnal' })
 
-                        this.$toasted.show("Sukses menambah jurnal", {
+                        this.$toasted.show("Sukses mengedit jurnal", {
                             type: 'success',
                             duration: 3000,
                             position: 'top-center',
                         })
                     }
                 ).catch((e) => {
-                    console.log("responseCreate gagal")
                     this.$toasted.show("Something went wrong : " + e, {
                         type: 'error',
                         duration: 3000,
                         position: 'top-center',
                     })
                     console.log(e)
-                    console.log("responseCreate gagal")
                     console.log("ERRR:: ", e.response.data)
                 })
 

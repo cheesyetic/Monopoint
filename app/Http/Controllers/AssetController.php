@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Asset;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -18,7 +19,9 @@ class AssetController extends Controller
     public function index()
     {
         $asset = Asset::get();
-
+        foreach ($asset as $key => $value) {
+            $asset[$key]->token = Crypt::encryptString($asset[$key]->id);
+        }
         $response = [
             'message' => 'List Asset',
             'data' => $asset
@@ -54,7 +57,7 @@ class AssetController extends Controller
             ];
 
             return response()->json($response, Response::HTTP_CREATED);
-            
+
         } catch (QueryException $e) {
             return response()->json([
                 'message' => "Failed " . $e->errorInfo
@@ -68,8 +71,9 @@ class AssetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($token)
     {
+        $id = Crypt::decryptString($token);
         $asset = Asset::findOrFail($id);
 
         $response = [
@@ -87,8 +91,9 @@ class AssetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $token)
     {
+        $id = Crypt::decryptString($token);
         $asset = Asset::findOrFail($id);
 
         $validator = Validator::make($request->all(), [
@@ -110,7 +115,7 @@ class AssetController extends Controller
             ];
 
             return response()->json($response, Response::HTTP_OK);
-            
+
         } catch (QueryException $e) {
             return response()->json([
                 'message' => "Failed " . $e->errorInfo
@@ -124,8 +129,9 @@ class AssetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($token)
     {
+        $id = Crypt::decryptString($token);
         $asset = Asset::findOrFail($id);
 
         try {
@@ -136,7 +142,7 @@ class AssetController extends Controller
             ];
 
             return response()->json($response, Response::HTTP_OK);
-            
+
         } catch (QueryException $e) {
             return response()->json([
                 'message' => "Failed " . $e->errorInfo

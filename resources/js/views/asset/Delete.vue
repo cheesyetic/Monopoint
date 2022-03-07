@@ -1,5 +1,5 @@
 <template>
-    <button class="btn btn-danger" ref="deleteProject" @click="destroyProject"><i class="uil-trash"></i> Delete</button>
+    <button class="btn btn-danger" ref="deleteProject" @click="destroyAsset"><i class="uil-trash"></i> Delete</button>
 </template>
 
 <script>
@@ -7,12 +7,12 @@ export default {
     props: ['endpoint'],
 
     methods: {
-        async destroyProject() {
+        async destroyAsset() {
             // console.log(this.endpoint)
             try {
-                let q = window.confirm("Are you sure you want to delete this period?")
+                let q = window.confirm("Are you sure you want to delete this asset?")
                 if (q) {
-                    let responseDelete = await axios.delete(`/api/project/${this.endpoint}`)
+                    let responseDelete = await axios.delete(`/api/asset/${this.endpoint}`)
                     if (responseDelete.status == 200) {
                         this.$toasted.show(responseDelete.data.message, {
                             type: 'success',
@@ -20,7 +20,7 @@ export default {
                             position: 'top-center',
                         })
 
-                        this.$refs.deleteProject.parentElement.parentElement.parentElement.parentElement.remove()
+                        this.$refs.deleteProject.parentElement.parentElement.parentElement.remove()
                     }
                     else {
                         this.$toasted.show("Error deleting period", {

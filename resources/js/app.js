@@ -20,6 +20,8 @@ import moment from 'moment'
 import 'animate.css'
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 /**
  * The following block of code may be used to automatically register your
@@ -36,6 +38,7 @@ import "vue-select/dist/vue-select.css";
 Vue.use(Toasted)
 Vue.use(VueRouter)
 Vue.use(moment)
+Vue.use(VueSweetalert2)
 
 window.moment = require('moment');
 window.moment.locale('id');

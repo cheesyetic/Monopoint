@@ -35,7 +35,7 @@ class JournalController extends Controller
         if($request->token){
             $id = Crypt::decryptString($request->token);
         }
-        
+
         $query = Journal::with(['user', 'chartAccount', 'accountingPeriod', 'project', 'asset', 'bankAccount']);
 
         if($request->token){
@@ -44,9 +44,9 @@ class JournalController extends Controller
                 $query->where('user_id', '=', $id);
             }
         }
-        
+
         if($request->keyword){
-            $query->where('title','ilike','%'.$request->keyword.'%');
+            $query->where('title','ILIKE','%'.$request->keyword.'%');
         }
 
         if($request->category > 2){
@@ -62,11 +62,11 @@ class JournalController extends Controller
                 $query->where('chart_account_id', $request->chart);
             });
         }
-        
+
         if($request->reimburse != null){
             $query->where('is_reimburse','=', $request->reimburse);
         }
-        
+
         if($request->date){
             $query->whereMonth('date','=', date($request->date));
         }
@@ -77,6 +77,10 @@ class JournalController extends Controller
             $value->project_id = Project::findOrFail($value->project_id)->name;
             $value->user_id = User::findOrFail($value->user_id)->name;
             $value->chart_account_id = ChartAccount::findOrFail($value->chart_account_id)->name;
+        }
+
+        foreach ($journal as $key => $value) {
+            $journal[$key]->token = Crypt::encryptString($journal[$key]->id);
         }
 
         $response =[
@@ -286,6 +290,7 @@ class JournalController extends Controller
         $this->sendEmailKeuanganPengajuan($id);
         $this->sendEmailPengajuan($id);
 
+        $this->sendEmail($id);
         $response = [
             'message' => 'A journal has been moved into process phase',
             'data' => $journal

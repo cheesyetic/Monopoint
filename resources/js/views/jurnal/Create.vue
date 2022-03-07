@@ -74,7 +74,7 @@
                             <div class="mb-3 row">
                                 <label for="example-date-input" class="col-md-2 col-form-label">File Bukti</label>
                                 <div class="col-md-10">
-                                    <input type="file" class="form-control-file" v-on:change="pictureUpload">
+                                    <input type="file" class="form-control-file" v-on:change="pictureUpload" accept="image/*">
                                     <div v-if="theErrors.ref" class="mt-1 text-danger">{{ theErrors.ref[0] }}</div>
                                 </div>
                             </div>
@@ -89,8 +89,9 @@
 
                             <div class="mb-3 row">
                                 <label for="example-date-input" class="col-md-2 col-form-label">Balance</label>
-                                <div class="col-md-10">
-                                    <input class="form-control" type="text" v-model="journalCreate.balance">
+                                <div class="col-md-10 d-flex align-items-center">
+                                    <p style="margin:0;margin-right: 1rem">IDR</p>
+                                    <input class="form-control flex-grow" type="number" v-model="journalCreate.balance">
                                 <div v-if="theErrors.balance" class="mt-1 text-danger">{{ theErrors.balance[0] }}</div>
                                 </div>
                             </div>
@@ -155,6 +156,7 @@ export default {
                 is_reimburse: '',
                 chart_account_id: '',
                 accounting_period_id: '',
+                balance: '',
                 bank_account_id: '',
                 project_id: '',
                 user_id: '1',
@@ -275,6 +277,7 @@ export default {
                 formdata.append('is_reimburse', this.journalCreate.is_reimburse)
                 formdata.append('chart_account_id', this.journalCreate.chart_account_id)
                 formdata.append('accounting_period_id', this.journalCreate.accounting_period_id)
+                formdata.append('balance', this.journalCreate.balance)
                 formdata.append('bank_account_id', this.journalCreate.bank_account_id)
                 formdata.append('project_id', this.journalCreate.project_id)
                 formdata.append('user_id', this.auth.user.id)

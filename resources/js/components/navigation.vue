@@ -4,36 +4,29 @@
         <div class="d-flex">
             <!-- LOGO -->
             <div class="navbar-brand-box">
-                <a href="index.html" class="logo logo-dark">
+                <router-link :to="{name: 'dashboard'}" class="logo logo-dark">
                     <span class="logo-sm">
                         <img src="/assets/images/logo-sm.png" alt="" height="22">
                     </span>
                     <span class="logo-lg">
                         <img src="/assets/images/logo-dark.png" alt="" height="20">
                     </span>
-                </a>
+                </router-link>
 
-                <a href="index.html" class="logo logo-light">
+                <router-link :to="{name: 'dashboard'}" class="logo logo-light">
                     <span class="logo-sm">
                         <img src="/assets/images/logo-sm.png" alt="" height="22">
                     </span>
                     <span class="logo-lg">
                         <img src="/assets/images/logo-light.png" alt="" height="20">
                     </span>
-                </a>
+                </router-link>
             </div>
 
             <button type="button" class="btn btn-sm px-3 font-size-16 d-lg-none header-item waves-effect waves-light" data-bs-toggle="collapse" data-bs-target="#topnav-menu-content">
                 <i class="fa fa-fw fa-bars"></i>
             </button>
 
-            <!-- App Search-->
-            <!-- <form class="app-search d-none d-lg-block">
-                <div class="position-relative">
-                    <input type="text" class="form-control" placeholder="Search...">
-                    <span class="uil-search"></span>
-                </div>
-            </form> -->
         </div>
 
         <div class="d-flex">
@@ -95,17 +88,24 @@
                             </router-link>
                         </li>
 
-                        <li class="nav-item">
-                            <router-link class="nav-link" :to="{name: 'jurnal'}">
-                                <i class="uil-file-landscape me-2"></i> Jurnal
-                            </router-link>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-jurnal" role="button">
+                                <i class="uil-file-landscape me-2"></i>Jurnal <div class="arrow-down"></div>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="topnav-jurnal">
+
+                                <router-link :to="{name: 'jurnal'}" class="dropdown-item">Draft</router-link>
+                                <router-link :to="{name: 'jurnalproses'}" class="dropdown-item">Proses</router-link>
+                                <router-link :to="{name: 'jurnalverif'}" class="dropdown-item">Verif</router-link>
+
+                            </div>
                         </li>
 
                         <li class="nav-item dropdown" v-if="auth.user.type == 0">
-                            <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-pages" role="button">
+                            <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-admin" role="button">
                                 <i class="uil-apps me-2"></i>Master Data <div class="arrow-down"></div>
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="topnav-pages">
+                            <div class="dropdown-menu" aria-labelledby="topnav-admin">
 
                                 <router-link :to="{name: 'karyawan'}" class="dropdown-item">Karyawan</router-link>
                                 <router-link :to="{name: 'periode'}" class="dropdown-item">Periode</router-link>
@@ -116,10 +116,6 @@
 
                             </div>
                         </li>
-
-
-
-
                     </ul>
                 </div>
             </nav>
