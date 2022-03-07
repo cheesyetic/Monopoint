@@ -13,7 +13,7 @@
 
 <p>Mohon bagi tim keuangan untuk segera melakukan proses terhadap pengajuan tersebut.</p>
 
-@component('mail::button', ['url' => {{ $details['url'] }}])
+@component('mail::button', ['url' => 'http://localhost:8000'])
 Process Now.
 @endcomponent
 

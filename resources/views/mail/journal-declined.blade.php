@@ -12,7 +12,7 @@
 
 <p>Hasil dari proses tim keuangan adalah jurnal anda dinyatakan TERTOLAK. Silakan kunjungi website untuk melihat detil lebih lanjut mengenai alasan penolakan jurnal anda.</p>
 
-@component('mail::button', ['url' => {{ $details['url'] }}])
+@component('mail::button', ['url' => 'http://localhost:8000'])
 Check The Detail Now.
 @endcomponent
 

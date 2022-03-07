@@ -10,15 +10,16 @@ use Illuminate\Queue\SerializesModels;
 class JournalDeclined extends Mailable
 {
     use Queueable, SerializesModels;
+    public $details;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($details)
     {
-        //
+        $this->details = $details;
     }
 
     /**
@@ -28,6 +29,7 @@ class JournalDeclined extends Mailable
      */
     public function build()
     {
-        return $this->markdown('mail.journal-declined');
+        return $this->subject('Pengumuman Mengenai Penolakan Jurnal')->markdown('mail.journal-declined')
+        ->with('details', $this->details);
     }
 }

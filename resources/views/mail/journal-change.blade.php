@@ -12,7 +12,7 @@
 
 <p>Mohon ditunggu hingga proses verifikasi jurnal selesai dilaksanakan oleh bagian keuangan.</p>
 
-@component('mail::button', ['url' => {{ $details['url'] }}])
+@component('mail::button', ['url' => 'http://localhost:8000'])
 Check Your Journal.
 @endcomponent
 

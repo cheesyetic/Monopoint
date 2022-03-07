@@ -17,7 +17,6 @@ use App\Models\Project;
 use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -33,13 +32,18 @@ class JournalController extends Controller
      */
     public function index(Request $request)
     {
-        $user = Auth::user();
-        dd($user);
+        if($request->token){
+            $id = Crypt::decryptString($request->token);
+        }
         
         $query = Journal::with(['user', 'chartAccount', 'accountingPeriod', 'project', 'asset', 'bankAccount']);
 
-        if($user->type = 3){
-        $query->where('user_id', '=', $user->id);}
+        if($request->token){
+            $user = User::where('id', '=', $id)->get();
+            if($user->type = 3){
+                $query->where('user_id', '=', $id);
+            }
+        }
         
         if($request->keyword){
             $query->where('title','ilike','%'.$request->keyword.'%');
@@ -72,6 +76,7 @@ class JournalController extends Controller
         foreach($journal as $value){
             $value->project_id = Project::findOrFail($value->project_id)->name;
             $value->user_id = User::findOrFail($value->user_id)->name;
+            $value->chart_account_id = ChartAccount::findOrFail($value->chart_account_id)->name;
         }
 
         $response =[
@@ -271,9 +276,9 @@ class JournalController extends Controller
         }
     }
 
-    public function draftToProcess($token)
+    public function draftToProcess($id)
     {
-        $id = Crypt::decryptString($token);
+        // $id = Crypt::decryptString($token);
         $journal = Journal::findOrFail($id);
 
         $journal->status = 2;
@@ -289,8 +294,8 @@ class JournalController extends Controller
         return response()->json($response, Response::HTTP_OK);
     }
 
-    public function validationStatus(Request $request, $token){
-        $id = Crypt::decryptString($token);
+    public function validationStatus(Request $request, $id){
+        // $id = Crypt::decryptString($token);
         $journal = Journal::findOrFail($id);
 
         $journal->status = 3;
@@ -328,7 +333,6 @@ class JournalController extends Controller
 
         $journal->note_decline = $request->note_decline;
         $journal->status = 4;
-        $journal->update($request);
         $journal->save();
         $this->sendEmailPenolakan($id);
 
@@ -369,7 +373,7 @@ class JournalController extends Controller
     public function sendEmailKeuanganPengajuan($id){
         $jurnal = Journal::findOrFail($id);
         $user_name = $jurnal->user->name;
-        $user = User::where('type', '=', 2)->get();
+        $user = User::where('type', '=', 1)->get();
 
         foreach($user as $value){
             $email = $value->email;

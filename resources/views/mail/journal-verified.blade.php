@@ -12,7 +12,7 @@
 
 <p>Hasil dari proses tim keuangan adalah jurnal anda dinyatakan TERVERIFIKASI. Silakan kunjungi website untuk melihat detil lebih lanjut.</p>
 
-@component('mail::button', ['url' => {{ $details['url'] }}])
+@component('mail::button', ['url' => 'http://localhost:8000'])
 Check Your Journal.
 @endcomponent
 
