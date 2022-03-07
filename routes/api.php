@@ -30,6 +30,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 //AUTH
 Route::post('/login', [LoginController::class, 'index']);
+Route::get('/token/{id}', [LoginController::class, 'token']);
 Route::get('/logout', [LoginController::class, 'logout']);
 
 //Accounting Period

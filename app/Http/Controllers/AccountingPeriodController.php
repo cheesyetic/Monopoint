@@ -149,7 +149,8 @@ class AccountingPeriodController extends Controller
             ]);
         }
     }
-    public function activateDeactivate($id){
+    public function activateDeactivate($token){
+        $id = Crypt::decryptString($token);
         $accountingperiod = AccountingPeriod::findOrFail($id);
         $status = $accountingperiod->status;
 
@@ -167,7 +168,7 @@ class AccountingPeriodController extends Controller
                     'message' => 'This period has been activated.',
                     'data' => $accountingperiod
                 ];
-    
+
                 return response()->json($response, Response::HTTP_OK);
             } catch(QueryException $e){
                 return response()->json([
@@ -182,7 +183,7 @@ class AccountingPeriodController extends Controller
                 $response = [
                     'message' => 'This period has been deactivated.'
                 ];
-    
+
                 return response()->json($response, Response::HTTP_OK);
                 } catch(QueryException $e){
                 return response()->json([
@@ -190,6 +191,6 @@ class AccountingPeriodController extends Controller
                 ]);
             }
         }
-        
+
     }
 }

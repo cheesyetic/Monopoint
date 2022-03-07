@@ -2109,6 +2109,7 @@ __webpack_require__.r(__webpack_exports__);
         loggedIn: localStorage.getItem('loggedIn'),
         //state token
         token: localStorage.getItem('token'),
+        user_token: '',
         //state user logged In
         user: []
       }
@@ -2124,20 +2125,22 @@ __webpack_require__.r(__webpack_exports__);
     }).then(function (response) {
       console.log(response);
       _this.auth.user = response.data; // assign response to state user
-      // this.$emit('user', this.user)
+
+      _this.token(); // this.$emit('user', this.user)
+
     });
   },
-  // methods: {
-  //     logout() {
-  //         axios.get('http://localhost:8000/api/logout')
-  //         .then(() => {
-  //             //remove localStorage
-  //             localStorage.removeItem("loggedIn")
-  //             //redirect
-  //             return this.$router.push({ name: 'login' })
-  //         })
-  //     }
-  // },
+  methods: {
+    token: function token() {
+      var _this2 = this;
+
+      console.log("request acc token");
+      axios.get('http://localhost:8000/api/token/' + this.auth.user.id).then(function (response) {
+        console.log(response);
+        _this2.auth.user_token = response.data.data;
+      });
+    }
+  },
   //check user logged in or not
   mounted: function mounted() {
     if (!this.auth.loggedIn) {
@@ -2286,10 +2289,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
-//
-//
-//
 //
 //
 //
@@ -5929,18 +5928,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['auth'],
@@ -5949,6 +5936,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
+      loading: true,
       journal: {},
       journalHistories: {}
     };
@@ -5958,6 +5946,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     this.getJournalHistories();
   },
   methods: {
+    format_date: function format_date(value) {
+      if (value) {
+        return moment(String(value)).format('hh:mm - Do MMM YYYY');
+      }
+    },
     getJournal: function getJournal() {
       var _this = this;
 
@@ -6004,14 +5997,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return axios.get('/api/adjustinghistory/' + _this2.$route.params.token);
+                return axios.get('/api/journalhistories/' + _this2.$route.params.token);
 
               case 2:
                 response = _context2.sent;
 
                 if (response.status === 200) {
-                  _this2.journal = response.data.data;
-                  _this2.journal.date = moment(String(_this2.journal.date)).format('yyyy-MM-DD') + 'T' + moment(String(_this2.journal.date)).format('hh:mm:ss');
+                  console.log(response);
+                  _this2.journalHistories = response.data.data;
+                  _this2.journalHistories.date = moment(String(_this2.journalHistories.date)).format('yyyy-MM-DD') + 'T' + moment(String(_this2.journalHistories.date)).format('hh:mm:ss');
                   _this2.loading = false;
                 } else {
                   _this2.$toasted.show("Something went wrong, please try again later", {
@@ -6903,6 +6897,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -7022,10 +7020,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                filter = "&keyword=" + _this2.filter_keyword + "&reimburse=" + _this2.filter_reimburse + "&date=" + _this2.filter_month;
+                filter = "&keyword=" + _this2.filter_keyword + "&reimburse=" + _this2.filter_reimburse + "&date=" + _this2.filter_month + "&token=" + _this2.auth.user_token;
                 console.log('/api/journal?category=1&keyword=' + filter);
                 _context2.next = 4;
-                return axios.get('/api/journal?category=1&keyword=' + filter);
+                return axios.get('/api/journal?category=1' + filter);
 
               case 4:
                 response = _context2.sent;
@@ -7303,6 +7301,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -7318,6 +7320,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       filter_keyword: '',
       filter_reimburse: '',
       filter_month: '',
+      loadingExcel: false,
       monthOptions: [{
         month: 'Semua',
         code: ''
@@ -7364,36 +7367,84 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     this.getJurnal();
   },
   methods: {
-    getJurnal: function getJurnal() {
+    exportExcel: function exportExcel() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var filter, response;
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                filter = "&keyword=" + _this.filter_keyword + "&reimburse=" + _this.filter_reimburse + "&date=" + _this.filter_month;
-                console.log('/api/journal?category=2&keyword=' + filter);
+                _context.prev = 0;
+                _this.loadingExcel = true;
                 _context.next = 4;
-                return axios.get('/api/journal?category=2&keyword=' + filter);
+                return axios.get("/api/journal/export");
 
               case 4:
                 response = _context.sent;
 
-                if (response.status === 200) {
-                  _this.journals = response.data.data;
+                if (response.status == 200) {
+                  _this.$toasted.show(response.data.message, {
+                    type: 'success',
+                    duration: 3000,
+                    position: 'top-center'
+                  });
                 }
 
-                console.log(_this.journals);
-                _this.loading = false;
+                _this.loadingExcel = false;
+                _context.next = 12;
+                break;
 
-              case 8:
+              case 9:
+                _context.prev = 9;
+                _context.t0 = _context["catch"](0);
+
+                // console.log(e)
+                _this.$toasted.show("Something went wrong : " + _context.t0, {
+                  type: 'error',
+                  duration: 3000,
+                  position: 'top-center'
+                });
+
+              case 12:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee);
+        }, _callee, null, [[0, 9]]);
+      }))();
+    },
+    getJurnal: function getJurnal() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var filter, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                filter = "&keyword=" + _this2.filter_keyword + "&reimburse=" + _this2.filter_reimburse + "&date=" + _this2.filter_month + "&token=" + _this2.auth.user_token;
+                console.log('/api/journal?category=2&keyword=' + filter);
+                _context2.next = 4;
+                return axios.get('/api/journal?category=2' + filter);
+
+              case 4:
+                response = _context2.sent;
+
+                if (response.status === 200) {
+                  _this2.journals = response.data.data;
+                }
+
+                console.log(_this2.journals);
+                _this2.loading = false;
+
+              case 8:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
       }))();
     },
     format_date: function format_date(value) {
@@ -7402,7 +7453,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
     },
     ajukanDialog: function ajukanDialog(token) {
-      var _this2 = this;
+      var _this3 = this;
 
       this.$swal.fire({
         title: 'Yakin ingin mengajukan jurnal?',
@@ -7410,54 +7461,54 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         confirmButtonText: 'Ya'
       }).then(function (result) {
         if (result.isConfirmed) {
-          _this2.ajukan(token);
+          _this3.ajukan(token);
         }
       });
     },
     ajukan: function ajukan(token) {
-      var _this3 = this;
+      var _this4 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
-                _context2.prev = 0;
-                _this3.loading = true;
-                _context2.next = 4;
+                _context3.prev = 0;
+                _this4.loading = true;
+                _context3.next = 4;
                 return axios.post("/api/validjournal/".concat(token));
 
               case 4:
-                response = _context2.sent;
+                response = _context3.sent;
 
                 if (response.status == 200) {
-                  _this3.$toasted.show(response.data.message, {
+                  _this4.$toasted.show(response.data.message, {
                     type: 'success',
                     duration: 3000,
                     position: 'top-center'
                   });
 
-                  _this3.getJurnal();
+                  _this4.getJurnal();
                 } else {
-                  _this3.loading = false;
+                  _this4.loading = false;
 
-                  _this3.$toasted.show("Error mengajukan jurnal", {
+                  _this4.$toasted.show("Error mengajukan jurnal", {
                     type: 'error',
                     duration: 3000,
                     position: 'top-center'
                   });
                 }
 
-                _context2.next = 11;
+                _context3.next = 11;
                 break;
 
               case 8:
-                _context2.prev = 8;
-                _context2.t0 = _context2["catch"](0);
+                _context3.prev = 8;
+                _context3.t0 = _context3["catch"](0);
 
                 // console.log(e)
-                _this3.$toasted.show("Something went wrong : " + _context2.t0, {
+                _this4.$toasted.show("Something went wrong : " + _context3.t0, {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
@@ -7465,10 +7516,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 11:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, null, [[0, 8]]);
+        }, _callee3, null, [[0, 8]]);
       }))();
     }
   }
@@ -7652,6 +7703,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -7665,8 +7724,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       journals: {},
       loading: true,
       filter_keyword: '',
-      filter_reimburse_verif: '',
+      filter_reimburse: '',
       filter_month: '',
+      loadingExcel: false,
       monthOptions: [{
         month: 'Semua',
         code: ''
@@ -7713,36 +7773,84 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     this.getJurnal();
   },
   methods: {
-    getJurnal: function getJurnal() {
+    exportExcel: function exportExcel() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var filter, response;
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                filter = "&keyword=" + _this.filter_keyword + "&reimburse=" + _this.filter_reimburse_verif + "&date=" + _this.filter_month;
-                console.log('/api/journal?category=3&keyword=' + filter);
+                _context.prev = 0;
+                _this.loadingExcel = true;
                 _context.next = 4;
-                return axios.get('/api/journal?category=3&keyword=' + filter);
+                return axios.get("/api/journal/export");
 
               case 4:
                 response = _context.sent;
 
-                if (response.status === 200) {
-                  _this.journals = response.data.data;
+                if (response.status == 200) {
+                  _this.$toasted.show(response.data.message, {
+                    type: 'success',
+                    duration: 3000,
+                    position: 'top-center'
+                  });
                 }
 
-                console.log(_this.journals);
-                _this.loading = false;
+                _this.loadingExcel = false;
+                _context.next = 12;
+                break;
 
-              case 8:
+              case 9:
+                _context.prev = 9;
+                _context.t0 = _context["catch"](0);
+
+                // console.log(e)
+                _this.$toasted.show("Something went wrong : " + _context.t0, {
+                  type: 'error',
+                  duration: 3000,
+                  position: 'top-center'
+                });
+
+              case 12:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee);
+        }, _callee, null, [[0, 9]]);
+      }))();
+    },
+    getJurnal: function getJurnal() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var filter, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                filter = "&keyword=" + _this2.filter_keyword + "&reimburse=" + _this2.filter_reimburse + "&date=" + _this2.filter_month + "&token=" + _this2.auth.user_token;
+                console.log('/api/journal?category=3&keyword=' + filter);
+                _context2.next = 4;
+                return axios.get('/api/journal?category=3' + filter);
+
+              case 4:
+                response = _context2.sent;
+
+                if (response.status === 200) {
+                  _this2.journals = response.data.data;
+                }
+
+                console.log(_this2.journals);
+                _this2.loading = false;
+
+              case 8:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
       }))();
     },
     format_date: function format_date(value) {
@@ -9286,6 +9394,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -9309,8 +9418,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     this.getPeriod();
   },
   methods: {
-    getPeriod: function getPeriod() {
+    enable: function enable(token) {
       var _this = this;
+
+      this.$swal.fire({
+        title: 'Yakin ingin mengaktifkan periode?',
+        showCancelButton: true,
+        confirmButtonText: 'Ya'
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          _this.enablePeriod(token);
+        }
+      });
+    },
+    enablePeriod: function enablePeriod(token) {
+      var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
         var response;
@@ -9319,23 +9441,58 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get('/api/accountingperiod');
+                return axios.post('/api/periodstatus/ ' + token);
 
               case 2:
                 response = _context.sent;
 
                 if (response.status === 200) {
-                  _this.periods = response.data.data;
+                  _this2.getPeriod();
+                } else {
+                  _this2.loading = false;
+
+                  _this2.$toasted.show("Error mengaktifkan periode", {
+                    type: 'error',
+                    duration: 3000,
+                    position: 'top-center'
+                  });
                 }
 
-                _this.loading = false;
-
-              case 5:
+              case 4:
               case "end":
                 return _context.stop();
             }
           }
         }, _callee);
+      }))();
+    },
+    getPeriod: function getPeriod() {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios.get('/api/accountingperiod');
+
+              case 2:
+                response = _context2.sent;
+
+                if (response.status === 200) {
+                  _this3.periods = response.data.data;
+                }
+
+                _this3.loading = false;
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
       }))();
     },
     format_date: function format_date(value) {
@@ -11055,7 +11212,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\r\n/*\r\n.wrapper{\r\n  display: inline-flex;\r\n  align-items: center;\r\n  justify-content: space-evenly;\r\n  border-radius: 5px;\r\n}\r\n.option{\r\n  background: #fff;\r\n  height: 100%;\r\n  width: 100%;\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  gap: .5rem;\r\n  margin: 0 8px;\r\n  border-radius: 5px;\r\n  cursor: pointer;\r\n  border: 2px solid lightgrey;\r\n  transition: all 0.3s ease;\r\n}\r\n.option:first-child {\r\n  margin-left: 0;\r\n}\r\n.option:last-child {\r\n  margin-right: 0;\r\n}\r\n.option .dot{\r\n  height: 16px;\r\n  width: 16px;\r\n  background: #d9d9d9;\r\n  border-radius: 50%;\r\n  position: relative;\r\n}\r\n.option .dot::before{\r\n  position: absolute;\r\n  content: \"\";\r\n  top: 4px;\r\n  left: 4px;\r\n  width: 8px;\r\n  height: 8px;\r\n  background: #5B73E8;\r\n  border-radius: 50%;\r\n  opacity: 0;\r\n  transform: scale(1.5);\r\n  transition: all 0.3s ease;\r\n}\r\ninput[type=\"radio\"]{\r\n  display: none;\r\n}\r\n#option-1:checked:checked ~ .option-1,\r\n#option-2:checked:checked ~ .option-2,\r\n#option-3:checked:checked ~ .option-3{\r\n  border-color: #5B73E8;\r\n  background: #5B73E8;\r\n}\r\n#option-1:checked:checked ~ .option-1 .dot,\r\n#option-2:checked:checked ~ .option-2 .dot,\r\n#option-3:checked:checked ~ .option-3 .dot{\r\n  background: #fff;\r\n}\r\n#option-1:checked:checked ~ .option-1 .dot::before,\r\n#option-2:checked:checked ~ .option-2 .dot::before,\r\n#option-3:checked:checked ~ .option-3 .dot::before{\r\n  opacity: 1;\r\n  transform: scale(1);\r\n}\r\n.option span{\r\n  font-size: 16px;\r\n  color: #808080;\r\n}\r\n#option-1:checked:checked ~ .option-1 span,\r\n#option-2:checked:checked ~ .option-2 span,\r\n#option-3:checked:checked ~ .option-3 span{\r\n  color: #fff;\r\n} */\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.wrapper{\n  display: inline-flex;\n  align-items: center;\n  justify-content: space-evenly;\n  border-radius: 5px;\n}\n.option{\n  background: #fff;\n  height: 100%;\n  width: 100%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: .5rem;\n  margin: 0 8px;\n  border-radius: 5px;\n  cursor: pointer;\n  border: 2px solid lightgrey;\n  transition: all 0.3s ease;\n}\n.option:first-child {\n  margin-left: 0;\n}\n.option:last-child {\n  margin-right: 0;\n}\n.option .dot{\n  height: 16px;\n  width: 16px;\n  background: #d9d9d9;\n  border-radius: 50%;\n  position: relative;\n}\n.option .dot::before{\n  position: absolute;\n  content: \"\";\n  top: 4px;\n  left: 4px;\n  width: 8px;\n  height: 8px;\n  background: #5B73E8;\n  border-radius: 50%;\n  opacity: 0;\n  transform: scale(1.5);\n  transition: all 0.3s ease;\n}\ninput[type=\"radio\"]{\n  display: none;\n}\n#option-1:checked:checked ~ .option-1,\n#option-2:checked:checked ~ .option-2,\n#option-3:checked:checked ~ .option-3{\n  border-color: #5B73E8;\n  background: #5B73E8;\n}\n#option-1:checked:checked ~ .option-1 .dot,\n#option-2:checked:checked ~ .option-2 .dot,\n#option-3:checked:checked ~ .option-3 .dot{\n  background: #fff;\n}\n#option-1:checked:checked ~ .option-1 .dot::before,\n#option-2:checked:checked ~ .option-2 .dot::before,\n#option-3:checked:checked ~ .option-3 .dot::before{\n  opacity: 1;\n  transform: scale(1);\n}\n.option span{\n  font-size: 16px;\n  color: #808080;\n}\n#option-1:checked:checked ~ .option-1 span,\n#option-2:checked:checked ~ .option-2 span,\n#option-3:checked:checked ~ .option-3 span{\n  color: #fff;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -11079,7 +11236,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n:root {\r\n  /* --animate-duration: 800ms; */\r\n  transition-delay: 0.9s;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n:root {\n  /* --animate-duration: 800ms; */\n  transition-delay: 0.9s;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -43172,7 +43329,7 @@ var render = function () {
                     _c("div", { staticClass: "col-md-10" }, [
                       _c("input", {
                         staticClass: "form-control-file",
-                        attrs: { type: "file" },
+                        attrs: { type: "file", accept: "image/*" },
                         on: { change: _vm.pictureUpload },
                       }),
                       _vm._v(" "),
@@ -43574,7 +43731,7 @@ var render = function () {
                       },
                     },
                     [
-                      !_vm.journals.length
+                      !_vm.journalHistories.length
                         ? _c("tr", [
                             _c("td", { attrs: { colspan: "7" } }, [
                               _vm._v("No data available"),
@@ -43583,144 +43740,55 @@ var render = function () {
                         : _c(
                             "transition-group",
                             { attrs: { tag: "tbody" } },
-                            _vm._l(_vm.journals, function (journal) {
-                              return _c("tr", { key: journal.token }, [
-                                _c("td", [_vm._v(_vm._s(journal.title))]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _vm._v(_vm._s(_vm.format_date(journal.date))),
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _vm._v(
-                                    "\n                                        " +
-                                      _vm._s(journal.remark) +
-                                      "\n                                    "
-                                  ),
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _vm._v(
-                                    "\n                                        " +
-                                      _vm._s(journal.ref) +
-                                      "\n                                    "
-                                  ),
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _c(
-                                    "span",
-                                    {
-                                      staticClass:
-                                        "badge rounded-pill bg-soft-success font-size-12",
-                                    },
-                                    [_vm._v(_vm._s(journal.project_id))]
-                                  ),
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _c("div", { staticClass: "btn-group" }, [
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass:
-                                          "btn btn-primary dropdown-toggle waves-effect waves-light",
-                                        attrs: {
-                                          type: "button",
-                                          "data-bs-toggle": "dropdown",
-                                          "aria-haspopup": "true",
-                                          "aria-expanded": "false",
-                                        },
-                                      },
-                                      [
-                                        _vm._v("Menu "),
-                                        _c("i", {
-                                          staticClass: "uil-angle-down",
-                                        }),
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      { staticClass: "dropdown-menu" },
-                                      [
-                                        _c(
-                                          "router-link",
-                                          {
-                                            staticClass: "dropdown-item",
-                                            attrs: {
-                                              to: {
-                                                name: "jurnal.detail",
-                                                params: {
-                                                  token: journal.token,
-                                                },
-                                              },
-                                            },
-                                          },
-                                          [
-                                            _c("i", {
-                                              staticClass: "uil-history-alt",
-                                            }),
-                                            _vm._v(" Detail"),
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "router-link",
-                                          {
-                                            staticClass: "dropdown-item",
-                                            attrs: {
-                                              to: {
-                                                name: "jurnal.verif",
-                                                params: {
-                                                  token: journal.token,
-                                                },
-                                              },
-                                            },
-                                          },
-                                          [
-                                            _c("i", {
-                                              staticClass: "uil-file-check",
-                                            }),
-                                            _vm._v(" Verifikasi"),
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c("div", {
-                                          staticClass: "dropdown-divider",
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "router-link",
-                                          {
-                                            staticClass: "dropdown-item",
-                                            attrs: {
-                                              to: {
-                                                name: "jurnal.edit",
-                                                params: {
-                                                  token: journal.token,
-                                                },
-                                              },
-                                            },
-                                          },
-                                          [
-                                            _c("i", {
-                                              staticClass: "uil-edit-alt",
-                                            }),
-                                            _vm._v(" Edit"),
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c("delete-journal", {
-                                          attrs: { endpoint: journal.token },
-                                        }),
-                                      ],
-                                      1
+                            _vm._l(
+                              _vm.journalHistories,
+                              function (journalHistory) {
+                                return _c("tr", { key: journalHistory.id }, [
+                                  _c("td", [
+                                    _vm._v(_vm._s(journalHistory.title)),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("td", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.format_date(journalHistory.date)
+                                      )
                                     ),
                                   ]),
-                                ]),
-                              ])
-                            }),
+                                  _vm._v(" "),
+                                  _c("td", [
+                                    _vm._v(
+                                      "\n                                        " +
+                                        _vm._s(journalHistory.remark) +
+                                        "\n                                    "
+                                    ),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("td", [
+                                    _vm._v(
+                                      "\n                                        " +
+                                        _vm._s(journalHistory.ref) +
+                                        "\n                                    "
+                                    ),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("td", [
+                                    _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "badge rounded-pill bg-soft-success font-size-12",
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._s(journalHistory.project_name)
+                                        ),
+                                      ]
+                                    ),
+                                  ]),
+                                ])
+                              }
+                            ),
                             0
                           ),
                     ],
@@ -44823,15 +44891,11 @@ var render = function () {
                       ),
                       _vm._v(" "),
                       _c(
-                        "button",
+                        "a",
                         {
                           staticClass: "btn btn-success",
                           staticStyle: { "margin-left": "8px" },
-                          on: {
-                            click: function ($event) {
-                              return _vm.exportExcel()
-                            },
-                          },
+                          attrs: { href: "/api/journal/export" },
                         },
                         [
                           _c("i", { staticClass: "uil-table" }),
@@ -45003,6 +45067,16 @@ var render = function () {
                                                 "badge rounded-pill bg-soft-success font-size-12",
                                             },
                                             [_vm._v(_vm._s(journal.project_id))]
+                                          ),
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm._v(
+                                            "\n                                                      " +
+                                              _vm._s(
+                                                journal.chart_account.name
+                                              ) +
+                                              "\n                                                  "
                                           ),
                                         ]),
                                         _vm._v(" "),
@@ -45369,6 +45443,8 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Project")]),
         _vm._v(" "),
+        _c("th", [_vm._v("Chart Account")]),
+        _vm._v(" "),
         _c("th"),
       ]),
     ])
@@ -45494,15 +45570,11 @@ var render = function () {
                       ),
                       _vm._v(" "),
                       _c(
-                        "button",
+                        "a",
                         {
                           staticClass: "btn btn-success",
                           staticStyle: { "margin-left": "8px" },
-                          on: {
-                            click: function ($event) {
-                              return _vm.exportExcel()
-                            },
-                          },
+                          attrs: { href: "/api/journal/export" },
                         },
                         [
                           _c("i", { staticClass: "uil-table" }),
@@ -45674,6 +45746,16 @@ var render = function () {
                                                 "badge rounded-pill bg-soft-success font-size-12",
                                             },
                                             [_vm._v(_vm._s(journal.project_id))]
+                                          ),
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm._v(
+                                            "\n                                                      " +
+                                              _vm._s(
+                                                journal.chart_account.name
+                                              ) +
+                                              "\n                                                  "
                                           ),
                                         ]),
                                         _vm._v(" "),
@@ -45850,7 +45932,7 @@ var render = function () {
                                     value: "1",
                                     type: "radio",
                                     name: "reimburse2",
-                                    id: "proses-option-1",
+                                    id: "option-1",
                                   },
                                   domProps: {
                                     checked: _vm._q(_vm.filter_reimburse, "1"),
@@ -45877,7 +45959,7 @@ var render = function () {
                                     value: "0",
                                     type: "radio",
                                     name: "reimburse2",
-                                    id: "proses-option-2",
+                                    id: "option-2",
                                   },
                                   domProps: {
                                     checked: _vm._q(_vm.filter_reimburse, "0"),
@@ -45904,7 +45986,7 @@ var render = function () {
                                     value: "",
                                     type: "radio",
                                     name: "reimburse2",
-                                    id: "proses-option-3",
+                                    id: "option-3",
                                     selected: "",
                                   },
                                   domProps: {
@@ -46040,6 +46122,8 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Project")]),
         _vm._v(" "),
+        _c("th", [_vm._v("Chart Account")]),
+        _vm._v(" "),
         _c("th"),
       ]),
     ])
@@ -46067,7 +46151,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "label",
-      { staticClass: "option option-1 m-0", attrs: { for: "proses-option-1" } },
+      { staticClass: "option option-1 m-0", attrs: { for: "option-1" } },
       [
         _c("div", { staticClass: "dot" }),
         _vm._v(" "),
@@ -46081,10 +46165,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "label",
-      {
-        staticClass: "option option-2 m-0 my-1",
-        attrs: { for: "proses-option-2" },
-      },
+      { staticClass: "option option-2 m-0 my-1", attrs: { for: "option-2" } },
       [
         _c("div", { staticClass: "dot" }),
         _vm._v(" "),
@@ -46098,7 +46179,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "label",
-      { staticClass: "option option-3 m-0", attrs: { for: "proses-option-3" } },
+      { staticClass: "option option-3 m-0", attrs: { for: "option-3" } },
       [
         _c("div", { staticClass: "dot" }),
         _vm._v(" "),
@@ -46168,15 +46249,11 @@ var render = function () {
                       ),
                       _vm._v(" "),
                       _c(
-                        "button",
+                        "a",
                         {
                           staticClass: "btn btn-success",
                           staticStyle: { "margin-left": "8px" },
-                          on: {
-                            click: function ($event) {
-                              return _vm.exportExcel()
-                            },
-                          },
+                          attrs: { href: "/api/journal/export" },
                         },
                         [
                           _c("i", { staticClass: "uil-table" }),
@@ -46307,6 +46384,29 @@ var render = function () {
                                             {
                                               staticClass:
                                                 "badge rounded-pill font-size-12",
+                                              class: journal.is_reimburse
+                                                ? "bg-soft-success"
+                                                : "bg-soft-danger",
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                                                      " +
+                                                  _vm._s(
+                                                    journal.is_reimburse
+                                                      ? "Ya"
+                                                      : "Tidak"
+                                                  )
+                                              ),
+                                            ]
+                                          ),
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _c(
+                                            "span",
+                                            {
+                                              staticClass:
+                                                "badge rounded-pill font-size-12",
                                               class:
                                                 journal.status == 3
                                                   ? "bg-soft-success"
@@ -46337,6 +46437,16 @@ var render = function () {
                                           _vm._v(
                                             "\n                                                      " +
                                               _vm._s(journal.user_id) +
+                                              "\n                                                  "
+                                          ),
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm._v(
+                                            "\n                                                      " +
+                                              _vm._s(
+                                                journal.chart_account.name
+                                              ) +
                                               "\n                                                  "
                                           ),
                                         ]),
@@ -46458,25 +46568,22 @@ var render = function () {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value: _vm.filter_reimburse_verif,
-                                      expression: "filter_reimburse_verif",
+                                      value: _vm.filter_reimburse,
+                                      expression: "filter_reimburse",
                                     },
                                   ],
                                   attrs: {
                                     value: "1",
                                     type: "radio",
                                     name: "reimburse3",
-                                    id: "verif-option-1",
+                                    id: "option-1",
                                   },
                                   domProps: {
-                                    checked: _vm._q(
-                                      _vm.filter_reimburse_verif,
-                                      "1"
-                                    ),
+                                    checked: _vm._q(_vm.filter_reimburse, "1"),
                                   },
                                   on: {
                                     change: function ($event) {
-                                      _vm.filter_reimburse_verif = "1"
+                                      _vm.filter_reimburse = "1"
                                     },
                                   },
                                 }),
@@ -46488,25 +46595,22 @@ var render = function () {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value: _vm.filter_reimburse_verif,
-                                      expression: "filter_reimburse_verif",
+                                      value: _vm.filter_reimburse,
+                                      expression: "filter_reimburse",
                                     },
                                   ],
                                   attrs: {
                                     value: "0",
                                     type: "radio",
                                     name: "reimburse3",
-                                    id: "verif-option-2",
+                                    id: "option-2",
                                   },
                                   domProps: {
-                                    checked: _vm._q(
-                                      _vm.filter_reimburse_verif,
-                                      "0"
-                                    ),
+                                    checked: _vm._q(_vm.filter_reimburse, "0"),
                                   },
                                   on: {
                                     change: function ($event) {
-                                      _vm.filter_reimburse_verif = "0"
+                                      _vm.filter_reimburse = "0"
                                     },
                                   },
                                 }),
@@ -46518,26 +46622,23 @@ var render = function () {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value: _vm.filter_reimburse_verif,
-                                      expression: "filter_reimburse_verif",
+                                      value: _vm.filter_reimburse,
+                                      expression: "filter_reimburse",
                                     },
                                   ],
                                   attrs: {
                                     value: "",
                                     type: "radio",
                                     name: "reimburse3",
-                                    id: "verif-option-3",
+                                    id: "option-3",
                                     selected: "",
                                   },
                                   domProps: {
-                                    checked: _vm._q(
-                                      _vm.filter_reimburse_verif,
-                                      ""
-                                    ),
+                                    checked: _vm._q(_vm.filter_reimburse, ""),
                                   },
                                   on: {
                                     change: function ($event) {
-                                      _vm.filter_reimburse_verif = ""
+                                      _vm.filter_reimburse = ""
                                     },
                                   },
                                 }),
@@ -46657,6 +46758,8 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Waktu")]),
         _vm._v(" "),
+        _c("th", [_vm._v("Reimburse")]),
+        _vm._v(" "),
         _c("th", [_vm._v("Status")]),
         _vm._v(" "),
         _c("th", [_vm._v("Remark")]),
@@ -46664,6 +46767,8 @@ var staticRenderFns = [
         _c("th", [_vm._v("User")]),
         _vm._v(" "),
         _c("th", [_vm._v("Project")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Chart Account")]),
         _vm._v(" "),
         _c("th"),
       ]),
@@ -46692,7 +46797,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "label",
-      { staticClass: "option option-1 m-0", attrs: { for: "verif-option-1" } },
+      { staticClass: "option option-1 m-0", attrs: { for: "option-1" } },
       [
         _c("div", { staticClass: "dot" }),
         _vm._v(" "),
@@ -46706,10 +46811,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "label",
-      {
-        staticClass: "option option-2 m-0 my-1",
-        attrs: { for: "verif-option-2" },
-      },
+      { staticClass: "option option-2 m-0 my-1", attrs: { for: "option-2" } },
       [
         _c("div", { staticClass: "dot" }),
         _vm._v(" "),
@@ -46723,7 +46825,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "label",
-      { staticClass: "option option-3 m-0", attrs: { for: "verif-option-3" } },
+      { staticClass: "option option-3 m-0", attrs: { for: "option-3" } },
       [
         _c("div", { staticClass: "dot" }),
         _vm._v(" "),
@@ -48730,7 +48832,24 @@ var render = function () {
                                         _c(
                                           "h4",
                                           { staticClass: "card-title" },
-                                          [_vm._v(_vm._s(period.name))]
+                                          [
+                                            _vm._v(_vm._s(period.name) + " "),
+                                            period.status
+                                              ? _c(
+                                                  "span",
+                                                  {
+                                                    staticClass:
+                                                      "badge rounded-pill bg-soft-success",
+                                                  },
+                                                  [
+                                                    _c("i", {
+                                                      staticClass: "uil-label",
+                                                    }),
+                                                    _vm._v(" Aktif"),
+                                                  ]
+                                                )
+                                              : _vm._e(),
+                                          ]
                                         ),
                                         _vm._v(" "),
                                         _c(
@@ -48754,6 +48873,27 @@ var render = function () {
                                               )
                                           ),
                                         ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "button",
+                                          {
+                                            staticClass: "btn btn-secondary",
+                                            class: period.status
+                                              ? "disabled"
+                                              : "",
+                                            on: {
+                                              click: function ($event) {
+                                                return _vm.enable(period.token)
+                                              },
+                                            },
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass: "uil-message",
+                                            }),
+                                            _vm._v(" Aktifkan"),
+                                          ]
+                                        ),
                                         _vm._v(" "),
                                         _c(
                                           "router-link",

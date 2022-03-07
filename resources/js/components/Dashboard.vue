@@ -32,6 +32,7 @@ export default {
                 loggedIn: localStorage.getItem('loggedIn'),
                 //state token
                 token: localStorage.getItem('token'),
+                user_token: '',
                 //state user logged In
                 user: []
             }
@@ -43,23 +44,21 @@ export default {
         .then(response => {
             console.log(response)
             this.auth.user = response.data // assign response to state user
+            this.token()
             // this.$emit('user', this.user)
         })
     },
 
-    // methods: {
-    //     logout() {
-    //         axios.get('http://localhost:8000/api/logout')
-    //         .then(() => {
-    //             //remove localStorage
-    //             localStorage.removeItem("loggedIn")
-
-
-    //             //redirect
-    //             return this.$router.push({ name: 'login' })
-    //         })
-    //     }
-    // },
+    methods: {
+        token() {
+            console.log("request acc token")
+            axios.get('http://localhost:8000/api/token/' + this.auth.user.id )
+            .then(response => {
+                console.log(response)
+                this.auth.user_token = response.data.data
+            })
+        },
+    },
 
     //check user logged in or not
     mounted() {

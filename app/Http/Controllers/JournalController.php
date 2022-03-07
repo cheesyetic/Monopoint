@@ -155,14 +155,15 @@ class JournalController extends Controller
         $id = Crypt::decryptString($token);
         $journal = Journal::findOrFail($id);
 
-        foreach($journal as $value){
-            $value->project_id = Project::findOrFail($value->project_id)->name;
-            $value->user_id = User::findOrFail($value->user_id)->name;
-            $value->chart_account_id = ChartAccount::findOrFail($value->chart_account_id)->name;
-            $value->accounting_period_id = AccountingPeriod::findOrFail($value->accounting_period_id)->name;
-            $value->bank_account_id = BankAccount::findOrFail($value->bank_account_id)->name;
-            $value->project_id = Project::findOrFail($value->project_id)->name;
-        }
+        // foreach($journal as $value){
+        //     $value->project_id = Project::findOrFail($value->project_id)->name;
+        //     $value->user_id = User::findOrFail($value->user_id)->name;
+        //     $value->chart_account_id = ChartAccount::findOrFail($value->chart_account_id)->name;
+        //     $value->accounting_period_id = AccountingPeriod::findOrFail($value->accounting_period_id)->name;
+        //     $value->bank_account_id = BankAccount::findOrFail($value->bank_account_id)->name;
+        //     $value->project_id = Project::findOrFail($value->project_id)->name;
+        // }
+
         $response = [
             'message' => 'A journal row shown',
             'data' => $journal

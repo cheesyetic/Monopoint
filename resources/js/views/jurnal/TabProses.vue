@@ -14,7 +14,7 @@
                                 <li class="breadcrumb-item m-auto"><router-link :to="{ name: 'dashboard' }">Dashboard</router-link></li>
                                 <li class="breadcrumb-item m-auto active">Jurnal Proses</li>
                                 <!-- <button type="button" class="btn btn-primary waves-effect waves-light mx-2" data-bs-toggle="modal" data-bs-target="#createModal">Buat Jurnal Baru</button> -->
-                                <button @click="exportExcel()" class="btn btn-success" style="margin-left:8px"><i class="uil-table"></i> Export Excel <loading v-if="loadingExcel" size="18"/></button>
+                                <a href="/api/journal/export" class="btn btn-success" style="margin-left:8px"><i class="uil-table"></i> Export Excel <loading v-if="loadingExcel" size="18"/></a>
                                 <router-link exact :to="{ name: 'jurnal.create'}" class="btn btn-primary mx-2"><i class="uil-plus"></i> Buat Jurnal Baru</router-link>
                             </ol>
                         </div>
@@ -45,6 +45,7 @@
                                             <th>Remark</th>
                                             <th>User</th>
                                             <th>Project</th>
+                                            <th>Chart Account</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -89,6 +90,9 @@
                                                     </td>
                                                     <td><span class="badge rounded-pill bg-soft-success font-size-12">{{ journal.project_id }}</span></td>
                                                     <td>
+                                                        {{ journal.chart_account.name }}
+                                                    </td>
+                                                    <td>
                                                         <div class="btn-group">
                                                             <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu <i class="uil-angle-down"></i></button>
                                                             <div class="dropdown-menu" style="">
@@ -116,18 +120,18 @@
                                             <div class="mb-2">
                                                     <label for="example-text-input" class="col col-form-label">Reimburse</label>
                                                     <div class="">
-                                                        <input value="1" type="radio" name="reimburse2" v-model="filter_reimburse" id="proses-option-1">
-                                                        <label for="proses-option-1" class="option option-1 m-0">
+                                                        <input value="1" type="radio" name="reimburse2" v-model="filter_reimburse" id="option-1">
+                                                        <label for="option-1" class="option option-1 m-0">
                                                             <div class="dot"></div>
                                                             <span>Ya</span>
                                                         </label>
-                                                        <input value="0" type="radio" name="reimburse2" v-model="filter_reimburse" id="proses-option-2">
-                                                        <label for="proses-option-2" class="option option-2 m-0 my-1">
+                                                        <input value="0" type="radio" name="reimburse2" v-model="filter_reimburse" id="option-2">
+                                                        <label for="option-2" class="option option-2 m-0 my-1">
                                                             <div class="dot"></div>
                                                             <span>Tidak</span>
                                                         </label>
-                                                        <input value="" type="radio" name="reimburse2" v-model="filter_reimburse" id="proses-option-3" selected>
-                                                        <label for="proses-option-3" class="option option-3 m-0">
+                                                        <input value="" type="radio" name="reimburse2" v-model="filter_reimburse" id="option-3" selected>
+                                                        <label for="option-3" class="option option-3 m-0">
                                                             <div class="dot"></div>
                                                             <span>Semua</span>
                                                         </label>
@@ -171,6 +175,7 @@ props: ['auth'],
             filter_keyword: '',
             filter_reimburse: '',
             filter_month: '',
+            loadingExcel: false,
             monthOptions: [
                 {month: 'Semua', code: ''},
                 {month: 'Januari', code: '01'},
@@ -194,10 +199,31 @@ props: ['auth'],
     },
 
     methods: {
+        async exportExcel() {
+            try {
+                this.loadingExcel = true
+                let response = await axios.get(`/api/journal/export`)
+                if (response.status == 200) {
+                    this.$toasted.show(response.data.message, {
+                        type: 'success',
+                        duration: 3000,
+                        position: 'top-center',
+                    })
+                }
+                this.loadingExcel = false
+            } catch (e) {
+                // console.log(e)
+                this.$toasted.show("Something went wrong : " + e, {
+                    type: 'error',
+                    duration: 3000,
+                    position: 'top-center',
+                })
+            }
+        },
         async getJurnal() {
-            let filter = "&keyword=" + this.filter_keyword + "&reimburse=" + this.filter_reimburse + "&date=" + this.filter_month
+            let filter = "&keyword=" + this.filter_keyword + "&reimburse=" + this.filter_reimburse + "&date=" + this.filter_month + "&token=" + this.auth.user_token
             console.log('/api/journal?category=2&keyword=' + filter)
-            let response = await axios.get('/api/journal?category=2&keyword=' + filter)
+            let response = await axios.get('/api/journal?category=2' + filter)
             if (response.status === 200) {
                 this.journals = response.data.data
             }

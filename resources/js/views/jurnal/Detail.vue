@@ -44,7 +44,7 @@
                                 leave-active-class="animate__animated animate__fadeOut"
                                 >
 
-                                <tr v-if="!journals.length">
+                                <tr v-if="!journalHistories.length">
                                     <td colspan="7">No data available</td>
                                 </tr>
 
@@ -53,30 +53,18 @@
                                     tag="tbody"
                                     >
                                     <tr
-                                        v-for="journal in journals"
-                                        :key="journal.token"
+                                        v-for="journalHistory in journalHistories"
+                                        :key="journalHistory.id"
                                         >
-                                        <td>{{ journal.title }}</td>
-                                        <td>{{ format_date(journal.date) }}</td>
+                                        <td>{{ journalHistory.title }}</td>
+                                        <td>{{ format_date(journalHistory.date) }}</td>
                                         <td>
-                                            {{ journal.remark }}
+                                            {{ journalHistory.remark }}
                                         </td>
                                         <td>
-                                            {{ journal.ref }}
+                                            {{ journalHistory.ref }}
                                         </td>
-                                        <td><span class="badge rounded-pill bg-soft-success font-size-12">{{ journal.project_id }}</span></td>
-                                        <td>
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu <i class="uil-angle-down"></i></button>
-                                                <div class="dropdown-menu" style="">
-                                                    <router-link :to="{ name: 'jurnal.detail', params: { token: journal.token }}" class="dropdown-item"><i class="uil-history-alt"></i> Detail</router-link>
-                                                    <router-link :to="{ name: 'jurnal.verif', params: { token: journal.token }}" class="dropdown-item"><i class="uil-file-check"></i> Verifikasi</router-link>
-                                                    <div class="dropdown-divider"></div>
-                                                    <router-link :to="{ name: 'jurnal.edit', params: { token: journal.token }}" class="dropdown-item"><i class="uil-edit-alt"></i> Edit</router-link>
-                                                    <delete-journal :endpoint="journal.token"/>
-                                                </div>
-                                            </div>
-                                        </td>
+                                        <td><span class="badge rounded-pill bg-soft-success font-size-12">{{ journalHistory.project_name }}</span></td>
                                     </tr>
                                 </transition-group>
                             </transition>
@@ -96,6 +84,7 @@ export default {
     },
     data() {
         return {
+            loading: true,
             journal: {},
             journalHistories: {},
         }
@@ -105,6 +94,11 @@ export default {
         this.getJournalHistories()
     },
     methods: {
+        format_date(value){
+            if (value) {
+                return moment(String(value)).format('hh:mm - Do MMM YYYY')
+            }
+        },
         async getJournal() {
             let response = await axios.get('/api/journal/' + this.$route.params.token)
             if (response.status === 200) {
@@ -121,10 +115,11 @@ export default {
             // console.log(response.data.data)
         },
         async getJournalHistories() {
-            let response = await axios.get('/api/adjustinghistory/' + this.$route.params.token)
+            let response = await axios.get('/api/journalhistories/' + this.$route.params.token)
             if (response.status === 200) {
-                this.journal = response.data.data
-                this.journal.date = moment(String(this.journal.date)).format('yyyy-MM-DD') + 'T' + moment(String(this.journal.date)).format('hh:mm:ss')
+                console.log(response)
+                this.journalHistories = response.data.data
+                this.journalHistories.date = moment(String(this.journalHistories.date)).format('yyyy-MM-DD') + 'T' + moment(String(this.journalHistories.date)).format('hh:mm:ss')
                 this.loading = false
             } else {
                 this.$toasted.show("Something went wrong, please try again later", {

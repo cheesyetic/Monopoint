@@ -9,7 +9,7 @@ export default {
 </script>
 
 <style>
-/*
+
 .wrapper{
   display: inline-flex;
   align-items: center;
@@ -84,5 +84,5 @@ input[type="radio"]{
 #option-2:checked:checked ~ .option-2 span,
 #option-3:checked:checked ~ .option-3 span{
   color: #fff;
-} */
+}
 </style>
