@@ -23,15 +23,17 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/user', function(Request $request) {
+        return auth()->user();
+    });
+    Route::get('/logout', [LoginController::class, 'logout']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
 });
 
 //AUTH
 Route::post('/login', [LoginController::class, 'index']);
 Route::get('/token/{id}', [LoginController::class, 'token']);
-Route::get('/logout', [LoginController::class, 'logout']);
 
 //Accounting Period
 Route::resource('/accountingperiod', AccountingPeriodController::class)->except('update', 'create', 'edit');
@@ -60,7 +62,6 @@ Route::post('/verifjournal/{id}', [JournalController::class, 'validationStatus']
 Route::post('/declinejournal/{id}', [JournalController::class, 'declineStatus']);
 Route::resource('/journal', JournalController::class)->except('update', 'create', 'edit');
 Route::post('/journal/{id}', [JournalController::class, 'update']);
-Route::get('/sendemail', [JournalController::class, 'sendEmail']);
 //Asset
 Route::resource('/asset', AssetController::class)->except('update', 'create', 'edit');
 Route::post('/asset/{id}', [JournalController::class, 'update']);

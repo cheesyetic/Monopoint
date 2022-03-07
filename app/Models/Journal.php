@@ -14,6 +14,7 @@ class Journal extends Model
         'date',
         'remark',
         'ref',
+        'note_decline',
         'balance',
         'is_reimburse',
         'filebukti',

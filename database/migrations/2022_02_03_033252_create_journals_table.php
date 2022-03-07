@@ -19,6 +19,7 @@ class CreateJournalsTable extends Migration
             $table->dateTime('date');
             $table->string('remark', 1000)->nullable(true);
             $table->string('ref', 45)->nullable(true);
+            $table->string('note_decline', 1000)->nullable(true);
             $table->double('balance')->nullable(true);
             $table->integer('is_reimburse');
             $table->string('filebukti');

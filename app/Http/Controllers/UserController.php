@@ -102,9 +102,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $token)
+    public function update(Request $request, $id)
     {
-        $id = Crypt::decryptString($token);
+        // $id = Crypt::decryptString($token);
         $user = User::findOrFail($id);
 
         $validator = Validator::make($request->all(), [
