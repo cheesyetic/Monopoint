@@ -7,6 +7,7 @@ use App\Imports\JournalsImport;
 use App\Mail\JournalChange;
 use App\Mail\JournalChangeFinance;
 use App\Mail\JournalDeclined;
+use App\Mail\JournalUpdate;
 use App\Mail\JournalVerified;
 use App\Models\AccountingPeriod;
 use App\Models\AdjustingHistory;
@@ -129,7 +130,10 @@ class JournalController extends Controller
             }
 
             $journal = Journal::create($input);
+            $user = $journal->user->name;
             $input['journal_id'] = $journal->id;
+            $input['title'] = 'Pembuatan Jurnal';
+            $input['remark'] = $user . ' melakukan pembuatan jurnal pada ' . $journal->created_at;
             adjustingHistory::create($input);
 
             // balance in ca
@@ -184,9 +188,10 @@ class JournalController extends Controller
     {
         $id = Crypt::decryptString($token);
         $journal = Journal::findOrFail($id);
+        $user = $journal->user->name;
 
         $validator = Validator::make($request->all(), [
-           'title' => ['required', 'max:45'],
+            'title' => ['required', 'max:45'],
             'date' => ['required'],
             'remark' => ['max:1000'],
             'ref' => ['max:45'],
@@ -235,8 +240,10 @@ class JournalController extends Controller
         // }
 
         $journal->update($input);
-        // $this->sendEmail($id);
+        $this->sendEmailUpdate($id);
         $input['journal_id'] = $journal->id;
+        $input['title'] = 'Perubahan Jurnal';
+        $input['remark'] = $user . ' melakukan perubahan jurnal pada ' . $journal->updated_at;
         AdjustingHistory::create($input);
 
             $response = [
@@ -280,17 +287,23 @@ class JournalController extends Controller
         }
     }
 
-    public function draftToProcess($id)
+    public function draftToProcess($token)
     {
-        // $id = Crypt::decryptString($token);
+        $id = Crypt::decryptString($token);
         $journal = Journal::findOrFail($id);
+        $user = $journal->user->name;
 
         $journal->status = 2;
         $journal->save();
         $this->sendEmailKeuanganPengajuan($id);
         $this->sendEmailPengajuan($id);
 
-        $this->sendEmail($id);
+        $journal->title = 'Verifikasi Jurnal';
+        $journal->remark = $user . ' melakukan pengajuan jurnal pada tanggal ' . $journal->updated_at;
+        $journal = $journal->toArray();
+        $journal['journal_id'] = $journal['id'];
+        AdjustingHistory::create($journal);
+
         $response = [
             'message' => 'A journal has been moved into process phase',
             'data' => $journal
@@ -299,9 +312,10 @@ class JournalController extends Controller
         return response()->json($response, Response::HTTP_OK);
     }
 
-    public function validationStatus(Request $request, $id){
-        // $id = Crypt::decryptString($token);
+    public function validationStatus(Request $request, $token){
+        $id = Crypt::decryptString($token);
         $journal = Journal::findOrFail($id);
+        $user = auth()->user()->name;
 
         $journal->status = 3;
         if($journal->is_reimburse = 1){
@@ -315,6 +329,11 @@ class JournalController extends Controller
             $journal->buktireimburse = $input;
         }
         $journal->save();
+        $journal->title = 'Verifikasi Jurnal';
+        $journal->remark = $user . ' menyetujui jurnal ini pada tanggal ' . $journal->updated_at;
+        $journal = $journal->toArray();
+        $journal['journal_id'] = $journal['id'];
+        AdjustingHistory::create($journal);
 
         // balance in ca
         $idchartacc = $journal->chart_account_id;
@@ -332,14 +351,21 @@ class JournalController extends Controller
         return response()->json($response, Response::HTTP_OK);
     }
 
-    public function declineStatus(Request $request, $token){
-        $id = Crypt::decryptString($token);
+    public function declineStatus(Request $request, $id){
+        // $id = Crypt::decryptString($token);
         $journal = Journal::findOrFail($id);
+        $user = auth()->user()->name;
 
         $journal->note_decline = $request->note_decline;
         $journal->status = 4;
         $journal->save();
         $this->sendEmailPenolakan($id);
+
+        $journal->title = 'Verifikasi Jurnal';
+        $journal->remark = $user . ' menolak jurnal ini pada tanggal ' . $journal->updated_at;
+        $journal = $journal->toArray();
+        $journal['journal_id'] = $journal['id'];
+        AdjustingHistory::create($journal);
 
         $response = [
             'message' => 'A journal has been declined',
@@ -358,6 +384,22 @@ class JournalController extends Controller
         return back();
     }
 
+    public function sendEmailUpdate($id){
+        $jurnal = Journal::findOrFail($id);
+        $iduser = $jurnal->user_id;
+        $user = User::findOrFail($iduser);
+        $email = $user->email;
+
+        $details=[
+            'name' => $user->name,
+            'project_name' => $jurnal->project->name,
+            'journal_name' => $jurnal->title,
+            'journal_date' => $jurnal->date,
+            'url' => env('APP_URL')
+        ];
+
+        Mail::to($email)->send(new JournalUpdate($details));
+    }
     public function sendEmailPengajuan($id){
         $jurnal = Journal::findOrFail($id);
         $iduser = $jurnal->user_id;
@@ -366,7 +408,7 @@ class JournalController extends Controller
 
         $details=[
             'name' => $user->name,
-            'journal_id' => $id,
+            'project_name' => $jurnal->project->name,
             'journal_name' => $jurnal->title,
             'journal_date' => $jurnal->date,
             'url' => env('APP_URL')
@@ -385,7 +427,7 @@ class JournalController extends Controller
             $details=[
                 'name' => $value->name,
                 'user_name' => $user_name,
-                'journal_id' => $id,
+                'project_name' => $jurnal->project->name,
                 'journal_name' => $jurnal->title,
                 'journal_date' => $jurnal->date,
                 'url' => env('APP_URL')
@@ -402,7 +444,7 @@ class JournalController extends Controller
 
         $details=[
             'name' => $user->name,
-            'journal_id' => $id,
+            'project_name' => $jurnal->project->name,
             'journal_name' => $jurnal->title,
             'journal_date' => $jurnal->date,
             'url' => env('APP_URL')
@@ -419,7 +461,7 @@ class JournalController extends Controller
 
         $details=[
             'name' => $user->name,
-            'journal_id' => $id,
+            'project_name' => $jurnal->project->name,
             'journal_name' => $jurnal->title,
             'journal_date' => $jurnal->date,
             'url' => env('APP_URL')
