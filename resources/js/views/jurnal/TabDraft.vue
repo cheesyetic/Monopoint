@@ -117,7 +117,7 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                            <div class="mb-2">
+                                                <div class="mb-2">
                                                     <label for="example-text-input" class="col col-form-label">Reimburse</label>
                                                     <div class="">
                                                         <input value="1" type="radio" name="reimburse" v-model="filter_reimburse" id="option-1">
@@ -138,8 +138,12 @@
                                                     </div>
                                                 </div>
                                                 <div class="mb-2">
-                                                    <label class="form-label" for="exampleDropdownFormPassword">Bulan</label>
-                                                    <v-select :options="monthOptions" @change="getJurnal" :reduce="month => month.code" label="month" v-model="filter_month"></v-select>
+                                                    <label class="form-label">Bulan</label>
+                                                    <v-select :options="monthOptions" :reduce="month => month.code" label="month" v-model="filter_month"></v-select>
+                                                </div>
+                                                <div class="mb-2">
+                                                    <label class="form-label">Proyek</label>
+                                                    <v-select :options="projectOptions" @input="selectId($event)" :disabled="projectLoading"></v-select>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -172,9 +176,12 @@ props: ['auth'],
         return  {
             journals: {},
             loading: true,
+            projectOptions: [],
+            projectLoading: true,
             filter_keyword: '',
             filter_reimburse: '',
             filter_month: '',
+            filter_project: '',
             loadingExcel: false,
             monthOptions: [
                 {month: 'Semua', code: ''},
@@ -196,9 +203,32 @@ props: ['auth'],
 
     mounted() {
         this.getJurnal()
+        this.getProject()
     },
 
     methods: {
+        selectId(e) {
+            this.filter_project = e.id
+        },
+        async getProject() {
+            let response = await axios.get('/api/project')
+            if (response.status === 200) {
+                // this.periodOptions = response.data.data
+                console.log(response.data.data.length)
+                for (var i = 0; i < response.data.data.length; i++) {
+                    let label = response.data.data[i].name
+                    let id = String(response.data.data[i].id)
+                    this.projectOptions.push({ label, id })
+                }
+                this.projectLoading = false
+            } else {
+                this.$toasted.show("Failed to load project", {
+                        type: 'error',
+                        duration: 3000,
+                        position: 'top-center',
+                    })
+            }
+        },
         async exportExcel() {
             try {
                 this.loadingExcel = true
