@@ -8,9 +8,9 @@
     <li>Judul : {{ $details['journal_name'] }}</li>
     <li>Tanggal : {{ $details['journal_date'] }}</li>
 </ul>
-<p>telah berhasil dipindahkan ke bagian diproses.</p>
+<p>telah mengalami perubahan dan sudah tersimpan ke dalam sistem.</p>
 
-<p>Mohon ditunggu hingga proses verifikasi jurnal selesai dilaksanakan oleh bagian keuangan.</p>
+<p>Apabila anda merasa ini bukan perubahan yang anda lakukan, silakan segera lakukan perubahan password pada akun anda.</p>
 
 @component('mail::button', ['url' => 'http://localhost:8000'])
 Check Your Journal.

@@ -4,7 +4,7 @@
 <p>Halo, {{ $details['name'] }}</p>
 <p>Kami ingin mengabari bahwasanya jurnal anda dengan : </p>
 <ul>
-    <li>ID : {{ $details['journal_id'] }}</li>
+    <li>Nama Projek : {{ $details['project_name'] }}</li>
     <li>Judul : {{ $details['journal_name'] }}</li>
     <li>Tanggal : {{ $details['journal_date'] }}</li>
 </ul>
@@ -17,5 +17,5 @@ Check Your Journal.
 @endcomponent
 
 Thanks,<br>
-Monopoint
+Kodig.id
 @endcomponent

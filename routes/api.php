@@ -28,6 +28,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         return auth()->user();
     });
     Route::get('/logout', [LoginController::class, 'logout']);
+    Route::post('/verifjournal/{id}', [JournalController::class, 'validationStatus']);
+    Route::post('/declinejournal/{id}', [JournalController::class, 'declineStatus']);
 
 });
 
@@ -58,8 +60,7 @@ Route::post('/project/{id}', [ProjectController::class, 'update']);
 Route::get('/journal/export/', [JournalController::class, 'export']);
 Route::get('/journal/import/', [JournalController::class, 'import']);
 Route::post('/validjournal/{id}', [JournalController::class, 'draftToProcess']);
-Route::post('/verifjournal/{id}', [JournalController::class, 'validationStatus']);
-Route::post('/declinejournal/{id}', [JournalController::class, 'declineStatus']);
+
 Route::resource('/journal', JournalController::class)->except('update', 'create', 'edit');
 Route::post('/journal/{id}', [JournalController::class, 'update']);
 //Asset
