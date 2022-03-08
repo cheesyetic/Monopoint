@@ -235,7 +235,7 @@ class JournalController extends Controller
         // }
 
         $journal->update($input);
-        $this->sendEmail($id);
+        // $this->sendEmail($id);
         $input['journal_id'] = $journal->id;
         AdjustingHistory::create($input);
 

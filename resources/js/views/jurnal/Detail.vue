@@ -24,8 +24,7 @@
                                 <th>Date</th>
                                 <th>Remark</th>
                                 <th>Ref</th>
-                                <th>Project</th>
-                                <th></th>
+                                <th>Diupdate</th>
                             </tr>
                         </thead>
                             <transition
@@ -64,7 +63,7 @@
                                         <td>
                                             {{ journalHistory.ref }}
                                         </td>
-                                        <td><span class="badge rounded-pill bg-soft-success font-size-12">{{ journalHistory.project_name }}</span></td>
+                                        <td>{{ format_date(journalHistory.updated_at) }}</td>
                                     </tr>
                                 </transition-group>
                             </transition>
