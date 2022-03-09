@@ -19,20 +19,19 @@ class JournalsImport implements ToModel
             'date' => $row[1],
             'remark' => $row[2],
             'ref' => $row[3],
-            'uang_masuk' => $row[4],
-            'uang_keluar' => $row[5],
+            'note_decline' => $row[4],
+            'balance' => $row[5],
             'is_reimburse' => $row[6],
-            'category' => $row[7],
-            'filebukti' => $row[8],
+            'filebukti' => $row[7],
+            'status' => $row[8],
             'buktireimburse' => $row[9],
-            'status' => $row[10],
-            'created_at' => $row[11],
-            'updated_at' => $row[12],
-            'chart_account_id' => $row[13],
-            'accounting_period_id' => $row[14],
-            'bank_account_id' => $row[15],
-            'project_id' => $row[16],
-            'user_id' => $row[17]
+            'created_at' => $row[10],
+            'updated_at' => $row[11],
+            'chart_account_id' => $row[12],
+            'accounting_period_id' => $row[13],
+            'bank_account_id' => $row[14],
+            'project_id' => $row[15],
+            'user_id' => $row[16]
         ]);
     }
 }
