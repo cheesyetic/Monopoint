@@ -321,7 +321,7 @@ class JournalController extends Controller
         $journal->status = 3;
         if($journal->is_reimburse = 1){
             $validator = Validator::make($request->all(), [
-                'buktireimburse' => ['mimes:png,jpg,jpeg,doc,docx,pdf,txt,csv', 'max:2048'],
+                'buktireimburse' => ['required', 'mimes:png,jpg,jpeg,doc,docx,pdf,txt,csv', 'max:2048'],
             ]);
     
             if($validator->fails()){
@@ -346,9 +346,9 @@ class JournalController extends Controller
         AdjustingHistory::create($journal);
 
         // balance in ca
-        $idchartacc = $journal->chart_account_id;
+        $idchartacc = $journal['chart_account_id'];
         $ca = ChartAccount::findOrFail($idchartacc);
-        $ca->balance = $ca->balance + $journal->balance;
+        $ca->balance = $ca->balance + $journal['balance'];
         $ca->save();
 
         $this->sendEmailVerifikasi($id);
