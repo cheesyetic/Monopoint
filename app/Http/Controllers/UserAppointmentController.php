@@ -17,9 +17,9 @@ class UserAppointmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index($token)
     {
-        // $id = Crypt::decryptString($token);
+        $id = Crypt::decryptString($token);
         $user_appointment = UserAppointment::where('appointment_id', '=', $id)->get();
 
         foreach($user_appointment as $value){

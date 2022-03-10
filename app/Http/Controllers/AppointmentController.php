@@ -102,10 +102,10 @@ class AppointmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $token)
     {
         
-        // $id = Crypt::decryptString($token);
+        $id = Crypt::decryptString($token);
         $appointment = Appointment::findOrFail($id);
 
         $validator = Validator::make($request->all(), [
