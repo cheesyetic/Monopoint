@@ -1,12 +1,13 @@
-import Auth from '../views/auth/Auth'
 import Dashboard from '../components/Dashboard'
 import Home from '../views/home'
-import Register from '../views/register'
 import Login from '../views/auth/Index'
 
 import Appointment from '../views/appointment/Index'
 import AppointmentEdit from '../views/appointment/Edit'
 import AppointmentCreate from '../views/appointment/Create'
+
+import Account from '../views/account/Index'
+import AccountEdit from '../views/account/Edit'
 
 import Jurnal from '../views/jurnal/Index'
 import JurnalEdit from '../views/jurnal/Edit'
@@ -67,6 +68,16 @@ export default {
                     meta:{
                         title:`Dashboard`
                     }
+                },
+                {
+                    path: '/akun',
+                    name: 'akun',
+                    component: Account
+                },
+                {
+                    path: '/akun/edit',
+                    name: 'akun.edit',
+                    component: AccountEdit
                 },
                 // APPOINTMENT
                 {

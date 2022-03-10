@@ -41,15 +41,25 @@
                     <div class="card col-sm-4">
                         <form class="card-body" method="pos" @submit.prevent="store">
                             <h3>Verifikasi</h3>
-                            <div class="mb-3 row" v-if="journal.is_reimburse == 1">
-                                <label for="example-date-input" class="col-form-label">File Bukti Verifikasi</label>
-                                <div class="">
-                                    <input type="file" class="form-control-file" v-on:change="pictureUpload">
+                            <div class="col md-10 wrapper btn-group">
+                                <button class="btn btn-outline-primary" :class="verif ? 'active' : ''" @click.prevent="verif = 1">Terima</button>
+                                <button class="btn btn-outline-primary" :class="!verif ? 'active' : ''" @click.prevent="verif = 0">Tolak</button>
+                            </div>
+                            <div class="my-3" v-if="!verif">
+                                <label for="example-date-input" class="">Alasan Penolakan</label>
+                                <div class="col-md-10">
+                                    <textarea class="form-control" type="text" v-model="note_decline"></textarea>
                                     <div v-if="theErrors.ref" class="mt-1 text-danger">{{ theErrors.ref[0] }}</div>
                                 </div>
                             </div>
-                            <button class="btn btn-success" type="submit">Terima <loading size="22" fill="#fff" v-if="loadingAcc"/></button>.
-                            <button class="btn btn-danger" @click.prevent="decline()">Tolak <loading size="22" fill="#fff" v-if="loadingDcl"/></button>
+                            <div class="my-3" v-if="journal.is_reimburse == 1 && verif">
+                                <label for="example-date-input" class="">File Bukti Verifikasi</label>
+                                <div class="">
+                                    <input type="file" class="form-control-file" v-on:change="pictureUpload" accept="image/*">
+                                    <div v-if="theErrors.ref" class="mt-1 text-danger">{{ theErrors.ref[0] }}</div>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" type="submit"><i class="uil-message"></i> Kirim <loading size="22" fill="#fff" v-if="loadingAcc"/></button>.
                         </form>
                     </div>
                     <div class="col-sm-8">
@@ -87,9 +97,11 @@ export default {
             journal: {},
             // successMessage: [],
             theErrors: [],
+            verif: 1,
+            filebukti: '',
+            note_decline: '',
             loading: true,
             loadingAcc: false,
-            loadingDcl: false,
         }
     },
 
@@ -104,7 +116,7 @@ export default {
         pictureUpload: function() {
             console.log("ganti gambar")
             // this.journal.filebukti = this.$refs.filebukti.files[0]
-            this.journal.filebukti = event.target.files[0]
+            this.filebukti = event.target.files[0]
         },
 
         async findJurnal() {
@@ -121,87 +133,97 @@ export default {
             }
             // console.log(response.data.data)
         },
-        async decline() {
-            try {
-                this.loadingDcl = true
-                await axios.post('/api/declinejournal/' + this.$route.params.token).then(
-                    response => {
-                        this.theErrors = []
-                        this.$router.push({ name: 'jurnal' })
-
-                        this.$toasted.show("Sukses menolak verifikasi jurnal", {
-                            type: 'success',
-                            duration: 3000,
-                            position: 'top-center',
-                        })
-                    }
-                ).catch((error) => {
-                    this.$toasted.show("Something went wrong : " + e, {
-                        type: 'error',
-                        duration: 3000,
-                        position: 'top-center',
-                    })
-                    console.log(e)
-                    console.log("Gagal verifikasi jurnal")
-                    console.log("ERRR:: ", e.response.data)
-                })
-
-            } catch (e) {
-                this.loadingDcl = false
-                this.$toasted.show("Something went wrong : " + e, {
-                        type: 'error',
-                        duration: 3000,
-                        position: 'top-center',
-                    })
-                    console.log(e)
-                    console.log("Gagal verifikasi jurnal")
-                    console.log("ERRR:: ", e.response.data)
-                // this.theErrors = e.responseCreate.data;
-            }
-        },
         async store() {
-            try {
-                this.loadingAcc = true
-                let formdata = new FormData()
-                formdata.append('filebukti', this.journal.filebukti)
-                await axios.post('/api/verifjournal/' + this.$route.params.token,  formdata, {
-                        headers: {
-                            'Content-Type': 'multipart/form-data'
-                        }
-                }).then(
-                    response => {
-                        this.journal.filebukti = ''
-                        this.theErrors = []
-                        this.$router.push({ name: 'jurnal' })
+            if(this.verif) {
+                try {
+                    this.loadingAcc = true
+                    let formdata = new FormData()
+                    if(this.filebukti != '') {
+                        formdata.append('filebukti', this.filebukti)
+                    }
+                    await axios.post('/api/verifjournal/' + this.$route.params.token, formdata, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data',
+                                'Authorization': 'Bearer ' + this.auth.token
+                            }
+                    }).then(
+                        response => {
+                            this.filebukti = ''
+                            this.theErrors = []
+                            this.$router.push({ name: 'jurnal' })
 
-                        this.$toasted.show("Sukses verifikasi jurnal", {
-                            type: 'success',
+                            this.$toasted.show("Sukses verifikasi jurnal", {
+                                type: 'success',
+                                duration: 3000,
+                                position: 'top-center',
+                            })
+                        }
+                    ).catch((e) => {
+                        this.$toasted.show("Something went wrong : " + e, {
+                            type: 'error',
                             duration: 3000,
                             position: 'top-center',
                         })
-                    }
-                ).catch((error) => {
-                    this.$toasted.show("Something went wrong : " + e, {
-                        type: 'error',
-                        duration: 3000,
-                        position: 'top-center',
+                        console.log(e)
+                        console.log("Gagal verifikasi jurnal")
+                        console.log("ERRR:: ", e.response.data)
                     })
-                    console.log(e)
-                    console.log("Gagal verifikasi jurnal")
-                    console.log("ERRR:: ", e.response.data)
-                })
 
-            } catch (e) {
-                this.loadingAcc = false
-                this.$toasted.show("Something went wrong : " + e, {
-                        type: 'error',
-                        duration: 3000,
-                        position: 'top-center',
+                } catch (e) {
+                    this.loadingAcc = false
+                    this.$toasted.show("Something went wrong : " + e, {
+                            type: 'error',
+                            duration: 3000,
+                            position: 'top-center',
+                        })
+                        console.log(e)
+                        console.log("Gagal verifikasi jurnal")
+                        console.log("ERRR:: ", e.response.data)
+                    // this.theErrors = e.responseCreate.data;
+                }
+            } else {
+                try {
+                    this.loadingAcc = true
+                    let formdata = new FormData()
+                    formdata.append('note_decline', this.note_decline)
+                    await axios.post('/api/declinejournal/' + this.$route.params.token, formdata, {
+                            headers: {
+                                'Authorization': 'Bearer ' + this.auth.token
+                            }
+                        }).then(
+                        response => {
+                            this.theErrors = []
+                            this.$router.push({ name: 'jurnal' })
+
+                            this.$toasted.show("Sukses menolak verifikasi jurnal", {
+                                type: 'success',
+                                duration: 3000,
+                                position: 'top-center',
+                            })
+                        }
+                    ).catch((error) => {
+                        this.$toasted.show("Something went wrong : " + e, {
+                            type: 'error',
+                            duration: 3000,
+                            position: 'top-center',
+                        })
+                        console.log(e)
+                        console.log("Gagal verifikasi jurnal")
+                        console.log("ERRR:: ", e.response.data)
                     })
-                    console.log(e)
-                    console.log("Gagal verifikasi jurnal")
-                    console.log("ERRR:: ", e.response.data)
-                // this.theErrors = e.responseCreate.data;
+
+                } catch (e) {
+                    this.loadingAcc = false
+                    this.$toasted.show("Something went wrong : " + e, {
+                            type: 'error',
+                            duration: 3000,
+                            position: 'top-center',
+                        })
+                        console.log(e)
+                        console.log("Gagal verifikasi jurnal")
+                        console.log("ERRR:: ", e.response.data)
+                    // this.theErrors = e.responseCreate.data;
+                }
             }
         }
     }

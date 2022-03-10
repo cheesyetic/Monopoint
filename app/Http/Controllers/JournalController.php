@@ -50,6 +50,10 @@ class JournalController extends Controller
             $query->where('title','ILIKE','%'.$request->keyword.'%');
         }
 
+        if($request->project){
+            $query->where('project_id','=',$request->project);
+        }
+
         if($request->category > 2){
             $query->where('status','>=', $request->category);
         }
@@ -336,9 +340,9 @@ class JournalController extends Controller
         AdjustingHistory::create($journal);
 
         // balance in ca
-        $idchartacc = $journal->chart_account_id;
+        $idchartacc = $journal['chart_account_id'];
         $ca = ChartAccount::findOrFail($idchartacc);
-        $ca->balance = $ca->balance + $journal->balance;
+        $ca->balance = $ca->balance + $journal['balance'];
         $ca->save();
 
         $this->sendEmailVerifikasi($id);
@@ -351,8 +355,8 @@ class JournalController extends Controller
         return response()->json($response, Response::HTTP_OK);
     }
 
-    public function declineStatus(Request $request, $id){
-        // $id = Crypt::decryptString($token);
+    public function declineStatus(Request $request, $token){
+        $id = Crypt::decryptString($token);
         $journal = Journal::findOrFail($id);
         $user = auth()->user()->name;
 

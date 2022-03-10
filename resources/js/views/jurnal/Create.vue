@@ -99,7 +99,7 @@
                             <div class="mb-3 row">
                                 <label for="example-date-input" class="col-md-2 col-form-label">Periode</label>
                                 <div class="col-md-10">
-                                    <v-select :options="periodOptions" @input="selectId($event, 'accounting_period_id')" :disabled="periodLoading"></v-select>
+                                    <v-select :options="periodOptions" :value="journalCreate.accounting_period_id" @input="selectId($event, 'accounting_period_id')" :disabled="periodLoading"></v-select>
                                     <div v-if="theErrors.accounting_period_id" class="mt-1 text-danger">{{ theErrors.accounting_period_id[0] }}</div>
                                 </div>
                             </div>
@@ -115,7 +115,7 @@
                             <div class="mb-3 row">
                                 <label for="example-date-input" class="col-md-2 col-form-label">Project</label>
                                 <div class="col-md-10">
-                                    <v-select :options="projectOptions" @input="selectId($event, 'project_id')" :disabled="projectLoading"></v-select>
+                                    <v-select :options="projectOptions"  @input="selectId($event, 'project_id')" :disabled="projectLoading"></v-select>
                                     <div v-if="theErrors.project_id" class="mt-1 text-danger">{{ theErrors.project_id[0] }}</div>
                                 </div>
                             </div>
@@ -212,10 +212,14 @@ export default {
                 // this.periodOptions = response.data.data
                 console.log(response.data.data.length)
                 for (var i = 0; i < response.data.data.length; i++) {
-                    let label = response.data.data[i].name + ' (' + response.data.data[i].start + ' - ' + response.data.data[i].end + ')'
+                    let label = response.data.data[i].id + ") " + response.data.data[i].name + ' (' + response.data.data[i].start + ' - ' + response.data.data[i].end + ')'
                     let id = String(response.data.data[i].id)
                     this.periodOptions.push({ label, id })
+                    if(response.data.data[i].status == 1) {
+                        this.journalCreate.accounting_period_id = id
+                    }
                 }
+                console.log(this.journalCreate.accounting_period_id + "periodeny broe")
                 this.periodLoading = false
             } else {
                 this.$toasted.show("Failed to load period", {

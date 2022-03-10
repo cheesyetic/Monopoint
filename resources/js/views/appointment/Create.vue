@@ -77,6 +77,9 @@ export default {
     components: {
         Loading
     },
+    mounted() {
+        this.getPartner()
+    },
     data() {
         return {
             appointmentCreate: {
@@ -88,58 +91,81 @@ export default {
             },
             partnerLoading: false,
             partnerOptions: [
-                {
-                    value: 1,
-                    label: 'Partner 1'
-                },
-                {
-                    value: 2,
-                    label: 'Partner 2'
-                },
-                {
-                    value: 3,
-                    label: 'Partner 3'
-                },
-                {
-                    value: 4,
-                    label: 'Partner 4'
-                },
+                // {
+                //     value: 1,
+                //     label: 'Partner 1'
+                // },
+                // {
+                //     value: 2,
+                //     label: 'Partner 2'
+                // },
+                // {
+                //     value: 3,
+                //     label: 'Partner 3'
+                // },
+                // {
+                //     value: 4,
+                //     label: 'Partner 4'
+                // },
             ],
             // successMessage: [],
-            theErrors: []
+            theErrors: [],
         }
     },
     methods: {
         // selectId(e, target) {
         //     this.appointmentCreate[target] = e.id
         // },
-        async store() {
-            try {
-                console.log(this.appointmentCreate)
-                let responseCreate = await axios.post('/api/appointment', this.appointmentCreate)
-                if (responseCreate.status == 201) {
-                    this.appointmentCreate.name = ''
-                    this.appointmentCreate.date = ''
-                    this.appointmentCreate.remark = ''
-                    this.theErrors = []
-
-                    this.$router.push({ name: 'appointment' })
-
-                    this.$toasted.show(responseCreate.data.message, {
-                        type: 'success',
-                        duration: 3000,
-                        position: 'top-center',
-                    })
+        async getPartner() {
+            let response = await axios.get('/api/account')
+            let type = ""
+            if (response.status === 200) {
+                // this.partnerOptions = response.data.data
+                for (var i = 0; i < response.data.data.length; i++) {
+                    if(response.data.data[i].type == 0) {
+                        type = "(Admin)"
+                    } else if(response.data.data[i].type == 1) {
+                        type = "(Keuangan)"
+                    } else {
+                        type = "(Staff)"
+                    }
+                    let label = response.data.data[i].name + " " + type
+                    let id = String(response.data.data[i].id)
+                    this.partnerOptions.push({ label, id })
                 }
-            } catch (e) {
-                this.$toasted.show("Something went wrong : " + e, {
-                        type: 'error',
-                        duration: 3000,
-                        position: 'top-center',
-                    })
-                console.log(e)
-                // this.theErrors = e.responseCreate.data;
             }
+            console.log(response.data.data)
+            console.log("sukses get user")
+            this.partnerLoading = false
+        },
+        async store() {
+            console.log(this.appointmentCreate)
+            // try {
+            //     console.log(this.appointmentCreate)
+            //     let responseCreate = await axios.post('/api/appointment', this.appointmentCreate)
+            //     if (responseCreate.status == 201) {
+            //         this.appointmentCreate.name = ''
+            //         this.appointmentCreate.date = ''
+            //         this.appointmentCreate.remark = ''
+            //         this.theErrors = []
+
+            //         this.$router.push({ name: 'appointment' })
+
+            //         this.$toasted.show(responseCreate.data.message, {
+            //             type: 'success',
+            //             duration: 3000,
+            //             position: 'top-center',
+            //         })
+            //     }
+            // } catch (e) {
+            //     this.$toasted.show("Something went wrong : " + e, {
+            //             type: 'error',
+            //             duration: 3000,
+            //             position: 'top-center',
+            //         })
+            //     console.log(e)
+            //     // this.theErrors = e.responseCreate.data;
+            // }
         }
     }
 }

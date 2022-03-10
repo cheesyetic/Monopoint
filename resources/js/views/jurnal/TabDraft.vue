@@ -14,7 +14,13 @@
                                 <li class="breadcrumb-item m-auto"><router-link :to="{ name: 'dashboard' }">Dashboard</router-link></li>
                                 <li class="breadcrumb-item m-auto active">Jurnal Draft</li>
                                 <!-- <button type="button" class="btn btn-primary waves-effect waves-light mx-2" data-bs-toggle="modal" data-bs-target="#createModal">Buat Jurnal Baru</button> -->
-                                <a href="/api/journal/export" class="btn btn-success" style="margin-left:8px"><i class="uil-table"></i> Export Excel <loading v-if="loadingExcel" size="18"/></a>
+                                <div class="btn-group" style="margin-left:8px">
+                                    <button type="button" class="btn btn-success dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="uil-table"></i> Excel <i class="uil-angle-down"></i></button>
+                                    <div class="dropdown-menu" style="">
+                                        <a href="/api/journal/export" class="dropdown-item"><i class="bx bx-export"></i> Export Excel <loading v-if="loadingExcel" size="18"/></a>
+                                        <a href="/api/journal/import" class="dropdown-item"><i class="bx bx-import"></i> Import Excel <loading v-if="loadingExcel" size="18"/></a>
+                                    </div>
+                                </div>
                                 <router-link exact :to="{ name: 'jurnal.create'}" class="btn btn-primary mx-2"><i class="uil-plus"></i> Buat Jurnal Baru</router-link>
                             </ol>
                         </div>
@@ -251,7 +257,7 @@ props: ['auth'],
             }
         },
         async getJurnal() {
-            let filter = "&keyword=" + this.filter_keyword + "&reimburse=" + this.filter_reimburse + "&date=" + this.filter_month + "&token=" + this.auth.user_token
+            let filter = "&keyword=" + this.filter_keyword + "&project=" + this.filter_project + "&reimburse=" + this.filter_reimburse + "&date=" + this.filter_month + "&token=" + this.auth.user_token
             console.log('/api/journal?category=1&keyword=' + filter)
             let response = await axios.get('/api/journal?category=1' + filter)
             if (response.status === 200) {

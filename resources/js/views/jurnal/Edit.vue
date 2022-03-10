@@ -90,7 +90,7 @@
                             <div class="mb-3 row">
                                 <label for="example-date-input" class="col-md-2 col-form-label">File Bukti</label>
                                 <div class="col-md-10">
-                                    <input type="file" class="form-control-file" v-on:change="pictureUpload">
+                                    <input type="file" class="form-control-file" v-on:change="pictureUpload" accept="image/*">
                                     <div v-if="theErrors.ref" class="mt-1 text-danger">{{ theErrors.ref[0] }}</div>
                                 </div>
                             </div>
