@@ -20,9 +20,9 @@ class AdjustingHistoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index($token)
     {
-        // $id = Crypt::decryptString($token);
+        $id = Crypt::decryptString($token);
         $adjustinghistory = AdjustingHistory::where('journal_id', '=', $id)->get();
         
         foreach ($adjustinghistory as $value) {
