@@ -319,10 +319,20 @@ class JournalController extends Controller
     public function validationStatus(Request $request, $token){
         $id = Crypt::decryptString($token);
         $journal = Journal::findOrFail($id);
+
         $user = auth()->user()->name;
 
         $journal->status = 3;
         if($journal->is_reimburse = 1){
+            $validator = Validator::make($request->all(), [
+                'buktireimburse' => ['required', 'mimes:png,jpg,jpeg,doc,docx,pdf,txt,csv', 'max:2048'],
+            ]);
+    
+            if($validator->fails()){
+                return response()->json($validator->errors(),
+                Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+
             $input = $request->all();
             if($file = $request->file('buktireimburse')){
                 $path = $file->store('public/files');
@@ -385,7 +395,10 @@ class JournalController extends Controller
 
     public function import(){
         Excel::import(new JournalsImport, request()->file('file'));
-        return back();
+        $response = [
+            'message' => 'Import Successful',
+        ];
+        return response()->json($response, Response::HTTP_OK);
     }
 
     public function sendEmailUpdate($id){

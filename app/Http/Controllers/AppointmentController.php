@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointment;
+use App\Models\UserAppointment;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -38,6 +39,7 @@ class AppointmentController extends Controller
      */
     public function store(Request $request)
     {
+        $user = auth()->user()->id;
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'max:200'],
             'date' => ['required'],
@@ -50,8 +52,16 @@ class AppointmentController extends Controller
             Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
+        $input = $request->all();
+
         try {
+            $request['user_id'] = $user;
             $appointment = Appointment::create($request->all());
+            $input['appointment_id'] = $appointment->id;
+            foreach($input['user_id'] as $value){
+                $input['user_id'] = $value;
+                UserAppointment::create($input);
+            }
             $response = [
                 'message' => 'A new appointment row created',
                 'data' => $appointment

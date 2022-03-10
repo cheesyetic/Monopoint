@@ -10,6 +10,7 @@ use App\Http\Controllers\JournalController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Api\LoginController;
+use App\Http\Controllers\UserAppointmentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,12 +31,16 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/logout', [LoginController::class, 'logout']);
     Route::post('/verifjournal/{id}', [JournalController::class, 'validationStatus']);
     Route::post('/declinejournal/{id}', [JournalController::class, 'declineStatus']);
-
+    Route::resource('/appointment', AppointmentController::class)->except('update', 'create', 'edit');
+    Route::post('/changepassword', [UserController::class, 'change_password']);
 });
 
 //AUTH
 Route::post('/login', [LoginController::class, 'index']);
 Route::get('/token/{id}', [LoginController::class, 'token']);
+
+//User Appointment
+Route::get('/userappointment/{id}', [UserAppointmentController::class, 'index']);
 
 //Accounting Period
 Route::resource('/accountingperiod', AccountingPeriodController::class)->except('update', 'create', 'edit');
@@ -44,8 +49,9 @@ Route::post('/periodstatus/{id}', [AccountingPeriodController::class, 'activateD
 //User
 Route::resource('/account', UserController::class)->except('update', 'create', 'edit');
 Route::post('/account/{id}', [UserController::class, 'update']);
+
 //Appointment
-Route::resource('/appointment', AppointmentController::class)->except('update', 'create', 'edit');
+
 Route::post('/appointment/{id}', [AppointmentController::class, 'update']);
 //BankAccount
 Route::resource('/bankaccount', BankAccountController::class)->except('update', 'create', 'edit');
@@ -58,9 +64,8 @@ Route::resource('/project', ProjectController::class)->except('update', 'create'
 Route::post('/project/{id}', [ProjectController::class, 'update']);
 //Journal
 Route::get('/journal/export/', [JournalController::class, 'export']);
-Route::get('/journal/import/', [JournalController::class, 'import']);
+Route::post('/journal/import/', [JournalController::class, 'import']);
 Route::post('/validjournal/{id}', [JournalController::class, 'draftToProcess']);
-
 Route::resource('/journal', JournalController::class)->except('update', 'create', 'edit');
 Route::post('/journal/{id}', [JournalController::class, 'update']);
 //Asset
