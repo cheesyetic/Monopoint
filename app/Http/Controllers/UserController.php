@@ -170,21 +170,25 @@ class UserController extends Controller
     $userid = auth()->user()->id;
     $rules = array(
         'old_password' => 'required',
-        'new_password' => 'required|min:6',
+        'new_password' => 'required|min:8',
         'confirm_password' => 'required|same:new_password',
     );
     $validator = Validator::make($input, $rules);
     if ($validator->fails()) {
-        $arr = array("status" => 400, "message" => $validator->errors()->first(), "data" => array());
+        $arr = array("message" => $validator->errors()->first(), "data" => array());
+        return response()->json($arr, Response::HTTP_UNPROCESSABLE_ENTITY);
     } else {
         try {
             if ((Hash::check(request('old_password'), auth()->user()->password)) == false) {
-                $arr = array("status" => 400, "message" => "Check your old password.", "data" => array());
+                $arr = array("message" => "Check your old password.", "data" => array());
+                return response()->json($arr, Response::HTTP_BAD_REQUEST);
             } else if ((Hash::check(request('new_password'), auth()->user()->password)) == true) {
-                $arr = array("status" => 400, "message" => "Please enter a password which is not similar then current password.", "data" => array());
+                $arr = array("message" => "Please enter a password which is not the exact current password.", "data" => array());
+                return response()->json($arr, Response::HTTP_BAD_REQUEST);
             } else {
                 User::where('id', $userid)->update(['password' => Hash::make($input['new_password'])]);
-                $arr = array("status" => 200, "message" => "Password updated successfully.", "data" => array());
+                $arr = array("message" => "Password updated successfully.", "data" => array());
+                return response()->json($arr, Response::HTTP_OK);
             }
         } catch (\Exception $ex) {
             if (isset($ex->errorInfo[2])) {
@@ -192,9 +196,9 @@ class UserController extends Controller
             } else {
                 $msg = $ex->getMessage();
             }
-            $arr = array("status" => 400, "message" => $msg, "data" => array());
+            $arr = array("message" => $msg, "data" => array());
+            return response()->json($arr, Response::HTTP_BAD_REQUEST);
         }
     }
-    return response()->json($arr);
 }
 }

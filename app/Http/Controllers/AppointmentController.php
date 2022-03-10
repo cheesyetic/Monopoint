@@ -102,9 +102,10 @@ class AppointmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $token)
+    public function update(Request $request, $id)
     {
-        $id = Crypt::decryptString($token);
+        
+        // $id = Crypt::decryptString($token);
         $appointment = Appointment::findOrFail($id);
 
         $validator = Validator::make($request->all(), [
@@ -119,8 +120,21 @@ class AppointmentController extends Controller
             Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
+        $input = $request->all();
+
         try {
+            $user_app_del = new UserAppointmentController;
+            $user_app_del->destroy($id);
+            
+            $request['user_id'] = $appointment->user_id;
             $appointment->update($request->all());
+
+            $input['appointment_id'] = $appointment->id;
+            foreach($input['user_id'] as $value){
+                $input['user_id'] = $value;
+                UserAppointment::create($input);
+            }
+
             $response = [
                 'message' => 'An appointment row updated',
                 'data' => $appointment
