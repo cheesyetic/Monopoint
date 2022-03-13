@@ -33,7 +33,7 @@
 
                                     <div class="mt-4">
                                         <router-link :to="{name: 'akun.edit'}" class="btn btn-primary btn-sm"><i class="uil uil-user me-2"></i> Update Profil</router-link>
-                                        <router-link :to="{name: 'akun.edit'}" class="btn btn-light btn-sm"><i class="uil uil-password me-2"></i> Ganti Password</router-link>
+                                        <router-link :to="{name: 'akun.password'}" class="btn btn-secondary btn-sm"><i class="uil uil-lock-open-alt me-2"></i> Ganti Password</router-link>
                                     </div>
                                 </div>
 

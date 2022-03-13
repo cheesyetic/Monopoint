@@ -26,30 +26,29 @@
                         <div class="card">
                             <div class="card-body">
                                 <form class="row" @submit.prevent="store">
-                                    <fieldset class="col-md-12" :disabled="loading">
+                                    <fieldset class="col-md-12">
                                         <div class="col-md-6 my-2">
                                             <div class="form-group">
-                                                <label for="">Nama</label>
-                                                <input type="text" class="form-control" v-model="account.name">
+                                                <label for="">Password Lama</label>
+                                                <input type="password" class="form-control" v-model="account.old_password">
                                             </div>
                                         </div>
                                         <div class="col-md-6 my-2">
                                             <div class="form-group">
-                                                <label for="">Email</label>
-                                                <input type="text" class="form-control" v-model="account.email">
+                                                <label for="">Password Baru</label>
+                                                <input type="password" class="form-control" v-model="account.new_password">
                                             </div>
                                         </div>
                                         <div class="col-md-6 my-2">
                                             <div class="form-group">
-                                                <label for="">Phone Number</label>
-                                                <input type="text" class="form-control" v-model="account.phone_number">
+                                                <label for="">Konfirmasi Password Baru</label>
+                                                <input type="password" class="form-control" v-model="account.confirm_password">
                                             </div>
                                         </div>
                                         <div class="row mt-4">
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <button class="btn btn-primary" type="submit">Update
-                                                    </button>
+                                                    <button class="btn btn-primary" type="submit">Update</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -80,20 +79,16 @@ export default {
             loading: true,
         }
     },
-    mounted() {
-        this.get()
-    },
     methods: {
-        async get() {
-            axios.get('http://localhost:8000/api/user', {headers: {'Authorization': 'Bearer '+this.auth.token}})
-            .then(response => {
-                this.account = response.data
-                this.loading = false
-            })
-        },
         async store() {
             try {
-                let response = await axios.post('/api/account/' + this.auth.user_token, this.account)
+                console.log("this.account")
+                console.log(this.account)
+                let response = await axios.post('/api/changepassword', this.account, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
                 // console.log(response.status)
                 if (response.status == 200) {
                     this.theErrors = []

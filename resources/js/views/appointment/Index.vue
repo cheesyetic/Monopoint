@@ -122,7 +122,11 @@ export default {
 
     methods: {
         async getChart() {
-            let response = await axios.get('/api/appointment')
+            let response = await axios.get('/api/appointment', {
+                headers: {
+                    Authorization: 'Bearer ' + this.auth.token
+                }
+            })
             if (response.status === 200) {
                 this.appointments = response.data.data
             }

@@ -56,8 +56,8 @@
                             <div class="mb-3 row">
                                 <label for="example-date-input" class="col-md-2 col-form-label">Partner</label>
                                 <div class="col-md-10">
-                                    <v-select :options="partnerOptions" @input="selectId($event, 'friend_id')" v-model="appointmentCreate.friend_id" multiple :disabled="partnerLoading"></v-select>
-                                    <div v-if="theErrors.friend_id" class="mt-1 text-danger">{{ theErrors.friend_id[0] }}</div>
+                                    <v-select :options="partnerOptions" @input="selectId($event, 'user_id')" v-model="appointmentCreate.user_id" multiple :disabled="partnerLoading"></v-select>
+                                    <div v-if="theErrors.user_id" class="mt-1 text-danger">{{ theErrors.user_id[0] }}</div>
                                 </div>
                             </div>
                             <button class="btn btn-primary" type="submit"><i class="uil-plus"></i> Buat</button>
@@ -74,6 +74,7 @@
 import Loading from '../../components/loading'
 
 export default {
+    props: ['auth'],
     components: {
         Loading
     },
@@ -86,8 +87,7 @@ export default {
                 name: '',
                 date: '',
                 remark: '',
-                friend_id: [],
-                user_id: '1',
+                user_id: [],
             },
             partnerLoading: false,
             partnerOptions: [
@@ -139,33 +139,41 @@ export default {
             this.partnerLoading = false
         },
         async store() {
+            console.log("this.appointmentCreate")
             console.log(this.appointmentCreate)
-            // try {
-            //     console.log(this.appointmentCreate)
-            //     let responseCreate = await axios.post('/api/appointment', this.appointmentCreate)
-            //     if (responseCreate.status == 201) {
-            //         this.appointmentCreate.name = ''
-            //         this.appointmentCreate.date = ''
-            //         this.appointmentCreate.remark = ''
-            //         this.theErrors = []
+            for (var i = 0; i < this.appointmentCreate.user_id.length; i++) {
+                this.appointmentCreate.user_id[i] = this.appointmentCreate.user_id[i].id
+            }
+            try {
+                console.log(this.appointmentCreate)
+                let responseCreate = await axios.post('/api/appointment', this.appointmentCreate, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
+                if (responseCreate.status == 201) {
+                    this.appointmentCreate.name = ''
+                    this.appointmentCreate.date = ''
+                    this.appointmentCreate.remark = ''
+                    this.theErrors = []
 
-            //         this.$router.push({ name: 'appointment' })
+                    this.$router.push({ name: 'appointment' })
 
-            //         this.$toasted.show(responseCreate.data.message, {
-            //             type: 'success',
-            //             duration: 3000,
-            //             position: 'top-center',
-            //         })
-            //     }
-            // } catch (e) {
-            //     this.$toasted.show("Something went wrong : " + e, {
-            //             type: 'error',
-            //             duration: 3000,
-            //             position: 'top-center',
-            //         })
-            //     console.log(e)
-            //     // this.theErrors = e.responseCreate.data;
-            // }
+                    this.$toasted.show(responseCreate.data.message, {
+                        type: 'success',
+                        duration: 3000,
+                        position: 'top-center',
+                    })
+                }
+            } catch (e) {
+                this.$toasted.show("Something went wrong : " + e, {
+                        type: 'error',
+                        duration: 3000,
+                        position: 'top-center',
+                    })
+                console.log(e)
+                // this.theErrors = e.responseCreate.data;
+            }
         }
     }
 }

@@ -18,7 +18,7 @@
                                     <button type="button" class="btn btn-success dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="uil-table"></i> Excel <i class="uil-angle-down"></i></button>
                                     <div class="dropdown-menu" style="">
                                         <a href="/api/journal/export" class="dropdown-item"><i class="bx bx-export"></i> Export Excel <loading v-if="loadingExcel" size="18"/></a>
-                                        <a href="/api/journal/import" class="dropdown-item"><i class="bx bx-import"></i> Import Excel <loading v-if="loadingExcel" size="18"/></a>
+                                        <router-link :to="{ name: 'jurnal.import' }" class="dropdown-item"><i class="bx bx-import"></i> Import Excel <loading v-if="loadingExcel" size="18"/></router-link>
                                     </div>
                                 </div>
                                 <router-link exact :to="{ name: 'jurnal.create'}" class="btn btn-primary mx-2"><i class="uil-plus"></i> Buat Jurnal Baru</router-link>

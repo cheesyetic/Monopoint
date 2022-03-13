@@ -8,12 +8,14 @@ import AppointmentCreate from '../views/appointment/Create'
 
 import Account from '../views/account/Index'
 import AccountEdit from '../views/account/Edit'
+import AccountPassword from '../views/account/Password'
 
 import Jurnal from '../views/jurnal/Index'
 import JurnalEdit from '../views/jurnal/Edit'
 import JurnalCreate from '../views/jurnal/Create'
 import JurnalVerif from '../views/jurnal/Verif'
 import JurnalDetail from '../views/jurnal/Detail'
+import JurnalImport from '../views/jurnal/Import'
 import TabDraft from '../views/jurnal/TabDraft'
 import TabProses from '../views/jurnal/TabProses'
 import TabVerif from '../views/jurnal/TabVerif'
@@ -79,6 +81,11 @@ export default {
                     name: 'akun.edit',
                     component: AccountEdit
                 },
+                {
+                    path: '/akun/password',
+                    name: 'akun.password',
+                    component: AccountPassword
+                },
                 // APPOINTMENT
                 {
                     path: '/appointment',
@@ -121,6 +128,11 @@ export default {
                     path: '/jurnal/create',
                     name: 'jurnal.create',
                     component: JurnalCreate
+                },
+                {
+                    path: '/jurnal/import',
+                    name: 'jurnal.import',
+                    component: JurnalImport
                 },
                 {
                     path: '/jurnal/detail/:token',

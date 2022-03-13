@@ -148,11 +148,15 @@ export default {
     //     this.loggedIn = localStorage.getItem("loggedIn")
     //   },
         logout() {
-                axios.get('http://localhost:8000/api/logout', {headers: {'Authorization': 'Bearer '+this.auth.token}})
+                axios.get('/api/logout', {
+                    headers: {
+                        'Authorization': 'Bearer '+this.auth.token
+                    }
+                })
                 .then(() => {
                     //remove localStorage
-                    console.log("KELUAR")
                     localStorage.removeItem("loggedIn")
+                    console.log("KELUAR")
                     //redirect
                     return this.$router.push({ name: 'login' })
                 })
