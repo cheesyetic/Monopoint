@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Appointment;
 use App\Models\UserAppointment;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserAppointmentController extends Controller
@@ -47,5 +49,27 @@ class UserAppointmentController extends Controller
         ];
 
         return response()->json($response, Response::HTTP_CREATED);
+    }
+
+    public function destroy($id)
+    {
+        $user_appointment = UserAppointment::where('appointment_id', '=', $id)->get();
+
+        try {
+            foreach($user_appointment as $value){
+                $value->delete();
+            }
+            $response = [
+                'message' => 'An user appointment row deleted',
+                'data' => $user_appointment
+            ];
+
+            return response()->json($response, Response::HTTP_OK);
+
+        } catch (QueryException $e) {
+            return response()->json([
+                'message' => "Failed " . $e->errorInfo
+            ]);
+        }
     }
 }
