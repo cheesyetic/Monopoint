@@ -16,7 +16,7 @@ class EnsureUserNotRole
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next, $roles)
+    public function handle(Request $request, Closure $next)
     {
         if(! auth()->user()){
             $response = [
@@ -27,7 +27,7 @@ class EnsureUserNotRole
 
         $user = auth()->user();
 
-        if( $user->type == $roles ){
+        if( $user->type != 0 ){
             $response = [
                 'message' => 'You are not an admin'
             ];

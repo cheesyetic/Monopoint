@@ -16,7 +16,7 @@ class EnsureUserHasRole
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next, $roles)
+    public function handle(Request $request, Closure $next)
     {
         if(! auth()->user()){
             $response = [
@@ -27,9 +27,9 @@ class EnsureUserHasRole
 
         $user = auth()->user();
 
-        if(! $user->type == $roles){
+        if( $user->type == 2){
             $response = [
-                'message' => 'You are not an admin'
+                'message' => 'You have to be a financial staff or an admin to access this resources'
             ];
             return response()->json($response, Response::HTTP_UNAUTHORIZED);
         }

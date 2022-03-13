@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Console\Commands\AppointmentCron;
+use App\Jobs\AppointmentReminder;
 use App\Models\Appointment;
 use App\Models\UserAppointment;
+use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -62,12 +65,13 @@ class AppointmentController extends Controller
                 $input['user_id'] = $value;
                 UserAppointment::create($input);
             }
-            $response = [
-                'message' => 'A new appointment row created',
-                'data' => $appointment
-            ];
+        $this->mailJob($appointment->id);
+        $response = [
+            'message' => 'A new appointment row created',
+            'data' => $appointment
+        ];
 
-            return response()->json($response, Response::HTTP_CREATED);
+        return response()->json($response, Response::HTTP_CREATED);
 
         } catch (QueryException $e) {
             return response()->json([
@@ -86,6 +90,14 @@ class AppointmentController extends Controller
     {
         $id = Crypt::decryptString($token);
         $appointment = Appointment::findOrFail($id);
+        $user_appointment = $appointment->user_appointment;
+        $i = 0;
+
+        foreach($user_appointment as $value){
+            $arrayuser[$i] = $value->user_id;
+            $i+=1;
+        }
+        $appointment->user_id = $arrayuser;
 
         $response = [
             'message' => 'An appointment row shown',
@@ -174,5 +186,41 @@ class AppointmentController extends Controller
                 'message' => "Failed " . $e->errorInfo
             ]);
         }
+    }
+
+    public function mailJob($id){
+        $appointment = Appointment::findOrFail($id);
+        $user_appointment = $appointment->user_appointment;
+        foreach($user_appointment as $value){
+            $email = $value->user->email;
+            $details=[
+                'email' => $email,
+                'name' => $value->name,
+                'user_name' => $value->user->name,
+                'date' => $appointment->date,
+            ];
+            $now = Carbon::now();
+            $appointment_date = (Carbon::create($appointment->date));
+            $diffInDays = $appointment_date->diffInDays($now);
+            $diffInMinutes = $appointment_date->diffInMinutes($now);
+            if($diffInDays <= 1){
+                AppointmentReminder::dispatch($details);
+            } elseif($diffInDays <3){
+                AppointmentReminder::dispatch($details);
+                AppointmentReminder::dispatch($details)->delay(now()->addDays($diffInDays - 1));
+            } else{
+                AppointmentReminder::dispatch($details);
+                AppointmentReminder::dispatch($details)->delay(now()->addDays($diffInDays - 3));
+                AppointmentReminder::dispatch($details)->delay(now()->addDays($diffInDays - 1));
+            }
+            if($diffInMinutes > 180){
+                AppointmentReminder::dispatch($details)->delay(now()->addMinutes($diffInMinutes - 180));
+            }
+        }
+
+        $response = [
+            'message' => 'Email sent successfully'
+        ];
+        return response()->json($response, Response::HTTP_OK);
     }
 }
