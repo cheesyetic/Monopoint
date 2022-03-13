@@ -61,6 +61,13 @@
                                     <div v-if="theErrors.remark" class="mt-1 text-danger">{{ theErrors.remark[0] }}</div>
                                 </div>
                             </div>
+                            <div class="mb-3 row">
+                                <label for="example-date-input" class="col-md-2 col-form-label">Partner</label>
+                                <div class="col-md-10">
+                                    <v-select :options="partnerOptions" @input="selectId($event, 'user_id')" v-model="appointmentCreate.user_id" multiple :disabled="partnerLoading"></v-select>
+                                    <div v-if="theErrors.user_id" class="mt-1 text-danger">{{ theErrors.user_id[0] }}</div>
+                                </div>
+                            </div>
                             <button class="btn btn-primary" type="submit"><i class="uil-edit-alt"></i> Edit</button>
                         </form>
                     </div>
@@ -74,6 +81,7 @@
 <script>
 import Loading from '../../components/loading'
 export default {
+    props: ['auth'],
     components: {
         Loading
     },
@@ -95,9 +103,14 @@ export default {
 
     methods: {
         async findAppointment() {
-            let response = await axios.get('/api/appointment/' + this.$route.params.token)
+            let response = await axios.get('/api/appointment/' + this.$route.params.token, {
+                headers: {
+                    Authorization: 'Bearer ' + this.auth.token
+                }
+            })
             if (response.status === 200) {
                 this.appointment = response.data.data
+                this.appointment.date = moment(String(this.appointment.date)).format('yyyy-MM-DD') + 'T' + moment(String(this.appointment.date)).format('hh:mm:ss')
                 this.loading = false
             } else {
                 this.$toasted.show("Something went wrong, please try again later", {

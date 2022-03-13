@@ -83,8 +83,12 @@ export default {
         async store() {
             try {
                 console.log("this.account")
-                console.log(this.account)
-                let response = await axios.post('/api/changepassword', this.account, {
+                let formdata = new FormData()
+                formdata.append('old_password', this.account.old_password)
+                formdata.append('new_password', this.account.new_password)
+                formdata.append('confirm_password', this.account.confirm_password)
+                console.log(formdata)
+                let response = await axios.post('/api/changepassword', formdata, {
                     headers: {
                         'Authorization': 'Bearer ' + this.auth.token
                     }
@@ -102,12 +106,12 @@ export default {
                     this.$router.push({ name: 'akun' })
                 }
             } catch (e) {
-                this.$toasted.show("Something went wrong", {
+                this.$toasted.show("Something went wrong : " + e.response.data.message, {
                         type: 'error',
                         duration: 3000,
                         position: 'top-center',
                     })
-                this.theErrors = e.response.data;
+                // this.theErrors = e.response.data;
             }
         }
     }

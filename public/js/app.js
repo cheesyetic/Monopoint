@@ -2838,22 +2838,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var response;
+        var formdata, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.prev = 0;
                 console.log("this.account");
-                console.log(_this.account);
-                _context.next = 5;
-                return axios.post('/api/changepassword', _this.account, {
+                formdata = new FormData();
+                formdata.append('old_password', _this.account.old_password);
+                formdata.append('new_password', _this.account.new_password);
+                formdata.append('confirm_password', _this.account.confirm_password);
+                console.log(formdata);
+                _context.next = 9;
+                return axios.post('/api/changepassword', formdata, {
                   headers: {
                     'Authorization': 'Bearer ' + _this.auth.token
                   }
                 });
 
-              case 5:
+              case 9:
                 response = _context.sent;
 
                 // console.log(response.status)
@@ -2871,27 +2875,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   });
                 }
 
-                _context.next = 13;
+                _context.next = 16;
                 break;
 
-              case 9:
-                _context.prev = 9;
+              case 13:
+                _context.prev = 13;
                 _context.t0 = _context["catch"](0);
 
-                _this.$toasted.show("Something went wrong", {
+                _this.$toasted.show("Something went wrong : " + _context.t0.response.data.message, {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
-                });
+                }); // this.theErrors = e.response.data;
 
-                _this.theErrors = _context.t0.response.data;
 
-              case 13:
+              case 16:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 9]]);
+        }, _callee, null, [[0, 13]]);
       }))();
     }
   }
@@ -3180,7 +3183,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['endpoint'],
+  props: ['endpoint', 'auth'],
   methods: {
     destroyChart: function destroyChart() {
       var _this = this;
@@ -3200,7 +3203,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
 
                 _context.next = 5;
-                return axios["delete"]("/api/chartaccount/".concat(_this.endpoint));
+                return axios["delete"]("/api/chartaccount/".concat(_this.endpoint), {
+                  headers: {
+                    Authorization: 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 5:
                 responseDelete = _context.sent;
@@ -3342,8 +3349,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['auth'],
   components: {
     Loading: _components_loading__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
@@ -3372,13 +3387,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get('/api/appointment/' + _this.$route.params.token);
+                return axios.get('/api/appointment/' + _this.$route.params.token, {
+                  headers: {
+                    Authorization: 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 2:
                 response = _context.sent;
 
                 if (response.status === 200) {
                   _this.appointment = response.data.data;
+                  _this.appointment.date = moment(String(_this.appointment.date)).format('yyyy-MM-DD') + 'T' + moment(String(_this.appointment.date)).format('hh:mm:ss');
                   _this.loading = false;
                 } else {
                   _this.$toasted.show("Something went wrong, please try again later", {
@@ -40440,6 +40460,56 @@ var render = function () {
                                   )
                                 : _vm._e(),
                             ]),
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "mb-3 row" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "col-md-2 col-form-label",
+                                attrs: { for: "example-date-input" },
+                              },
+                              [_vm._v("Partner")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "col-md-10" },
+                              [
+                                _c("v-select", {
+                                  attrs: {
+                                    options: _vm.partnerOptions,
+                                    multiple: "",
+                                    disabled: _vm.partnerLoading,
+                                  },
+                                  on: {
+                                    input: function ($event) {
+                                      return _vm.selectId($event, "user_id")
+                                    },
+                                  },
+                                  model: {
+                                    value: _vm.appointmentCreate.user_id,
+                                    callback: function ($$v) {
+                                      _vm.$set(
+                                        _vm.appointmentCreate,
+                                        "user_id",
+                                        $$v
+                                      )
+                                    },
+                                    expression: "appointmentCreate.user_id",
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _vm.theErrors.user_id
+                                  ? _c(
+                                      "div",
+                                      { staticClass: "mt-1 text-danger" },
+                                      [_vm._v(_vm._s(_vm.theErrors.user_id[0]))]
+                                    )
+                                  : _vm._e(),
+                              ],
+                              1
+                            ),
                           ]),
                           _vm._v(" "),
                           _c(
