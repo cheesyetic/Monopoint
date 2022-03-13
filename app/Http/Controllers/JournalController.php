@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Str;
 
 class JournalController extends Controller
 {
@@ -33,17 +34,13 @@ class JournalController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->token){
-            $id = Crypt::decryptString($request->token);
-        }
+        $user = auth()->user();
 
         $query = Journal::with(['user', 'chartAccount', 'accountingPeriod', 'project', 'asset', 'bankAccount']);
 
-        if($request->token){
-            $user = User::where('id', '=', $id)->get();
-            if($user->type = 3){
-                $query->where('user_id', '=', $id);
-            }
+        if($user->type == 2){
+            dd($user);
+            $query->where('user_id', '=', $user->id);
         }
 
         if($request->keyword){
@@ -127,10 +124,9 @@ class JournalController extends Controller
             Response::HTTP_UNPROCESSABLE_ENTITY);
         }
             if($file = $request->file('filebukti')){
-                $path = $file->store('public/files');
-                $name = $file->getClientOriginalName();
-                $file->move($path, $name);
-                $input['filebukti'] = "$name";
+                $imageName = Str::random(2) . time().'.'.$request->filebukti->extension();
+                $path = $file->storeAs('uploads', $imageName, 'public');
+                $input['filebukti'] = '/storage/'.$path;
             }
 
             $journal = Journal::create($input);
@@ -165,7 +161,6 @@ class JournalController extends Controller
     {
         $id = Crypt::decryptString($token);
         $journal = Journal::findOrFail($id);
-        // dd($journal);
 
         $journal->project_name = $journal->project->name;
         $journal->user_name = $journal->user->name;
@@ -218,10 +213,9 @@ class JournalController extends Controller
 
         try {
             if($file = $request->file('filebukti')){
-                $path = $file->store('public/files');
-                $name = $file->getClientOriginalName();
-                $file->move($path, $name);
-                $input['filebukti'] = "$name";
+                $imageName = time().'.'.$request->filebukti->extension();
+                $path = $file->storeAs('uploads', $imageName, 'public');
+                $input['filebukti'] = '/storage/'.$path;
             }
         else{
             $input['filebukti'] = "$journal->filebukti";
