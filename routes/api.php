@@ -33,24 +33,29 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::group(['middleware' => ['adminonly']], function(){
         //Accounting Period
-        Route::resource('/accountingperiod', AccountingPeriodController::class)->except('update', 'create', 'edit');
+        Route::post('/accountingperiod', [AccountingPeriodController::class, 'store']);
         Route::post('/accountingperiod/{id}', [AccountingPeriodController::class, 'update']);
+        Route::delete('/accountingperiod/{id}', [AccountingPeriodController::class, 'destroy']);
         Route::post('/periodstatus/{id}', [AccountingPeriodController::class, 'activateDeactivate']);
 
         //User
-        Route::resource('/account', UserController::class)->except('update', 'create', 'edit');
+        Route::post('/account', [UserController::class, 'store']);
+        Route::delete('/account/{id}', [UserController::class, 'destroy']);
         Route::post('/account/{id}', [UserController::class, 'update']);
 
         //BankAccount
-        Route::resource('/bankaccount', BankAccountController::class)->except('update', 'create', 'edit');
+        Route::post('/bankaccount', [BankAccountController::class, 'store']);
+        Route::delete('/bankaccount/{id}', [BankAccountController::class, 'destroy']);
         Route::post('/bankaccount/{id}', [BankAccountController::class, 'update']);
         
         //ChartAccount
-        Route::resource('/chartaccount', ChartAccountController::class)->except('update', 'create', 'edit');
+        Route::post('/chartaccount', [ChartAccountController::class, 'store']);
+        Route::delete('/chartaccount/{id}', [ChartAccountController::class, 'destroy']);
         Route::post('/chartaccount/{id}', [ChartAccountController::class, 'update']);
         
         //Project
-        Route::resource('/project', ProjectController::class)->except('update', 'create', 'edit');
+        Route::post('/project', [ProjectController::class, 'store']);
+        Route::delete('/project/{id}', [ProjectController::class, 'destroy']);
         Route::post('/project/{id}', [ProjectController::class, 'update']);
 
         //Asset
@@ -105,6 +110,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //-------------------------------------------------------------------------------------------------------
 
 });
+
+//GET MASTER DATA
+Route::resource('/accountingperiod', AccountingPeriodController::class)->except('destroy', 'store', 'update', 'create', 'edit');
+Route::resource('/account', UserController::class)->except('destroy', 'store', 'update', 'create', 'edit');
+Route::resource('/bankaccount', BankAccountController::class)->except('destroy', 'store', 'update', 'create', 'edit');
+Route::resource('/chartaccount', ChartAccountController::class)->except('destroy', 'store', 'update', 'create', 'edit');
+Route::resource('/project', ProjectController::class)->except('destroy', 'store', 'update', 'create', 'edit');
 
 //AUTH
 Route::post('/login', [LoginController::class, 'index']);
