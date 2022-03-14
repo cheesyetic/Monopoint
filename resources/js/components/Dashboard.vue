@@ -40,7 +40,7 @@ export default {
     },
 
     created() {
-        axios.get('http://localhost:8000/api/user', {headers: {'Authorization': 'Bearer '+this.auth.token}})
+        axios.get('/api/user', {headers: {'Authorization': 'Bearer '+this.auth.token}})
         .then(response => {
             console.log(response)
             this.auth.user = response.data // assign response to state user
@@ -52,7 +52,7 @@ export default {
     methods: {
         token() {
             console.log("request acc token")
-            axios.get('http://localhost:8000/api/token/' + this.auth.user.id )
+            axios.get('/api/token/' + this.auth.user.id )
             .then(response => {
                 console.log(response)
                 this.auth.user_token = response.data.data

@@ -2118,7 +2118,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    axios.get('http://localhost:8000/api/user', {
+    axios.get('/api/user', {
       headers: {
         'Authorization': 'Bearer ' + this.auth.token
       }
@@ -2135,7 +2135,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       console.log("request acc token");
-      axios.get('http://localhost:8000/api/token/' + this.auth.user.id).then(function (response) {
+      axios.get('/api/token/' + this.auth.user.id).then(function (response) {
         console.log(response);
         _this2.auth.user_token = response.data.data;
       });
