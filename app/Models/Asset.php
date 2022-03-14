@@ -11,7 +11,9 @@ class Asset extends Model
 
     protected $fillable = [
         'name',
-        'value',
+        'quantity',
+        'price',
+        'total',
         'buy_time'
     ];
 

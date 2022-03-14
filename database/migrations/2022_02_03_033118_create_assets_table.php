@@ -16,7 +16,9 @@ class CreateAssetsTable extends Migration
         Schema::create('assets', function (Blueprint $table) {
             $table->id();
             $table->string('name', 45);
-            $table->double('value');
+            $table->double('quantity');
+            $table->double('price');
+            $table->double('total');
             $table->dateTime('buy_time');
             $table->timestamps();
         });

@@ -40,7 +40,8 @@ class AssetController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'max:45'],
-            'value' => ['required'],
+            'quantity' => ['required'],
+            'price' => ['required'],
             'buy_time' => ['required']
         ]);
 
@@ -50,6 +51,9 @@ class AssetController extends Controller
         }
 
         try {
+            $value1 = $request['quantity'];
+            $value2 = $request['price'];
+            $request['total'] =  $value1 * $value2 ;
             $asset = Asset::create($request->all());
             $response = [
                 'message' => 'A new asset row created',
@@ -98,7 +102,8 @@ class AssetController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'max:45'],
-            'value' => ['required'],
+            'quantity' => ['required'],
+            'price' => ['required'],
             'buy_time' => ['required']
         ]);
 
@@ -108,6 +113,9 @@ class AssetController extends Controller
         }
 
         try {
+            $value1 = $request['quantity'];
+            $value2 = $request['price'];
+            $request['total'] =  $value1 * $value2 ;
             $asset->update($request->all());
             $response = [
                 'message' => 'An asset row updated',
