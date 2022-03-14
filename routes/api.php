@@ -60,7 +60,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
         //Asset
         Route::resource('/asset', AssetController::class)->except('update', 'create', 'edit');
-        Route::post('/asset/{id}', [JournalController::class, 'update']);
+        Route::post('/asset/{id}', [AssetController::class, 'update']);
     });
 
     //-------------------------------------------------------------------------------------------------------
