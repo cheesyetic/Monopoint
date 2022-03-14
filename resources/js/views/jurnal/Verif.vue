@@ -59,7 +59,7 @@
                                     <div v-if="theErrors.ref" class="mt-1 text-danger">{{ theErrors.ref[0] }}</div>
                                 </div>
                             </div>
-                            <button class="btn btn-primary" type="submit"><i class="uil-message"></i> Kirim <loading size="22" fill="#fff" v-if="loadingAcc"/></button>.
+                            <button class="btn btn-primary" type="submit" :disabled="loadingAcc"><i class="uil-message"></i> Kirim <loading size="22" fill="#fff" v-if="loadingAcc"/></button>.
                         </form>
                     </div>
                     <div class="col-sm-8">

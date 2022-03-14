@@ -24,7 +24,7 @@ export default {
                             position: 'top-center',
                         })
 
-                        this.$refs.deleteChart.parentElement.parentElement.parentElement.parentElement.remove()
+                        this.$refs.deleteChart.parentElement.parentElement.remove()
                     }
                     else {
                         this.$toasted.show("Error deleting period", {

@@ -68,7 +68,8 @@
                                     <div v-if="theErrors.user_id" class="mt-1 text-danger">{{ theErrors.user_id[0] }}</div>
                                 </div>
                             </div>
-                            <button class="btn btn-primary" type="submit"><i class="bx bx-save"></i> Save</button>
+                            <button class="btn btn-primary" type="submit" :disabled="loadingCRUD"><i class="bx bx-save"></i> Save</button>
+                            <loading v-if="loadingCRUD"/>
                         </form>
                     </div>
                 </div> <!-- end col -->
@@ -97,6 +98,7 @@ export default {
             partnerLoading: true,
             theErrors: [],
             loading: true,
+            loadingCRUD: false,
         }
     },
 
@@ -124,12 +126,12 @@ export default {
                         type = "(Staff)"
                     }
                     let label = response.data.data[i].name + " " + type
-                    let id = String(response.data.data[i].id)
+                    let id = (response.data.data[i].id)
                     this.partnerOptions.push({ label, id })
                 }
             }
-            console.log(">> sukses get partner options")
-            console.log(this.partnerOptions)
+            // console.log(">> sukses get partner options")
+            // console.log(this.partnerOptions)
             this.partnerLoading = false
             this.findAppointment()
         },
@@ -142,15 +144,15 @@ export default {
             if (response.status === 200) {
                 this.appointment = response.data.data
                 this.appointment.date = moment(String(this.appointment.date)).format('yyyy-MM-DD') + 'T' + moment(String(this.appointment.date)).format('hh:mm:ss')
-                console.log(">> Panjang Appointment user id")
-                console.log(this.appointment.user_id.length)
-                console.log(">> Panjang partnerOptions")
-                console.log(this.partnerOptions.length)
+                // console.log(">> Panjang Appointment user id")
+                // console.log(this.appointment.user_id.length)
+                // console.log(">> Panjang partnerOptions")
+                // console.log(this.partnerOptions.length)
                 for (var i = 0; i < this.appointment.user_id.length; i++) {
                     for (var j = 0; j < this.partnerOptions.length; j++) {
                         if(this.partnerOptions[j].id == this.appointment.user_id[i]) {
                             let label = this.partnerOptions[j].label
-                            let id = String(this.partnerOptions[j].id)
+                            let id = (this.partnerOptions[j].id)
                             this.partnerSelected.push({ label, id })
                             break
                         }
@@ -169,9 +171,11 @@ export default {
             // console.log(response.data.data)
         },
         async store() {
-            console.log("this.partnerSelected")
-            console.log(this.partnerSelected.length)
-            console.log(this.partnerSelected)
+            this.loadingCRUD = true
+
+            this.appointment.user_id = []
+            this.appointment.length = 0
+            console.log(this.appointment.user_id)
             for (var i = 0; i < this.partnerSelected.length; i++) {
                 this.appointment.user_id[i] = this.partnerSelected[i].id
             }
@@ -200,6 +204,7 @@ export default {
                         position: 'top-center',
                     })
                 this.theErrors = e.response.data;
+                this.loadingCRUD = false
             }
         }
     }

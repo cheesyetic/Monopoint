@@ -142,7 +142,7 @@ class AppointmentController extends Controller
             $appointment->update($request->all());
 
             $input['appointment_id'] = $appointment->id;
-            dd($input);
+            // dd($input);
             foreach($input['user_id'] as $value){
                 $input['user_id'] = $value;
                 UserAppointment::create($input);

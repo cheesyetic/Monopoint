@@ -103,7 +103,7 @@
                                                             <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu <i class="uil-angle-down"></i></button>
                                                             <div class="dropdown-menu" style="">
                                                                 <router-link :to="{ name: 'jurnal.detail', params: { token: journal.token }}" class="dropdown-item"><i class="uil-document-layout-left"></i> Detail</router-link>
-                                                                <button  @click="ajukanDialog(journal.token)" class="dropdown-item"><i class="uil-message"></i> Ajukan</button>
+                                                                <button @click="ajukanDialog(journal.token)" class="dropdown-item"><i class="uil-message"></i> Ajukan</button>
                                                                 <div class="dropdown-divider"></div>
                                                                 <router-link :to="{ name: 'jurnal.edit', params: { token: journal.token }}" class="dropdown-item"><i class="uil-edit-alt"></i> Edit</router-link>
                                                                 <delete-journal :endpoint="journal.token" :auth="auth" />

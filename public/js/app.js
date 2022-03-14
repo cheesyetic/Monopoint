@@ -3204,7 +3204,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     position: 'top-center'
                   });
 
-                  _this.$refs.deleteChart.parentElement.parentElement.parentElement.parentElement.remove();
+                  _this.$refs.deleteChart.parentElement.parentElement.remove();
                 } else {
                   _this.$toasted.show("Error deleting period", {
                     type: 'error',
@@ -3341,6 +3341,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['auth'],
@@ -3358,7 +3359,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       partnerOptions: [],
       partnerLoading: true,
       theErrors: [],
-      loading: true
+      loading: true,
+      loadingCRUD: false
     };
   },
   mounted: function mounted() {
@@ -3397,22 +3399,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     }
 
                     label = response.data.data[i].name + " " + type;
-                    id = String(response.data.data[i].id);
+                    id = response.data.data[i].id;
 
                     _this.partnerOptions.push({
                       label: label,
                       id: id
                     });
                   }
-                }
+                } // console.log(">> sukses get partner options")
+                // console.log(this.partnerOptions)
 
-                console.log(">> sukses get partner options");
-                console.log(_this.partnerOptions);
+
                 _this.partnerLoading = false;
 
                 _this.findAppointment();
 
-              case 9:
+              case 7:
               case "end":
                 return _context.stop();
             }
@@ -3440,72 +3442,72 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context2.sent;
 
                 if (!(response.status === 200)) {
-                  _context2.next = 30;
+                  _context2.next = 26;
                   break;
                 }
 
                 _this2.appointment = response.data.data;
-                _this2.appointment.date = moment(String(_this2.appointment.date)).format('yyyy-MM-DD') + 'T' + moment(String(_this2.appointment.date)).format('hh:mm:ss');
-                console.log(">> Panjang Appointment user id");
-                console.log(_this2.appointment.user_id.length);
-                console.log(">> Panjang partnerOptions");
-                console.log(_this2.partnerOptions.length);
+                _this2.appointment.date = moment(String(_this2.appointment.date)).format('yyyy-MM-DD') + 'T' + moment(String(_this2.appointment.date)).format('hh:mm:ss'); // console.log(">> Panjang Appointment user id")
+                // console.log(this.appointment.user_id.length)
+                // console.log(">> Panjang partnerOptions")
+                // console.log(this.partnerOptions.length)
+
                 i = 0;
 
-              case 11:
+              case 7:
                 if (!(i < _this2.appointment.user_id.length)) {
-                  _context2.next = 25;
+                  _context2.next = 21;
                   break;
                 }
 
                 j = 0;
 
-              case 13:
+              case 9:
                 if (!(j < _this2.partnerOptions.length)) {
-                  _context2.next = 22;
+                  _context2.next = 18;
                   break;
                 }
 
                 if (!(_this2.partnerOptions[j].id == _this2.appointment.user_id[i])) {
-                  _context2.next = 19;
+                  _context2.next = 15;
                   break;
                 }
 
                 label = _this2.partnerOptions[j].label;
-                id = String(_this2.partnerOptions[j].id);
+                id = _this2.partnerOptions[j].id;
 
                 _this2.partnerSelected.push({
                   label: label,
                   id: id
                 });
 
-                return _context2.abrupt("break", 22);
+                return _context2.abrupt("break", 18);
 
-              case 19:
+              case 15:
                 j++;
-                _context2.next = 13;
+                _context2.next = 9;
                 break;
 
-              case 22:
+              case 18:
                 i++;
-                _context2.next = 11;
+                _context2.next = 7;
                 break;
 
-              case 25:
+              case 21:
                 console.log(">> Selected Partner");
                 console.log(_this2.partnerSelected);
                 _this2.loading = false;
-                _context2.next = 31;
+                _context2.next = 27;
                 break;
 
-              case 30:
+              case 26:
                 _this2.$toasted.show("Something went wrong, please try again later", {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
                 });
 
-              case 31:
+              case 27:
               case "end":
                 return _context2.stop();
             }
@@ -3522,23 +3524,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                console.log("this.partnerSelected");
-                console.log(_this3.partnerSelected.length);
-                console.log(_this3.partnerSelected);
+                _this3.loadingCRUD = true;
+                _this3.appointment.user_id = [];
+                _this3.appointment.length = 0;
+                console.log(_this3.appointment.user_id);
 
                 for (i = 0; i < _this3.partnerSelected.length; i++) {
                   _this3.appointment.user_id[i] = _this3.partnerSelected[i].id;
                 }
 
-                _context3.prev = 4;
-                _context3.next = 7;
+                _context3.prev = 5;
+                _context3.next = 8;
                 return axios.post('/api/appointment/' + _this3.$route.params.token, _this3.appointment, {
                   headers: {
                     'Authorization': 'Bearer ' + _this3.auth.token
                   }
                 });
 
-              case 7:
+              case 8:
                 response = _context3.sent;
 
                 // console.log(response.status)
@@ -3556,12 +3559,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   });
                 }
 
-                _context3.next = 15;
+                _context3.next = 17;
                 break;
 
-              case 11:
-                _context3.prev = 11;
-                _context3.t0 = _context3["catch"](4);
+              case 12:
+                _context3.prev = 12;
+                _context3.t0 = _context3["catch"](5);
 
                 _this3.$toasted.show("Something went wrong", {
                   type: 'error',
@@ -3570,13 +3573,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
                 _this3.theErrors = _context3.t0.response.data;
+                _this3.loadingCRUD = false;
 
-              case 15:
+              case 17:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[4, 11]]);
+        }, _callee3, null, [[5, 12]]);
       }))();
     }
   }
@@ -40805,14 +40809,20 @@ var render = function () {
                             "button",
                             {
                               staticClass: "btn btn-primary",
-                              attrs: { type: "submit" },
+                              attrs: {
+                                type: "submit",
+                                disabled: _vm.loadingCRUD,
+                              },
                             },
                             [
                               _c("i", { staticClass: "bx bx-save" }),
                               _vm._v(" Save"),
                             ]
                           ),
-                        ]
+                          _vm._v(" "),
+                          _vm.loadingCRUD ? _c("loading") : _vm._e(),
+                        ],
+                        1
                       ),
                     ]),
                   ]),
@@ -46377,7 +46387,10 @@ var render = function () {
                             "button",
                             {
                               staticClass: "btn btn-primary",
-                              attrs: { type: "submit" },
+                              attrs: {
+                                type: "submit",
+                                disabled: _vm.loadingEdit,
+                              },
                             },
                             [
                               _c("i", { staticClass: "bx bx-save" }),
@@ -49273,7 +49286,10 @@ var render = function () {
                             "button",
                             {
                               staticClass: "btn btn-primary",
-                              attrs: { type: "submit" },
+                              attrs: {
+                                type: "submit",
+                                disabled: _vm.loadingAcc,
+                              },
                             },
                             [
                               _c("i", { staticClass: "uil-message" }),
