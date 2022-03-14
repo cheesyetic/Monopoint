@@ -113,7 +113,11 @@ export default {
         },
         async store() {
             try {
-                let response = await axios.post('/api/asset/' + this.$route.params.token, this.asset)
+                let response = await axios.post('/api/asset/' + this.$route.params.token, this.asset, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
                 // console.log(response.status)
                 if (response.status == 200) {
                     this.theErrors = []

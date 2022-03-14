@@ -132,16 +132,20 @@ export default {
             }
         },
         async getPeriod() {
-            let response = await axios.get('/api/accountingperiod')
+            let response = await axios.get('/api/accountingperiod', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 this.periods = response.data.data
             }
             this.loading = false
         },
         format_date(value){
-         if (value) {
-           return moment(String(value)).format('Do MMMM YYYY')
-          }
+            if (value) {
+                return moment(String(value)).format('Do MMMM YYYY')
+            }
         },
     }
 }

@@ -4179,7 +4179,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context2.prev = 0;
                 _context2.next = 3;
-                return axios.post('/api/asset/' + _this2.$route.params.token, _this2.asset);
+                return axios.post('/api/asset/' + _this2.$route.params.token, _this2.asset, {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this2.auth.token
+                  }
+                });
 
               case 3:
                 response = _context2.sent;
@@ -9064,7 +9068,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get('/api/journal/' + _this.$route.params.token);
+                return axios.get('/api/journal/' + _this.$route.params.token, {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 2:
                 response = _context.sent;
@@ -10595,7 +10603,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return axios.get('/api/accountingperiod');
+                return axios.get('/api/accountingperiod', {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this3.auth.token
+                  }
+                });
 
               case 2:
                 response = _context2.sent;

@@ -120,7 +120,11 @@ export default {
         },
 
         async findJurnal() {
-            let response = await axios.get('/api/journal/' + this.$route.params.token)
+            let response = await axios.get('/api/journal/' + this.$route.params.token, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 this.journal = response.data.data
                 this.loading = false
