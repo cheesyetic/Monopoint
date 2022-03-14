@@ -90,32 +90,12 @@ export default {
                 user_id: [],
             },
             partnerLoading: false,
-            partnerOptions: [
-                // {
-                //     value: 1,
-                //     label: 'Partner 1'
-                // },
-                // {
-                //     value: 2,
-                //     label: 'Partner 2'
-                // },
-                // {
-                //     value: 3,
-                //     label: 'Partner 3'
-                // },
-                // {
-                //     value: 4,
-                //     label: 'Partner 4'
-                // },
-            ],
+            partnerOptions: [],
             // successMessage: [],
             theErrors: [],
         }
     },
     methods: {
-        // selectId(e, target) {
-        //     this.appointmentCreate[target] = e.id
-        // },
         async getPartner() {
             let response = await axios.get('/api/account', {
                     headers: {
