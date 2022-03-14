@@ -79,6 +79,7 @@ import DeletePeriod from './Delete'
 import CreatePeriod from './Create'
 import Loading from '../../components/loading'
 export default {
+    props: ['auth'],
     components: {
         DeletePeriod,
         CreatePeriod,
@@ -113,7 +114,11 @@ export default {
             })
         },
         async enablePeriod(token) {
-            let response = await axios.post('/api/periodstatus/ ' + token)
+            let response = await axios.post('/api/periodstatus/ ' + token, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 this.getPeriod()
             }

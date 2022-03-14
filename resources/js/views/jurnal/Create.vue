@@ -187,7 +187,11 @@ export default {
         },
 
         async getChart() {
-            let response = await axios.get('/api/chartaccount')
+            let response = await axios.get('/api/chartaccount', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 // this.periodOptions = response.data.data
                 console.log(response.data.data.length)
@@ -207,7 +211,11 @@ export default {
         },
 
         async getPeriod() {
-            let response = await axios.get('/api/accountingperiod')
+            let response = await axios.get('/api/accountingperiod', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 // this.periodOptions = response.data.data
                 console.log(response.data.data.length)
@@ -231,7 +239,11 @@ export default {
         },
 
         async getProject() {
-            let response = await axios.get('/api/project')
+            let response = await axios.get('/api/project', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 // this.periodOptions = response.data.data
                 console.log(response.data.data.length)
@@ -251,7 +263,11 @@ export default {
         },
 
         async getBank() {
-            let response = await axios.get('/api/bankaccount')
+            let response = await axios.get('/api/bankaccount', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 // this.periodOptions = response.data.data
                 console.log(response.data.data.length)
@@ -286,9 +302,10 @@ export default {
                 formdata.append('project_id', this.journalCreate.project_id)
                 formdata.append('user_id', this.auth.user.id)
                 await axios.post('/api/journal',  formdata, {
-                        headers: {
-                            'Content-Type': 'multipart/form-data'
-                        }
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
                 }).then(
                     response => {
                         this.journalCreate.title = ''

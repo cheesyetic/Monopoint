@@ -39,7 +39,6 @@ class JournalController extends Controller
         $query = Journal::with(['user', 'chartAccount', 'accountingPeriod', 'project', 'asset', 'bankAccount']);
 
         if($user->type == 2){
-            dd($user);
             $query->where('user_id', '=', $user->id);
         }
 
@@ -321,7 +320,7 @@ class JournalController extends Controller
             $validator = Validator::make($request->all(), [
                 'buktireimburse' => ['required', 'mimes:png,jpg,jpeg,doc,docx,pdf,txt,csv', 'max:2048'],
             ]);
-    
+
             if($validator->fails()){
                 return response()->json($validator->errors(),
                 Response::HTTP_UNPROCESSABLE_ENTITY);

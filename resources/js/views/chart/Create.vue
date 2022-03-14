@@ -78,6 +78,7 @@ import Loading from '../../components/loading'
 import Radio from '../../components/Radio'
 
 export default {
+    props: ['auth'],
     components: {
         Loading,
         Radio
@@ -97,7 +98,11 @@ export default {
         async store() {
             try {
                 // console.log(this.chartCreate)
-                let responseCreate = await axios.post('/api/chartaccount', this.chartCreate)
+                let responseCreate = await axios.post('/api/chartaccount', this.chartCreate, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
                 if (responseCreate.status == 201) {
                     this.chartCreate.name = ''
                     this.chartCreate.code = ''

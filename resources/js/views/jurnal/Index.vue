@@ -87,7 +87,11 @@ export default {
         async exportExcel() {
             try {
                 this.loadingExcel = true
-                let response = await axios.get(`/api/journal/export`)
+                let response = await axios.get(`/api/journal/export`, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
                 if (response.status == 200) {
                     this.$toasted.show(response.data.message, {
                         type: 'success',

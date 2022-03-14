@@ -87,6 +87,7 @@
 import DeleteChart from './Delete'
 import Loading from '../../components/loading'
 export default {
+    props: ['auth'],
     components: {
         DeleteChart,
         Loading
@@ -109,7 +110,11 @@ export default {
 
     methods: {
         async getChart() {
-            let response = await axios.get('/api/chartaccount')
+            let response = await axios.get('/api/chartaccount', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 this.charts = response.data.data
             }

@@ -74,6 +74,7 @@
 <script>
 import Loading from '../../components/loading'
 export default {
+    props: ['auth'],
     components: {
         Loading
     },
@@ -96,7 +97,11 @@ export default {
 
     methods: {
         async findPeriod() {
-            let response = await axios.get('/api/accountingperiod/' + this.$route.params.token)
+            let response = await axios.get('/api/accountingperiod/' + this.$route.params.token, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 this.periode = response.data.data
                 this.loading = false
@@ -111,7 +116,11 @@ export default {
         },
         async store() {
             try {
-                let response = await axios.post('/api/accountingperiod/' + this.$route.params.token, this.periode)
+                let response = await axios.post('/api/accountingperiod/' + this.$route.params.token, this.periode, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
                 // console.log(response.status)
                 if (response.status == 200) {
                     this.theErrors = []

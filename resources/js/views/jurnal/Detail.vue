@@ -106,7 +106,11 @@ export default {
             }
         },
         async getJournal() {
-            let response = await axios.get('/api/journal/' + this.$route.params.token)
+            let response = await axios.get('/api/journal/' + this.$route.params.token, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 this.journal = response.data.data
                 this.journal.date = moment(String(this.journal.date)).format('yyyy-MM-DD') + 'T' + moment(String(this.journal.date)).format('hh:mm:ss')
@@ -121,7 +125,11 @@ export default {
             // console.log(response.data.data)
         },
         async getJournalHistories() {
-            let response = await axios.get('/api/journalhistories/' + this.$route.params.token)
+            let response = await axios.get('/api/journalhistories/' + this.$route.params.token, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 console.log(response)
                 this.journalHistories = response.data.data

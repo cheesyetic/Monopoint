@@ -70,6 +70,7 @@ import Loading from '../../components/loading'
 import Radio from '../../components/Radio'
 
 export default {
+    props: ['auth'],
     components: {
         Loading,
         Radio
@@ -91,7 +92,11 @@ export default {
         async store() {
             try {
                 console.log(this.projectCreate)
-                let responseCreate = await axios.post('/api/project', this.projectCreate)
+                let responseCreate = await axios.post('/api/project', this.projectCreate, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
                 if (responseCreate.status == 201) {
                     this.projectCreate.name = ''
                     this.projectCreate.status = ''

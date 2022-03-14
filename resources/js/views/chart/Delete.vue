@@ -4,7 +4,7 @@
 
 <script>
 export default {
-    props: ['endpoint'],
+    props: ['endpoint', 'auth'],
 
     methods: {
         async destroyChart() {

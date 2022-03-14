@@ -4,7 +4,7 @@
 
 <script>
 export default {
-    props: ['endpoint'],
+    props: ['endpoint', 'auth'],
 
     methods: {
         async destroyAccount() {
@@ -12,7 +12,11 @@ export default {
             try {
                 let q = window.confirm("Are you sure you want to delete this account?")
                 if (q) {
-                    let responseDelete = await axios.delete(`/api/account/${this.endpoint}`)
+                    let responseDelete = await axios.delete(`/api/account/${this.endpoint}`, {
+                        headers: {
+                            'Authorization': 'Bearer ' + this.auth.token
+                        }
+                    })
                     if (responseDelete.status == 200) {
                         this.$toasted.show(responseDelete.data.message, {
                             type: 'success',

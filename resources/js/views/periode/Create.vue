@@ -44,6 +44,7 @@
 
 <script>
 export default {
+    props: ['auth'],
     data() {
         return {
             periodeCreate: {
@@ -59,7 +60,11 @@ export default {
     methods: {
         async store() {
             try {
-                let responseCreate = await axios.post('/api/accountingperiod', this.periodeCreate)
+                let responseCreate = await axios.post('/api/accountingperiod', this.periodeCreate, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
                 // console.log(responseCreate.status)
                 if (responseCreate.status == 201) {
                     this.periodeCreate.name = ""

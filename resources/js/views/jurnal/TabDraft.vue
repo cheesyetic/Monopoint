@@ -173,7 +173,7 @@
 import DeleteJournal from './Delete'
 import Loading from '../../components/loading'
 export default {
-props: ['auth'],
+    props: ['auth'],
     components: {
         DeleteJournal,
         Loading,
@@ -217,7 +217,11 @@ props: ['auth'],
             this.filter_project = e.id
         },
         async getProject() {
-            let response = await axios.get('/api/project')
+            let response = await axios.get('/api/project', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 // this.periodOptions = response.data.data
                 console.log(response.data.data.length)
@@ -238,7 +242,11 @@ props: ['auth'],
         async exportExcel() {
             try {
                 this.loadingExcel = true
-                let response = await axios.get(`/api/journal/export`)
+                let response = await axios.get(`/api/journal/export`, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
                 if (response.status == 200) {
                     this.$toasted.show(response.data.message, {
                         type: 'success',
@@ -257,13 +265,16 @@ props: ['auth'],
             }
         },
         async getJurnal() {
-            let filter = "&keyword=" + this.filter_keyword + "&project=" + this.filter_project + "&reimburse=" + this.filter_reimburse + "&date=" + this.filter_month + "&token=" + this.auth.user_token
+            let filter = "&keyword=" + this.filter_keyword + "&project=" + this.filter_project + "&reimburse=" + this.filter_reimburse + "&date=" + this.filter_month
             console.log('/api/journal?category=1&keyword=' + filter)
-            let response = await axios.get('/api/journal?category=1' + filter)
+            let response = await axios.get('/api/journal?category=1' + filter, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 this.journals = response.data.data
             }
-            console.log(this.journals)
             this.loading = false
         },
         format_date(value){
@@ -285,7 +296,11 @@ props: ['auth'],
         async ajukan(token) {
             try {
                 this.loading = true
-                let response = await axios.post(`/api/validjournal/${token}`)
+                let response = await axios.post(`/api/validjournal/${token}`, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
                 if (response.status == 200) {
                     this.$toasted.show(response.data.message, {
                         type: 'success',

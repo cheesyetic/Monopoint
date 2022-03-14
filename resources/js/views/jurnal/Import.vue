@@ -46,6 +46,7 @@
 import Loading from '../../components/loading'
 
 export default {
+    props: ['auth'],
     components: {
         Loading
     },
@@ -71,7 +72,8 @@ export default {
 
                 let responseCreate = await axios.post('/api/journal/import',  formdata, {
                     headers: {
-                        'Content-Type': 'multipart/form-data'
+                        'Content-Type': 'multipart/form-data',
+                        'Authorization': 'Bearer ' + this.auth.token
                     }
                 })
                 if (responseCreate.status == 200) {

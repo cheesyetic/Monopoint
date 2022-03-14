@@ -85,6 +85,7 @@
 import DeleteAsset from './Delete'
 import Loading from '../../components/loading'
 export default {
+    props: ['auth'],
     components: {
         DeleteAsset,
         Loading
@@ -103,7 +104,11 @@ export default {
 
     methods: {
         async getAsset() {
-            let response = await axios.get('/api/asset')
+            let response = await axios.get('/api/asset', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 this.assets = response.data.data
             }

@@ -64,7 +64,7 @@
                             <div class="mb-3 row">
                                 <label for="example-date-input" class="col-md-2 col-form-label">Partner</label>
                                 <div class="col-md-10">
-                                    <v-select :options="partnerOptions" @input="selectId($event, 'user_id')" v-model="appointmentCreate.user_id" multiple :disabled="partnerLoading"></v-select>
+                                    <v-select :options="partnerOptions" v-model="partnerSelected" multiple :disabled="partnerLoading"></v-select>
                                     <div v-if="theErrors.user_id" class="mt-1 text-danger">{{ theErrors.user_id[0] }}</div>
                                 </div>
                             </div>
@@ -92,16 +92,49 @@ export default {
                 account_number: '',
             },
             // successMessage: [],
+            partnerSelected: [
+
+            ],
+            partnerOptions: [],
+            partnerLoading: true,
             theErrors: [],
             loading: true,
         }
     },
 
     mounted() {
-        this.findAppointment()
+        this.getPartner()
+
     },
 
     methods: {
+        async getPartner() {
+            let response = await axios.get('/api/account', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
+            let type = ""
+            if (response.status === 200) {
+                // this.partnerOptions = response.data.data
+                for (var i = 0; i < response.data.data.length; i++) {
+                    if(response.data.data[i].type == 0) {
+                        type = "(Admin)"
+                    } else if(response.data.data[i].type == 1) {
+                        type = "(Keuangan)"
+                    } else {
+                        type = "(Staff)"
+                    }
+                    let label = response.data.data[i].name + " " + type
+                    let id = String(response.data.data[i].id)
+                    this.partnerOptions.push({ label, id })
+                }
+            }
+            console.log(response.data.data)
+            console.log("sukses get user")
+            this.partnerLoading = false
+            this.findAppointment()
+        },
         async findAppointment() {
             let response = await axios.get('/api/appointment/' + this.$route.params.token, {
                 headers: {
@@ -111,6 +144,19 @@ export default {
             if (response.status === 200) {
                 this.appointment = response.data.data
                 this.appointment.date = moment(String(this.appointment.date)).format('yyyy-MM-DD') + 'T' + moment(String(this.appointment.date)).format('hh:mm:ss')
+                for (var i = 0; i < this.appointment.user_id.length; i++) {
+                    for (var j = 0; j < this.partnerOptions.length; j++) {
+                    // for (const x in this.partnerOptions) {
+                        console.log("YUHUU x.label")
+                        console.log(this.partnerOptions[j].label)
+                        if(this.partnerOptions[j].id == this.appointment.user_id[i]) {
+                            this.partnerSelected[i].label = this.partnerOptions[j].label
+                            this.partnerSelected[i].id = this.partnerOptions[j].id
+                            console.log("ANJAY x.label")
+                        }
+                    }
+                    // this.appointment.user_id[i] = this.appointment.user_id[i].id
+                }
                 this.loading = false
             } else {
                 this.$toasted.show("Something went wrong, please try again later", {
@@ -122,8 +168,15 @@ export default {
             // console.log(response.data.data)
         },
         async store() {
+            for (var i = 0; i < this.appointment.user_id.length; i++) {
+                this.appointment.user_id[i] = this.appointment.user_id[i].id
+            }
             try {
-                let response = await axios.post('/api/appointment/' + this.$route.params.token, this.appointment)
+                let response = await axios.post('/api/appointment/' + this.$route.params.token, this.appointment, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
                 // console.log(response.status)
                 if (response.status == 200) {
                     this.theErrors = []

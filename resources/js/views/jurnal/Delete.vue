@@ -4,15 +4,18 @@
 
 <script>
 export default {
-    props: ['endpoint'],
-
+    props: ['endpoint', 'auth'],
     methods: {
         async destroyJournal() {
             // console.log(this.endpoint)
             try {
                 let q = window.confirm("Are you sure you want to delete this journal?")
                 if (q) {
-                    let responseDelete = await axios.delete(`/api/journal/${this.endpoint}`)
+                    let responseDelete = await axios.delete(`/api/journal/${this.endpoint}`, {
+                        headers: {
+                            'Authorization': 'Bearer ' + this.auth.token
+                        }
+                    })
                     if (responseDelete.status == 200) {
                         this.$toasted.show(responseDelete.data.message, {
                             type: 'success',

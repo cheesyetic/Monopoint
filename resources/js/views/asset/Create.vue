@@ -60,6 +60,7 @@
 import Loading from '../../components/loading'
 
 export default {
+    props: ['auth'],
     components: {
         Loading
     },
@@ -74,7 +75,11 @@ export default {
         async store() {
             try {
                 console.log(this.assetCreate)
-                let responseCreate = await axios.post('/api/asset', this.assetCreate)
+                let responseCreate = await axios.post('/api/asset', this.assetCreate, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
                 if (responseCreate.status == 201) {
                     this.$router.push({ name: 'asset' })
 

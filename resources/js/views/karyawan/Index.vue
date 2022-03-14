@@ -129,7 +129,11 @@ export default {
 
     methods: {
         async getUser() {
-            let response = await axios.get('/api/account')
+            let response = await axios.get('/api/account', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 this.users = response.data.data
             }

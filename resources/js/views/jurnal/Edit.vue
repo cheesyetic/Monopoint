@@ -190,7 +190,11 @@ export default {
         },
 
         async getChart() {
-            let response = await axios.get('/api/chartaccount')
+            let response = await axios.get('/api/chartaccount', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 // this.periodOptions = response.data.data
                 console.log(response.data.data.length)
@@ -210,7 +214,11 @@ export default {
         },
 
         async getPeriod() {
-            let response = await axios.get('/api/accountingperiod')
+            let response = await axios.get('/api/accountingperiod', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 // this.periodOptions = response.data.data
                 console.log(response.data.data.length)
@@ -230,7 +238,11 @@ export default {
         },
 
         async getProject() {
-            let response = await axios.get('/api/project')
+            let response = await axios.get('/api/project', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 // this.periodOptions = response.data.data
                 console.log(response.data.data.length)
@@ -250,7 +262,11 @@ export default {
         },
 
         async getBank() {
-            let response = await axios.get('/api/bankaccount')
+            let response = await axios.get('/api/bankaccount', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 // this.periodOptions = response.data.data
                 console.log(response.data.data.length)
@@ -269,7 +285,11 @@ export default {
             }
         },
         async findJurnal() {
-            let response = await axios.get('/api/journal/' + this.$route.params.token)
+            let response = await axios.get('/api/journal/' + this.$route.params.token, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 this.journal = response.data.data
                 this.journal.date = moment(String(this.journal.date)).format('yyyy-MM-DD') + 'T' + moment(String(this.journal.date)).format('hh:mm:ss')
@@ -305,7 +325,8 @@ export default {
                 this.loadingEdit = true
                 await axios.post('/api/journal/' + this.$route.params.token,  formdata, {
                         headers: {
-                            'Content-Type': 'multipart/form-data'
+                            'Content-Type': 'multipart/form-data',
+                            'Authorization': 'Bearer ' + this.auth.token
                         }
                 }).then(
                     response => {

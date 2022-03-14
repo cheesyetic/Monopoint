@@ -85,6 +85,7 @@
 import DeleteProject from './Delete'
 import Loading from '../../components/loading'
 export default {
+    props: ['auth'],
     components: {
         DeleteProject,
         Loading
@@ -107,7 +108,11 @@ export default {
 
     methods: {
         async getProject() {
-            let response = await axios.get('/api/project')
+            let response = await axios.get('/api/project', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 this.projects = response.data.data
             }

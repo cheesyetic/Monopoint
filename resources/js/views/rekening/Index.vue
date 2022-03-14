@@ -76,6 +76,7 @@
 import DeleteRekening from './Delete'
 import Loading from '../../components/loading'
 export default {
+    props: ['auth'],
     components: {
         DeleteRekening,
         Loading
@@ -98,7 +99,11 @@ export default {
 
     methods: {
         async getRekening() {
-            let response = await axios.get('/api/bankaccount')
+            let response = await axios.get('/api/bankaccount', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 this.banks = response.data.data
             }

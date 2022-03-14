@@ -3047,7 +3047,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get('/api/account');
+                return axios.get('/api/account', {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 2:
                 response = _context.sent;
@@ -3369,39 +3373,113 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         account_number: ''
       },
       // successMessage: [],
+      partnerSelected: [],
+      partnerOptions: [],
+      partnerLoading: true,
       theErrors: [],
       loading: true
     };
   },
   mounted: function mounted() {
-    this.findAppointment();
+    this.getPartner();
   },
   methods: {
-    findAppointment: function findAppointment() {
+    getPartner: function getPartner() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var response;
+        var response, type, i, label, id;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get('/api/appointment/' + _this.$route.params.token, {
+                return axios.get('/api/account', {
                   headers: {
-                    Authorization: 'Bearer ' + _this.auth.token
+                    'Authorization': 'Bearer ' + _this.auth.token
                   }
                 });
 
               case 2:
                 response = _context.sent;
+                type = "";
 
                 if (response.status === 200) {
-                  _this.appointment = response.data.data;
-                  _this.appointment.date = moment(String(_this.appointment.date)).format('yyyy-MM-DD') + 'T' + moment(String(_this.appointment.date)).format('hh:mm:ss');
-                  _this.loading = false;
+                  // this.partnerOptions = response.data.data
+                  for (i = 0; i < response.data.data.length; i++) {
+                    if (response.data.data[i].type == 0) {
+                      type = "(Admin)";
+                    } else if (response.data.data[i].type == 1) {
+                      type = "(Keuangan)";
+                    } else {
+                      type = "(Staff)";
+                    }
+
+                    label = response.data.data[i].name + " " + type;
+                    id = String(response.data.data[i].id);
+
+                    _this.partnerOptions.push({
+                      label: label,
+                      id: id
+                    });
+                  }
+                }
+
+                console.log(response.data.data);
+                console.log("sukses get user");
+                _this.partnerLoading = false;
+
+                _this.findAppointment();
+
+              case 9:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    findAppointment: function findAppointment() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var response, i, j;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios.get('/api/appointment/' + _this2.$route.params.token, {
+                  headers: {
+                    Authorization: 'Bearer ' + _this2.auth.token
+                  }
+                });
+
+              case 2:
+                response = _context2.sent;
+
+                if (response.status === 200) {
+                  _this2.appointment = response.data.data;
+                  _this2.appointment.date = moment(String(_this2.appointment.date)).format('yyyy-MM-DD') + 'T' + moment(String(_this2.appointment.date)).format('hh:mm:ss');
+
+                  for (i = 0; i < _this2.appointment.user_id.length; i++) {
+                    for (j = 0; j < _this2.partnerOptions.length; j++) {
+                      // for (const x in this.partnerOptions) {
+                      console.log("YUHUU x.label");
+                      console.log(_this2.partnerOptions[j].label);
+
+                      if (_this2.partnerOptions[j].id == _this2.appointment.user_id[i]) {
+                        _this2.partnerSelected[i].label = _this2.partnerOptions[j].label;
+                        _this2.partnerSelected[i].id = _this2.partnerOptions[j].id;
+                        console.log("ANJAY x.label");
+                      }
+                    } // this.appointment.user_id[i] = this.appointment.user_id[i].id
+
+                  }
+
+                  _this2.loading = false;
                 } else {
-                  _this.$toasted.show("Something went wrong, please try again later", {
+                  _this2.$toasted.show("Something went wrong, please try again later", {
                     type: 'error',
                     duration: 3000,
                     position: 'top-center'
@@ -3411,64 +3489,72 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 4:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee);
+        }, _callee2);
       }))();
     },
     store: function store() {
-      var _this2 = this;
+      var _this3 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        var i, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
-                _context2.prev = 0;
-                _context2.next = 3;
-                return axios.post('/api/appointment/' + _this2.$route.params.token, _this2.appointment);
+                for (i = 0; i < _this3.appointment.user_id.length; i++) {
+                  _this3.appointment.user_id[i] = _this3.appointment.user_id[i].id;
+                }
 
-              case 3:
-                response = _context2.sent;
+                _context3.prev = 1;
+                _context3.next = 4;
+                return axios.post('/api/appointment/' + _this3.$route.params.token, _this3.appointment, {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this3.auth.token
+                  }
+                });
+
+              case 4:
+                response = _context3.sent;
 
                 // console.log(response.status)
                 if (response.status == 200) {
-                  _this2.theErrors = [];
+                  _this3.theErrors = [];
 
-                  _this2.$toasted.show(response.data.message, {
+                  _this3.$toasted.show(response.data.message, {
                     type: 'success',
                     duration: 3000,
                     position: 'top-center'
                   });
 
-                  _this2.$router.push({
+                  _this3.$router.push({
                     name: 'appointment'
                   });
                 }
 
-                _context2.next = 11;
+                _context3.next = 12;
                 break;
 
-              case 7:
-                _context2.prev = 7;
-                _context2.t0 = _context2["catch"](0);
+              case 8:
+                _context3.prev = 8;
+                _context3.t0 = _context3["catch"](1);
 
-                _this2.$toasted.show("Something went wrong", {
+                _this3.$toasted.show("Something went wrong", {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
                 });
 
-                _this2.theErrors = _context2.t0.response.data;
+                _this3.theErrors = _context3.t0.response.data;
 
-              case 11:
+              case 12:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, null, [[0, 7]]);
+        }, _callee3, null, [[1, 8]]);
       }))();
     }
   }
@@ -3742,6 +3828,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['auth'],
   components: {
     Loading: _components_loading__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
@@ -3765,7 +3852,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.prev = 0;
                 console.log(_this.assetCreate);
                 _context.next = 4;
-                return axios.post('/api/asset', _this.assetCreate);
+                return axios.post('/api/asset', _this.assetCreate, {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 4:
                 responseCreate = _context.sent;
@@ -3835,7 +3926,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['endpoint'],
+  props: ['endpoint', 'auth'],
   methods: {
     destroyAsset: function destroyAsset() {
       var _this = this;
@@ -3999,6 +4090,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['auth'],
   components: {
     Loading: _components_loading__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
@@ -4024,7 +4116,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get('/api/asset/' + _this.$route.params.token);
+                return axios.get('/api/asset/' + _this.$route.params.token, {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 2:
                 response = _context.sent;
@@ -4215,6 +4311,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['auth'],
   components: {
     DeleteAsset: _Delete__WEBPACK_IMPORTED_MODULE_1__["default"],
     Loading: _components_loading__WEBPACK_IMPORTED_MODULE_2__["default"]
@@ -4240,7 +4337,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get('/api/asset');
+                return axios.get('/api/asset', {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 2:
                 response = _context.sent;
@@ -4592,6 +4693,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['auth'],
   components: {
     Loading: _components_loading__WEBPACK_IMPORTED_MODULE_1__["default"],
     Radio: _components_Radio__WEBPACK_IMPORTED_MODULE_2__["default"]
@@ -4619,7 +4721,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return axios.post('/api/chartaccount', _this.chartCreate);
+                return axios.post('/api/chartaccount', _this.chartCreate, {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 3:
                 responseCreate = _context.sent;
@@ -4693,7 +4799,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['endpoint'],
+  props: ['endpoint', 'auth'],
   methods: {
     destroyChart: function destroyChart() {
       var _this = this;
@@ -4874,6 +4980,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['auth'],
   components: {
     Loading: _components_loading__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
@@ -4902,7 +5009,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get('/api/chartaccount/' + _this.$route.params.token);
+                return axios.get('/api/chartaccount/' + _this.$route.params.token, {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 2:
                 response = _context.sent;
@@ -4938,7 +5049,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context2.prev = 0;
                 _context2.next = 3;
-                return axios.post('/api/chartaccount/' + _this2.$route.params.token, _this2.chart);
+                return axios.post('/api/chartaccount/' + _this2.$route.params.token, _this2.chart, {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this2.auth.token
+                  }
+                });
 
               case 3:
                 response = _context2.sent;
@@ -5094,6 +5209,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['auth'],
   components: {
     DeleteChart: _Delete__WEBPACK_IMPORTED_MODULE_1__["default"],
     Loading: _components_loading__WEBPACK_IMPORTED_MODULE_2__["default"]
@@ -5122,7 +5238,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get('/api/chartaccount');
+                return axios.get('/api/chartaccount', {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 2:
                 response = _context.sent;
@@ -5932,7 +6052,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get('/api/chartaccount');
+                return axios.get('/api/chartaccount', {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 2:
                 response = _context.sent;
@@ -5978,7 +6102,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return axios.get('/api/accountingperiod');
+                return axios.get('/api/accountingperiod', {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this2.auth.token
+                  }
+                });
 
               case 2:
                 response = _context2.sent;
@@ -6029,7 +6157,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.next = 2;
-                return axios.get('/api/project');
+                return axios.get('/api/project', {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this3.auth.token
+                  }
+                });
 
               case 2:
                 response = _context3.sent;
@@ -6075,7 +6207,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context4.prev = _context4.next) {
               case 0:
                 _context4.next = 2;
-                return axios.get('/api/bankaccount');
+                return axios.get('/api/bankaccount', {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this4.auth.token
+                  }
+                });
 
               case 2:
                 response = _context4.sent;
@@ -6137,7 +6273,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context5.next = 16;
                 return axios.post('/api/journal', formdata, {
                   headers: {
-                    'Content-Type': 'multipart/form-data'
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': 'Bearer ' + _this5.auth.token
                   }
                 }).then(function (response) {
                   _this5.journalCreate.title = '';
@@ -6231,7 +6368,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['endpoint'],
+  props: ['endpoint', 'auth'],
   methods: {
     destroyJournal: function destroyJournal() {
       var _this = this;
@@ -6251,7 +6388,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
 
                 _context.next = 5;
-                return axios["delete"]("/api/journal/".concat(_this.endpoint));
+                return axios["delete"]("/api/journal/".concat(_this.endpoint), {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 5:
                 responseDelete = _context.sent;
@@ -6436,7 +6577,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get('/api/journal/' + _this.$route.params.token);
+                return axios.get('/api/journal/' + _this.$route.params.token, {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 2:
                 response = _context.sent;
@@ -6472,7 +6617,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return axios.get('/api/journalhistories/' + _this2.$route.params.token);
+                return axios.get('/api/journalhistories/' + _this2.$route.params.token, {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this2.auth.token
+                  }
+                });
 
               case 2:
                 response = _context2.sent;
@@ -6721,7 +6870,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get('/api/chartaccount');
+                return axios.get('/api/chartaccount', {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 2:
                 response = _context.sent;
@@ -6769,7 +6922,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return axios.get('/api/accountingperiod');
+                return axios.get('/api/accountingperiod', {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this2.auth.token
+                  }
+                });
 
               case 2:
                 response = _context2.sent;
@@ -6815,7 +6972,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.next = 2;
-                return axios.get('/api/project');
+                return axios.get('/api/project', {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this3.auth.token
+                  }
+                });
 
               case 2:
                 response = _context3.sent;
@@ -6861,7 +7022,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context4.prev = _context4.next) {
               case 0:
                 _context4.next = 2;
-                return axios.get('/api/bankaccount');
+                return axios.get('/api/bankaccount', {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this4.auth.token
+                  }
+                });
 
               case 2:
                 response = _context4.sent;
@@ -6907,7 +7072,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context5.prev = _context5.next) {
               case 0:
                 _context5.next = 2;
-                return axios.get('/api/journal/' + _this5.$route.params.token);
+                return axios.get('/api/journal/' + _this5.$route.params.token, {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this5.auth.token
+                  }
+                });
 
               case 2:
                 response = _context5.sent;
@@ -6966,7 +7135,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context6.next = 18;
                 return axios.post('/api/journal/' + _this6.$route.params.token, formdata, {
                   headers: {
-                    'Content-Type': 'multipart/form-data'
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': 'Bearer ' + _this6.auth.token
                   }
                 }).then(function (response) {
                   _this6.journal.title = '';
@@ -7099,6 +7269,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['auth'],
   components: {
     Loading: _components_loading__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
@@ -7132,7 +7303,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.next = 6;
                 return axios.post('/api/journal/import', formdata, {
                   headers: {
-                    'Content-Type': 'multipart/form-data'
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': 'Bearer ' + _this.auth.token
                   }
                 });
 
@@ -7302,7 +7474,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.prev = 0;
                 _this.loadingExcel = true;
                 _context.next = 4;
-                return axios.get("/api/journal/export");
+                return axios.get("/api/journal/export", {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 4:
                 response = _context.sent;
@@ -7614,7 +7790,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get('/api/project');
+                return axios.get('/api/project', {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 2:
                 response = _context.sent;
@@ -7662,7 +7842,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context2.prev = 0;
                 _this2.loadingExcel = true;
                 _context2.next = 4;
-                return axios.get("/api/journal/export");
+                return axios.get("/api/journal/export", {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this2.auth.token
+                  }
+                });
 
               case 4:
                 response = _context2.sent;
@@ -7707,10 +7891,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                filter = "&keyword=" + _this3.filter_keyword + "&project=" + _this3.filter_project + "&reimburse=" + _this3.filter_reimburse + "&date=" + _this3.filter_month + "&token=" + _this3.auth.user_token;
+                filter = "&keyword=" + _this3.filter_keyword + "&project=" + _this3.filter_project + "&reimburse=" + _this3.filter_reimburse + "&date=" + _this3.filter_month;
                 console.log('/api/journal?category=1&keyword=' + filter);
                 _context3.next = 4;
-                return axios.get('/api/journal?category=1' + filter);
+                return axios.get('/api/journal?category=1' + filter, {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this3.auth.token
+                  }
+                });
 
               case 4:
                 response = _context3.sent;
@@ -7719,10 +7907,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this3.journals = response.data.data;
                 }
 
-                console.log(_this3.journals);
                 _this3.loading = false;
 
-              case 8:
+              case 7:
               case "end":
                 return _context3.stop();
             }
@@ -7760,7 +7947,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context4.prev = 0;
                 _this5.loading = true;
                 _context4.next = 4;
-                return axios.post("/api/validjournal/".concat(token));
+                return axios.post("/api/validjournal/".concat(token), {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this5.auth.token
+                  }
+                });
 
               case 4:
                 response = _context4.sent;
@@ -8081,7 +8272,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get('/api/project');
+                return axios.get('/api/project', {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 2:
                 response = _context.sent;
@@ -8129,7 +8324,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context2.prev = 0;
                 _this2.loadingExcel = true;
                 _context2.next = 4;
-                return axios.get("/api/journal/export");
+                return axios.get("/api/journal/export", {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this2.auth.token
+                  }
+                });
 
               case 4:
                 response = _context2.sent;
@@ -8177,7 +8376,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 filter = "&keyword=" + _this3.filter_keyword + "&project=" + _this3.filter_project + "&reimburse=" + _this3.filter_reimburse + "&date=" + _this3.filter_month + "&token=" + _this3.auth.user_token;
                 console.log('/api/journal?category=2&keyword=' + filter);
                 _context3.next = 4;
-                return axios.get('/api/journal?category=2' + filter);
+                return axios.get('/api/journal?category=2' + filter, {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this3.auth.token
+                  }
+                });
 
               case 4:
                 response = _context3.sent;
@@ -8227,7 +8430,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context4.prev = 0;
                 _this5.loading = true;
                 _context4.next = 4;
-                return axios.post("/api/validjournal/".concat(token));
+                return axios.post("/api/validjournal/".concat(token), {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this5.auth.token
+                  }
+                });
 
               case 4:
                 response = _context4.sent;
@@ -8550,7 +8757,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get('/api/project');
+                return axios.get('/api/project', {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 2:
                 response = _context.sent;
@@ -8598,7 +8809,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context2.prev = 0;
                 _this2.loadingExcel = true;
                 _context2.next = 4;
-                return axios.get("/api/journal/export");
+                return axios.get("/api/journal/export", {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this2.auth.token
+                  }
+                });
 
               case 4:
                 response = _context2.sent;
@@ -8646,7 +8861,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 filter = "&keyword=" + _this3.filter_keyword + "&project=" + _this3.filter_project + "&reimburse=" + _this3.filter_reimburse + "&date=" + _this3.filter_month + "&token=" + _this3.auth.user_token;
                 console.log('/api/journal?category=3&keyword=' + filter);
                 _context3.next = 4;
-                return axios.get('/api/journal?category=3' + filter);
+                return axios.get('/api/journal?category=3' + filter, {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this3.auth.token
+                  }
+                });
 
               case 4:
                 response = _context3.sent;
@@ -9103,6 +9322,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['auth'],
   components: {
     Loading: _components_loading__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
@@ -9145,7 +9365,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.prev = 0;
                 console.log(_this.accountCreate);
                 _context.next = 4;
-                return axios.post('/api/account', _this.accountCreate);
+                return axios.post('/api/account', _this.accountCreate, {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 4:
                 responseCreate = _context.sent;
@@ -9221,7 +9445,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['endpoint'],
+  props: ['endpoint', 'auth'],
   methods: {
     destroyAccount: function destroyAccount() {
       var _this = this;
@@ -9241,7 +9465,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
 
                 _context.next = 5;
-                return axios["delete"]("/api/account/".concat(_this.endpoint));
+                return axios["delete"]("/api/account/".concat(_this.endpoint), {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 5:
                 responseDelete = _context.sent;
@@ -9385,6 +9613,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['auth'],
   components: {
     Loading: _components_loading__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
@@ -9416,7 +9645,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get('/api/account/' + _this.$route.params.token);
+                return axios.get('/api/account/' + _this.$route.params.token, {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 2:
                 response = _context.sent;
@@ -9452,7 +9685,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context2.prev = 0;
                 _context2.next = 3;
-                return axios.post('/api/account/' + _this2.$route.params.token, _this2.account);
+                return axios.post('/api/account/' + _this2.$route.params.token, _this2.account, {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this2.auth.token
+                  }
+                });
 
               case 3:
                 response = _context2.sent;
@@ -9659,7 +9896,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get('/api/account');
+                return axios.get('/api/account', {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 2:
                 response = _context.sent;
@@ -9754,6 +9995,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['auth'],
   data: function data() {
     return {
       periodeCreate: {
@@ -9777,7 +10019,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return axios.post('/api/accountingperiod', _this.periodeCreate);
+                return axios.post('/api/accountingperiod', _this.periodeCreate, {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 3:
                 responseCreate = _context.sent;
@@ -9853,7 +10099,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['endpoint'],
+  props: ['endpoint', 'auth'],
   methods: {
     destroyPeriod: function destroyPeriod() {
       var _this = this;
@@ -9873,7 +10119,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
 
                 _context.next = 5;
-                return axios["delete"]("/api/accountingperiod/".concat(_this.endpoint));
+                return axios["delete"]("/api/accountingperiod/".concat(_this.endpoint), {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 5:
                 responseDelete = _context.sent;
@@ -10017,6 +10267,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['auth'],
   components: {
     Loading: _components_loading__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
@@ -10046,7 +10297,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get('/api/accountingperiod/' + _this.$route.params.token);
+                return axios.get('/api/accountingperiod/' + _this.$route.params.token, {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 2:
                 response = _context.sent;
@@ -10082,7 +10337,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context2.prev = 0;
                 _context2.next = 3;
-                return axios.post('/api/accountingperiod/' + _this2.$route.params.token, _this2.periode);
+                return axios.post('/api/accountingperiod/' + _this2.$route.params.token, _this2.periode, {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this2.auth.token
+                  }
+                });
 
               case 3:
                 response = _context2.sent;
@@ -10232,6 +10491,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['auth'],
   components: {
     DeletePeriod: _Delete__WEBPACK_IMPORTED_MODULE_1__["default"],
     CreatePeriod: _Create__WEBPACK_IMPORTED_MODULE_2__["default"],
@@ -10274,7 +10534,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.post('/api/periodstatus/ ' + token);
+                return axios.post('/api/periodstatus/ ' + token, {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this2.auth.token
+                  }
+                });
 
               case 2:
                 response = _context.sent;
@@ -10429,6 +10693,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['auth'],
   components: {
     Loading: _components_loading__WEBPACK_IMPORTED_MODULE_1__["default"],
     Radio: _components_Radio__WEBPACK_IMPORTED_MODULE_2__["default"]
@@ -10459,7 +10724,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.prev = 0;
                 console.log(_this.projectCreate);
                 _context.next = 4;
-                return axios.post('/api/project', _this.projectCreate);
+                return axios.post('/api/project', _this.projectCreate, {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 4:
                 responseCreate = _context.sent;
@@ -10533,7 +10802,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['endpoint'],
+  props: ['endpoint', 'auth'],
   methods: {
     destroyProject: function destroyProject() {
       var _this = this;
@@ -10553,7 +10822,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
 
                 _context.next = 5;
-                return axios["delete"]("/api/project/".concat(_this.endpoint));
+                return axios["delete"]("/api/project/".concat(_this.endpoint), {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 5:
                 responseDelete = _context.sent;
@@ -10708,6 +10981,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['auth'],
   components: {
     Loading: _components_loading__WEBPACK_IMPORTED_MODULE_1__["default"],
     Radio: _components_Radio__WEBPACK_IMPORTED_MODULE_2__["default"]
@@ -10737,7 +11011,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get('/api/project/' + _this.$route.params.token);
+                return axios.get('/api/project/' + _this.$route.params.token, {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 2:
                 response = _context.sent;
@@ -10773,7 +11051,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context2.prev = 0;
                 _context2.next = 3;
-                return axios.post('/api/project/' + _this2.$route.params.token, _this2.project);
+                return axios.post('/api/project/' + _this2.$route.params.token, _this2.project, {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this2.auth.token
+                  }
+                });
 
               case 3:
                 response = _context2.sent;
@@ -10927,6 +11209,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['auth'],
   components: {
     DeleteProject: _Delete__WEBPACK_IMPORTED_MODULE_1__["default"],
     Loading: _components_loading__WEBPACK_IMPORTED_MODULE_2__["default"]
@@ -10955,7 +11238,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get('/api/project');
+                return axios.get('/api/project', {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 2:
                 response = _context.sent;
@@ -11058,6 +11345,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['auth'],
   components: {
     Loading: _components_loading__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
@@ -11084,7 +11372,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.prev = 0;
                 console.log(_this.bankCreate);
                 _context.next = 4;
-                return axios.post('/api/bankaccount', _this.bankCreate);
+                return axios.post('/api/bankaccount', _this.bankCreate, {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 4:
                 responseCreate = _context.sent;
@@ -11157,7 +11449,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['endpoint'],
+  props: ['endpoint', 'auth'],
   methods: {
     destroyBank: function destroyBank() {
       var _this = this;
@@ -11177,7 +11469,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
 
                 _context.next = 5;
-                return axios["delete"]("/api/bankaccount/".concat(_this.endpoint));
+                return axios["delete"]("/api/bankaccount/".concat(_this.endpoint), {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 5:
                 responseDelete = _context.sent;
@@ -11314,6 +11610,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['auth'],
   components: {
     Loading: _components_loading__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
@@ -11342,7 +11639,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get('/api/bankaccount/' + _this.$route.params.token);
+                return axios.get('/api/bankaccount/' + _this.$route.params.token, {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 2:
                 response = _context.sent;
@@ -11378,7 +11679,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context2.prev = 0;
                 _context2.next = 3;
-                return axios.post('/api/bankaccount/' + _this2.$route.params.token, _this2.bank);
+                return axios.post('/api/bankaccount/' + _this2.$route.params.token, _this2.bank, {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this2.auth.token
+                  }
+                });
 
               case 3:
                 response = _context2.sent;
@@ -11523,6 +11828,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['auth'],
   components: {
     DeleteRekening: _Delete__WEBPACK_IMPORTED_MODULE_1__["default"],
     Loading: _components_loading__WEBPACK_IMPORTED_MODULE_2__["default"]
@@ -11551,7 +11857,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get('/api/bankaccount');
+                return axios.get('/api/bankaccount', {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 2:
                 response = _context.sent;
@@ -11895,63 +12205,7 @@ __webpack_require__.r(__webpack_exports__);
       component: _views_chart_Create__WEBPACK_IMPORTED_MODULE_34__["default"]
     }]
   }]
-}); // const Routes = [
-//     {
-//         name:"login",
-//         path:"/login",
-//         component:Login,
-//         meta:{
-//             middleware:"guest",
-//             title:`Login`
-//         }
-//     },
-//     {
-//         name:"register",
-//         path:"/register",
-//         component:Register,
-//         meta:{
-//             middleware:"guest",
-//             title:`Register`
-//         }
-//     },
-//     {
-//         path:"/",
-//         component:DahboardLayout,
-//         meta:{
-//             middleware:"auth"
-//         },
-//         children:[
-//             {
-//                 name:"dashboard",
-//                 path: '/',
-//                 component: Dashboard,
-//                 meta:{
-//                     title:`Dashboard`
-//                 }
-//             }
-//         ]
-//     }
-// ]
-// var router  = new VueRouter({
-//     mode: 'history',
-//     routes: Routes
-// })
-// router.beforeEach((to, from, next) => {
-//     document.title = `${to.meta.title} - ${process.env.MIX_APP_NAME}`
-//     if(to.meta.middleware=="guest"){
-//         if(store.state.auth.authenticated){
-//             next({name:"dashboard"})
-//         }
-//         next()
-//     }else{
-//         if(store.state.auth.authenticated){
-//             next()
-//         }else{
-//             next({name:"login"})
-//         }
-//     }
-// })
-// export default router
+});
 
 /***/ }),
 
@@ -40482,21 +40736,12 @@ var render = function () {
                                     multiple: "",
                                     disabled: _vm.partnerLoading,
                                   },
-                                  on: {
-                                    input: function ($event) {
-                                      return _vm.selectId($event, "user_id")
-                                    },
-                                  },
                                   model: {
-                                    value: _vm.appointmentCreate.user_id,
+                                    value: _vm.partnerSelected,
                                     callback: function ($$v) {
-                                      _vm.$set(
-                                        _vm.appointmentCreate,
-                                        "user_id",
-                                        $$v
-                                      )
+                                      _vm.partnerSelected = $$v
                                     },
-                                    expression: "appointmentCreate.user_id",
+                                    expression: "partnerSelected",
                                   },
                                 }),
                                 _vm._v(" "),

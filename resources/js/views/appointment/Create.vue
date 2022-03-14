@@ -117,7 +117,11 @@ export default {
         //     this.appointmentCreate[target] = e.id
         // },
         async getPartner() {
-            let response = await axios.get('/api/account')
+            let response = await axios.get('/api/account', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             let type = ""
             if (response.status === 200) {
                 // this.partnerOptions = response.data.data

@@ -91,6 +91,7 @@
 <script>
 import Loading from '../../components/loading'
 export default {
+    props: ['auth'],
     components: {
         Loading
     },
@@ -112,7 +113,11 @@ export default {
 
     methods: {
         async findChart() {
-            let response = await axios.get('/api/chartaccount/' + this.$route.params.token)
+            let response = await axios.get('/api/chartaccount/' + this.$route.params.token, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 this.chart = response.data.data
                 this.loading = false
@@ -127,7 +132,11 @@ export default {
         },
         async store() {
             try {
-                let response = await axios.post('/api/chartaccount/' + this.$route.params.token, this.chart)
+                let response = await axios.post('/api/chartaccount/' + this.$route.params.token, this.chart, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
                 // console.log(response.status)
                 if (response.status == 200) {
                     this.theErrors = []

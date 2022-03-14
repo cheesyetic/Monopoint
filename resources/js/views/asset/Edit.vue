@@ -74,6 +74,7 @@
 <script>
 import Loading from '../../components/loading'
 export default {
+    props: ['auth'],
     components: {
         Loading
     },
@@ -92,7 +93,11 @@ export default {
 
     methods: {
         async findAsset() {
-            let response = await axios.get('/api/asset/' + this.$route.params.token)
+            let response = await axios.get('/api/asset/' + this.$route.params.token, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 this.asset = response.data.data
                 this.asset.buy_time = moment(String(this.asset.buy_time)).format('yyyy-MM-DD') + 'T' + moment(String(this.asset.buy_time)).format('hh:mm:ss')
