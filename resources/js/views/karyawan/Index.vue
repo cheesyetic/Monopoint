@@ -77,7 +77,7 @@
                                                     </td>
                                                     <td>
                                                         <router-link :to="{ name: 'karyawan.edit', params: { token: user.token }}" class="btn btn-primary"><i class="uil-edit-alt"></i> Edit</router-link>
-                                                        <delete-user :endpoint="user.token"/>
+                                                        <delete-user :endpoint="user.token" :auth="auth"/>
                                                         <!-- <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
                                                             Edit
                                                         </button> -->

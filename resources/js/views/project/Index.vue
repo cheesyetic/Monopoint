@@ -64,7 +64,7 @@
                                             </div>
                                             <div class="col-3 row">
                                                 <router-link :to="{ name: 'project.edit', params: { token: project.token }}" class="btn btn-primary mb-2"><i class="uil-edit-alt"></i> Edit</router-link>
-                                                <delete-project :endpoint="project.token"/>
+                                                <delete-project :endpoint="project.token" :auth="auth"/>
                                             </div>
                                         </div>
                                     </div>

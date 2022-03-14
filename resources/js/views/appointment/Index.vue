@@ -73,7 +73,7 @@
                                                     </td>
                                                     <td>
                                                         <router-link :to="{ name: 'appointment.edit', params: { token: appointment.token }}" class="btn btn-primary"><i class="uil-edit-alt"></i> Edit</router-link>
-                                                        <delete-appointment :endpoint="appointment.token"/>
+                                                        <delete-appointment :endpoint="appointment.token" :auth="auth"/>
                                                     </td>
                                             </tr>
                                         </transition-group>

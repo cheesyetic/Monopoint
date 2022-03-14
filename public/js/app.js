@@ -3012,31 +3012,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         user_id: []
       },
       partnerLoading: false,
-      partnerOptions: [// {
-        //     value: 1,
-        //     label: 'Partner 1'
-        // },
-        // {
-        //     value: 2,
-        //     label: 'Partner 2'
-        // },
-        // {
-        //     value: 3,
-        //     label: 'Partner 3'
-        // },
-        // {
-        //     value: 4,
-        //     label: 'Partner 4'
-        // },
-      ],
+      partnerOptions: [],
       // successMessage: [],
       theErrors: []
     };
   },
   methods: {
-    // selectId(e, target) {
-    //     this.appointmentCreate[target] = e.id
-    // },
     getPartner: function getPartner() {
       var _this = this;
 
@@ -3207,7 +3188,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
 
                 _context.next = 5;
-                return axios["delete"]("/api/chartaccount/".concat(_this.endpoint), {
+                return axios["delete"]("/api/appointment/".concat(_this.endpoint), {
                   headers: {
                     Authorization: 'Bearer ' + _this.auth.token
                   }
@@ -3425,8 +3406,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }
                 }
 
-                console.log(response.data.data);
-                console.log("sukses get user");
+                console.log(">> sukses get partner options");
+                console.log(_this.partnerOptions);
                 _this.partnerLoading = false;
 
                 _this.findAppointment();
@@ -3443,7 +3424,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var response, i, j;
+        var response, i, j, label, id;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -3458,36 +3439,73 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 2:
                 response = _context2.sent;
 
-                if (response.status === 200) {
-                  _this2.appointment = response.data.data;
-                  _this2.appointment.date = moment(String(_this2.appointment.date)).format('yyyy-MM-DD') + 'T' + moment(String(_this2.appointment.date)).format('hh:mm:ss');
+                if (!(response.status === 200)) {
+                  _context2.next = 30;
+                  break;
+                }
 
-                  for (i = 0; i < _this2.appointment.user_id.length; i++) {
-                    for (j = 0; j < _this2.partnerOptions.length; j++) {
-                      // for (const x in this.partnerOptions) {
-                      console.log("YUHUU x.label");
-                      console.log(_this2.partnerOptions[j].label);
+                _this2.appointment = response.data.data;
+                _this2.appointment.date = moment(String(_this2.appointment.date)).format('yyyy-MM-DD') + 'T' + moment(String(_this2.appointment.date)).format('hh:mm:ss');
+                console.log(">> Panjang Appointment user id");
+                console.log(_this2.appointment.user_id.length);
+                console.log(">> Panjang partnerOptions");
+                console.log(_this2.partnerOptions.length);
+                i = 0;
 
-                      if (_this2.partnerOptions[j].id == _this2.appointment.user_id[i]) {
-                        _this2.partnerSelected[i].label = _this2.partnerOptions[j].label;
-                        _this2.partnerSelected[i].id = _this2.partnerOptions[j].id;
-                        console.log("ANJAY x.label");
-                      }
-                    } // this.appointment.user_id[i] = this.appointment.user_id[i].id
+              case 11:
+                if (!(i < _this2.appointment.user_id.length)) {
+                  _context2.next = 25;
+                  break;
+                }
 
-                  }
+                j = 0;
 
-                  _this2.loading = false;
-                } else {
-                  _this2.$toasted.show("Something went wrong, please try again later", {
-                    type: 'error',
-                    duration: 3000,
-                    position: 'top-center'
-                  });
-                } // console.log(response.data.data)
+              case 13:
+                if (!(j < _this2.partnerOptions.length)) {
+                  _context2.next = 22;
+                  break;
+                }
 
+                if (!(_this2.partnerOptions[j].id == _this2.appointment.user_id[i])) {
+                  _context2.next = 19;
+                  break;
+                }
 
-              case 4:
+                label = _this2.partnerOptions[j].label;
+                id = String(_this2.partnerOptions[j].id);
+
+                _this2.partnerSelected.push({
+                  label: label,
+                  id: id
+                });
+
+                return _context2.abrupt("break", 22);
+
+              case 19:
+                j++;
+                _context2.next = 13;
+                break;
+
+              case 22:
+                i++;
+                _context2.next = 11;
+                break;
+
+              case 25:
+                console.log(">> Selected Partner");
+                console.log(_this2.partnerSelected);
+                _this2.loading = false;
+                _context2.next = 31;
+                break;
+
+              case 30:
+                _this2.$toasted.show("Something went wrong, please try again later", {
+                  type: 'error',
+                  duration: 3000,
+                  position: 'top-center'
+                });
+
+              case 31:
               case "end":
                 return _context2.stop();
             }
@@ -3504,19 +3522,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                for (i = 0; i < _this3.appointment.user_id.length; i++) {
-                  _this3.appointment.user_id[i] = _this3.appointment.user_id[i].id;
+                console.log("this.partnerSelected");
+                console.log(_this3.partnerSelected.length);
+                console.log(_this3.partnerSelected);
+
+                for (i = 0; i < _this3.partnerSelected.length; i++) {
+                  _this3.appointment.user_id[i] = _this3.partnerSelected[i].id;
                 }
 
-                _context3.prev = 1;
-                _context3.next = 4;
+                _context3.prev = 4;
+                _context3.next = 7;
                 return axios.post('/api/appointment/' + _this3.$route.params.token, _this3.appointment, {
                   headers: {
                     'Authorization': 'Bearer ' + _this3.auth.token
                   }
                 });
 
-              case 4:
+              case 7:
                 response = _context3.sent;
 
                 // console.log(response.status)
@@ -3534,12 +3556,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   });
                 }
 
-                _context3.next = 12;
+                _context3.next = 15;
                 break;
 
-              case 8:
-                _context3.prev = 8;
-                _context3.t0 = _context3["catch"](1);
+              case 11:
+                _context3.prev = 11;
+                _context3.t0 = _context3["catch"](4);
 
                 _this3.$toasted.show("Something went wrong", {
                   type: 'error',
@@ -3549,12 +3571,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _this3.theErrors = _context3.t0.response.data;
 
-              case 12:
+              case 15:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[1, 8]]);
+        }, _callee3, null, [[4, 11]]);
       }))();
     }
   }
@@ -40992,6 +41014,7 @@ var render = function () {
                                                 _c("delete-appointment", {
                                                   attrs: {
                                                     endpoint: appointment.token,
+                                                    auth: _vm.auth,
                                                   },
                                                 }),
                                               ],
@@ -41834,6 +41857,7 @@ var render = function () {
                                               _c("delete-asset", {
                                                 attrs: {
                                                   endpoint: asset.token,
+                                                  auth: _vm.auth,
                                                 },
                                               }),
                                             ],
@@ -43018,6 +43042,7 @@ var render = function () {
                                               _c("delete-chart", {
                                                 attrs: {
                                                   endpoint: chart.token,
+                                                  auth: _vm.auth,
                                                 },
                                               }),
                                             ],
@@ -47094,6 +47119,7 @@ var render = function () {
                                                   _c("delete-journal", {
                                                     attrs: {
                                                       endpoint: journal.token,
+                                                      auth: _vm.auth,
                                                     },
                                                   }),
                                                 ],
@@ -47851,6 +47877,7 @@ var render = function () {
                                                         attrs: {
                                                           endpoint:
                                                             journal.token,
+                                                          auth: _vm.auth,
                                                         },
                                                       })
                                                     : _vm._e(),
@@ -50246,7 +50273,10 @@ var render = function () {
                                             ),
                                             _vm._v(" "),
                                             _c("delete-user", {
-                                              attrs: { endpoint: user.token },
+                                              attrs: {
+                                                endpoint: user.token,
+                                                auth: _vm.auth,
+                                              },
                                             }),
                                           ],
                                           1
@@ -51065,7 +51095,10 @@ var render = function () {
                                         ),
                                         _vm._v(" "),
                                         _c("delete-period", {
-                                          attrs: { endpoint: period.token },
+                                          attrs: {
+                                            endpoint: period.token,
+                                            auth: _vm.auth,
+                                          },
                                         }),
                                       ],
                                       1
@@ -51085,7 +51118,7 @@ var render = function () {
         ]),
       ]),
       _vm._v(" "),
-      _c("create-period"),
+      _c("create-period", { attrs: { auth: _vm.auth } }),
     ],
     1
   )
@@ -52014,6 +52047,7 @@ var render = function () {
                                               _c("delete-project", {
                                                 attrs: {
                                                   endpoint: project.token,
+                                                  auth: _vm.auth,
                                                 },
                                               }),
                                             ],
@@ -52716,7 +52750,10 @@ var render = function () {
                                       ),
                                       _vm._v(" "),
                                       _c("delete-rekening", {
-                                        attrs: { endpoint: bank.token },
+                                        attrs: {
+                                          endpoint: bank.token,
+                                          auth: _vm.auth,
+                                        },
                                       }),
                                     ],
                                     1

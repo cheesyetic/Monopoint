@@ -66,7 +66,7 @@
                                             </div>
                                             <div class="col-4 row">
                                                 <router-link :to="{ name: 'chart.edit', params: { token: chart.token }}" class="btn btn-primary mb-2"><i class="uil-edit-alt"></i> Edit</router-link>
-                                                <delete-chart :endpoint="chart.token"/>
+                                                <delete-chart :endpoint="chart.token" :auth="auth"/>
                                             </div>
                                         </div>
                                     </div>

@@ -106,7 +106,7 @@
                                                                 <button  @click="ajukanDialog(journal.token)" class="dropdown-item"><i class="uil-message"></i> Ajukan</button>
                                                                 <div class="dropdown-divider"></div>
                                                                 <router-link :to="{ name: 'jurnal.edit', params: { token: journal.token }}" class="dropdown-item"><i class="uil-edit-alt"></i> Edit</router-link>
-                                                                <delete-journal :endpoint="journal.token"/>
+                                                                <delete-journal :endpoint="journal.token" :auth="auth" />
                                                             </div>
                                                         </div>
                                                     </td>

@@ -92,9 +92,7 @@ export default {
                 account_number: '',
             },
             // successMessage: [],
-            partnerSelected: [
-
-            ],
+            partnerSelected: [],
             partnerOptions: [],
             partnerLoading: true,
             theErrors: [],
@@ -130,8 +128,8 @@ export default {
                     this.partnerOptions.push({ label, id })
                 }
             }
-            console.log(response.data.data)
-            console.log("sukses get user")
+            console.log(">> sukses get partner options")
+            console.log(this.partnerOptions)
             this.partnerLoading = false
             this.findAppointment()
         },
@@ -144,19 +142,22 @@ export default {
             if (response.status === 200) {
                 this.appointment = response.data.data
                 this.appointment.date = moment(String(this.appointment.date)).format('yyyy-MM-DD') + 'T' + moment(String(this.appointment.date)).format('hh:mm:ss')
+                console.log(">> Panjang Appointment user id")
+                console.log(this.appointment.user_id.length)
+                console.log(">> Panjang partnerOptions")
+                console.log(this.partnerOptions.length)
                 for (var i = 0; i < this.appointment.user_id.length; i++) {
                     for (var j = 0; j < this.partnerOptions.length; j++) {
-                    // for (const x in this.partnerOptions) {
-                        console.log("YUHUU x.label")
-                        console.log(this.partnerOptions[j].label)
                         if(this.partnerOptions[j].id == this.appointment.user_id[i]) {
-                            this.partnerSelected[i].label = this.partnerOptions[j].label
-                            this.partnerSelected[i].id = this.partnerOptions[j].id
-                            console.log("ANJAY x.label")
+                            let label = this.partnerOptions[j].label
+                            let id = String(this.partnerOptions[j].id)
+                            this.partnerSelected.push({ label, id })
+                            break
                         }
                     }
-                    // this.appointment.user_id[i] = this.appointment.user_id[i].id
                 }
+                console.log(">> Selected Partner")
+                console.log(this.partnerSelected)
                 this.loading = false
             } else {
                 this.$toasted.show("Something went wrong, please try again later", {
@@ -168,8 +169,11 @@ export default {
             // console.log(response.data.data)
         },
         async store() {
-            for (var i = 0; i < this.appointment.user_id.length; i++) {
-                this.appointment.user_id[i] = this.appointment.user_id[i].id
+            console.log("this.partnerSelected")
+            console.log(this.partnerSelected.length)
+            console.log(this.partnerSelected)
+            for (var i = 0; i < this.partnerSelected.length; i++) {
+                this.appointment.user_id[i] = this.partnerSelected[i].id
             }
             try {
                 let response = await axios.post('/api/appointment/' + this.$route.params.token, this.appointment, {

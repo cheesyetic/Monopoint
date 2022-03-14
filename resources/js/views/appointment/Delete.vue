@@ -12,7 +12,7 @@ export default {
             try {
                 let q = window.confirm("Are you sure you want to delete this chart account?")
                 if (q) {
-                    let responseDelete = await axios.delete(`/api/chartaccount/${this.endpoint}`, {
+                    let responseDelete = await axios.delete(`/api/appointment/${this.endpoint}`, {
                         headers: {
                             Authorization: 'Bearer ' + this.auth.token
                         }

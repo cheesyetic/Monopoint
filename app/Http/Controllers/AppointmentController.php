@@ -116,7 +116,7 @@ class AppointmentController extends Controller
      */
     public function update(Request $request, $token)
     {
-        
+
         $id = Crypt::decryptString($token);
         $appointment = Appointment::findOrFail($id);
 
@@ -137,11 +137,12 @@ class AppointmentController extends Controller
         try {
             $user_app_del = new UserAppointmentController;
             $user_app_del->destroy($id);
-            
+
             $request['user_id'] = $appointment->user_id;
             $appointment->update($request->all());
 
             $input['appointment_id'] = $appointment->id;
+            dd($input);
             foreach($input['user_id'] as $value){
                 $input['user_id'] = $value;
                 UserAppointment::create($input);
