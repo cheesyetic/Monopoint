@@ -135,7 +135,7 @@
                                     <div v-if="theErrors.project_id" class="mt-1 text-danger">{{ theErrors.project_id[0] }}</div>
                                 </div>
                             </div>
-                            <button class="btn btn-primary" type="submit">Edit</button>
+                            <button class="btn btn-primary" type="submit"><i class="bx bx-save"></i> Save</button>
                             <loading v-if="loadingEdit"/>
                         </form>
                     </div>

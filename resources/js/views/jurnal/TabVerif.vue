@@ -150,8 +150,8 @@
                                                     <v-select :options="monthOptions" :reduce="month => month.code" label="month" v-model="filter_month"></v-select>
                                                 </div>
                                                 <div class="mb-2">
-                                                    <label class="form-label">Proyek</label>
-                                                    <v-select :options="projectOptions" @input="selectId($event)" :disabled="projectLoading"></v-select>
+                                                    <label class="form-label">Chart Account</label>
+                                                    <v-select :options="chartOptions" @input="selectId($event)" :disabled="chartLoading"></v-select>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -184,12 +184,12 @@ export default {
         return  {
             journals: {},
             loading: true,
-            projectOptions: [],
-            projectLoading: true,
+            chartOptions: [],
+            chartLoading: true,
             filter_keyword: '',
             filter_reimburse: '',
             filter_month: '',
-            filter_project: '',
+            filter_chartaccount: '',
             loadingExcel: false,
             monthOptions: [
                 {month: 'Semua', code: ''},
@@ -211,30 +211,28 @@ export default {
 
     mounted() {
         this.getJurnal()
-        this.getProject()
+        this.getChart()
     },
 
     methods: {
         selectId(e) {
-            this.filter_project = e.id
+            this.filter_chartaccount = e.id
         },
-        async getProject() {
-            let response = await axios.get('/api/project', {
+        async getChart() {
+            let response = await axios.get('/api/chartaccount', {
                     headers: {
                         'Authorization': 'Bearer ' + this.auth.token
                     }
                 })
             if (response.status === 200) {
-                // this.periodOptions = response.data.data
-                console.log(response.data.data.length)
                 for (var i = 0; i < response.data.data.length; i++) {
                     let label = response.data.data[i].name
                     let id = String(response.data.data[i].id)
-                    this.projectOptions.push({ label, id })
+                    this.chartOptions.push({ label, id })
                 }
-                this.projectLoading = false
+                this.chartLoading = false
             } else {
-                this.$toasted.show("Failed to load project", {
+                this.$toasted.show("Failed to load Chart Account", {
                         type: 'error',
                         duration: 3000,
                         position: 'top-center',
@@ -244,18 +242,20 @@ export default {
         async exportExcel() {
             try {
                 this.loadingExcel = true
-                let response = await axios.get(`/api/journal/export`, {
-                    headers: {
-                        'Authorization': 'Bearer ' + this.auth.token
-                    }
-                })
-                if (response.status == 200) {
-                    this.$toasted.show(response.data.message, {
-                        type: 'success',
-                        duration: 3000,
-                        position: 'top-center',
-                    })
-                }
+
+                let response = await axios({
+                    url: '/api/journal/export', //your url
+                    method: 'GET',
+                    responseType: 'blob', // important
+                    headers: {'Authorization': 'Bearer '+ this.auth.token}
+                }).then((response) => {
+                    const url = window.URL.createObjectURL(new Blob([response.data]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', 'Journal.xlsx'); //or any other extension
+                    document.body.appendChild(link);
+                    link.click();
+                });
                 this.loadingExcel = false
             } catch (e) {
                 // console.log(e)
@@ -267,9 +267,14 @@ export default {
             }
         },
         async getJurnal() {
-            let filter = "&keyword=" + this.filter_keyword + "&project=" + this.filter_project + "&reimburse=" + this.filter_reimburse + "&date=" + this.filter_month + "&token=" + this.auth.user_token
-            console.log('/api/journal?category=3&keyword=' + filter)
-            let response = await axios.get('/api/journal?category=3' + filter, {
+            let response = await axios.get('/api/journal', {
+                    params: {
+                        category: 1,
+                        keyword: this.filter_keyword,
+                        chart: this.filter_chartaccount,
+                        reimburse: this.filter_reimburse,
+                        date: this.filter_month,
+                    },
                     headers: {
                         'Authorization': 'Bearer ' + this.auth.token
                     }

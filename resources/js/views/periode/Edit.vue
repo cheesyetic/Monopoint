@@ -61,7 +61,7 @@
                                     <div v-if="theErrors.end" class="mt-1 text-danger">{{ theErrors.end[0] }}</div>
                                 </div>
                             </div>
-                            <button class="btn btn-primary" type="submit">Edit</button>
+                            <button class="btn btn-primary" type="submit"><i class="bx bx-save"></i> Save</button>
                         </form>
                     </div>
                 </div> <!-- end col -->

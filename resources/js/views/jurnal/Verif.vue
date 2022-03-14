@@ -143,7 +143,7 @@ export default {
                     this.loadingAcc = true
                     let formdata = new FormData()
                     if(this.filebukti != '') {
-                        formdata.append('filebukti', this.filebukti)
+                        formdata.append('buktireimburse', this.filebukti)
                     }
                     await axios.post('/api/verifjournal/' + this.$route.params.token, formdata, {
                             headers: {

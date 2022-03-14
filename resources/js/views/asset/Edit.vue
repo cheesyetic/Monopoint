@@ -48,10 +48,17 @@
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="example-text-input" class="col-md-2 col-form-label">No Rekening</label>
+                                <label for="example-text-input" class="col-md-2 col-form-label">Kuantitas</label>
                                 <div class="col-md-10">
-                                    <input class="form-control" type="text" v-model="asset.value">
-                                    <div v-if="theErrors.value" class="mt-1 text-danger">{{ theErrors.value[0] }}</div>
+                                    <input class="form-control" type="text" v-model="asset.quantity">
+                                    <div v-if="theErrors.quantity" class="mt-1 text-danger">{{ theErrors.quantity[0] }}</div>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="example-text-input" class="col-md-2 col-form-label">Harga Satuan</label>
+                                <div class="col-md-10">
+                                    <input class="form-control" type="text" v-model="asset.price">
+                                    <div v-if="theErrors.price" class="mt-1 text-danger">{{ theErrors.price[0] }}</div>
                                 </div>
                             </div>
                             <div class="mb-3 row">
@@ -61,7 +68,7 @@
                                     <div v-if="theErrors.buy_time" class="mt-1 text-danger">{{ theErrors.buy_time[0] }}</div>
                                 </div>
                             </div>
-                            <button class="btn btn-primary" type="submit">Edit</button>
+                            <button class="btn btn-primary" type="submit"><i class="bx bx-save"></i> Save</button>
                         </form>
                     </div>
                 </div> <!-- end col -->

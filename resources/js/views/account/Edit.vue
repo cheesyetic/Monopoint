@@ -48,7 +48,7 @@
                                         <div class="row mt-4">
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <button class="btn btn-primary" type="submit">Update
+                                                    <button class="btn btn-primary" type="submit"><i class="bx bx-save"></i> Save
                                                     </button>
                                                 </div>
                                             </div>

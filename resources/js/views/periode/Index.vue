@@ -114,7 +114,8 @@ export default {
             })
         },
         async enablePeriod(token) {
-            let response = await axios.post('/api/periodstatus/ ' + token, {
+            let formdata = new FormData();
+            let response = await axios.post('/api/periodstatus/ ' + token, formdata, {
                     headers: {
                         'Authorization': 'Bearer ' + this.auth.token
                     }

@@ -10,7 +10,7 @@ export default {
         async destroyChart() {
             // console.log(this.endpoint)
             try {
-                let q = window.confirm("Are you sure you want to delete this chart account?")
+                let q = window.confirm("Are you sure you want to delete this appointment?")
                 if (q) {
                     let responseDelete = await axios.delete(`/api/appointment/${this.endpoint}`, {
                         headers: {

@@ -78,7 +78,7 @@
                                     <div v-if="theErrors.type" class="mt-1 text-danger">{{ theErrors.type[0] }}</div>
                                 </div>
                             </div> -->
-                            <button class="btn btn-primary" type="submit"><i class="uil-edit-alt"></i> Edit</button>
+                            <button class="btn btn-primary" type="submit"><i class="bx bx-save"></i> Save</button>
                         </form>
                     </div>
                 </div> <!-- end col -->

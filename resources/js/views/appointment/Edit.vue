@@ -68,7 +68,7 @@
                                     <div v-if="theErrors.user_id" class="mt-1 text-danger">{{ theErrors.user_id[0] }}</div>
                                 </div>
                             </div>
-                            <button class="btn btn-primary" type="submit"><i class="uil-edit-alt"></i> Edit</button>
+                            <button class="btn btn-primary" type="submit"><i class="bx bx-save"></i> Save</button>
                         </form>
                     </div>
                 </div> <!-- end col -->
