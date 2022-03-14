@@ -109,7 +109,7 @@ class ChartAccountController extends Controller
         }
 
         try {
-            $chartacc = ChartAccount::create($request->all());
+            $chartacc->update($request->all());
             $response = [
                 'message' => 'A chart account row updated',
                 'data' => $chartacc

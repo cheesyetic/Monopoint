@@ -83,6 +83,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     
     //ALL USER
 
+    //GET MASTER DATA
+    Route::resource('/accountingperiod', AccountingPeriodController::class)->except('destroy', 'store', 'update', 'create', 'edit');
+    Route::resource('/account', UserController::class)->except('destroy', 'store', 'update', 'create', 'edit');
+    Route::resource('/bankaccount', BankAccountController::class)->except('destroy', 'store', 'update', 'create', 'edit');
+    Route::resource('/chartaccount', ChartAccountController::class)->except('destroy', 'store', 'update', 'create', 'edit');
+    Route::resource('/project', ProjectController::class)->except('destroy', 'store', 'update', 'create', 'edit');
+
     //USER
     Route::post('/changepassword', [UserController::class, 'change_password']);
 
@@ -110,13 +117,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //-------------------------------------------------------------------------------------------------------
 
 });
-
-//GET MASTER DATA
-Route::resource('/accountingperiod', AccountingPeriodController::class)->except('destroy', 'store', 'update', 'create', 'edit');
-Route::resource('/account', UserController::class)->except('destroy', 'store', 'update', 'create', 'edit');
-Route::resource('/bankaccount', BankAccountController::class)->except('destroy', 'store', 'update', 'create', 'edit');
-Route::resource('/chartaccount', ChartAccountController::class)->except('destroy', 'store', 'update', 'create', 'edit');
-Route::resource('/project', ProjectController::class)->except('destroy', 'store', 'update', 'create', 'edit');
 
 //AUTH
 Route::post('/login', [LoginController::class, 'index']);
