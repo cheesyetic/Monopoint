@@ -40,16 +40,27 @@ export default {
     },
 
     created() {
-        axios.get('/api/user', {headers: {'Authorization': 'Bearer '+this.auth.token}})
-        .then(response => {
-            console.log(response)
-            this.auth.user = response.data // assign response to state user
-            this.token()
-            // this.$emit('user', this.user)
-        })
+        this.getUser()
     },
 
     methods: {
+        ping() {
+            console.log("ping")
+        },
+        async getUser() {
+            try {
+                await axios.get('/api/user', {
+                        headers: {
+                            'Authorization': 'Bearer ' + this.auth.token
+                        }
+                    })
+            }
+            catch (e) {
+                // console.log("logout")
+                localStorage.removeItem("loggedIn")
+                this.$router.push({ name: 'login' })
+            }
+        },
         token() {
             console.log("request acc token")
             axios.get('/api/token/' + this.auth.user.id )
