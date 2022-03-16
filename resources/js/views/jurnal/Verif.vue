@@ -156,7 +156,15 @@ export default {
                         response => {
                             this.filebukti = ''
                             this.theErrors = []
-                            this.$router.push({ name: 'jurnal' })
+
+                            if(this.$route.query.page == 'proses') {
+                                this.$router.push({ name: 'jurnalproses' })
+                            } else if(this.$route.query.page == 'verif'){
+                                this.$router.push({ name: 'jurnalverif' })
+                            }
+                            else {
+                                this.$router.push({ name: 'jurnal' })
+                            }
 
                             this.$toasted.show("Sukses verifikasi jurnal", {
                                 type: 'success',
@@ -164,16 +172,17 @@ export default {
                                 position: 'top-center',
                             })
                         }
-                    ).catch((e) => {
-                        this.$toasted.show("Something went wrong : " + e, {
-                            type: 'error',
-                            duration: 3000,
-                            position: 'top-center',
-                        })
-                        console.log(e)
-                        console.log("Gagal verifikasi jurnal")
-                        console.log("ERRR:: ", e.response.data)
-                    })
+                    )
+                    // .catch((e) => {
+                    //     this.$toasted.show("Something went wrong : " + e, {
+                    //         type: 'error',
+                    //         duration: 3000,
+                    //         position: 'top-center',
+                    //     })
+                    //     console.log(e)
+                    //     console.log("Gagal verifikasi jurnal")
+                    //     console.log("ERRR:: ", e.response.data)
+                    // })
 
                 } catch (e) {
                     this.loadingAcc = false
@@ -182,10 +191,10 @@ export default {
                             duration: 3000,
                             position: 'top-center',
                         })
-                        console.log(e)
-                        console.log("Gagal verifikasi jurnal")
-                        console.log("ERRR:: ", e.response.data)
-                    // this.theErrors = e.responseCreate.data;
+                        // console.log(e)
+                        // console.log("Gagal verifikasi jurnal")
+                        // console.log("ERRR:: ", e.response.data)
+                    this.theErrors = e.response.data;
                 }
             } else {
                 try {
@@ -199,7 +208,15 @@ export default {
                         }).then(
                         response => {
                             this.theErrors = []
-                            this.$router.push({ name: 'jurnal' })
+
+                            if(this.$route.query.page == 'proses') {
+                                this.$router.push({ name: 'jurnalproses' })
+                            } else if(this.$route.query.page == 'verif'){
+                                this.$router.push({ name: 'jurnalverif' })
+                            }
+                            else {
+                                this.$router.push({ name: 'jurnal' })
+                            }
 
                             this.$toasted.show("Sukses menolak verifikasi jurnal", {
                                 type: 'success',
@@ -207,16 +224,17 @@ export default {
                                 position: 'top-center',
                             })
                         }
-                    ).catch((error) => {
-                        this.$toasted.show("Something went wrong : " + e, {
-                            type: 'error',
-                            duration: 3000,
-                            position: 'top-center',
-                        })
-                        console.log(e)
-                        console.log("Gagal verifikasi jurnal")
-                        console.log("ERRR:: ", e.response.data)
-                    })
+                    )
+                    // .catch((error) => {
+                    //     this.$toasted.show("Something went wrong : " + e, {
+                    //         type: 'error',
+                    //         duration: 3000,
+                    //         position: 'top-center',
+                    //     })
+                    //     console.log(e)
+                    //     console.log("Gagal verifikasi jurnal")
+                    //     console.log("ERRR:: ", e.response.data)
+                    // })
 
                 } catch (e) {
                     this.loadingAcc = false
@@ -225,10 +243,10 @@ export default {
                             duration: 3000,
                             position: 'top-center',
                         })
-                        console.log(e)
-                        console.log("Gagal verifikasi jurnal")
-                        console.log("ERRR:: ", e.response.data)
-                    // this.theErrors = e.responseCreate.data;
+                        // console.log(e)
+                        // console.log("Gagal verifikasi jurnal")
+                        // console.log("ERRR:: ", e.response.data)
+                    this.theErrors = e.response.data;
                 }
             }
         }

@@ -108,7 +108,7 @@
                                                         <div class="btn-group">
                                                             <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu <i class="uil-angle-down"></i></button>
                                                             <div class="dropdown-menu" style="">
-                                                                <router-link :to="{ name: 'jurnal.detail', params: { token: journal.token }}" class="dropdown-item"><i class="uil-document-layout-left"></i> Detail</router-link>
+                                                                <router-link :to="{ name: 'jurnal.detail', params: { token: journal.token }, query: { page: 'verif'} }" class="dropdown-item"><i class="uil-document-layout-left"></i> Detail</router-link>
                                                             </div>
                                                         </div>
                                                     </td>

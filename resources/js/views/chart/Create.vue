@@ -35,7 +35,7 @@
                             <div class="mb-3 row">
                                 <label for="example-date-input" class="col-md-2 col-form-label">Kode</label>
                                 <div class="col-md-10">
-                                    <input class="form-control" type="text" v-model="chartCreate.code">
+                                    <input class="form-control" type="number" v-model="chartCreate.code">
                                     <div v-if="theErrors.code" class="mt-1 text-danger">{{ theErrors.code[0] }}</div>
                                 </div>
                             </div>

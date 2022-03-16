@@ -102,10 +102,10 @@
                                                         <div class="btn-group">
                                                             <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu <i class="uil-angle-down"></i></button>
                                                             <div class="dropdown-menu" style="">
-                                                                <router-link :to="{ name: 'jurnal.detail', params: { token: journal.token }}" class="dropdown-item"><i class="uil-document-layout-left"></i> Detail</router-link>
-                                                                <router-link :to="{ name: 'jurnal.verif', params: { token: journal.token }}" v-if="auth.user.type != 2" class="dropdown-item"><i class="uil-file-check"></i> Verifikasi</router-link>
+                                                                <router-link :to="{ name: 'jurnal.detail', params: { token: journal.token }, query: { page: 'proses'} }" class="dropdown-item"><i class="uil-document-layout-left"></i> Detail</router-link>
+                                                                <router-link :to="{ name: 'jurnal.verif', params: { token: journal.token }, query: { page: 'proses'} }" v-if="auth.user.type != 2" class="dropdown-item"><i class="uil-file-check"></i> Verifikasi</router-link>
                                                                 <div class="dropdown-divider" v-if="auth.user.type != 2"></div>
-                                                                <router-link :to="{ name: 'jurnal.edit', params: { token: journal.token }}" v-if="auth.user.type != 2" class="dropdown-item"><i class="uil-edit-alt"></i> Edit</router-link>
+                                                                <router-link :to="{ name: 'jurnal.edit', params: { token: journal.token }, query: { page: 'proses'} }" v-if="auth.user.type != 2" class="dropdown-item"><i class="uil-edit-alt"></i> Edit</router-link>
                                                                 <delete-journal :endpoint="journal.token" v-if="auth.user.type != 2" :auth="auth"/>
                                                             </div>
                                                         </div>

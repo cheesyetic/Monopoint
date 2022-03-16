@@ -360,7 +360,14 @@ export default {
                         this.journal.user_id = ''
                         this.theErrors = []
 
-                        this.$router.push({ name: 'jurnal' })
+                        // if(this.$route.query.page == 'proses') {
+                        //     this.$router.push({ name: 'jurnalproses' })
+                        // } else if(this.$route.query.page == 'verif'){
+                        //     this.$router.push({ name: 'jurnalverif' })
+                        // }
+                        // else {
+                        //     }
+                            this.$router.push({ name: 'jurnal' })
 
                         this.$toasted.show("Sukses mengedit jurnal", {
                             type: 'success',
@@ -386,11 +393,11 @@ export default {
                         duration: 3000,
                         position: 'top-center',
                     })
-                console.log(e)
-                console.log("responseCreate gagal")
-                console.log("ERRR:: ", e.response.data)
+                // console.log(e)
+                // console.log("responseCreate gagal")
+                // console.log("ERRR:: ", e.response.data)
+                // this.theErrors = e.response.data;
                 this.theErrors = e.response.data;
-                // this.theErrors = e.responseCreate.data;
             }
         }
     }

@@ -7226,8 +7226,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this6.journal.bank_account_id = '';
                   _this6.journal.project_id = '';
                   _this6.journal.user_id = '';
-                  _this6.theErrors = [];
+                  _this6.theErrors = []; // if(this.$route.query.page == 'proses') {
+                  //     this.$router.push({ name: 'jurnalproses' })
+                  // } else if(this.$route.query.page == 'verif'){
+                  //     this.$router.push({ name: 'jurnalverif' })
+                  // }
+                  // else {
+                  //     }
 
+                  // if(this.$route.query.page == 'proses') {
+                  //     this.$router.push({ name: 'jurnalproses' })
+                  // } else if(this.$route.query.page == 'verif'){
+                  //     this.$router.push({ name: 'jurnalverif' })
+                  // }
+                  // else {
+                  //     }
                   _this6.$router.push({
                     name: 'jurnal'
                   });
@@ -7240,7 +7253,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 18:
-                _context6.next = 28;
+                _context6.next = 25;
                 break;
 
               case 20:
@@ -7252,14 +7265,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
-                });
+                }); // console.log(e)
+                // console.log("responseCreate gagal")
+                // console.log("ERRR:: ", e.response.data)
+                // this.theErrors = e.response.data;
 
-                console.log(_context6.t0);
-                console.log("responseCreate gagal");
-                console.log("ERRR:: ", _context6.t0.response.data);
-                _this6.theErrors = _context6.t0.response.data; // this.theErrors = e.responseCreate.data;
 
-              case 28:
+                _this6.theErrors = _context6.t0.response.data;
+
+              case 25:
               case "end":
                 return _context6.stop();
             }
@@ -8987,7 +9001,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 if (!_this2.verif) {
-                  _context2.next = 18;
+                  _context2.next = 16;
                   break;
                 }
 
@@ -9009,29 +9023,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this2.filebukti = '';
                   _this2.theErrors = [];
 
-                  _this2.$router.push({
-                    name: 'jurnal'
-                  });
+                  if (_this2.$route.query.page == 'proses') {
+                    _this2.$router.push({
+                      name: 'jurnalproses'
+                    });
+                  } else if (_this2.$route.query.page == 'verif') {
+                    _this2.$router.push({
+                      name: 'jurnalverif'
+                    });
+                  } else {
+                    _this2.$router.push({
+                      name: 'jurnal'
+                    });
+                  }
 
                   _this2.$toasted.show("Sukses verifikasi jurnal", {
                     type: 'success',
                     duration: 3000,
                     position: 'top-center'
                   });
-                })["catch"](function (e) {
-                  _this2.$toasted.show("Something went wrong : " + e, {
-                    type: 'error',
-                    duration: 3000,
-                    position: 'top-center'
-                  });
-
-                  console.log(e);
-                  console.log("Gagal verifikasi jurnal");
-                  console.log("ERRR:: ", e.response.data);
                 });
 
               case 7:
-                _context2.next = 16;
+                _context2.next = 14;
                 break;
 
               case 9:
@@ -9043,24 +9057,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
-                });
+                }); // console.log(e)
+                // console.log("Gagal verifikasi jurnal")
+                // console.log("ERRR:: ", e.response.data)
 
-                console.log(_context2.t0);
-                console.log("Gagal verifikasi jurnal");
-                console.log("ERRR:: ", _context2.t0.response.data); // this.theErrors = e.responseCreate.data;
 
-              case 16:
-                _context2.next = 33;
+                _this2.theErrors = _context2.t0.response.data;
+
+              case 14:
+                _context2.next = 29;
                 break;
 
-              case 18:
-                _context2.prev = 18;
+              case 16:
+                _context2.prev = 16;
                 _this2.loadingAcc = true;
                 _formdata = new FormData();
 
                 _formdata.append('note_decline', _this2.note_decline);
 
-                _context2.next = 24;
+                _context2.next = 22;
                 return axios.post('/api/declinejournal/' + _this2.$route.params.token, _formdata, {
                   headers: {
                     'Authorization': 'Bearer ' + _this2.auth.token
@@ -9068,52 +9083,53 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (response) {
                   _this2.theErrors = [];
 
-                  _this2.$router.push({
-                    name: 'jurnal'
-                  });
+                  if (_this2.$route.query.page == 'proses') {
+                    _this2.$router.push({
+                      name: 'jurnalproses'
+                    });
+                  } else if (_this2.$route.query.page == 'verif') {
+                    _this2.$router.push({
+                      name: 'jurnalverif'
+                    });
+                  } else {
+                    _this2.$router.push({
+                      name: 'jurnal'
+                    });
+                  }
 
                   _this2.$toasted.show("Sukses menolak verifikasi jurnal", {
                     type: 'success',
                     duration: 3000,
                     position: 'top-center'
                   });
-                })["catch"](function (error) {
-                  _this2.$toasted.show("Something went wrong : " + e, {
-                    type: 'error',
-                    duration: 3000,
-                    position: 'top-center'
-                  });
-
-                  console.log(e);
-                  console.log("Gagal verifikasi jurnal");
-                  console.log("ERRR:: ", e.response.data);
                 });
 
-              case 24:
-                _context2.next = 33;
+              case 22:
+                _context2.next = 29;
                 break;
 
-              case 26:
-                _context2.prev = 26;
-                _context2.t1 = _context2["catch"](18);
+              case 24:
+                _context2.prev = 24;
+                _context2.t1 = _context2["catch"](16);
                 _this2.loadingAcc = false;
 
                 _this2.$toasted.show("Something went wrong : " + _context2.t1, {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
-                });
+                }); // console.log(e)
+                // console.log("Gagal verifikasi jurnal")
+                // console.log("ERRR:: ", e.response.data)
 
-                console.log(_context2.t1);
-                console.log("Gagal verifikasi jurnal");
-                console.log("ERRR:: ", _context2.t1.response.data); // this.theErrors = e.responseCreate.data;
 
-              case 33:
+                _this2.theErrors = _context2.t1.response.data;
+
+              case 29:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[1, 9], [18, 26]]);
+        }, _callee2, null, [[1, 9], [16, 24]]);
       }))();
     }
   }
@@ -42286,7 +42302,7 @@ var render = function () {
                           },
                         ],
                         staticClass: "form-control",
-                        attrs: { type: "text" },
+                        attrs: { type: "number" },
                         domProps: { value: _vm.chartCreate.code },
                         on: {
                           input: function ($event) {
@@ -42670,7 +42686,7 @@ var render = function () {
                                   },
                                 ],
                                 staticClass: "form-control",
-                                attrs: { type: "text" },
+                                attrs: { type: "number" },
                                 domProps: { value: _vm.chart.code },
                                 on: {
                                   input: function ($event) {
@@ -42982,7 +42998,7 @@ var render = function () {
                                                   "p",
                                                   {
                                                     staticClass:
-                                                      "card-text text-success",
+                                                      "card-text text-success mb-1",
                                                   },
                                                   [
                                                     _c("i", {
@@ -42995,7 +43011,7 @@ var render = function () {
                                                   "p",
                                                   {
                                                     staticClass:
-                                                      "card-text text-danger",
+                                                      "card-text text-danger mb-1",
                                                   },
                                                   [
                                                     _c("i", {
@@ -47576,6 +47592,9 @@ var render = function () {
                                                             token:
                                                               journal.token,
                                                           },
+                                                          query: {
+                                                            page: "proses",
+                                                          },
                                                         },
                                                       },
                                                     },
@@ -47600,6 +47619,9 @@ var render = function () {
                                                               params: {
                                                                 token:
                                                                   journal.token,
+                                                              },
+                                                              query: {
+                                                                page: "proses",
                                                               },
                                                             },
                                                           },
@@ -47633,6 +47655,9 @@ var render = function () {
                                                               params: {
                                                                 token:
                                                                   journal.token,
+                                                              },
+                                                              query: {
+                                                                page: "proses",
                                                               },
                                                             },
                                                           },
@@ -48366,6 +48391,9 @@ var render = function () {
                                                           params: {
                                                             token:
                                                               journal.token,
+                                                          },
+                                                          query: {
+                                                            page: "verif",
                                                           },
                                                         },
                                                       },
