@@ -31,6 +31,7 @@
                                             <div class="form-group">
                                                 <label for="">Password Lama</label>
                                                 <input type="password" class="form-control" v-model="account.old_password">
+                                                <div v-if="theErrors.old_password" class="mt-1 text-danger">{{ theErrors.old_password[0] }}</div>
                                             </div>
                                         </div>
                                         <div class="col-md-6 my-2">
@@ -73,7 +74,13 @@ export default {
     },
     data() {
         return {
-            account: [],
+            account: [
+                {
+                    old_password: '',
+                    new_password: '',
+                    confirm_password: ''
+                }
+            ],
             // successMessage: [],
             theErrors: [],
             loading: true,
@@ -84,9 +91,15 @@ export default {
             try {
                 console.log("this.account")
                 let formdata = new FormData()
-                formdata.append('old_password', this.account.old_password)
-                formdata.append('new_password', this.account.new_password)
-                formdata.append('confirm_password', this.account.confirm_password)
+                if (this.account.old_password != undefined) {
+                    formdata.append('old_password', this.account.old_password)
+                }
+                if (this.account.new_password != undefined) {
+                    formdata.append('new_password', this.account.new_password)
+                }
+                if (this.account.confirm_password != undefined) {
+                    formdata.append('confirm_password', this.account.confirm_password)
+                }
                 console.log(formdata)
                 let response = await axios.post('/api/changepassword', formdata, {
                     headers: {
@@ -111,7 +124,10 @@ export default {
                         duration: 3000,
                         position: 'top-center',
                     })
-                // this.theErrors = e.response.data;
+                console.log(e.response.data)
+                this.theErrors = e.response.data;
+                console.log(this.theErrors)
+
             }
         }
     }

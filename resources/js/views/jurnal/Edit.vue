@@ -72,17 +72,19 @@
 
                             <div class="mb-3 row">
                                 <label for="example-text-input" class="col-md-2 col-form-label">Reimburse</label>
-                                <div class="col md-10 wrapper">
-                                    <input value="1" type="radio" name="select" id="option-1" v-model="journal.is_reimburse">
-                                    <label for="option-1" class="option option-1" style="margin-left:0">
-                                        <div class="dot"></div>
-                                        <span>Ya</span>
-                                    </label>
-                                    <input value="0" type="radio" name="select" id="option-3" v-model="journal.is_reimburse">
-                                    <label for="option-3" class="option option-3">
-                                        <div class="dot"></div>
-                                        <span>Tidak</span>
-                                    </label>
+                                <div class="col md-10">
+                                    <div class="col wrapper">
+                                        <input value="1" type="radio" name="select" id="option-1" v-model="journal.is_reimburse">
+                                        <label for="option-1" class="option option-1" style="margin-left:0">
+                                            <div class="dot"></div>
+                                            <span>Ya</span>
+                                        </label>
+                                        <input value="0" type="radio" name="select" id="option-3" v-model="journal.is_reimburse">
+                                        <label for="option-3" class="option option-3">
+                                            <div class="dot"></div>
+                                            <span>Tidak</span>
+                                        </label>
+                                    </div>
                                     <div v-if="theErrors.is_reimburse" class="mt-1 text-danger">{{ theErrors.is_reimburse[0] }}</div>
                                 </div>
                             </div>
@@ -105,10 +107,12 @@
 
                             <div class="mb-3 row">
                                 <label for="example-date-input" class="col-md-2 col-form-label">Balance</label>
-                                <div class="col-md-10 d-flex align-items-center">
-                                    <p style="margin:0;margin-right: 1rem">IDR</p>
-                                    <input class="form-control flex-grow" type="number" v-model="journal.balance">
-                                <div v-if="theErrors.balance" class="mt-1 text-danger">{{ theErrors.balance[0] }}</div>
+                                <div class="col-md-10">
+                                    <div class="d-flex align-items-center">
+                                        <p style="margin:0;margin-right: 1rem">IDR</p>
+                                        <input class="form-control flex-grow" type="number" v-model="journal.balance" :class="theErrors.balance ? 'is-invalid' : ''">
+                                    </div>
+                                    <div v-if="theErrors.balance" class="mt-1 text-danger">{{ theErrors.balance[0] }}</div>
                                 </div>
                             </div>
 
@@ -351,25 +355,28 @@ export default {
                             position: 'top-center',
                         })
                     }
-                ).catch((e) => {
-                    this.$toasted.show("Something went wrong : " + e, {
-                        type: 'error',
-                        duration: 3000,
-                        position: 'top-center',
-                    })
-                    console.log(e)
-                    console.log("ERRR:: ", e.response.data)
-                })
+                )
+                // .catch((e) => {
+                //     this.$toasted.show("Something went wrong : " + e, {
+                //         type: 'error',
+                //         duration: 3000,
+                //         position: 'top-center',
+                //     })
+                //     console.log(e)
+                //     console.log("ERRR:: ", e.response.data)
+                // })
 
             } catch (e) {
+                this.loadingEdit = false
                 this.$toasted.show("Something went wrong : " + e, {
                         type: 'error',
                         duration: 3000,
                         position: 'top-center',
                     })
-                    console.log(e)
-                    console.log("responseCreate gagal")
-                    console.log("ERRR:: ", e.response.data)
+                console.log(e)
+                console.log("responseCreate gagal")
+                console.log("ERRR:: ", e.response.data)
+                this.theErrors = e.response.data;
                 // this.theErrors = e.responseCreate.data;
             }
         }

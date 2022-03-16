@@ -158,8 +158,8 @@ export default {
                         }
                     }
                 }
-                console.log(">> Selected Partner")
-                console.log(this.partnerSelected)
+                // console.log(">> Selected Partner")
+                // console.log(this.partnerSelected)
                 this.loading = false
             } else {
                 this.$toasted.show("Something went wrong, please try again later", {

@@ -60,7 +60,8 @@
                                     <div v-if="theErrors.user_id" class="mt-1 text-danger">{{ theErrors.user_id[0] }}</div>
                                 </div>
                             </div>
-                            <button class="btn btn-primary" type="submit"><i class="uil-plus"></i> Buat</button>
+                            <button class="btn btn-primary" type="submit" :disabled="requestLoading"><i class="uil-plus"></i> Buat</button>
+                            <loading v-if="requestLoading"/>
                         </form>
                     </div>
                 </div> <!-- end col -->
@@ -91,6 +92,7 @@ export default {
             },
             partnerLoading: false,
             partnerOptions: [],
+            requestLoading: false,
             // successMessage: [],
             theErrors: [],
         }
@@ -123,8 +125,7 @@ export default {
             this.partnerLoading = false
         },
         async store() {
-            console.log("this.appointmentCreate")
-            console.log(this.appointmentCreate)
+            this.requestLoading = true
             for (var i = 0; i < this.appointmentCreate.user_id.length; i++) {
                 this.appointmentCreate.user_id[i] = this.appointmentCreate.user_id[i].id
             }
@@ -155,8 +156,8 @@ export default {
                         duration: 3000,
                         position: 'top-center',
                     })
-                console.log(e)
-                // this.theErrors = e.responseCreate.data;
+                this.requestLoading = false
+                this.theErrors = e.responseCreate.data;
             }
         }
     }

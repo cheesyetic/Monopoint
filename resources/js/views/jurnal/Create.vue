@@ -56,17 +56,19 @@
 
                             <div class="mb-3 row">
                                 <label for="example-text-input" class="col-md-2 col-form-label">Reimburse</label>
-                                <div class="col md-10 wrapper">
-                                    <input value="1" type="radio" name="select" id="option-1" v-model="journalCreate.is_reimburse">
-                                    <label for="option-1" class="option option-1" style="margin-left:0">
-                                        <div class="dot"></div>
-                                        <span>Ya</span>
-                                    </label>
-                                    <input value="0" type="radio" name="select" id="option-3" v-model="journalCreate.is_reimburse">
-                                    <label for="option-3" class="option option-3">
-                                        <div class="dot"></div>
-                                        <span>Tidak</span>
-                                    </label>
+                                <div class="col md-10">
+                                    <div class="col wrapper">
+                                        <input value="1" type="radio" name="select" id="option-1" v-model="journalCreate.is_reimburse">
+                                        <label for="option-1" class="option option-1" style="margin-left:0">
+                                            <div class="dot"></div>
+                                            <span>Ya</span>
+                                        </label>
+                                        <input value="0" type="radio" name="select" id="option-3" v-model="journalCreate.is_reimburse">
+                                        <label for="option-3" class="option option-3">
+                                            <div class="dot"></div>
+                                            <span>Tidak</span>
+                                        </label>
+                                    </div>
                                     <div v-if="theErrors.is_reimburse" class="mt-1 text-danger">{{ theErrors.is_reimburse[0] }}</div>
                                 </div>
                             </div>
@@ -75,7 +77,7 @@
                                 <label for="example-date-input" class="col-md-2 col-form-label">File Bukti</label>
                                 <div class="col-md-10">
                                     <input type="file" class="form-control-file" v-on:change="pictureUpload" accept="image/*">
-                                    <div v-if="theErrors.ref" class="mt-1 text-danger">{{ theErrors.ref[0] }}</div>
+                                    <div v-if="theErrors.filebukti" class="mt-1 text-danger">{{ theErrors.filebukti[0] }}</div>
                                 </div>
                             </div>
 
@@ -89,9 +91,11 @@
 
                             <div class="mb-3 row">
                                 <label for="example-date-input" class="col-md-2 col-form-label">Balance</label>
-                                <div class="col-md-10 d-flex align-items-center">
-                                    <p style="margin:0;margin-right: 1rem">IDR</p>
-                                    <input class="form-control flex-grow" type="number" v-model="journalCreate.balance">
+                                <div class="col-md-10">
+                                    <div class="d-flex align-items-center">
+                                        <p style="margin:0;margin-right: 1rem">IDR</p>
+                                        <input class="form-control flex-grow" type="number" v-model="journalCreate.balance" :class="theErrors.balance ? 'is-invalid' : ''">
+                                    </div>
                                     <div v-if="theErrors.balance" class="mt-1 text-danger">{{ theErrors.balance[0] }}</div>
                                 </div>
                             </div>
@@ -99,7 +103,7 @@
                             <div class="mb-3 row">
                                 <label for="example-date-input" class="col-md-2 col-form-label">Periode</label>
                                 <div class="col-md-10">
-                                    <v-select :options="periodOptions" :value="journalCreate.accounting_period_id" @input="selectId($event, 'accounting_period_id')" :disabled="periodLoading"></v-select>
+                                    <v-select class="is-invalid" :options="periodOptions" :value="journalCreate.accounting_period_id" @input="selectId($event, 'accounting_period_id')" :disabled="periodLoading"></v-select>
                                     <div v-if="theErrors.accounting_period_id" class="mt-1 text-danger">{{ theErrors.accounting_period_id[0] }}</div>
                                 </div>
                             </div>
@@ -159,7 +163,7 @@ export default {
                 balance: '',
                 bank_account_id: '',
                 project_id: '',
-                user_id: '1',
+                user_id: '',
             },
             // successMessage: [],
             theErrors: []
@@ -329,17 +333,18 @@ export default {
                             position: 'top-center',
                         })
                     }
-                ).catch((e) => {
-                    console.log("responseCreate gagal")
-                    this.$toasted.show("Something went wrong : " + e, {
-                        type: 'error',
-                        duration: 3000,
-                        position: 'top-center',
-                    })
-                    console.log(e)
-                    console.log("responseCreate gagal")
-                    console.log("ERRR:: ", e.response.data)
-                })
+                )
+                // .catch((e) => {
+                //     console.log("responseCreate gagal")
+                //     this.$toasted.show("Something went wrong : " + e, {
+                //         type: 'error',
+                //         duration: 3000,
+                //         position: 'top-center',
+                //     })
+                //     console.log(e)
+                //     console.log("responseCreate gagal")
+                //     console.log("ERRR:: ", e.response.data)
+                // })
 
             } catch (e) {
                 this.$toasted.show("Something went wrong : " + e, {
@@ -347,10 +352,10 @@ export default {
                         duration: 3000,
                         position: 'top-center',
                     })
-                    console.log(e)
-                    console.log("responseCreate gagal")
-                    console.log("ERRR:: ", e.response.data)
-                // this.theErrors = e.responseCreate.data;
+                // console.log(e)
+                console.log("responseCreate gagal")
+                this.theErrors = e.response.data;
+                console.log(this.theErrors)
             }
         }
     }
