@@ -44,16 +44,19 @@ export default {
     },
 
     methods: {
-        ping() {
-            console.log("ping")
-        },
         async getUser() {
             try {
-                await axios.get('/api/user', {
+                let responseUser = await axios.get('/api/user', {
                         headers: {
                             'Authorization': 'Bearer ' + this.auth.token
                         }
                     })
+                .then(response => {
+                    // console.log("response")
+                    // console.log(response.message)
+                    this.auth.user = response.data // assign response to state user
+                    this.token()
+                })
             }
             catch (e) {
                 // console.log("logout")

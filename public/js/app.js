@@ -2127,13 +2127,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     this.getUser();
   },
   methods: {
-    ping: function ping() {
-      console.log("ping");
-    },
     getUser: function getUser() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var responseUser;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -2144,14 +2142,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   headers: {
                     'Authorization': 'Bearer ' + _this.auth.token
                   }
+                }).then(function (response) {
+                  // console.log("response")
+                  // console.log(response.message)
+                  _this.auth.user = response.data; // assign response to state user
+
+                  // assign response to state user
+                  _this.token();
                 });
 
               case 3:
-                _context.next = 9;
+                responseUser = _context.sent;
+                _context.next = 10;
                 break;
 
-              case 5:
-                _context.prev = 5;
+              case 6:
+                _context.prev = 6;
                 _context.t0 = _context["catch"](0);
                 // console.log("logout")
                 localStorage.removeItem("loggedIn");
@@ -2160,12 +2166,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   name: 'login'
                 });
 
-              case 9:
+              case 10:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 5]]);
+        }, _callee, null, [[0, 6]]);
       }))();
     },
     token: function token() {
