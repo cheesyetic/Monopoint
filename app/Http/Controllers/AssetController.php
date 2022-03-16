@@ -18,7 +18,7 @@ class AssetController extends Controller
      */
     public function index()
     {
-        $asset = Asset::get();
+        $asset = Asset::orderBy('id', 'desc')->get();
         foreach ($asset as $key => $value) {
             $asset[$key]->token = Crypt::encryptString($asset[$key]->id);
         }

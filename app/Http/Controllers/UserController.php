@@ -20,7 +20,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::get();
+        $user = User::orderBy('id', 'desc')->get();
 
         foreach ($user as $key => $value) {
             $user[$key]->token = Crypt::encryptString($user[$key]->id);

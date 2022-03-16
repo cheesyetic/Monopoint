@@ -42,6 +42,14 @@ class JournalController extends Controller
             $query->where('user_id', '=', $user->id);
         }
 
+        if($request->sortname){
+            $query->orderBy('title', $request->sortname);
+        }
+
+        if($request->sortdate){
+            $query->orderBy('date', $request->sortdate);
+        }
+
         if($request->keyword){
             $query->where('title','ILIKE','%'.$request->keyword.'%');
         }
@@ -72,7 +80,7 @@ class JournalController extends Controller
             $query->whereMonth('date','=', date($request->date));
         }
 
-        $journal = $query->get();
+        $journal = $query->orderBy('id', 'desc')->get();
 
         foreach($journal as $value){
             $value->project_id = Project::findOrFail($value->project_id)->name;
@@ -161,11 +169,26 @@ class JournalController extends Controller
         $id = Crypt::decryptString($token);
         $journal = Journal::findOrFail($id);
 
-        $journal->project_name = $journal->project->name;
-        $journal->user_name = $journal->user->name;
-        $journal->chart_account_name = $journal->chartaccount->name;
-        $journal->accounting_period_name = $journal->accountingperiod->name;
-        $journal->bank_account_name = $journal->bankaccount->name;
+        if( $journal->project != null){
+            $journal->project_name = $journal->project->name;
+        }
+        else $journal->project_name = "Data terhapus";
+        if( $journal->user != null){
+            $journal->user_name = $journal->user->name;
+        }
+        else $journal->user_name = "Data terhapus";
+        if( $journal->chartaccount != null){
+            $journal->chart_account_name = $journal->chartaccount->name;
+        }
+        else $journal->chart_account_name = "Data terhapus";
+        if( $journal->accountingperiod != null){
+            $journal->accounting_period_name = $journal->accountingperiod->name;
+        }
+        else $journal->accounting_period_name = "Data terhapus";
+        if( $journal->bank_account != null){
+            $journal->bank_account_name = $journal->bankaccount->name;
+        }
+        else $journal->bank_account_name = "Data terhapus";
 
         $response = [
             'message' => 'A journal row shown',
@@ -295,7 +318,7 @@ class JournalController extends Controller
         $this->sendEmailKeuanganPengajuan($id);
         $this->sendEmailPengajuan($id);
 
-        $journal->title = 'Verifikasi Jurnal';
+        $journal->title = 'Pengajuan Jurnal';
         $journal->remark = $user . ' melakukan pengajuan jurnal pada tanggal ' . $journal->updated_at;
         $journal = $journal->toArray();
         $journal['journal_id'] = $journal['id'];
@@ -316,22 +339,21 @@ class JournalController extends Controller
         $user = auth()->user()->name;
 
         $journal->status = 3;
-        if($journal->is_reimburse = 1){
+        if($journal->is_reimburse == 1){
             $validator = Validator::make($request->all(), [
                 'buktireimburse' => ['required', 'mimes:png,jpg,jpeg,doc,docx,pdf,txt,csv', 'max:2048'],
             ]);
 
-            if($validator->fails()){
-                return response()->json($validator->errors(),
-                Response::HTTP_UNPROCESSABLE_ENTITY);
-            }
+        if($validator->fails()){
+            return response()->json($validator->errors(),
+            Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
 
             $input = $request->all();
             if($file = $request->file('buktireimburse')){
-                $path = $file->store('public/files');
-                $name = $file->getClientOriginalName();
-                $file->move($path, $name);
-                $input['buktireimburse'] = "$name";
+                $imageName = time().'.'.$request->filebukti->extension();
+                $path = $file->storeAs('uploads', $imageName, 'public');
+                $input['filebukti'] = '/storage/'.$path;
             }
             $journal->buktireimburse = $input;
         }

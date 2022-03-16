@@ -18,7 +18,7 @@ class AccountingPeriodController extends Controller
      */
     public function index()
     {
-        $accountingperiod = AccountingPeriod::get();
+        $accountingperiod = AccountingPeriod::orderBy('id', 'desc')->get();
         foreach ($accountingperiod as $key => $value) {
             $accountingperiod[$key]->token = Crypt::encryptString($accountingperiod[$key]->id);
         }
