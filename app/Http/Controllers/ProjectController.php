@@ -18,7 +18,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $project = Project::get();
+        $project = Project::orderBy('id', 'desc')->get();
 
         foreach ($project as $key => $value) {
             $project[$key]->token = Crypt::encryptString($project[$key]->id);

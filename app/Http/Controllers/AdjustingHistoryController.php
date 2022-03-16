@@ -26,12 +26,29 @@ class AdjustingHistoryController extends Controller
         $adjustinghistory = AdjustingHistory::where('journal_id', '=', $id)->get();
 
         foreach ($adjustinghistory as $value) {
+            
             $value->journal_id = Journal::findOrFail($value->journal_id)->title;
-            $value->project_name = $value->project->name;
-            $value->user_name = $value->user->name;
-            $value->chart_account_name = $value->chartaccount->name;
-            $value->accounting_period_name = $value->accountingperiod->name;
-            $value->bank_account_name = $value->bankaccount->name;
+            if( $value->project != null){
+                $value->project_name = $value->project->name;
+            }
+            else $value->project_name = "Data terhapus";
+            if( $value->user != null){
+                $value->user_name = $value->user->name;
+            }
+            else $value->user_name = "Data terhapus";
+            if( $value->chart_account != null){
+                $value->chart_account_name = $value->chartaccount->name;;
+            }
+            else $value->chart_account_name = "Data terhapus";
+            if( $value->accounting_period != null){
+                $value->accounting_period_name = $value->accountingperiod->name;;
+            }
+            else $value->accounting_period_name = "Data terhapus";
+            if( $value->bankaccount != null){
+                $value->bank_account_name = $value->bankaccount->name;
+            }
+            else $value->bank_account_name = "Data terhapus";
+        
         }
 
         $response = [

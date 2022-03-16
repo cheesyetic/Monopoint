@@ -22,7 +22,7 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        $appointment = Appointment::get();
+        $appointment = Appointment::orderBy('id', 'desc')->get();
         foreach ($appointment as $key => $value) {
             $appointment[$key]->token = Crypt::encryptString($appointment[$key]->id);
         }
@@ -116,7 +116,6 @@ class AppointmentController extends Controller
      */
     public function update(Request $request, $token)
     {
-
         $id = Crypt::decryptString($token);
         $appointment = Appointment::findOrFail($id);
 

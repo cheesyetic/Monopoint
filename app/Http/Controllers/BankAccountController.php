@@ -18,7 +18,7 @@ class BankAccountController extends Controller
      */
     public function index()
     {
-        $bankacc = BankAccount::get();
+        $bankacc = BankAccount::orderBy('id', 'desc')->get();
         foreach ($bankacc as $key => $value) {
             $bankacc[$key]->token = Crypt::encryptString($bankacc[$key]->id);
         }
