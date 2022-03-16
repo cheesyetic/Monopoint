@@ -2,30 +2,37 @@
     <div class="main-content">
         <div class="page-content">
             <div class="container-fluid">
+                <div class="page-title-box d-flex align-items-center justify-content-between">
+                    <h4 class="mb-0"><i class="uil-document-layout-left"></i> Detail Jurnal</h4>
+                </div>
                 <div class="card p-4">
                     <h4>{{ journal.title }}</h4>
-                    <p>{{ journal.date }}</p>
+                    <p>{{ format_date(journal.date) }}</p>
                     <br>
-                    <p>{{ journal.remark }}</p>
-                    <p>{{ journal.ref }}</p>
-                    <p>{{ journal.is_reimburse }}</p>
-                    <p>{{ journal.chart_account }}</p>
-                    <p>{{ journal.accounting_period_id }}</p>
-                    <p>{{ journal.bank_account_id }}</p>
-                    <p>{{ journal.project_id }}</p>
-                    <p>{{ journal.user_id }}</p>
-                    <p>{{ journal.filebukti }}</p>
+                    <p>Remark : {{ journal.remark }}</p>
+                    <p>Ref : {{ journal.ref }}</p>
+                    <p>Reimburse : {{ journal.is_reimburse ? "Ya" : "Tidak" }}</p>
+                    <p>Chart Account : {{ journal.chart_account_name }}</p>
+                    <p>Accounting Period : {{ journal.accounting_period_name }}</p>
+                    <p>Bank : {{ journal.bank_account_name }}</p>
+                    <p>Project : {{ journal.project_name }}</p>
+                    <p>Pengaju : {{ journal.user_name }}</p>
+                    <p>File Bukti : {{ journal.filebukti }}</p>
+                    <!-- <img :src="journal.filebukti" alt="" srcset=""> -->
+                </div>
+                <div class="page-title-box d-flex align-items-center justify-content-between">
+                    <h4 class="mb-0"><i class="uil-document-layout-left"></i> Histori Perubahan Jurnal</h4>
                 </div>
                 <div class="card table-responsive-sm">
                     <table class="table table-centered mb-0">
                         <thead class="table-light">
                             <tr>
                                 <th>Title</th>
-                                <th>Date</th>
                                 <th>Remark</th>
-                                <th>Ref</th>
                                 <th>Project</th>
-                                <th></th>
+                                <th>Chart Akun</th>
+                                <th>Nominal</th>
+                                <th>Reimburse</th>
                             </tr>
                         </thead>
                             <transition
@@ -57,14 +64,13 @@
                                         :key="journalHistory.id"
                                         >
                                         <td>{{ journalHistory.title }}</td>
-                                        <td>{{ format_date(journalHistory.date) }}</td>
-                                        <td>
-                                            {{ journalHistory.remark }}
+                                        <td>{{ journalHistory.remark }}</td>
+                                        <td>{{ journalHistory.project_name }}</td>
+                                        <td>{{ journalHistory.chart_account_name }}</td>
+                                        <td>Rp {{ journalHistory.balance }} </td>
+                                        <td><span :class=" journalHistory.is_reimburse ? 'bg-soft-success' : 'bg-soft-danger'" class="badge rounded-pill font-size-12" >
+                                            {{ journalHistory.is_reimburse ? 'Ya' : 'Tidak'}}</span>
                                         </td>
-                                        <td>
-                                            {{ journalHistory.ref }}
-                                        </td>
-                                        <td><span class="badge rounded-pill bg-soft-success font-size-12">{{ journalHistory.project_name }}</span></td>
                                     </tr>
                                 </transition-group>
                             </transition>
@@ -100,7 +106,11 @@ export default {
             }
         },
         async getJournal() {
-            let response = await axios.get('/api/journal/' + this.$route.params.token)
+            let response = await axios.get('/api/journal/' + this.$route.params.token, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 this.journal = response.data.data
                 this.journal.date = moment(String(this.journal.date)).format('yyyy-MM-DD') + 'T' + moment(String(this.journal.date)).format('hh:mm:ss')
@@ -115,7 +125,11 @@ export default {
             // console.log(response.data.data)
         },
         async getJournalHistories() {
-            let response = await axios.get('/api/journalhistories/' + this.$route.params.token)
+            let response = await axios.get('/api/journalhistories/' + this.$route.params.token, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 console.log(response)
                 this.journalHistories = response.data.data

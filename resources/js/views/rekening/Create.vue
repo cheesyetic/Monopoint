@@ -53,6 +53,7 @@
 import Loading from '../../components/loading'
 
 export default {
+    props: ['auth'],
     components: {
         Loading
     },
@@ -70,7 +71,11 @@ export default {
         async store() {
             try {
                 console.log(this.bankCreate)
-                let responseCreate = await axios.post('/api/bankaccount', this.bankCreate)
+                let responseCreate = await axios.post('/api/bankaccount', this.bankCreate, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
                 if (responseCreate.status == 201) {
                     this.bankCreate.name = ''
                     this.bankCreate.account_number = ''

@@ -48,10 +48,18 @@
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="example-text-input" class="col-md-2 col-form-label">No Rekening</label>
+                                <label for="example-text-input" class="col-md-2 col-form-label">Kuantitas</label>
                                 <div class="col-md-10">
-                                    <input class="form-control" type="text" v-model="asset.value">
-                                    <div v-if="theErrors.value" class="mt-1 text-danger">{{ theErrors.value[0] }}</div>
+                                    <input class="form-control" type="text" v-model="asset.quantity">
+                                    <div v-if="theErrors.quantity" class="mt-1 text-danger">{{ theErrors.quantity[0] }}</div>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="example-text-input" class="col-md-2 col-form-label">Harga Satuan</label>
+                                <div class="col-md-10 d-flex align-items-center">
+                                    <p style="margin:0;margin-right: 1rem">IDR</p>
+                                    <input class="form-control flex-grow" type="number" v-model="asset.price">
+                                    <div v-if="theErrors.price" class="mt-1 text-danger">{{ theErrors.price[0] }}</div>
                                 </div>
                             </div>
                             <div class="mb-3 row">
@@ -61,7 +69,7 @@
                                     <div v-if="theErrors.buy_time" class="mt-1 text-danger">{{ theErrors.buy_time[0] }}</div>
                                 </div>
                             </div>
-                            <button class="btn btn-primary" type="submit">Edit</button>
+                            <button class="btn btn-primary" type="submit"><i class="bx bx-save"></i> Save</button>
                         </form>
                     </div>
                 </div> <!-- end col -->
@@ -74,6 +82,7 @@
 <script>
 import Loading from '../../components/loading'
 export default {
+    props: ['auth'],
     components: {
         Loading
     },
@@ -92,7 +101,11 @@ export default {
 
     methods: {
         async findAsset() {
-            let response = await axios.get('/api/asset/' + this.$route.params.token)
+            let response = await axios.get('/api/asset/' + this.$route.params.token, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 this.asset = response.data.data
                 this.asset.buy_time = moment(String(this.asset.buy_time)).format('yyyy-MM-DD') + 'T' + moment(String(this.asset.buy_time)).format('hh:mm:ss')
@@ -108,7 +121,11 @@ export default {
         },
         async store() {
             try {
-                let response = await axios.post('/api/asset/' + this.$route.params.token, this.asset)
+                let response = await axios.post('/api/asset/' + this.$route.params.token, this.asset, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
                 // console.log(response.status)
                 if (response.status == 200) {
                     this.theErrors = []

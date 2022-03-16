@@ -165,40 +165,42 @@ class UserController extends Controller
     }
 
     public function change_password(Request $request)
-{
-    $input = $request->all();
-    $userid = auth()->user()->id;
-    $rules = array(
-        'old_password' => 'required',
-        'new_password' => 'required|min:8',
-        'confirm_password' => 'required|same:new_password',
-    );
-    $validator = Validator::make($input, $rules);
-    if ($validator->fails()) {
-        $arr = array("message" => $validator->errors()->first(), "data" => array());
-        return response()->json($arr, Response::HTTP_UNPROCESSABLE_ENTITY);
-    } else {
-        try {
-            if ((Hash::check(request('old_password'), auth()->user()->password)) == false) {
-                $arr = array("message" => "Check your old password.", "data" => array());
+    {
+        $input = $request->all();
+        $userid = auth()->user()->id;
+        $arr = '';
+        $rules = array(
+            'old_password' => 'required',
+            'new_password' => 'required|min:8',
+            'confirm_password' => 'required|same:new_password',
+        );
+        $validator = Validator::make($input, $rules);
+        if ($validator->fails()) {
+            $arr = array("message" => $validator->errors()->first(), "data" => array());
+            return response()->json($arr, Response::HTTP_UNPROCESSABLE_ENTITY);
+        } else {
+            try {
+                if ((Hash::check(request('old_password'), auth()->user()->password)) == false) {
+                    $arr = array("message" => "Check your old password.", "data" => array());
+                    return response()->json($arr, Response::HTTP_BAD_REQUEST);
+                } else if ((Hash::check(request('new_password'), auth()->user()->password)) == true) {
+                    $arr = array("message" => "Please enter a password which is not the exact current password.", "data" => array());
+                    return response()->json($arr, Response::HTTP_BAD_REQUEST);
+                } else {
+                    User::where('id', $userid)->update(['password' => Hash::make($input['new_password'])]);
+                    $arr = array("message" => "Password updated successfully.", "data" => array());
+                    return response()->json($arr, Response::HTTP_OK);
+                }
+            } catch (\Exception $ex) {
+                if (isset($ex->errorInfo[2])) {
+                    $msg = $ex->errorInfo[2];
+                } else {
+                    $msg = $ex->getMessage();
+                }
+                $arr = array("message" => $msg, "data" => array());
                 return response()->json($arr, Response::HTTP_BAD_REQUEST);
-            } else if ((Hash::check(request('new_password'), auth()->user()->password)) == true) {
-                $arr = array("message" => "Please enter a password which is not the exact current password.", "data" => array());
-                return response()->json($arr, Response::HTTP_BAD_REQUEST);
-            } else {
-                User::where('id', $userid)->update(['password' => Hash::make($input['new_password'])]);
-                $arr = array("message" => "Password updated successfully.", "data" => array());
-                return response()->json($arr, Response::HTTP_OK);
             }
-        } catch (\Exception $ex) {
-            if (isset($ex->errorInfo[2])) {
-                $msg = $ex->errorInfo[2];
-            } else {
-                $msg = $ex->getMessage();
-            }
-            $arr = array("message" => $msg, "data" => array());
-            return response()->json($arr, Response::HTTP_BAD_REQUEST);
+            return response()->json($arr);
         }
     }
-}
 }

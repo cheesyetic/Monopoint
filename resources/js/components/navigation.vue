@@ -61,8 +61,8 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
                     <!-- item-->
-                    <a class="dropdown-item" href="#"><i class="uil uil-user-circle font-size-18 align-middle text-muted me-1"></i> <span class="align-middle">Akun</span></a>
-                    <a class="dropdown-item" href="#" @click="logout"><i class="uil uil-sign-out-alt font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Sign out</span></a>
+                    <router-link class="dropdown-item" :to="{name: 'akun'}"><i class="uil uil-user-circle font-size-18 align-middle text-muted me-1"></i> <span class="align-middle">Akun</span></router-link>
+                    <a class="dropdown-item" href="#" @click.prevent="logout()"><i class="uil uil-sign-out-alt font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Sign out</span></a>
                 </div>
             </div>
 
@@ -147,17 +147,20 @@ export default {
     //   getLoggedIn() {
     //     this.loggedIn = localStorage.getItem("loggedIn")
     //   },
-      logout() {
-            axios.get('http://localhost:8000/api/logout')
-            .then(() => {
-                //remove localStorage
-                localStorage.removeItem("loggedIn")
-
-
-                //redirect
-                return this.$router.push({ name: 'login' })
-            })
-        }
+        logout() {
+                axios.get('/api/logout', {
+                    headers: {
+                        'Authorization': 'Bearer '+this.auth.token
+                    }
+                })
+                .then(() => {
+                    //remove localStorage
+                    localStorage.removeItem("loggedIn")
+                    console.log("KELUAR")
+                    //redirect
+                    return this.$router.push({ name: 'login' })
+                })
+            }
     },
 
     // watch: {

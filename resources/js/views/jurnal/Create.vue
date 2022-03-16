@@ -92,14 +92,14 @@
                                 <div class="col-md-10 d-flex align-items-center">
                                     <p style="margin:0;margin-right: 1rem">IDR</p>
                                     <input class="form-control flex-grow" type="number" v-model="journalCreate.balance">
-                                <div v-if="theErrors.balance" class="mt-1 text-danger">{{ theErrors.balance[0] }}</div>
+                                    <div v-if="theErrors.balance" class="mt-1 text-danger">{{ theErrors.balance[0] }}</div>
                                 </div>
                             </div>
 
                             <div class="mb-3 row">
                                 <label for="example-date-input" class="col-md-2 col-form-label">Periode</label>
                                 <div class="col-md-10">
-                                    <v-select :options="periodOptions" @input="selectId($event, 'accounting_period_id')" :disabled="periodLoading"></v-select>
+                                    <v-select :options="periodOptions" :value="journalCreate.accounting_period_id" @input="selectId($event, 'accounting_period_id')" :disabled="periodLoading"></v-select>
                                     <div v-if="theErrors.accounting_period_id" class="mt-1 text-danger">{{ theErrors.accounting_period_id[0] }}</div>
                                 </div>
                             </div>
@@ -115,7 +115,7 @@
                             <div class="mb-3 row">
                                 <label for="example-date-input" class="col-md-2 col-form-label">Project</label>
                                 <div class="col-md-10">
-                                    <v-select :options="projectOptions" @input="selectId($event, 'project_id')" :disabled="projectLoading"></v-select>
+                                    <v-select :options="projectOptions"  @input="selectId($event, 'project_id')" :disabled="projectLoading"></v-select>
                                     <div v-if="theErrors.project_id" class="mt-1 text-danger">{{ theErrors.project_id[0] }}</div>
                                 </div>
                             </div>
@@ -187,7 +187,11 @@ export default {
         },
 
         async getChart() {
-            let response = await axios.get('/api/chartaccount')
+            let response = await axios.get('/api/chartaccount', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 // this.periodOptions = response.data.data
                 console.log(response.data.data.length)
@@ -207,15 +211,23 @@ export default {
         },
 
         async getPeriod() {
-            let response = await axios.get('/api/accountingperiod')
+            let response = await axios.get('/api/accountingperiod', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 // this.periodOptions = response.data.data
                 console.log(response.data.data.length)
                 for (var i = 0; i < response.data.data.length; i++) {
-                    let label = response.data.data[i].name + ' (' + response.data.data[i].start + ' - ' + response.data.data[i].end + ')'
+                    let label = response.data.data[i].id + ") " + response.data.data[i].name + ' (' + response.data.data[i].start + ' - ' + response.data.data[i].end + ')'
                     let id = String(response.data.data[i].id)
                     this.periodOptions.push({ label, id })
+                    if(response.data.data[i].status == 1) {
+                        this.journalCreate.accounting_period_id = id
+                    }
                 }
+                console.log(this.journalCreate.accounting_period_id + "periodeny broe")
                 this.periodLoading = false
             } else {
                 this.$toasted.show("Failed to load period", {
@@ -227,7 +239,11 @@ export default {
         },
 
         async getProject() {
-            let response = await axios.get('/api/project')
+            let response = await axios.get('/api/project', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 // this.periodOptions = response.data.data
                 console.log(response.data.data.length)
@@ -247,7 +263,11 @@ export default {
         },
 
         async getBank() {
-            let response = await axios.get('/api/bankaccount')
+            let response = await axios.get('/api/bankaccount', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 // this.periodOptions = response.data.data
                 console.log(response.data.data.length)
@@ -282,9 +302,10 @@ export default {
                 formdata.append('project_id', this.journalCreate.project_id)
                 formdata.append('user_id', this.auth.user.id)
                 await axios.post('/api/journal',  formdata, {
-                        headers: {
-                            'Content-Type': 'multipart/form-data'
-                        }
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
                 }).then(
                     response => {
                         this.journalCreate.title = ''

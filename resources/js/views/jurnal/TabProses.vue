@@ -14,7 +14,13 @@
                                 <li class="breadcrumb-item m-auto"><router-link :to="{ name: 'dashboard' }">Dashboard</router-link></li>
                                 <li class="breadcrumb-item m-auto active">Jurnal Proses</li>
                                 <!-- <button type="button" class="btn btn-primary waves-effect waves-light mx-2" data-bs-toggle="modal" data-bs-target="#createModal">Buat Jurnal Baru</button> -->
-                                <a href="/api/journal/export" class="btn btn-success" style="margin-left:8px"><i class="uil-table"></i> Export Excel <loading v-if="loadingExcel" size="18"/></a>
+                                <div class="btn-group" style="margin-left:8px">
+                                    <button type="button" class="btn btn-success dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="uil-table"></i> Excel <i class="uil-angle-down"></i></button>
+                                    <div class="dropdown-menu" style="">
+                                        <a href="/api/journal/export" class="dropdown-item"><i class="bx bx-export"></i> Export Excel <loading v-if="loadingExcel" size="18"/></a>
+                                        <router-link :to="{ name: 'jurnal.import' }" class="dropdown-item"><i class="bx bx-import"></i> Import Excel <loading v-if="loadingExcel" size="18"/></router-link>
+                                    </div>
+                                </div>
                                 <router-link exact :to="{ name: 'jurnal.create'}" class="btn btn-primary mx-2"><i class="uil-plus"></i> Buat Jurnal Baru</router-link>
                             </ol>
                         </div>
@@ -40,7 +46,7 @@
                                     <thead class="table-light">
                                         <tr>
                                             <th>Title</th>
-                                            <th>Date</th>
+                                            <th>Waktu</th>
                                             <th>Reimburse</th>
                                             <th>Remark</th>
                                             <th>User</th>
@@ -97,10 +103,10 @@
                                                             <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu <i class="uil-angle-down"></i></button>
                                                             <div class="dropdown-menu" style="">
                                                                 <router-link :to="{ name: 'jurnal.detail', params: { token: journal.token }}" class="dropdown-item"><i class="uil-document-layout-left"></i> Detail</router-link>
-                                                                <router-link :to="{ name: 'jurnal.verif', params: { token: journal.token }}" class="dropdown-item"><i class="uil-file-check"></i> Verifikasi</router-link>
-                                                                <div class="dropdown-divider"></div>
-                                                                <router-link :to="{ name: 'jurnal.edit', params: { token: journal.token }}" class="dropdown-item"><i class="uil-edit-alt"></i> Edit</router-link>
-                                                                <delete-journal :endpoint="journal.token"/>
+                                                                <router-link :to="{ name: 'jurnal.verif', params: { token: journal.token }}" v-if="auth.user.type != 2" class="dropdown-item"><i class="uil-file-check"></i> Verifikasi</router-link>
+                                                                <div class="dropdown-divider" v-if="auth.user.type != 2"></div>
+                                                                <router-link :to="{ name: 'jurnal.edit', params: { token: journal.token }}" v-if="auth.user.type != 2" class="dropdown-item"><i class="uil-edit-alt"></i> Edit</router-link>
+                                                                <delete-journal :endpoint="journal.token" v-if="auth.user.type != 2" :auth="auth"/>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -141,6 +147,10 @@
                                                     <label class="form-label" for="exampleDropdownFormPassword">Bulan</label>
                                                     <v-select :options="monthOptions" @change="getJurnal" :reduce="month => month.code" label="month" v-model="filter_month"></v-select>
                                                 </div>
+                                                <div class="mb-2">
+                                                    <label class="form-label">Chart Account</label>
+                                                    <v-select :options="chartOptions" @input="selectId($event)" :disabled="chartLoading"></v-select>
+                                                </div>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-primary waves-effect" @click="getJurnal" data-bs-dismiss="modal">Terapkan</button>
@@ -163,7 +173,7 @@
 import DeleteJournal from './Delete'
 import Loading from '../../components/loading'
 export default {
-props: ['auth'],
+    props: ['auth'],
     components: {
         DeleteJournal,
         Loading,
@@ -172,9 +182,12 @@ props: ['auth'],
         return  {
             journals: {},
             loading: true,
+            chartOptions: [],
+            chartLoading: true,
             filter_keyword: '',
             filter_reimburse: '',
             filter_month: '',
+            filter_chartaccount: '',
             loadingExcel: false,
             monthOptions: [
                 {month: 'Semua', code: ''},
@@ -196,20 +209,53 @@ props: ['auth'],
 
     mounted() {
         this.getJurnal()
+        this.getChart()
     },
 
     methods: {
-        async exportExcel() {
-            try {
-                this.loadingExcel = true
-                let response = await axios.get(`/api/journal/export`)
-                if (response.status == 200) {
-                    this.$toasted.show(response.data.message, {
-                        type: 'success',
+        selectId(e) {
+            this.filter_chartaccount = e.id
+        },
+        async getChart() {
+            let response = await axios.get('/api/chartaccount', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
+            if (response.status === 200) {
+                // this.periodOptions = response.data.data
+                console.log(response.data.data.length)
+                for (var i = 0; i < response.data.data.length; i++) {
+                    let label = response.data.data[i].name
+                    let id = String(response.data.data[i].id)
+                    this.chartOptions.push({ label, id })
+                }
+                this.chartLoading = false
+            } else {
+                this.$toasted.show("Failed to load Chart Account", {
+                        type: 'error',
                         duration: 3000,
                         position: 'top-center',
                     })
-                }
+            }
+        },
+        async exportExcel() {
+            try {
+                this.loadingExcel = true
+
+                let response = await axios({
+                    url: '/api/journal/export', //your url
+                    method: 'GET',
+                    responseType: 'blob', // important
+                    headers: {'Authorization': 'Bearer '+ this.auth.token}
+                }).then((response) => {
+                    const url = window.URL.createObjectURL(new Blob([response.data]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', 'Journal.xlsx'); //or any other extension
+                    document.body.appendChild(link);
+                    link.click();
+                });
                 this.loadingExcel = false
             } catch (e) {
                 // console.log(e)
@@ -221,9 +267,18 @@ props: ['auth'],
             }
         },
         async getJurnal() {
-            let filter = "&keyword=" + this.filter_keyword + "&reimburse=" + this.filter_reimburse + "&date=" + this.filter_month + "&token=" + this.auth.user_token
-            console.log('/api/journal?category=2&keyword=' + filter)
-            let response = await axios.get('/api/journal?category=2' + filter)
+            let response = await axios.get('/api/journal', {
+                    params: {
+                        category: 2,
+                        keyword: this.filter_keyword,
+                        chart: this.filter_chartaccount,
+                        reimburse: this.filter_reimburse,
+                        date: this.filter_month,
+                    },
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 this.journals = response.data.data
             }
@@ -242,39 +297,44 @@ props: ['auth'],
                 confirmButtonText: 'Ya',
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        this.ajukan(token)
+                        this.verifikasi(token)
                     }
             })
         },
-        async ajukan(token) {
-            try {
-                this.loading = true
-                let response = await axios.post(`/api/validjournal/${token}`)
-                if (response.status == 200) {
-                    this.$toasted.show(response.data.message, {
-                        type: 'success',
-                        duration: 3000,
-                        position: 'top-center',
-                    })
-                    this.getJurnal()
-                }
-                else {
-                    this.loading = false
-                    this.$toasted.show("Error mengajukan jurnal", {
-                        type: 'error',
-                        duration: 3000,
-                        position: 'top-center',
-                    })
-                }
-            } catch (e) {
-                // console.log(e)
-                this.$toasted.show("Something went wrong : " + e, {
-                    type: 'error',
-                    duration: 3000,
-                    position: 'top-center',
-                })
-            }
-        }
+        // async verifikasi(token) {
+        //     try {
+        //         this.loading = true
+        //         let formdata = new FormData()
+        //         let response = await axios.post(`/api/verifjournal/${token}`, formdata, {
+        //             headers: {
+        //                 'Authorization': 'Bearer ' + this.auth.token
+        //             }
+        //         })
+        //         if (response.status == 200) {
+        //             this.$toasted.show(response.data.message, {
+        //                 type: 'success',
+        //                 duration: 3000,
+        //                 position: 'top-center',
+        //             })
+        //             this.getJurnal()
+        //         }
+        //         else {
+        //             this.loading = false
+        //             this.$toasted.show("Error verifikasi jurnal", {
+        //                 type: 'error',
+        //                 duration: 3000,
+        //                 position: 'top-center',
+        //             })
+        //         }
+        //     } catch (e) {
+        //         // console.log(e)
+        //         this.$toasted.show("Something went wrong : " + e, {
+        //             type: 'error',
+        //             duration: 3000,
+        //             position: 'top-center',
+        //         })
+        //     }
+        // }
     }
 }
 </script>

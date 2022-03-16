@@ -46,6 +46,10 @@ class JournalController extends Controller
             $query->where('title','ILIKE','%'.$request->keyword.'%');
         }
 
+        if($request->project){
+            $query->where('project_id','=',$request->project);
+        }
+
         if($request->category > 2){
             $query->where('status','>=', $request->category);
         }
@@ -316,7 +320,7 @@ class JournalController extends Controller
             $validator = Validator::make($request->all(), [
                 'buktireimburse' => ['required', 'mimes:png,jpg,jpeg,doc,docx,pdf,txt,csv', 'max:2048'],
             ]);
-    
+
             if($validator->fails()){
                 return response()->json($validator->errors(),
                 Response::HTTP_UNPROCESSABLE_ENTITY);

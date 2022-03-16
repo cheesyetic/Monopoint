@@ -90,6 +90,7 @@
 import Loading from '../../components/loading'
 
 export default {
+    props: ['auth'],
     components: {
         Loading
     },
@@ -127,7 +128,11 @@ export default {
         async store() {
             try {
                 console.log(this.accountCreate)
-                let responseCreate = await axios.post('/api/account', this.accountCreate)
+                let responseCreate = await axios.post('/api/account', this.accountCreate, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
                 if (responseCreate.status == 201) {
                     this.accountCreate.name = ''
                     this.accountCreate.email = ''

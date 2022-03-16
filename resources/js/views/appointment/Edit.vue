@@ -61,7 +61,15 @@
                                     <div v-if="theErrors.remark" class="mt-1 text-danger">{{ theErrors.remark[0] }}</div>
                                 </div>
                             </div>
-                            <button class="btn btn-primary" type="submit"><i class="uil-edit-alt"></i> Edit</button>
+                            <div class="mb-3 row">
+                                <label for="example-date-input" class="col-md-2 col-form-label">Partner</label>
+                                <div class="col-md-10">
+                                    <v-select :options="partnerOptions" v-model="partnerSelected" multiple :disabled="partnerLoading"></v-select>
+                                    <div v-if="theErrors.user_id" class="mt-1 text-danger">{{ theErrors.user_id[0] }}</div>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" type="submit" :disabled="loadingCRUD"><i class="bx bx-save"></i> Save</button>
+                            <loading v-if="loadingCRUD"/>
                         </form>
                     </div>
                 </div> <!-- end col -->
@@ -74,6 +82,7 @@
 <script>
 import Loading from '../../components/loading'
 export default {
+    props: ['auth'],
     components: {
         Loading
     },
@@ -84,20 +93,73 @@ export default {
                 account_number: '',
             },
             // successMessage: [],
+            partnerSelected: [],
+            partnerOptions: [],
+            partnerLoading: true,
             theErrors: [],
             loading: true,
+            loadingCRUD: false,
         }
     },
 
     mounted() {
-        this.findAppointment()
+        this.getPartner()
+
     },
 
     methods: {
+        async getPartner() {
+            let response = await axios.get('/api/account', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
+            let type = ""
+            if (response.status === 200) {
+                // this.partnerOptions = response.data.data
+                for (var i = 0; i < response.data.data.length; i++) {
+                    if(response.data.data[i].type == 0) {
+                        type = "(Admin)"
+                    } else if(response.data.data[i].type == 1) {
+                        type = "(Keuangan)"
+                    } else {
+                        type = "(Staff)"
+                    }
+                    let label = response.data.data[i].name + " " + type
+                    let id = (response.data.data[i].id)
+                    this.partnerOptions.push({ label, id })
+                }
+            }
+            // console.log(">> sukses get partner options")
+            // console.log(this.partnerOptions)
+            this.partnerLoading = false
+            this.findAppointment()
+        },
         async findAppointment() {
-            let response = await axios.get('/api/appointment/' + this.$route.params.token)
+            let response = await axios.get('/api/appointment/' + this.$route.params.token, {
+                headers: {
+                    Authorization: 'Bearer ' + this.auth.token
+                }
+            })
             if (response.status === 200) {
                 this.appointment = response.data.data
+                this.appointment.date = moment(String(this.appointment.date)).format('yyyy-MM-DD') + 'T' + moment(String(this.appointment.date)).format('hh:mm:ss')
+                // console.log(">> Panjang Appointment user id")
+                // console.log(this.appointment.user_id.length)
+                // console.log(">> Panjang partnerOptions")
+                // console.log(this.partnerOptions.length)
+                for (var i = 0; i < this.appointment.user_id.length; i++) {
+                    for (var j = 0; j < this.partnerOptions.length; j++) {
+                        if(this.partnerOptions[j].id == this.appointment.user_id[i]) {
+                            let label = this.partnerOptions[j].label
+                            let id = (this.partnerOptions[j].id)
+                            this.partnerSelected.push({ label, id })
+                            break
+                        }
+                    }
+                }
+                console.log(">> Selected Partner")
+                console.log(this.partnerSelected)
                 this.loading = false
             } else {
                 this.$toasted.show("Something went wrong, please try again later", {
@@ -109,8 +171,20 @@ export default {
             // console.log(response.data.data)
         },
         async store() {
+            this.loadingCRUD = true
+
+            this.appointment.user_id = []
+            this.appointment.length = 0
+            console.log(this.appointment.user_id)
+            for (var i = 0; i < this.partnerSelected.length; i++) {
+                this.appointment.user_id[i] = this.partnerSelected[i].id
+            }
             try {
-                let response = await axios.post('/api/appointment/' + this.$route.params.token, this.appointment)
+                let response = await axios.post('/api/appointment/' + this.$route.params.token, this.appointment, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
                 // console.log(response.status)
                 if (response.status == 200) {
                     this.theErrors = []
@@ -130,6 +204,7 @@ export default {
                         position: 'top-center',
                     })
                 this.theErrors = e.response.data;
+                this.loadingCRUD = false
             }
         }
     }

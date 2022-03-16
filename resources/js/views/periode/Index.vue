@@ -60,7 +60,7 @@
                                     <p class="card-text">End : {{ format_date(period.end) }}</p>
                                     <button @click="enable(period.token)" class="btn btn-secondary" :class="period.status ? 'disabled' : ''"><i class="uil-message"></i> Aktifkan</button>
                                     <router-link :to="{ name: 'periode.edit', params: { token: period.token }}" class="btn btn-primary"><i class="uil-edit-alt"></i> Edit</router-link>
-                                    <delete-period :endpoint="period.token"/>
+                                    <delete-period :endpoint="period.token" :auth="auth"/>
                                 </div>
                             </div>
                         </div> <!-- end col -->
@@ -70,7 +70,7 @@
         </div>
     </div>
   </div>
-  <create-period/>
+  <create-period :auth="auth"/>
 </div>
 </template>
 
@@ -79,6 +79,7 @@ import DeletePeriod from './Delete'
 import CreatePeriod from './Create'
 import Loading from '../../components/loading'
 export default {
+    props: ['auth'],
     components: {
         DeletePeriod,
         CreatePeriod,
@@ -113,7 +114,12 @@ export default {
             })
         },
         async enablePeriod(token) {
-            let response = await axios.post('/api/periodstatus/ ' + token)
+            let formdata = new FormData();
+            let response = await axios.post('/api/periodstatus/ ' + token, formdata, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 this.getPeriod()
             }
@@ -127,16 +133,20 @@ export default {
             }
         },
         async getPeriod() {
-            let response = await axios.get('/api/accountingperiod')
+            let response = await axios.get('/api/accountingperiod', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 this.periods = response.data.data
             }
             this.loading = false
         },
         format_date(value){
-         if (value) {
-           return moment(String(value)).format('Do MMMM YYYY')
-          }
+            if (value) {
+                return moment(String(value)).format('Do MMMM YYYY')
+            }
         },
     }
 }

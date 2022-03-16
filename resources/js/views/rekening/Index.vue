@@ -59,7 +59,7 @@
                                     <h4 class="mb-1 mt-1"><span data-plugin="counterup">{{ bank.name }}</span></h4>
                                     <p class="text-muted">No Rekening : {{ bank.account_number }}</p>
                                     <router-link :to="{ name: 'rekening.edit', params: { token: bank.token }}" class="btn btn-primary"><i class="uil-edit-alt"></i> Edit</router-link>
-                                    <delete-rekening :endpoint="bank.token"/>
+                                    <delete-rekening :endpoint="bank.token" :auth="auth"/>
                                 </div>
                             </div>
                         </div>
@@ -76,6 +76,7 @@
 import DeleteRekening from './Delete'
 import Loading from '../../components/loading'
 export default {
+    props: ['auth'],
     components: {
         DeleteRekening,
         Loading
@@ -98,7 +99,11 @@ export default {
 
     methods: {
         async getRekening() {
-            let response = await axios.get('/api/bankaccount')
+            let response = await axios.get('/api/bankaccount', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 this.banks = response.data.data
             }

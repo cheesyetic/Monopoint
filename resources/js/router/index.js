@@ -1,18 +1,21 @@
-import Auth from '../views/auth/Auth'
 import Dashboard from '../components/Dashboard'
 import Home from '../views/home'
-import Register from '../views/register'
 import Login from '../views/auth/Index'
 
 import Appointment from '../views/appointment/Index'
 import AppointmentEdit from '../views/appointment/Edit'
 import AppointmentCreate from '../views/appointment/Create'
 
+import Account from '../views/account/Index'
+import AccountEdit from '../views/account/Edit'
+import AccountPassword from '../views/account/Password'
+
 import Jurnal from '../views/jurnal/Index'
 import JurnalEdit from '../views/jurnal/Edit'
 import JurnalCreate from '../views/jurnal/Create'
 import JurnalVerif from '../views/jurnal/Verif'
 import JurnalDetail from '../views/jurnal/Detail'
+import JurnalImport from '../views/jurnal/Import'
 import TabDraft from '../views/jurnal/TabDraft'
 import TabProses from '../views/jurnal/TabProses'
 import TabVerif from '../views/jurnal/TabVerif'
@@ -68,6 +71,21 @@ export default {
                         title:`Dashboard`
                     }
                 },
+                {
+                    path: '/akun',
+                    name: 'akun',
+                    component: Account
+                },
+                {
+                    path: '/akun/edit',
+                    name: 'akun.edit',
+                    component: AccountEdit
+                },
+                {
+                    path: '/akun/password',
+                    name: 'akun.password',
+                    component: AccountPassword
+                },
                 // APPOINTMENT
                 {
                     path: '/appointment',
@@ -110,6 +128,11 @@ export default {
                     path: '/jurnal/create',
                     name: 'jurnal.create',
                     component: JurnalCreate
+                },
+                {
+                    path: '/jurnal/import',
+                    name: 'jurnal.import',
+                    component: JurnalImport
                 },
                 {
                     path: '/jurnal/detail/:token',
@@ -221,65 +244,3 @@ export default {
 
     ]
 }
-
-
-// const Routes = [
-//     {
-//         name:"login",
-//         path:"/login",
-//         component:Login,
-//         meta:{
-//             middleware:"guest",
-//             title:`Login`
-//         }
-//     },
-//     {
-//         name:"register",
-//         path:"/register",
-//         component:Register,
-//         meta:{
-//             middleware:"guest",
-//             title:`Register`
-//         }
-//     },
-//     {
-//         path:"/",
-//         component:DahboardLayout,
-//         meta:{
-//             middleware:"auth"
-//         },
-//         children:[
-//             {
-//                 name:"dashboard",
-//                 path: '/',
-//                 component: Dashboard,
-//                 meta:{
-//                     title:`Dashboard`
-//                 }
-//             }
-//         ]
-//     }
-// ]
-
-// var router  = new VueRouter({
-//     mode: 'history',
-//     routes: Routes
-// })
-
-// router.beforeEach((to, from, next) => {
-//     document.title = `${to.meta.title} - ${process.env.MIX_APP_NAME}`
-//     if(to.meta.middleware=="guest"){
-//         if(store.state.auth.authenticated){
-//             next({name:"dashboard"})
-//         }
-//         next()
-//     }else{
-//         if(store.state.auth.authenticated){
-//             next()
-//         }else{
-//             next({name:"login"})
-//         }
-//     }
-// })
-
-// export default router

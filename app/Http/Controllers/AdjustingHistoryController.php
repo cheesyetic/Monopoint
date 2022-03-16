@@ -24,9 +24,14 @@ class AdjustingHistoryController extends Controller
     {
         $id = Crypt::decryptString($token);
         $adjustinghistory = AdjustingHistory::where('journal_id', '=', $id)->get();
-        
+
         foreach ($adjustinghistory as $value) {
             $value->journal_id = Journal::findOrFail($value->journal_id)->title;
+            $value->project_name = $value->project->name;
+            $value->user_name = $value->user->name;
+            $value->chart_account_name = $value->chartaccount->name;
+            $value->accounting_period_name = $value->accountingperiod->name;
+            $value->bank_account_name = $value->bankaccount->name;
         }
 
         $response = [

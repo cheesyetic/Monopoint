@@ -56,8 +56,8 @@
                             <div class="mb-3 row">
                                 <label for="example-date-input" class="col-md-2 col-form-label">Partner</label>
                                 <div class="col-md-10">
-                                    <v-select :options="partnerOptions" @input="selectId($event, 'friend_id')" v-model="appointmentCreate.friend_id" multiple :disabled="partnerLoading"></v-select>
-                                    <div v-if="theErrors.friend_id" class="mt-1 text-danger">{{ theErrors.friend_id[0] }}</div>
+                                    <v-select :options="partnerOptions" @input="selectId($event, 'user_id')" v-model="appointmentCreate.user_id" multiple :disabled="partnerLoading"></v-select>
+                                    <div v-if="theErrors.user_id" class="mt-1 text-danger">{{ theErrors.user_id[0] }}</div>
                                 </div>
                             </div>
                             <button class="btn btn-primary" type="submit"><i class="uil-plus"></i> Buat</button>
@@ -74,8 +74,12 @@
 import Loading from '../../components/loading'
 
 export default {
+    props: ['auth'],
     components: {
         Loading
+    },
+    mounted() {
+        this.getPartner()
     },
     data() {
         return {
@@ -83,40 +87,54 @@ export default {
                 name: '',
                 date: '',
                 remark: '',
-                friend_id: [],
-                user_id: '1',
+                user_id: [],
             },
             partnerLoading: false,
-            partnerOptions: [
-                {
-                    value: 1,
-                    label: 'Partner 1'
-                },
-                {
-                    value: 2,
-                    label: 'Partner 2'
-                },
-                {
-                    value: 3,
-                    label: 'Partner 3'
-                },
-                {
-                    value: 4,
-                    label: 'Partner 4'
-                },
-            ],
+            partnerOptions: [],
             // successMessage: [],
-            theErrors: []
+            theErrors: [],
         }
     },
     methods: {
-        // selectId(e, target) {
-        //     this.appointmentCreate[target] = e.id
-        // },
+        async getPartner() {
+            let response = await axios.get('/api/account', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
+            let type = ""
+            if (response.status === 200) {
+                // this.partnerOptions = response.data.data
+                for (var i = 0; i < response.data.data.length; i++) {
+                    if(response.data.data[i].type == 0) {
+                        type = "(Admin)"
+                    } else if(response.data.data[i].type == 1) {
+                        type = "(Keuangan)"
+                    } else {
+                        type = "(Staff)"
+                    }
+                    let label = response.data.data[i].name + " " + type
+                    let id = String(response.data.data[i].id)
+                    this.partnerOptions.push({ label, id })
+                }
+            }
+            console.log(response.data.data)
+            console.log("sukses get user")
+            this.partnerLoading = false
+        },
         async store() {
+            console.log("this.appointmentCreate")
+            console.log(this.appointmentCreate)
+            for (var i = 0; i < this.appointmentCreate.user_id.length; i++) {
+                this.appointmentCreate.user_id[i] = this.appointmentCreate.user_id[i].id
+            }
             try {
                 console.log(this.appointmentCreate)
-                let responseCreate = await axios.post('/api/appointment', this.appointmentCreate)
+                let responseCreate = await axios.post('/api/appointment', this.appointmentCreate, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
                 if (responseCreate.status == 201) {
                     this.appointmentCreate.name = ''
                     this.appointmentCreate.date = ''

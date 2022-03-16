@@ -65,7 +65,7 @@
                                             </div>
                                             <div class="col-3 row">
                                                 <router-link :to="{ name: 'asset.edit', params: { token: asset.token }}" class="btn btn-primary mb-2"><i class="uil-edit-alt"></i> Edit</router-link>
-                                                <delete-asset :endpoint="asset.token"/>
+                                                <delete-asset :endpoint="asset.token" :auth="auth"/>
                                             </div>
                                         </div>
                                     </div>
@@ -85,6 +85,7 @@
 import DeleteAsset from './Delete'
 import Loading from '../../components/loading'
 export default {
+    props: ['auth'],
     components: {
         DeleteAsset,
         Loading
@@ -103,7 +104,11 @@ export default {
 
     methods: {
         async getAsset() {
-            let response = await axios.get('/api/asset')
+            let response = await axios.get('/api/asset', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 this.assets = response.data.data
             }

@@ -64,7 +64,7 @@
                                             </div>
                                             <div class="col-3 row">
                                                 <router-link :to="{ name: 'project.edit', params: { token: project.token }}" class="btn btn-primary mb-2"><i class="uil-edit-alt"></i> Edit</router-link>
-                                                <delete-project :endpoint="project.token"/>
+                                                <delete-project :endpoint="project.token" :auth="auth"/>
                                             </div>
                                         </div>
                                     </div>
@@ -85,6 +85,7 @@
 import DeleteProject from './Delete'
 import Loading from '../../components/loading'
 export default {
+    props: ['auth'],
     components: {
         DeleteProject,
         Loading
@@ -107,7 +108,11 @@ export default {
 
     methods: {
         async getProject() {
-            let response = await axios.get('/api/project')
+            let response = await axios.get('/api/project', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 this.projects = response.data.data
             }

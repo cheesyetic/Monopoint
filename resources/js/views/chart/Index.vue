@@ -66,7 +66,7 @@
                                             </div>
                                             <div class="col-4 row">
                                                 <router-link :to="{ name: 'chart.edit', params: { token: chart.token }}" class="btn btn-primary mb-2"><i class="uil-edit-alt"></i> Edit</router-link>
-                                                <delete-chart :endpoint="chart.token"/>
+                                                <delete-chart :endpoint="chart.token" :auth="auth"/>
                                             </div>
                                         </div>
                                     </div>
@@ -87,6 +87,7 @@
 import DeleteChart from './Delete'
 import Loading from '../../components/loading'
 export default {
+    props: ['auth'],
     components: {
         DeleteChart,
         Loading
@@ -109,7 +110,11 @@ export default {
 
     methods: {
         async getChart() {
-            let response = await axios.get('/api/chartaccount')
+            let response = await axios.get('/api/chartaccount', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 this.charts = response.data.data
             }

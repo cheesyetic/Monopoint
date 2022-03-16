@@ -4,15 +4,19 @@
 
 <script>
 export default {
-    props: ['endpoint'],
+    props: ['endpoint', 'auth'],
 
     methods: {
         async destroyChart() {
             // console.log(this.endpoint)
             try {
-                let q = window.confirm("Are you sure you want to delete this chart account?")
+                let q = window.confirm("Are you sure you want to delete this appointment?")
                 if (q) {
-                    let responseDelete = await axios.delete(`/api/chartaccount/${this.endpoint}`)
+                    let responseDelete = await axios.delete(`/api/appointment/${this.endpoint}`, {
+                        headers: {
+                            Authorization: 'Bearer ' + this.auth.token
+                        }
+                    })
                     if (responseDelete.status == 200) {
                         this.$toasted.show(responseDelete.data.message, {
                             type: 'success',
@@ -20,7 +24,7 @@ export default {
                             position: 'top-center',
                         })
 
-                        this.$refs.deleteChart.parentElement.parentElement.parentElement.parentElement.remove()
+                        this.$refs.deleteChart.parentElement.parentElement.remove()
                     }
                     else {
                         this.$toasted.show("Error deleting period", {

@@ -70,7 +70,7 @@
                                     <div v-if="theErrors.type" class="mt-1 text-danger">{{ theErrors.status[0] }}</div>
                                 </div>
                             </div>
-                            <button class="btn btn-primary" type="submit">Edit</button>
+                            <button class="btn btn-primary" type="submit"><i class="bx bx-save"></i> Save</button>
                         </form>
                     </div>
                 </div> <!-- end col -->
@@ -84,6 +84,7 @@
 import Loading from '../../components/loading'
 import Radio from '../../components/Radio'
 export default {
+    props: ['auth'],
     components: {
         Loading,
         Radio
@@ -106,7 +107,11 @@ export default {
 
     methods: {
         async findProject() {
-            let response = await axios.get('/api/project/' + this.$route.params.token)
+            let response = await axios.get('/api/project/' + this.$route.params.token, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
             if (response.status === 200) {
                 this.project = response.data.data
                 this.loading = false
@@ -121,7 +126,11 @@ export default {
         },
         async store() {
             try {
-                let response = await axios.post('/api/project/' + this.$route.params.token, this.project)
+                let response = await axios.post('/api/project/' + this.$route.params.token, this.project, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
                 // console.log(response.status)
                 if (response.status == 200) {
                     this.theErrors = []
