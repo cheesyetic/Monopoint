@@ -33,10 +33,18 @@
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="example-date-input" class="col-md-2 col-form-label">Jumlah</label>
+                                <label for="example-text-input" class="col-md-2 col-form-label">Kuantitas</label>
                                 <div class="col-md-10">
-                                    <input class="form-control" type="number" v-model="assetCreate.value">
-                                    <div v-if="theErrors.value" class="mt-1 text-danger">{{ theErrors.value[0] }}</div>
+                                    <input class="form-control" type="number" v-model="assetCreate.quantity">
+                                    <div v-if="theErrors.quantity" class="mt-1 text-danger">{{ theErrors.quantity[0] }}</div>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="example-text-input" class="col-md-2 col-form-label">Harga Satuan</label>
+                                <div class="col-md-10 d-flex align-items-center">
+                                    <p style="margin:0;margin-right: 1rem">IDR</p>
+                                    <input class="form-control flex-grow" type="number" v-model="assetCreate.price">
+                                    <div v-if="theErrors.price" class="mt-1 text-danger">{{ theErrors.price[0] }}</div>
                                 </div>
                             </div>
                             <div class="mb-3 row">
