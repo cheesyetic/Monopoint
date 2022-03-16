@@ -100,7 +100,7 @@
                             <div class="mb-3 row">
                                 <label for="example-date-input" class="col-md-2 col-form-label">Chart Account</label>
                                 <div class="col-md-10">
-                                    <v-select v-model="journal.chart_account_id" :options="chartOptions" @input="selectId($event, 'chart_account_id')" :disabled="chartLoading"></v-select>
+                                    <v-select v-model="chartSelected" :options="chartOptions" :disabled="chartLoading"></v-select>
                                     <div v-if="theErrors.chart_account_id" class="mt-1 text-danger">{{ theErrors.chart_account_id[0] }}</div>
                                 </div>
                             </div>
@@ -119,7 +119,7 @@
                             <div class="mb-3 row">
                                 <label for="example-date-input" class="col-md-2 col-form-label">Periode</label>
                                 <div class="col-md-10">
-                                    <v-select v-model="journal.accounting_period_id" :options="periodOptions" @input="selectId($event, 'accounting_period_id')" :disabled="periodLoading"></v-select>
+                                    <v-select v-model="periodSelected" :options="periodOptions" :disabled="periodLoading"></v-select>
                                     <div v-if="theErrors.accounting_period_id" class="mt-1 text-danger">{{ theErrors.accounting_period_id[0] }}</div>
                                 </div>
                             </div>
@@ -127,7 +127,7 @@
                             <div class="mb-3 row">
                                 <label for="example-date-input" class="col-md-2 col-form-label">Akun Bank</label>
                                 <div class="col-md-10">
-                                    <v-select v-model="journal.bank_account_id" :options="bankOptions" @input="selectId($event, 'bank_account_id')" :disabled="bankLoading"></v-select>
+                                    <v-select v-model="bankSelected" :options="bankOptions" :disabled="bankLoading"></v-select>
                                     <div v-if="theErrors.bank_account_id" class="mt-1 text-danger">{{ theErrors.bank_account_id[0] }}</div>
                                 </div>
                             </div>
@@ -135,7 +135,7 @@
                             <div class="mb-3 row">
                                 <label for="example-date-input" class="col-md-2 col-form-label">Project</label>
                                 <div class="col-md-10">
-                                    <v-select v-model="journal.project_id" :options="projectOptions" @input="selectId($event, 'project_id')" :disabled="projectLoading"></v-select>
+                                    <v-select v-model="projectSelected" :options="projectOptions" :disabled="projectLoading"></v-select>
                                     <div v-if="theErrors.project_id" class="mt-1 text-danger">{{ theErrors.project_id[0] }}</div>
                                 </div>
                             </div>
@@ -160,13 +160,21 @@ export default {
     data() {
         return {
             chartOptions: [],
+            chartSelected: '',
             chartLoading: true,
+
             bankOptions: [],
+            bankSelected: '',
             bankLoading: true,
+
             projectOptions: [],
+            projectSelected: '',
             projectLoading: true,
+
             periodOptions: [],
+            periodSelected: '',
             periodLoading: true,
+
             journal: {},
             // successMessage: [],
             theErrors: [],
@@ -200,15 +208,16 @@ export default {
                     }
                 })
             if (response.status === 200) {
-                // this.periodOptions = response.data.data
-                console.log(response.data.data.length)
                 for (var i = 0; i < response.data.data.length; i++) {
-                    let label = response.data.data[i].id + " - " + response.data.data[i].name + ' (' + response.data.data[i].code + ', ' + response.data.data[i].type + ')'
+                    let label = response.data.data[i].name + ' (' + response.data.data[i].code + ', ' + response.data.data[i].type + ')'
                     let id = String(response.data.data[i].id)
                     this.chartOptions.push({ label, id })
+                    if(id == this.journal.chart_account_id) {
+                        this.chartSelected = { label, id }
+                    }
                 }
                 this.chartLoading = false
-            } else {8
+            } else {
                 this.$toasted.show("Failed to load period", {
                         type: 'error',
                         duration: 3000,
@@ -224,12 +233,13 @@ export default {
                     }
                 })
             if (response.status === 200) {
-                // this.periodOptions = response.data.data
-                console.log(response.data.data.length)
                 for (var i = 0; i < response.data.data.length; i++) {
-                    let label = response.data.data[i].id + " - " + response.data.data[i].name + ' (' + response.data.data[i].start + ' - ' + response.data.data[i].end + ')'
+                    let label = response.data.data[i].name + ' (' + response.data.data[i].start + ' - ' + response.data.data[i].end + ')'
                     let id = String(response.data.data[i].id)
                     this.periodOptions.push({ label, id })
+                    if(id == this.journal.accounting_period_id) {
+                        this.periodSelected = { label, id }
+                    }
                 }
                 this.periodLoading = false
             } else {
@@ -248,12 +258,13 @@ export default {
                     }
                 })
             if (response.status === 200) {
-                // this.periodOptions = response.data.data
-                console.log(response.data.data.length)
                 for (var i = 0; i < response.data.data.length; i++) {
-                    let label = response.data.data[i].id + " - " + response.data.data[i].name
+                    let label = response.data.data[i].name
                     let id = String(response.data.data[i].id)
                     this.projectOptions.push({ label, id })
+                    if(id == this.journal.project_id) {
+                        this.projectSelected = { label, id }
+                    }
                 }
                 this.projectLoading = false
             } else {
@@ -272,12 +283,13 @@ export default {
                     }
                 })
             if (response.status === 200) {
-                // this.periodOptions = response.data.data
-                console.log(response.data.data.length)
                 for (var i = 0; i < response.data.data.length; i++) {
-                    let label = response.data.data[i].id + " - " + response.data.data[i].name
+                    let label = response.data.data[i].name
                     let id = String(response.data.data[i].id)
                     this.bankOptions.push({ label, id })
+                    if(id == this.journal.bank_account_id) {
+                        this.bankSelected = { label, id }
+                    }
                 }
                 this.bankLoading = false
             } else {
@@ -320,11 +332,12 @@ export default {
                     formdata.append('filebukti', this.journal.filebukti)
                 }
                 formdata.append('is_reimburse', this.journal.is_reimburse)
-                formdata.append('chart_account_id', this.journal.chart_account_id)
-                formdata.append('accounting_period_id', this.journal.accounting_period_id)
+                formdata.append('chart_account_id', this.chartSelected.id)
+                formdata.append('accounting_period_id', this.periodSelected.id)
                 formdata.append('balance', this.journal.balance)
-                formdata.append('bank_account_id', this.journal.bank_account_id)
-                formdata.append('project_id', this.journal.project_id)
+                formdata.append('bank_account_id', this.bankSelected.id)
+                formdata.append('project_id', this.projectSelected.id)
+                // formdata.append('project_id', this.journal.project_id)
                 formdata.append('user_id', this.auth.user.id)
                 this.loadingEdit = true
                 await axios.post('/api/journal/' + this.$route.params.token,  formdata, {

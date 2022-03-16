@@ -6887,12 +6887,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       chartOptions: [],
+      chartSelected: '',
       chartLoading: true,
       bankOptions: [],
+      bankSelected: '',
       bankLoading: true,
       projectOptions: [],
+      projectSelected: '',
       projectLoading: true,
       periodOptions: [],
+      periodSelected: '',
       periodLoading: true,
       journal: {},
       // successMessage: [],
@@ -6937,23 +6941,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context.sent;
 
                 if (response.status === 200) {
-                  // this.periodOptions = response.data.data
-                  console.log(response.data.data.length);
-
                   for (i = 0; i < response.data.data.length; i++) {
-                    label = response.data.data[i].id + " - " + response.data.data[i].name + ' (' + response.data.data[i].code + ', ' + response.data.data[i].type + ')';
+                    label = response.data.data[i].name + ' (' + response.data.data[i].code + ', ' + response.data.data[i].type + ')';
                     id = String(response.data.data[i].id);
 
                     _this.chartOptions.push({
                       label: label,
                       id: id
                     });
+
+                    if (id == _this.journal.chart_account_id) {
+                      _this.chartSelected = {
+                        label: label,
+                        id: id
+                      };
+                    }
                   }
 
                   _this.chartLoading = false;
                 } else {
-                  8;
-
                   _this.$toasted.show("Failed to load period", {
                     type: 'error',
                     duration: 3000,
@@ -6989,17 +6995,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context2.sent;
 
                 if (response.status === 200) {
-                  // this.periodOptions = response.data.data
-                  console.log(response.data.data.length);
-
                   for (i = 0; i < response.data.data.length; i++) {
-                    label = response.data.data[i].id + " - " + response.data.data[i].name + ' (' + response.data.data[i].start + ' - ' + response.data.data[i].end + ')';
+                    label = response.data.data[i].name + ' (' + response.data.data[i].start + ' - ' + response.data.data[i].end + ')';
                     id = String(response.data.data[i].id);
 
                     _this2.periodOptions.push({
                       label: label,
                       id: id
                     });
+
+                    if (id == _this2.journal.accounting_period_id) {
+                      _this2.periodSelected = {
+                        label: label,
+                        id: id
+                      };
+                    }
                   }
 
                   _this2.periodLoading = false;
@@ -7039,17 +7049,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context3.sent;
 
                 if (response.status === 200) {
-                  // this.periodOptions = response.data.data
-                  console.log(response.data.data.length);
-
                   for (i = 0; i < response.data.data.length; i++) {
-                    label = response.data.data[i].id + " - " + response.data.data[i].name;
+                    label = response.data.data[i].name;
                     id = String(response.data.data[i].id);
 
                     _this3.projectOptions.push({
                       label: label,
                       id: id
                     });
+
+                    if (id == _this3.journal.project_id) {
+                      _this3.projectSelected = {
+                        label: label,
+                        id: id
+                      };
+                    }
                   }
 
                   _this3.projectLoading = false;
@@ -7089,17 +7103,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context4.sent;
 
                 if (response.status === 200) {
-                  // this.periodOptions = response.data.data
-                  console.log(response.data.data.length);
-
                   for (i = 0; i < response.data.data.length; i++) {
-                    label = response.data.data[i].id + " - " + response.data.data[i].name;
+                    label = response.data.data[i].name;
                     id = String(response.data.data[i].id);
 
                     _this4.bankOptions.push({
                       label: label,
                       id: id
                     });
+
+                    if (id == _this4.journal.bank_account_id) {
+                      _this4.bankSelected = {
+                        label: label,
+                        id: id
+                      };
+                    }
                   }
 
                   _this4.bankLoading = false;
@@ -7182,11 +7200,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
 
                 formdata.append('is_reimburse', _this6.journal.is_reimburse);
-                formdata.append('chart_account_id', _this6.journal.chart_account_id);
-                formdata.append('accounting_period_id', _this6.journal.accounting_period_id);
+                formdata.append('chart_account_id', _this6.chartSelected.id);
+                formdata.append('accounting_period_id', _this6.periodSelected.id);
                 formdata.append('balance', _this6.journal.balance);
-                formdata.append('bank_account_id', _this6.journal.bank_account_id);
-                formdata.append('project_id', _this6.journal.project_id);
+                formdata.append('bank_account_id', _this6.bankSelected.id);
+                formdata.append('project_id', _this6.projectSelected.id); // formdata.append('project_id', this.journal.project_id)
+
                 formdata.append('user_id', _this6.auth.user.id);
                 _this6.loadingEdit = true;
                 _context6.next = 18;
@@ -7397,171 +7416,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee, null, [[0, 10]]);
-      }))();
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/Index.vue?vue&type=script&lang=js&":
-/*!**************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/Index.vue?vue&type=script&lang=js& ***!
-  \**************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _TabDraft__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TabDraft */ "./resources/js/views/jurnal/TabDraft.vue");
-/* harmony import */ var _TabProses__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TabProses */ "./resources/js/views/jurnal/TabProses.vue");
-/* harmony import */ var _TabVerif__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./TabVerif */ "./resources/js/views/jurnal/TabVerif.vue");
-/* harmony import */ var _Delete__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Delete */ "./resources/js/views/jurnal/Delete.vue");
-/* harmony import */ var _components_loading__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/loading */ "./resources/js/components/loading.vue");
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['auth'],
-  components: {
-    DeleteJournal: _Delete__WEBPACK_IMPORTED_MODULE_4__["default"],
-    TabDraft: _TabDraft__WEBPACK_IMPORTED_MODULE_1__["default"],
-    TabProses: _TabProses__WEBPACK_IMPORTED_MODULE_2__["default"],
-    TabVerif: _TabVerif__WEBPACK_IMPORTED_MODULE_3__["default"],
-    Loading: _components_loading__WEBPACK_IMPORTED_MODULE_5__["default"]
-  },
-  data: function data() {
-    return {
-      loadingExcel: false
-    };
-  },
-  methods: {
-    exportExcel: function exportExcel() {
-      var _this = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.prev = 0;
-                _this.loadingExcel = true;
-                _context.next = 4;
-                return axios.get("/api/journal/export", {
-                  headers: {
-                    'Authorization': 'Bearer ' + _this.auth.token
-                  }
-                });
-
-              case 4:
-                response = _context.sent;
-
-                if (response.status == 200) {
-                  _this.$toasted.show(response.data.message, {
-                    type: 'success',
-                    duration: 3000,
-                    position: 'top-center'
-                  });
-                }
-
-                _this.loadingExcel = false;
-                _context.next = 12;
-                break;
-
-              case 9:
-                _context.prev = 9;
-                _context.t0 = _context["catch"](0);
-
-                // console.log(e)
-                _this.$toasted.show("Something went wrong : " + _context.t0, {
-                  type: 'error',
-                  duration: 3000,
-                  position: 'top-center'
-                });
-
-              case 12:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, null, [[0, 9]]);
       }))();
     }
   }
@@ -12049,33 +11903,31 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _views_account_Index__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../views/account/Index */ "./resources/js/views/account/Index.vue");
 /* harmony import */ var _views_account_Edit__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../views/account/Edit */ "./resources/js/views/account/Edit.vue");
 /* harmony import */ var _views_account_Password__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../views/account/Password */ "./resources/js/views/account/Password.vue");
-/* harmony import */ var _views_jurnal_Index__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../views/jurnal/Index */ "./resources/js/views/jurnal/Index.vue");
-/* harmony import */ var _views_jurnal_Edit__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../views/jurnal/Edit */ "./resources/js/views/jurnal/Edit.vue");
-/* harmony import */ var _views_jurnal_Create__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../views/jurnal/Create */ "./resources/js/views/jurnal/Create.vue");
-/* harmony import */ var _views_jurnal_Verif__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../views/jurnal/Verif */ "./resources/js/views/jurnal/Verif.vue");
-/* harmony import */ var _views_jurnal_Detail__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../views/jurnal/Detail */ "./resources/js/views/jurnal/Detail.vue");
-/* harmony import */ var _views_jurnal_Import__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../views/jurnal/Import */ "./resources/js/views/jurnal/Import.vue");
-/* harmony import */ var _views_jurnal_TabDraft__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../views/jurnal/TabDraft */ "./resources/js/views/jurnal/TabDraft.vue");
-/* harmony import */ var _views_jurnal_TabProses__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../views/jurnal/TabProses */ "./resources/js/views/jurnal/TabProses.vue");
-/* harmony import */ var _views_jurnal_TabVerif__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../views/jurnal/TabVerif */ "./resources/js/views/jurnal/TabVerif.vue");
-/* harmony import */ var _views_karyawan_Index__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../views/karyawan/Index */ "./resources/js/views/karyawan/Index.vue");
-/* harmony import */ var _views_karyawan_Edit__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../views/karyawan/Edit */ "./resources/js/views/karyawan/Edit.vue");
-/* harmony import */ var _views_karyawan_Create__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../views/karyawan/Create */ "./resources/js/views/karyawan/Create.vue");
-/* harmony import */ var _views_rekening_Index__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../views/rekening/Index */ "./resources/js/views/rekening/Index.vue");
-/* harmony import */ var _views_rekening_Edit__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../views/rekening/Edit */ "./resources/js/views/rekening/Edit.vue");
-/* harmony import */ var _views_rekening_Create__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../views/rekening/Create */ "./resources/js/views/rekening/Create.vue");
-/* harmony import */ var _views_periode_Index__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../views/periode/Index */ "./resources/js/views/periode/Index.vue");
-/* harmony import */ var _views_periode_Edit__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../views/periode/Edit */ "./resources/js/views/periode/Edit.vue");
-/* harmony import */ var _views_project_Index__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../views/project/Index */ "./resources/js/views/project/Index.vue");
-/* harmony import */ var _views_project_Edit__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../views/project/Edit */ "./resources/js/views/project/Edit.vue");
-/* harmony import */ var _views_project_Create__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../views/project/Create */ "./resources/js/views/project/Create.vue");
-/* harmony import */ var _views_asset_Index__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../views/asset/Index */ "./resources/js/views/asset/Index.vue");
-/* harmony import */ var _views_asset_Edit__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../views/asset/Edit */ "./resources/js/views/asset/Edit.vue");
-/* harmony import */ var _views_asset_Create__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ../views/asset/Create */ "./resources/js/views/asset/Create.vue");
-/* harmony import */ var _views_chart_Index__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ../views/chart/Index */ "./resources/js/views/chart/Index.vue");
-/* harmony import */ var _views_chart_Edit__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ../views/chart/Edit */ "./resources/js/views/chart/Edit.vue");
-/* harmony import */ var _views_chart_Create__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ../views/chart/Create */ "./resources/js/views/chart/Create.vue");
-
+/* harmony import */ var _views_jurnal_Edit__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../views/jurnal/Edit */ "./resources/js/views/jurnal/Edit.vue");
+/* harmony import */ var _views_jurnal_Create__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../views/jurnal/Create */ "./resources/js/views/jurnal/Create.vue");
+/* harmony import */ var _views_jurnal_Verif__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../views/jurnal/Verif */ "./resources/js/views/jurnal/Verif.vue");
+/* harmony import */ var _views_jurnal_Detail__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../views/jurnal/Detail */ "./resources/js/views/jurnal/Detail.vue");
+/* harmony import */ var _views_jurnal_Import__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../views/jurnal/Import */ "./resources/js/views/jurnal/Import.vue");
+/* harmony import */ var _views_jurnal_TabDraft__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../views/jurnal/TabDraft */ "./resources/js/views/jurnal/TabDraft.vue");
+/* harmony import */ var _views_jurnal_TabProses__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../views/jurnal/TabProses */ "./resources/js/views/jurnal/TabProses.vue");
+/* harmony import */ var _views_jurnal_TabVerif__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../views/jurnal/TabVerif */ "./resources/js/views/jurnal/TabVerif.vue");
+/* harmony import */ var _views_karyawan_Index__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../views/karyawan/Index */ "./resources/js/views/karyawan/Index.vue");
+/* harmony import */ var _views_karyawan_Edit__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../views/karyawan/Edit */ "./resources/js/views/karyawan/Edit.vue");
+/* harmony import */ var _views_karyawan_Create__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../views/karyawan/Create */ "./resources/js/views/karyawan/Create.vue");
+/* harmony import */ var _views_rekening_Index__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../views/rekening/Index */ "./resources/js/views/rekening/Index.vue");
+/* harmony import */ var _views_rekening_Edit__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../views/rekening/Edit */ "./resources/js/views/rekening/Edit.vue");
+/* harmony import */ var _views_rekening_Create__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../views/rekening/Create */ "./resources/js/views/rekening/Create.vue");
+/* harmony import */ var _views_periode_Index__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../views/periode/Index */ "./resources/js/views/periode/Index.vue");
+/* harmony import */ var _views_periode_Edit__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../views/periode/Edit */ "./resources/js/views/periode/Edit.vue");
+/* harmony import */ var _views_project_Index__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../views/project/Index */ "./resources/js/views/project/Index.vue");
+/* harmony import */ var _views_project_Edit__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../views/project/Edit */ "./resources/js/views/project/Edit.vue");
+/* harmony import */ var _views_project_Create__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../views/project/Create */ "./resources/js/views/project/Create.vue");
+/* harmony import */ var _views_asset_Index__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../views/asset/Index */ "./resources/js/views/asset/Index.vue");
+/* harmony import */ var _views_asset_Edit__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../views/asset/Edit */ "./resources/js/views/asset/Edit.vue");
+/* harmony import */ var _views_asset_Create__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../views/asset/Create */ "./resources/js/views/asset/Create.vue");
+/* harmony import */ var _views_chart_Index__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ../views/chart/Index */ "./resources/js/views/chart/Index.vue");
+/* harmony import */ var _views_chart_Edit__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ../views/chart/Edit */ "./resources/js/views/chart/Edit.vue");
+/* harmony import */ var _views_chart_Create__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ../views/chart/Create */ "./resources/js/views/chart/Create.vue");
 
 
 
@@ -12161,108 +12013,108 @@ __webpack_require__.r(__webpack_exports__);
     {
       path: '/jurnal-draft',
       name: 'jurnal',
-      component: _views_jurnal_TabDraft__WEBPACK_IMPORTED_MODULE_15__["default"]
+      component: _views_jurnal_TabDraft__WEBPACK_IMPORTED_MODULE_14__["default"]
     }, {
       path: '/jurnal-proses',
       name: 'jurnalproses',
-      component: _views_jurnal_TabProses__WEBPACK_IMPORTED_MODULE_16__["default"]
+      component: _views_jurnal_TabProses__WEBPACK_IMPORTED_MODULE_15__["default"]
     }, {
       path: '/jurnal-verif',
       name: 'jurnalverif',
-      component: _views_jurnal_TabVerif__WEBPACK_IMPORTED_MODULE_17__["default"]
+      component: _views_jurnal_TabVerif__WEBPACK_IMPORTED_MODULE_16__["default"]
     }, {
       path: '/jurnal/edit/:token',
       name: 'jurnal.edit',
-      component: _views_jurnal_Edit__WEBPACK_IMPORTED_MODULE_10__["default"]
+      component: _views_jurnal_Edit__WEBPACK_IMPORTED_MODULE_9__["default"]
     }, {
       path: '/jurnal/create',
       name: 'jurnal.create',
-      component: _views_jurnal_Create__WEBPACK_IMPORTED_MODULE_11__["default"]
+      component: _views_jurnal_Create__WEBPACK_IMPORTED_MODULE_10__["default"]
     }, {
       path: '/jurnal/import',
       name: 'jurnal.import',
-      component: _views_jurnal_Import__WEBPACK_IMPORTED_MODULE_14__["default"]
+      component: _views_jurnal_Import__WEBPACK_IMPORTED_MODULE_13__["default"]
     }, {
       path: '/jurnal/detail/:token',
       name: 'jurnal.detail',
-      component: _views_jurnal_Detail__WEBPACK_IMPORTED_MODULE_13__["default"]
+      component: _views_jurnal_Detail__WEBPACK_IMPORTED_MODULE_12__["default"]
     }, {
       path: '/jurnal/verification/:token',
       name: 'jurnal.verif',
-      component: _views_jurnal_Verif__WEBPACK_IMPORTED_MODULE_12__["default"]
+      component: _views_jurnal_Verif__WEBPACK_IMPORTED_MODULE_11__["default"]
     }, {
       path: '/admin/karyawan',
       name: 'karyawan',
-      component: _views_karyawan_Index__WEBPACK_IMPORTED_MODULE_18__["default"]
+      component: _views_karyawan_Index__WEBPACK_IMPORTED_MODULE_17__["default"]
     }, {
       path: '/admin/karyawan/edit/:token',
       name: 'karyawan.edit',
-      component: _views_karyawan_Edit__WEBPACK_IMPORTED_MODULE_19__["default"]
+      component: _views_karyawan_Edit__WEBPACK_IMPORTED_MODULE_18__["default"]
     }, {
       path: '/admin/karyawan/create',
       name: 'karyawan.create',
-      component: _views_karyawan_Create__WEBPACK_IMPORTED_MODULE_20__["default"]
+      component: _views_karyawan_Create__WEBPACK_IMPORTED_MODULE_19__["default"]
     }, // REKENING BANK
     {
       path: '/admin/rekening',
       name: 'rekening',
-      component: _views_rekening_Index__WEBPACK_IMPORTED_MODULE_21__["default"]
+      component: _views_rekening_Index__WEBPACK_IMPORTED_MODULE_20__["default"]
     }, {
       path: '/admin/rekening/edit/:token',
       name: 'rekening.edit',
-      component: _views_rekening_Edit__WEBPACK_IMPORTED_MODULE_22__["default"]
+      component: _views_rekening_Edit__WEBPACK_IMPORTED_MODULE_21__["default"]
     }, {
       path: '/admin/rekening/create',
       name: 'rekening.create',
-      component: _views_rekening_Create__WEBPACK_IMPORTED_MODULE_23__["default"]
+      component: _views_rekening_Create__WEBPACK_IMPORTED_MODULE_22__["default"]
     }, // PERIODE
     {
       path: '/admin/periode',
       name: 'periode',
-      component: _views_periode_Index__WEBPACK_IMPORTED_MODULE_24__["default"]
+      component: _views_periode_Index__WEBPACK_IMPORTED_MODULE_23__["default"]
     }, {
       path: '/admin/periode/:token',
       name: 'periode.edit',
-      component: _views_periode_Edit__WEBPACK_IMPORTED_MODULE_25__["default"]
+      component: _views_periode_Edit__WEBPACK_IMPORTED_MODULE_24__["default"]
     }, // PROJECT
     {
       path: '/admin/project',
       name: 'project',
-      component: _views_project_Index__WEBPACK_IMPORTED_MODULE_26__["default"]
+      component: _views_project_Index__WEBPACK_IMPORTED_MODULE_25__["default"]
     }, {
       path: '/admin/project/edit/:token',
       name: 'project.edit',
-      component: _views_project_Edit__WEBPACK_IMPORTED_MODULE_27__["default"]
+      component: _views_project_Edit__WEBPACK_IMPORTED_MODULE_26__["default"]
     }, {
       path: '/admin/project/create',
       name: 'project.create',
-      component: _views_project_Create__WEBPACK_IMPORTED_MODULE_28__["default"]
+      component: _views_project_Create__WEBPACK_IMPORTED_MODULE_27__["default"]
     }, // ASSET
     {
       path: '/admin/asset',
       name: 'asset',
-      component: _views_asset_Index__WEBPACK_IMPORTED_MODULE_29__["default"]
+      component: _views_asset_Index__WEBPACK_IMPORTED_MODULE_28__["default"]
     }, {
       path: '/admin/asset/edit/:token',
       name: 'asset.edit',
-      component: _views_asset_Edit__WEBPACK_IMPORTED_MODULE_30__["default"]
+      component: _views_asset_Edit__WEBPACK_IMPORTED_MODULE_29__["default"]
     }, {
       path: '/admin/asset/create',
       name: 'asset.create',
-      component: _views_asset_Create__WEBPACK_IMPORTED_MODULE_31__["default"]
+      component: _views_asset_Create__WEBPACK_IMPORTED_MODULE_30__["default"]
     }, // CHART ACCOUNT
     {
       path: '/admin/chart',
       name: 'chart',
-      component: _views_chart_Index__WEBPACK_IMPORTED_MODULE_32__["default"]
+      component: _views_chart_Index__WEBPACK_IMPORTED_MODULE_31__["default"]
     }, {
       path: '/admin/chart/edit/:token',
       name: 'chart.edit',
-      component: _views_chart_Edit__WEBPACK_IMPORTED_MODULE_33__["default"]
+      component: _views_chart_Edit__WEBPACK_IMPORTED_MODULE_32__["default"]
     }, {
       path: '/admin/chart/create',
       name: 'chart.create',
-      component: _views_chart_Create__WEBPACK_IMPORTED_MODULE_34__["default"]
+      component: _views_chart_Create__WEBPACK_IMPORTED_MODULE_33__["default"]
     }]
   }]
 });
@@ -36354,45 +36206,6 @@ component.options.__file = "resources/js/views/jurnal/Import.vue"
 
 /***/ }),
 
-/***/ "./resources/js/views/jurnal/Index.vue":
-/*!*********************************************!*\
-  !*** ./resources/js/views/jurnal/Index.vue ***!
-  \*********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _Index_vue_vue_type_template_id_bbf1e4d8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Index.vue?vue&type=template&id=bbf1e4d8& */ "./resources/js/views/jurnal/Index.vue?vue&type=template&id=bbf1e4d8&");
-/* harmony import */ var _Index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Index.vue?vue&type=script&lang=js& */ "./resources/js/views/jurnal/Index.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _Index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Index_vue_vue_type_template_id_bbf1e4d8___WEBPACK_IMPORTED_MODULE_0__.render,
-  _Index_vue_vue_type_template_id_bbf1e4d8___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/views/jurnal/Index.vue"
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
-
-/***/ }),
-
 /***/ "./resources/js/views/jurnal/TabDraft.vue":
 /*!************************************************!*\
   !*** ./resources/js/views/jurnal/TabDraft.vue ***!
@@ -37607,22 +37420,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/views/jurnal/Index.vue?vue&type=script&lang=js&":
-/*!**********************************************************************!*\
-  !*** ./resources/js/views/jurnal/Index.vue?vue&type=script&lang=js& ***!
-  \**********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Index.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/Index.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
 /***/ "./resources/js/views/jurnal/TabDraft.vue?vue&type=script&lang=js&":
 /*!*************************************************************************!*\
   !*** ./resources/js/views/jurnal/TabDraft.vue?vue&type=script&lang=js& ***!
@@ -38424,23 +38221,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Import_vue_vue_type_template_id_18c1745a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Import_vue_vue_type_template_id_18c1745a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Import.vue?vue&type=template&id=18c1745a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/Import.vue?vue&type=template&id=18c1745a&");
-
-
-/***/ }),
-
-/***/ "./resources/js/views/jurnal/Index.vue?vue&type=template&id=bbf1e4d8&":
-/*!****************************************************************************!*\
-  !*** ./resources/js/views/jurnal/Index.vue?vue&type=template&id=bbf1e4d8& ***!
-  \****************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_template_id_bbf1e4d8___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_template_id_bbf1e4d8___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
-/* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_template_id_bbf1e4d8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Index.vue?vue&type=template&id=bbf1e4d8& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/Index.vue?vue&type=template&id=bbf1e4d8&");
 
 
 /***/ }),
@@ -46288,24 +46068,12 @@ var render = function () {
                                     options: _vm.chartOptions,
                                     disabled: _vm.chartLoading,
                                   },
-                                  on: {
-                                    input: function ($event) {
-                                      return _vm.selectId(
-                                        $event,
-                                        "chart_account_id"
-                                      )
-                                    },
-                                  },
                                   model: {
-                                    value: _vm.journal.chart_account_id,
+                                    value: _vm.chartSelected,
                                     callback: function ($$v) {
-                                      _vm.$set(
-                                        _vm.journal,
-                                        "chart_account_id",
-                                        $$v
-                                      )
+                                      _vm.chartSelected = $$v
                                     },
-                                    expression: "journal.chart_account_id",
+                                    expression: "chartSelected",
                                   },
                                 }),
                                 _vm._v(" "),
@@ -46413,24 +46181,12 @@ var render = function () {
                                     options: _vm.periodOptions,
                                     disabled: _vm.periodLoading,
                                   },
-                                  on: {
-                                    input: function ($event) {
-                                      return _vm.selectId(
-                                        $event,
-                                        "accounting_period_id"
-                                      )
-                                    },
-                                  },
                                   model: {
-                                    value: _vm.journal.accounting_period_id,
+                                    value: _vm.periodSelected,
                                     callback: function ($$v) {
-                                      _vm.$set(
-                                        _vm.journal,
-                                        "accounting_period_id",
-                                        $$v
-                                      )
+                                      _vm.periodSelected = $$v
                                     },
-                                    expression: "journal.accounting_period_id",
+                                    expression: "periodSelected",
                                   },
                                 }),
                                 _vm._v(" "),
@@ -46472,24 +46228,12 @@ var render = function () {
                                     options: _vm.bankOptions,
                                     disabled: _vm.bankLoading,
                                   },
-                                  on: {
-                                    input: function ($event) {
-                                      return _vm.selectId(
-                                        $event,
-                                        "bank_account_id"
-                                      )
-                                    },
-                                  },
                                   model: {
-                                    value: _vm.journal.bank_account_id,
+                                    value: _vm.bankSelected,
                                     callback: function ($$v) {
-                                      _vm.$set(
-                                        _vm.journal,
-                                        "bank_account_id",
-                                        $$v
-                                      )
+                                      _vm.bankSelected = $$v
                                     },
-                                    expression: "journal.bank_account_id",
+                                    expression: "bankSelected",
                                   },
                                 }),
                                 _vm._v(" "),
@@ -46530,17 +46274,12 @@ var render = function () {
                                     options: _vm.projectOptions,
                                     disabled: _vm.projectLoading,
                                   },
-                                  on: {
-                                    input: function ($event) {
-                                      return _vm.selectId($event, "project_id")
-                                    },
-                                  },
                                   model: {
-                                    value: _vm.journal.project_id,
+                                    value: _vm.projectSelected,
                                     callback: function ($$v) {
-                                      _vm.$set(_vm.journal, "project_id", $$v)
+                                      _vm.projectSelected = $$v
                                     },
-                                    expression: "journal.project_id",
+                                    expression: "projectSelected",
                                   },
                                 }),
                                 _vm._v(" "),
@@ -46747,244 +46486,6 @@ var staticRenderFns = [
       "button",
       { staticClass: "btn btn-primary", attrs: { type: "submit" } },
       [_c("i", { staticClass: "bx bx-import" }), _vm._v(" Import")]
-    )
-  },
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/Index.vue?vue&type=template&id=bbf1e4d8&":
-/*!*******************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/Index.vue?vue&type=template&id=bbf1e4d8& ***!
-  \*******************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* binding */ render),
-/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
-/* harmony export */ });
-var render = function () {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "main-content" }, [
-    _c("div", { staticClass: "page-content" }, [
-      _c("div", { staticClass: "container-fluid" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-12" }, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "page-title-box d-flex align-items-center justify-content-between",
-              },
-              [
-                _vm._m(0),
-                _vm._v(" "),
-                _c("div", { staticClass: "page-title-right" }, [
-                  _c(
-                    "ol",
-                    { staticClass: "breadcrumb m-0" },
-                    [
-                      _c(
-                        "li",
-                        { staticClass: "breadcrumb-item m-auto" },
-                        [
-                          _c(
-                            "router-link",
-                            { attrs: { to: { name: "dashboard" } } },
-                            [_vm._v("Dashboard")]
-                          ),
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "li",
-                        { staticClass: "breadcrumb-item m-auto active" },
-                        [_vm._v("Jurnal")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-success",
-                          staticStyle: { "margin-left": "8px" },
-                          on: {
-                            click: function ($event) {
-                              return _vm.exportExcel()
-                            },
-                          },
-                        },
-                        [
-                          _c("i", { staticClass: "uil-table" }),
-                          _vm._v(" Export Excel "),
-                          _vm.loadingExcel
-                            ? _c("loading", { attrs: { size: "18" } })
-                            : _vm._e(),
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "router-link",
-                        {
-                          staticClass: "btn btn-primary mx-2",
-                          attrs: { exact: "", to: { name: "jurnal.create" } },
-                        },
-                        [
-                          _c("i", { staticClass: "uil-plus" }),
-                          _vm._v(" Buat Jurnal Baru"),
-                        ]
-                      ),
-                    ],
-                    1
-                  ),
-                ]),
-              ]
-            ),
-          ]),
-        ]),
-        _vm._v(" "),
-        _vm._m(1),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "tab-content p-3 text-muted card border-top-0" },
-          [
-            _c(
-              "div",
-              {
-                staticClass: "tab-pane active",
-                attrs: { id: "home1", role: "tabpanel" },
-              },
-              [_c("tab-draft", { attrs: { auth: _vm.auth } })],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "tab-pane",
-                attrs: { id: "profile1", role: "tabpanel" },
-              },
-              [_c("tab-proses", { attrs: { auth: _vm.auth } })],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "tab-pane",
-                attrs: { id: "messages1", role: "tabpanel" },
-              },
-              [_c("tab-verif", { attrs: { auth: _vm.auth } })],
-              1
-            ),
-          ]
-        ),
-      ]),
-    ]),
-  ])
-}
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h4", { staticClass: "mb-0" }, [
-      _c("i", { staticClass: "uil-file-landscape" }),
-      _vm._v(" Jurnal"),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "ul",
-      {
-        staticClass: "nav nav-tabs nav-tabs nav-justified",
-        attrs: { role: "tablist" },
-      },
-      [
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link active",
-              attrs: {
-                "data-bs-toggle": "tab",
-                href: "#home1",
-                role: "tab",
-                "aria-selected": "true",
-              },
-            },
-            [
-              _c("span", { staticClass: "d-block" }, [
-                _c("i", { staticClass: "uil-clipboard" }),
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "d-none d-sm-block" }, [
-                _vm._v("Draft"),
-              ]),
-            ]
-          ),
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link",
-              attrs: {
-                "data-bs-toggle": "tab",
-                href: "#profile1",
-                role: "tab",
-                "aria-selected": "false",
-              },
-            },
-            [
-              _c("span", { staticClass: "d-block" }, [
-                _c("i", { staticClass: "uil-process" }),
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "d-none d-sm-block" }, [
-                _vm._v("Diproses"),
-              ]),
-            ]
-          ),
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link",
-              attrs: {
-                "data-bs-toggle": "tab",
-                href: "#messages1",
-                role: "tab",
-                "aria-selected": "false",
-              },
-            },
-            [
-              _c("span", { staticClass: "d-block" }, [
-                _c("i", { staticClass: "uil-file-check" }),
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "d-none d-sm-block" }, [
-                _vm._v("Terverif"),
-              ]),
-            ]
-          ),
-        ]),
-      ]
     )
   },
 ]

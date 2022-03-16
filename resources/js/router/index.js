@@ -10,7 +10,6 @@ import Account from '../views/account/Index'
 import AccountEdit from '../views/account/Edit'
 import AccountPassword from '../views/account/Password'
 
-import Jurnal from '../views/jurnal/Index'
 import JurnalEdit from '../views/jurnal/Edit'
 import JurnalCreate from '../views/jurnal/Create'
 import JurnalVerif from '../views/jurnal/Verif'
