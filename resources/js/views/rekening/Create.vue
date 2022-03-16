@@ -90,13 +90,13 @@ export default {
                     })
                 }
             } catch (e) {
-                this.$toasted.show("Something went wrong : " + e, {
+                this.$toasted.show("Something went wrong : " + e.response.statusText, {
                         type: 'error',
                         duration: 3000,
                         position: 'top-center',
                     })
-                    console.log(e)
-                // this.theErrors = e.responseCreate.data;
+                    // console.log(e)
+                this.theErrors = e.response.data;
             }
         }
     }

@@ -126,7 +126,7 @@ export default {
                     this.$router.push({ name: 'rekening' })
                 }
             } catch (e) {
-                this.$toasted.show("Something went wrong", {
+                this.$toasted.show("Something went wrong : " + e.response.statusText, {
                         type: 'error',
                         duration: 3000,
                         position: 'top-center',

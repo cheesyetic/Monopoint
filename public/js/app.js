@@ -3193,14 +3193,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context2.prev = 10;
                 _context2.t0 = _context2["catch"](2);
 
-                _this2.$toasted.show("Something went wrong : " + _context2.t0, {
+                _this2.$toasted.show("Something went wrong : " + _context2.t0.response.statusText, {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
                 });
 
                 _this2.requestLoading = false;
-                _this2.theErrors = _context2.t0.responseCreate.data;
+                _this2.theErrors = _context2.t0.response.data;
 
               case 15:
               case "end":
@@ -3597,22 +3597,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _this3.loadingCRUD = true;
                 _this3.appointment.user_id = [];
-                _this3.appointment.length = 0;
-                console.log(_this3.appointment.user_id);
+                _this3.appointment.length = 0; // console.log(this.appointment.user_id)
 
                 for (i = 0; i < _this3.partnerSelected.length; i++) {
                   _this3.appointment.user_id[i] = _this3.partnerSelected[i].id;
                 }
 
-                _context3.prev = 5;
-                _context3.next = 8;
+                _context3.prev = 4;
+                _context3.next = 7;
                 return axios.post('/api/appointment/' + _this3.$route.params.token, _this3.appointment, {
                   headers: {
                     'Authorization': 'Bearer ' + _this3.auth.token
                   }
                 });
 
-              case 8:
+              case 7:
                 response = _context3.sent;
 
                 // console.log(response.status)
@@ -3630,14 +3629,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   });
                 }
 
-                _context3.next = 17;
+                _context3.next = 16;
                 break;
 
-              case 12:
-                _context3.prev = 12;
-                _context3.t0 = _context3["catch"](5);
+              case 11:
+                _context3.prev = 11;
+                _context3.t0 = _context3["catch"](4);
 
-                _this3.$toasted.show("Something went wrong", {
+                _this3.$toasted.show("Something went wrong : " + _context3.t0.response.statusText, {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
@@ -3646,12 +3645,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this3.theErrors = _context3.t0.response.data;
                 _this3.loadingCRUD = false;
 
-              case 17:
+              case 16:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[5, 12]]);
+        }, _callee3, null, [[4, 11]]);
       }))();
     }
   }
@@ -3931,6 +3930,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['auth'],
@@ -3978,23 +3979,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   });
                 }
 
-                _context.next = 13;
+                _context.next = 12;
                 break;
 
               case 8:
                 _context.prev = 8;
                 _context.t0 = _context["catch"](0);
 
-                _this.$toasted.show("Something went wrong : " + _context.t0, {
+                _this.$toasted.show("Something went wrong : " + _context.t0.response.statusText, {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
-                });
+                }); // console.log(e)
 
-                console.log(_context.t0);
-                _this.theErrors = _context.t0.responseCreate.data;
 
-              case 13:
+                _this.theErrors = _context.t0.response.data;
+
+              case 12:
               case "end":
                 return _context.stop();
             }
@@ -4205,6 +4206,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['auth'],
@@ -4305,7 +4308,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context2.prev = 7;
                 _context2.t0 = _context2["catch"](0);
 
-                _this2.$toasted.show("Something went wrong", {
+                _this2.$toasted.show("Something went wrong : " + _context2.t0.response.statusText, {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
@@ -4744,6 +4747,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -4808,13 +4813,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.prev = 7;
                 _context.t0 = _context["catch"](0);
 
-                _this.$toasted.show("Something went wrong : " + _context.t0, {
+                _this.$toasted.show("Something went wrong : " + _context.t0.response.statusText, {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
-                });
+                }); // console.log(e)
 
-                console.log(_context.t0); // this.theErrors = e.responseCreate.data;
+
+                _this.theErrors = _context.t0.response.data;
 
               case 11:
               case "end":
@@ -5036,6 +5042,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['auth'],
@@ -5138,7 +5146,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context2.prev = 7;
                 _context2.t0 = _context2["catch"](0);
 
-                _this2.$toasted.show("Something went wrong", {
+                _this2.$toasted.show("Something went wrong : " + _context2.t0.response.statusText, {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
@@ -6942,7 +6950,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 if (response.status === 200) {
                   for (i = 0; i < response.data.data.length; i++) {
-                    label = response.data.data[i].name + ' (' + response.data.data[i].code + ', ' + response.data.data[i].type + ')';
+                    label = response.data.data[i].name + ' (' + response.data.data[i].code + ')';
                     id = String(response.data.data[i].id);
 
                     _this.chartOptions.push({
@@ -7226,24 +7234,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this6.journal.bank_account_id = '';
                   _this6.journal.project_id = '';
                   _this6.journal.user_id = '';
-                  _this6.theErrors = []; // if(this.$route.query.page == 'proses') {
-                  //     this.$router.push({ name: 'jurnalproses' })
-                  // } else if(this.$route.query.page == 'verif'){
-                  //     this.$router.push({ name: 'jurnalverif' })
-                  // }
-                  // else {
-                  //     }
+                  _this6.theErrors = [];
 
-                  // if(this.$route.query.page == 'proses') {
-                  //     this.$router.push({ name: 'jurnalproses' })
-                  // } else if(this.$route.query.page == 'verif'){
-                  //     this.$router.push({ name: 'jurnalverif' })
-                  // }
-                  // else {
-                  //     }
-                  _this6.$router.push({
-                    name: 'jurnal'
-                  });
+                  if (_this6.$route.query.page == 'proses') {
+                    _this6.$router.push({
+                      name: 'jurnalproses'
+                    });
+                  } else if (_this6.$route.query.page == 'verif') {
+                    _this6.$router.push({
+                      name: 'jurnalverif'
+                    });
+                  } else {
+                    _this6.$router.push({
+                      name: 'jurnal'
+                    });
+                  }
 
                   _this6.$toasted.show("Sukses mengedit jurnal", {
                     type: 'success',
@@ -9245,6 +9250,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['auth'],
@@ -9288,15 +9295,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.prev = 0;
-                console.log(_this.accountCreate);
-                _context.next = 4;
+                _context.next = 3;
                 return axios.post('/api/account', _this.accountCreate, {
                   headers: {
                     'Authorization': 'Bearer ' + _this.auth.token
                   }
                 });
 
-              case 4:
+              case 3:
                 responseCreate = _context.sent;
 
                 if (responseCreate.status == 201) {
@@ -9318,27 +9324,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   });
                 }
 
-                _context.next = 12;
+                _context.next = 11;
                 break;
 
-              case 8:
-                _context.prev = 8;
+              case 7:
+                _context.prev = 7;
                 _context.t0 = _context["catch"](0);
 
-                _this.$toasted.show("Something went wrong : " + _context.t0, {
+                _this.$toasted.show("Something went wrong : " + _context.t0.response.statusText, {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
-                });
+                }); // console.log(e.response)
 
-                console.log(_context.t0); // this.theErrors = e.responseCreate.data;
 
-              case 12:
+                _this.theErrors = _context.t0.response.data;
+
+              case 11:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 8]]);
+        }, _callee, null, [[0, 7]]);
       }))();
     }
   }
@@ -9979,13 +9986,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.prev = 7;
                 _context.t0 = _context["catch"](0);
 
-                _this.$toasted.show("Something went wrong : " + _context.t0, {
+                _this.$toasted.show("Something went wrong : " + _context.t0.response.statusText, {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
                 });
 
-                _this.theErrors = _context.t0.responseCreate.data;
+                _this.theErrors = _context.t0.response.data;
 
               case 11:
               case "end":
@@ -10620,6 +10627,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -10679,23 +10688,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   });
                 }
 
-                _context.next = 13;
+                _context.next = 12;
                 break;
 
               case 8:
                 _context.prev = 8;
                 _context.t0 = _context["catch"](0);
 
-                _this.$toasted.show("Something went wrong : " + _context.t0, {
+                _this.$toasted.show("Something went wrong : " + _context.t0.response.statusText, {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
-                });
+                }); // console.log(e)
 
-                console.log(_context.t0);
-                _this.theErrors = _context.t0.responseCreate.data;
 
-              case 13:
+                _this.theErrors = _context.t0.response.data;
+
+              case 12:
               case "end":
                 return _context.stop();
             }
@@ -10908,6 +10917,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -11012,7 +11023,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context2.prev = 7;
                 _context2.t0 = _context2["catch"](0);
 
-                _this2.$toasted.show("Something went wrong", {
+                _this2.$toasted.show("Something went wrong : " + _context2.t0.response.statusText, {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
@@ -11334,13 +11345,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.prev = 8;
                 _context.t0 = _context["catch"](0);
 
-                _this.$toasted.show("Something went wrong : " + _context.t0, {
+                _this.$toasted.show("Something went wrong : " + _context.t0.response.statusText, {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
-                });
+                }); // console.log(e)
 
-                console.log(_context.t0); // this.theErrors = e.responseCreate.data;
+
+                _this.theErrors = _context.t0.response.data;
 
               case 12:
               case "end":
@@ -11640,7 +11652,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context2.prev = 7;
                 _context2.t0 = _context2["catch"](0);
 
-                _this2.$toasted.show("Something went wrong", {
+                _this2.$toasted.show("Something went wrong : " + _context2.t0.response.statusText, {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
@@ -12226,7 +12238,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.wrapper{\n  display: inline-flex;\n  align-items: center;\n  justify-content: space-evenly;\n  border-radius: 5px;\n}\n.option{\n    min-height: 39px;\n    min-width: 100px;\n    padding: .2rem 1rem;\n    background: #fff;\n    height: 100%;\n    width: 100%;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    gap: .5rem;\n    margin: 0 8px;\n    border-radius: 5px;\n    cursor: pointer;\n    border: 2px solid lightgrey;\n    transition: all 0.3s ease;\n}\n.option:first-child {\n  margin-left: 0;\n}\n.option:last-child {\n  margin-right: 0;\n}\n.option .dot{\n  height: 16px;\n  width: 16px;\n  background: #d9d9d9;\n  border-radius: 50%;\n  position: relative;\n}\n.option .dot::before{\n  position: absolute;\n  content: \"\";\n  top: 4px;\n  left: 4px;\n  width: 8px;\n  height: 8px;\n  background: #5B73E8;\n  border-radius: 50%;\n  opacity: 0;\n  transform: scale(1.5);\n  transition: all 0.3s ease;\n}\ninput[type=\"radio\"]{\n  display: none;\n}\n#option-1:checked:checked ~ .option-1,\n#option-2:checked:checked ~ .option-2,\n#option-3:checked:checked ~ .option-3{\n  border-color: #5B73E8;\n  background: #5B73E8;\n}\n#option-1:checked:checked ~ .option-1 .dot,\n#option-2:checked:checked ~ .option-2 .dot,\n#option-3:checked:checked ~ .option-3 .dot{\n  background: #fff;\n}\n#option-1:checked:checked ~ .option-1 .dot::before,\n#option-2:checked:checked ~ .option-2 .dot::before,\n#option-3:checked:checked ~ .option-3 .dot::before{\n  opacity: 1;\n  transform: scale(1);\n}\n.option span{\n  font-size: 16px;\n  color: #808080;\n}\n#option-1:checked:checked ~ .option-1 span,\n#option-2:checked:checked ~ .option-2 span,\n#option-3:checked:checked ~ .option-3 span{\n  color: #fff;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.wrapper{\n  display: inline-flex;\n  align-items: center;\n  justify-content: space-evenly;\n  border-radius: 5px;\n}\n.option{\n    min-height: 39px;\n    min-width: 100px;\n    padding: .2rem 1rem;\n    background: #fff;\n    height: 100%;\n    width: auto;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    gap: .5rem;\n    margin: 0 8px;\n    border-radius: 5px;\n    cursor: pointer;\n    border: 2px solid lightgrey;\n    transition: all 0.3s ease;\n}\n.option:first-child {\n  margin-left: 0;\n}\n.option:last-child {\n  margin-right: 0;\n}\n.option .dot{\n  height: 16px;\n  width: 16px;\n  background: #d9d9d9;\n  border-radius: 50%;\n  position: relative;\n}\n.option .dot::before{\n  position: absolute;\n  content: \"\";\n  top: 4px;\n  left: 4px;\n  width: 8px;\n  height: 8px;\n  background: #5B73E8;\n  border-radius: 50%;\n  opacity: 0;\n  transform: scale(1.5);\n  transition: all 0.3s ease;\n}\ninput[type=\"radio\"]{\n  display: none;\n}\n#option-1:checked:checked ~ .option-1,\n#option-2:checked:checked ~ .option-2,\n#option-3:checked:checked ~ .option-3{\n  border-color: #5B73E8;\n  background: #5B73E8;\n}\n#option-1:checked:checked ~ .option-1 .dot,\n#option-2:checked:checked ~ .option-2 .dot,\n#option-3:checked:checked ~ .option-3 .dot{\n  background: #fff;\n}\n#option-1:checked:checked ~ .option-1 .dot::before,\n#option-2:checked:checked ~ .option-2 .dot::before,\n#option-3:checked:checked ~ .option-3 .dot::before{\n  opacity: 1;\n  transform: scale(1);\n}\n.option span{\n  font-size: 16px;\n  color: #808080;\n}\n#option-1:checked:checked ~ .option-1 span,\n#option-2:checked:checked ~ .option-2 span,\n#option-3:checked:checked ~ .option-3 span{\n  color: #fff;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -41125,10 +41137,8 @@ var render = function () {
                       [_vm._v("Harga Satuan")]
                     ),
                     _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "col-md-10 d-flex align-items-center" },
-                      [
+                    _c("div", { staticClass: "col-md-10" }, [
+                      _c("div", { staticClass: "d-flex align-items-center" }, [
                         _c(
                           "p",
                           {
@@ -41165,14 +41175,14 @@ var render = function () {
                             },
                           },
                         }),
-                        _vm._v(" "),
-                        _vm.theErrors.price
-                          ? _c("div", { staticClass: "mt-1 text-danger" }, [
-                              _vm._v(_vm._s(_vm.theErrors.price[0])),
-                            ])
-                          : _vm._e(),
-                      ]
-                    ),
+                      ]),
+                      _vm._v(" "),
+                      _vm.theErrors.price
+                        ? _c("div", { staticClass: "mt-1 text-danger" }, [
+                            _vm._v(_vm._s(_vm.theErrors.price[0])),
+                          ])
+                        : _vm._e(),
+                    ]),
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "mb-3 row" }, [
@@ -41517,59 +41527,58 @@ var render = function () {
                               [_vm._v("Harga Satuan")]
                             ),
                             _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "col-md-10 d-flex align-items-center",
-                              },
-                              [
-                                _c(
-                                  "p",
-                                  {
-                                    staticStyle: {
-                                      margin: "0",
-                                      "margin-right": "1rem",
-                                    },
-                                  },
-                                  [_vm._v("IDR")]
-                                ),
-                                _vm._v(" "),
-                                _c("input", {
-                                  directives: [
+                            _c("div", { staticClass: "col-md-10" }, [
+                              _c(
+                                "div",
+                                { staticClass: "d-flex align-items-center" },
+                                [
+                                  _c(
+                                    "p",
                                     {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.asset.price,
-                                      expression: "asset.price",
+                                      staticStyle: {
+                                        margin: "0",
+                                        "margin-right": "1rem",
+                                      },
                                     },
-                                  ],
-                                  staticClass: "form-control flex-grow",
-                                  attrs: { type: "number" },
-                                  domProps: { value: _vm.asset.price },
-                                  on: {
-                                    input: function ($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        _vm.asset,
-                                        "price",
-                                        $event.target.value
-                                      )
+                                    [_vm._v("IDR")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.asset.price,
+                                        expression: "asset.price",
+                                      },
+                                    ],
+                                    staticClass: "form-control flex-grow",
+                                    attrs: { type: "number" },
+                                    domProps: { value: _vm.asset.price },
+                                    on: {
+                                      input: function ($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.asset,
+                                          "price",
+                                          $event.target.value
+                                        )
+                                      },
                                     },
-                                  },
-                                }),
-                                _vm._v(" "),
-                                _vm.theErrors.price
-                                  ? _c(
-                                      "div",
-                                      { staticClass: "mt-1 text-danger" },
-                                      [_vm._v(_vm._s(_vm.theErrors.price[0]))]
-                                    )
-                                  : _vm._e(),
-                              ]
-                            ),
+                                  }),
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _vm.theErrors.price
+                                ? _c(
+                                    "div",
+                                    { staticClass: "mt-1 text-danger" },
+                                    [_vm._v(_vm._s(_vm.theErrors.price[0]))]
+                                  )
+                                : _vm._e(),
+                            ]),
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "mb-3 row" }, [
@@ -42336,60 +42345,62 @@ var render = function () {
                       [_vm._v("Tipe")]
                     ),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col md-10 wrapper" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.chartCreate.type,
-                            expression: "chartCreate.type",
+                    _c("div", { staticClass: "col md-10" }, [
+                      _c("div", { staticClass: "col wrapper" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.chartCreate.type,
+                              expression: "chartCreate.type",
+                            },
+                          ],
+                          attrs: {
+                            value: "1",
+                            type: "radio",
+                            name: "select",
+                            id: "option-1",
                           },
-                        ],
-                        attrs: {
-                          value: "1",
-                          type: "radio",
-                          name: "select",
-                          id: "option-1",
-                        },
-                        domProps: {
-                          checked: _vm._q(_vm.chartCreate.type, "1"),
-                        },
-                        on: {
-                          change: function ($event) {
-                            return _vm.$set(_vm.chartCreate, "type", "1")
+                          domProps: {
+                            checked: _vm._q(_vm.chartCreate.type, "1"),
                           },
-                        },
-                      }),
-                      _vm._v(" "),
-                      _vm._m(1),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.chartCreate.type,
-                            expression: "chartCreate.type",
+                          on: {
+                            change: function ($event) {
+                              return _vm.$set(_vm.chartCreate, "type", "1")
+                            },
                           },
-                        ],
-                        attrs: {
-                          value: "0",
-                          type: "radio",
-                          name: "select",
-                          id: "option-2",
-                        },
-                        domProps: {
-                          checked: _vm._q(_vm.chartCreate.type, "0"),
-                        },
-                        on: {
-                          change: function ($event) {
-                            return _vm.$set(_vm.chartCreate, "type", "0")
+                        }),
+                        _vm._v(" "),
+                        _vm._m(1),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.chartCreate.type,
+                              expression: "chartCreate.type",
+                            },
+                          ],
+                          attrs: {
+                            value: "0",
+                            type: "radio",
+                            name: "select",
+                            id: "option-2",
                           },
-                        },
-                      }),
-                      _vm._v(" "),
-                      _vm._m(2),
+                          domProps: {
+                            checked: _vm._q(_vm.chartCreate.type, "0"),
+                          },
+                          on: {
+                            change: function ($event) {
+                              return _vm.$set(_vm.chartCreate, "type", "0")
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        _vm._m(2),
+                      ]),
                       _vm._v(" "),
                       _vm.theErrors.type
                         ? _c("div", { staticClass: "mt-1 text-danger" }, [
@@ -42722,83 +42733,85 @@ var render = function () {
                               [_vm._v("Tipe")]
                             ),
                             _vm._v(" "),
-                            _c("div", { staticClass: "col md-10 wrapper" }, [
-                              _c("input", {
-                                directives: [
+                            _c("div", { staticClass: "col md-10" }, [
+                              _c("div", { staticClass: "col wrapper" }, [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.chart.type,
+                                      expression: "chart.type",
+                                    },
+                                  ],
+                                  attrs: {
+                                    value: "1",
+                                    type: "radio",
+                                    name: "select",
+                                    id: "option-1",
+                                  },
+                                  domProps: {
+                                    checked: _vm._q(_vm.chart.type, "1"),
+                                  },
+                                  on: {
+                                    change: function ($event) {
+                                      return _vm.$set(_vm.chart, "type", "1")
+                                    },
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "label",
                                   {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.chart.type,
-                                    expression: "chart.type",
+                                    staticClass: "option option-1",
+                                    staticStyle: { "margin-left": "0" },
+                                    attrs: { for: "option-1" },
                                   },
-                                ],
-                                attrs: {
-                                  value: "1",
-                                  type: "radio",
-                                  name: "select",
-                                  id: "option-1",
-                                },
-                                domProps: {
-                                  checked: _vm._q(_vm.chart.type, "1"),
-                                },
-                                on: {
-                                  change: function ($event) {
-                                    return _vm.$set(_vm.chart, "type", "1")
+                                  [
+                                    _c("div", { staticClass: "dot" }),
+                                    _vm._v(" "),
+                                    _c("span", [_vm._v("Pemasukan")]),
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.chart.type,
+                                      expression: "chart.type",
+                                    },
+                                  ],
+                                  attrs: {
+                                    value: "2",
+                                    type: "radio",
+                                    name: "select",
+                                    id: "option-2",
                                   },
-                                },
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "label",
-                                {
-                                  staticClass: "option option-1",
-                                  staticStyle: { "margin-left": "0" },
-                                  attrs: { for: "option-1" },
-                                },
-                                [
-                                  _c("div", { staticClass: "dot" }),
-                                  _vm._v(" "),
-                                  _c("span", [_vm._v("Pemasukan")]),
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c("input", {
-                                directives: [
+                                  domProps: {
+                                    checked: _vm._q(_vm.chart.type, "2"),
+                                  },
+                                  on: {
+                                    change: function ($event) {
+                                      return _vm.$set(_vm.chart, "type", "2")
+                                    },
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "label",
                                   {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.chart.type,
-                                    expression: "chart.type",
+                                    staticClass: "option option-2",
+                                    attrs: { for: "option-2" },
                                   },
-                                ],
-                                attrs: {
-                                  value: "2",
-                                  type: "radio",
-                                  name: "select",
-                                  id: "option-2",
-                                },
-                                domProps: {
-                                  checked: _vm._q(_vm.chart.type, "2"),
-                                },
-                                on: {
-                                  change: function ($event) {
-                                    return _vm.$set(_vm.chart, "type", "2")
-                                  },
-                                },
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "label",
-                                {
-                                  staticClass: "option option-2",
-                                  attrs: { for: "option-2" },
-                                },
-                                [
-                                  _c("div", { staticClass: "dot" }),
-                                  _vm._v(" "),
-                                  _c("span", [_vm._v("Pengeluaran")]),
-                                ]
-                              ),
+                                  [
+                                    _c("div", { staticClass: "dot" }),
+                                    _vm._v(" "),
+                                    _c("span", [_vm._v("Pengeluaran")]),
+                                  ]
+                                ),
+                              ]),
                               _vm._v(" "),
                               _vm.theErrors.type
                                 ? _c(
@@ -46777,14 +46790,7 @@ var render = function () {
                                         ]),
                                         _vm._v(" "),
                                         _c("td", [
-                                          _c(
-                                            "span",
-                                            {
-                                              staticClass:
-                                                "badge rounded-pill bg-soft-success font-size-12",
-                                            },
-                                            [_vm._v(_vm._s(journal.project_id))]
-                                          ),
+                                          _vm._v(_vm._s(journal.project_id)),
                                         ]),
                                         _vm._v(" "),
                                         _c("td", [
@@ -47527,14 +47533,7 @@ var render = function () {
                                         ]),
                                         _vm._v(" "),
                                         _c("td", [
-                                          _c(
-                                            "span",
-                                            {
-                                              staticClass:
-                                                "badge rounded-pill bg-soft-success font-size-12",
-                                            },
-                                            [_vm._v(_vm._s(journal.project_id))]
-                                          ),
+                                          _vm._v(_vm._s(journal.project_id)),
                                         ]),
                                         _vm._v(" "),
                                         _c("td", [
@@ -48337,14 +48336,7 @@ var render = function () {
                                         ]),
                                         _vm._v(" "),
                                         _c("td", [
-                                          _c(
-                                            "span",
-                                            {
-                                              staticClass:
-                                                "badge rounded-pill bg-soft-success font-size-12",
-                                            },
-                                            [_vm._v(_vm._s(journal.project_id))]
-                                          ),
+                                          _vm._v(_vm._s(journal.project_id)),
                                         ]),
                                         _vm._v(" "),
                                         _c("td", [
@@ -49385,87 +49377,89 @@ var render = function () {
                       [_vm._v("Tipe Akun")]
                     ),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col md-10 wrapper" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.accountCreate.type,
-                            expression: "accountCreate.type",
+                    _c("div", { staticClass: "col md-10" }, [
+                      _c("div", { staticClass: "col wrapper" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.accountCreate.type,
+                              expression: "accountCreate.type",
+                            },
+                          ],
+                          attrs: {
+                            value: "0",
+                            type: "radio",
+                            name: "select",
+                            id: "option-1",
                           },
-                        ],
-                        attrs: {
-                          value: "0",
-                          type: "radio",
-                          name: "select",
-                          id: "option-1",
-                        },
-                        domProps: {
-                          checked: _vm._q(_vm.accountCreate.type, "0"),
-                        },
-                        on: {
-                          change: function ($event) {
-                            return _vm.$set(_vm.accountCreate, "type", "0")
+                          domProps: {
+                            checked: _vm._q(_vm.accountCreate.type, "0"),
                           },
-                        },
-                      }),
-                      _vm._v(" "),
-                      _vm._m(1),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.accountCreate.type,
-                            expression: "accountCreate.type",
+                          on: {
+                            change: function ($event) {
+                              return _vm.$set(_vm.accountCreate, "type", "0")
+                            },
                           },
-                        ],
-                        attrs: {
-                          value: "1",
-                          type: "radio",
-                          name: "select",
-                          id: "option-2",
-                        },
-                        domProps: {
-                          checked: _vm._q(_vm.accountCreate.type, "1"),
-                        },
-                        on: {
-                          change: function ($event) {
-                            return _vm.$set(_vm.accountCreate, "type", "1")
+                        }),
+                        _vm._v(" "),
+                        _vm._m(1),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.accountCreate.type,
+                              expression: "accountCreate.type",
+                            },
+                          ],
+                          attrs: {
+                            value: "1",
+                            type: "radio",
+                            name: "select",
+                            id: "option-2",
                           },
-                        },
-                      }),
-                      _vm._v(" "),
-                      _vm._m(2),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.accountCreate.type,
-                            expression: "accountCreate.type",
+                          domProps: {
+                            checked: _vm._q(_vm.accountCreate.type, "1"),
                           },
-                        ],
-                        attrs: {
-                          value: "2",
-                          type: "radio",
-                          name: "select",
-                          id: "option-3",
-                        },
-                        domProps: {
-                          checked: _vm._q(_vm.accountCreate.type, "2"),
-                        },
-                        on: {
-                          change: function ($event) {
-                            return _vm.$set(_vm.accountCreate, "type", "2")
+                          on: {
+                            change: function ($event) {
+                              return _vm.$set(_vm.accountCreate, "type", "1")
+                            },
                           },
-                        },
-                      }),
-                      _vm._v(" "),
-                      _vm._m(3),
+                        }),
+                        _vm._v(" "),
+                        _vm._m(2),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.accountCreate.type,
+                              expression: "accountCreate.type",
+                            },
+                          ],
+                          attrs: {
+                            value: "2",
+                            type: "radio",
+                            name: "select",
+                            id: "option-3",
+                          },
+                          domProps: {
+                            checked: _vm._q(_vm.accountCreate.type, "2"),
+                          },
+                          on: {
+                            change: function ($event) {
+                              return _vm.$set(_vm.accountCreate, "type", "2")
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        _vm._m(3),
+                      ]),
                       _vm._v(" "),
                       _vm.theErrors.type
                         ? _c("div", { staticClass: "mt-1 text-danger" }, [
@@ -50401,7 +50395,7 @@ var render = function () {
     "button",
     {
       ref: "deletePeriod",
-      staticClass: "btn btn-danger",
+      staticClass: "btn btn-danger mb-1",
       on: { click: _vm.destroyPeriod },
     },
     [_c("i", { staticClass: "uil-trash" }), _vm._v(" Delete")]
@@ -50883,7 +50877,8 @@ var render = function () {
                                         _c(
                                           "button",
                                           {
-                                            staticClass: "btn btn-secondary",
+                                            staticClass:
+                                              "btn btn-secondary mb-1",
                                             class: period.status
                                               ? "disabled"
                                               : "",
@@ -50904,7 +50899,7 @@ var render = function () {
                                         _c(
                                           "router-link",
                                           {
-                                            staticClass: "btn btn-primary",
+                                            staticClass: "btn btn-primary mb-1",
                                             attrs: {
                                               to: {
                                                 name: "periode.edit",
@@ -51122,98 +51117,107 @@ var render = function () {
                       [_vm._v("Status")]
                     ),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col md-10 wrapper" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.projectCreate.status,
-                            expression: "projectCreate.status",
+                    _c("div", { staticClass: "col md-10" }, [
+                      _c("div", { staticClass: "col wrapper" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.projectCreate.status,
+                              expression: "projectCreate.status",
+                            },
+                          ],
+                          attrs: {
+                            value: "In Progress",
+                            type: "radio",
+                            name: "select",
+                            id: "option-1",
                           },
-                        ],
-                        attrs: {
-                          value: "In Progress",
-                          type: "radio",
-                          name: "select",
-                          id: "option-1",
-                        },
-                        domProps: {
-                          checked: _vm._q(
-                            _vm.projectCreate.status,
-                            "In Progress"
-                          ),
-                        },
-                        on: {
-                          change: function ($event) {
-                            return _vm.$set(
-                              _vm.projectCreate,
-                              "status",
+                          domProps: {
+                            checked: _vm._q(
+                              _vm.projectCreate.status,
                               "In Progress"
-                            )
+                            ),
                           },
-                        },
-                      }),
-                      _vm._v(" "),
-                      _vm._m(1),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.projectCreate.status,
-                            expression: "projectCreate.status",
+                          on: {
+                            change: function ($event) {
+                              return _vm.$set(
+                                _vm.projectCreate,
+                                "status",
+                                "In Progress"
+                              )
+                            },
                           },
-                        ],
-                        attrs: {
-                          value: "Pending",
-                          type: "radio",
-                          name: "select",
-                          id: "option-2",
-                        },
-                        domProps: {
-                          checked: _vm._q(_vm.projectCreate.status, "Pending"),
-                        },
-                        on: {
-                          change: function ($event) {
-                            return _vm.$set(
-                              _vm.projectCreate,
-                              "status",
+                        }),
+                        _vm._v(" "),
+                        _vm._m(1),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.projectCreate.status,
+                              expression: "projectCreate.status",
+                            },
+                          ],
+                          attrs: {
+                            value: "Pending",
+                            type: "radio",
+                            name: "select",
+                            id: "option-2",
+                          },
+                          domProps: {
+                            checked: _vm._q(
+                              _vm.projectCreate.status,
                               "Pending"
-                            )
+                            ),
                           },
-                        },
-                      }),
-                      _vm._v(" "),
-                      _vm._m(2),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.projectCreate.status,
-                            expression: "projectCreate.status",
+                          on: {
+                            change: function ($event) {
+                              return _vm.$set(
+                                _vm.projectCreate,
+                                "status",
+                                "Pending"
+                              )
+                            },
                           },
-                        ],
-                        attrs: {
-                          value: "Done",
-                          type: "radio",
-                          name: "select",
-                          id: "option-3",
-                        },
-                        domProps: {
-                          checked: _vm._q(_vm.projectCreate.status, "Done"),
-                        },
-                        on: {
-                          change: function ($event) {
-                            return _vm.$set(_vm.projectCreate, "status", "Done")
+                        }),
+                        _vm._v(" "),
+                        _vm._m(2),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.projectCreate.status,
+                              expression: "projectCreate.status",
+                            },
+                          ],
+                          attrs: {
+                            value: "Done",
+                            type: "radio",
+                            name: "select",
+                            id: "option-3",
                           },
-                        },
-                      }),
-                      _vm._v(" "),
-                      _vm._m(3),
+                          domProps: {
+                            checked: _vm._q(_vm.projectCreate.status, "Done"),
+                          },
+                          on: {
+                            change: function ($event) {
+                              return _vm.$set(
+                                _vm.projectCreate,
+                                "status",
+                                "Done"
+                              )
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        _vm._m(3),
+                      ]),
                       _vm._v(" "),
                       _vm.theErrors.status
                         ? _c("div", { staticClass: "mt-1 text-danger" }, [
@@ -51513,139 +51517,141 @@ var render = function () {
                               [_vm._v("Status")]
                             ),
                             _vm._v(" "),
-                            _c("div", { staticClass: "col md-10 wrapper" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.project.status,
-                                    expression: "project.status",
+                            _c("div", { staticClass: "col md-10" }, [
+                              _c("div", { staticClass: "col wrapper" }, [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.project.status,
+                                      expression: "project.status",
+                                    },
+                                  ],
+                                  attrs: {
+                                    value: "In Progress",
+                                    type: "radio",
+                                    name: "select",
+                                    id: "option-1",
                                   },
-                                ],
-                                attrs: {
-                                  value: "In Progress",
-                                  type: "radio",
-                                  name: "select",
-                                  id: "option-1",
-                                },
-                                domProps: {
-                                  checked: _vm._q(
-                                    _vm.project.status,
-                                    "In Progress"
-                                  ),
-                                },
-                                on: {
-                                  change: function ($event) {
-                                    return _vm.$set(
-                                      _vm.project,
-                                      "status",
+                                  domProps: {
+                                    checked: _vm._q(
+                                      _vm.project.status,
                                       "In Progress"
-                                    )
+                                    ),
                                   },
-                                },
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "label",
-                                {
-                                  staticClass: "option option-1",
-                                  staticStyle: { "margin-left": "0" },
-                                  attrs: { for: "option-1" },
-                                },
-                                [
-                                  _c("div", { staticClass: "dot" }),
-                                  _vm._v(" "),
-                                  _c("span", [_vm._v("In Progress")]),
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c("input", {
-                                directives: [
+                                  on: {
+                                    change: function ($event) {
+                                      return _vm.$set(
+                                        _vm.project,
+                                        "status",
+                                        "In Progress"
+                                      )
+                                    },
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "label",
                                   {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.project.status,
-                                    expression: "project.status",
+                                    staticClass: "option option-1",
+                                    staticStyle: { "margin-left": "0" },
+                                    attrs: { for: "option-1" },
                                   },
-                                ],
-                                attrs: {
-                                  value: "Pending",
-                                  type: "radio",
-                                  name: "select",
-                                  id: "option-2",
-                                },
-                                domProps: {
-                                  checked: _vm._q(
-                                    _vm.project.status,
-                                    "Pending"
-                                  ),
-                                },
-                                on: {
-                                  change: function ($event) {
-                                    return _vm.$set(
-                                      _vm.project,
-                                      "status",
+                                  [
+                                    _c("div", { staticClass: "dot" }),
+                                    _vm._v(" "),
+                                    _c("span", [_vm._v("In Progress")]),
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.project.status,
+                                      expression: "project.status",
+                                    },
+                                  ],
+                                  attrs: {
+                                    value: "Pending",
+                                    type: "radio",
+                                    name: "select",
+                                    id: "option-2",
+                                  },
+                                  domProps: {
+                                    checked: _vm._q(
+                                      _vm.project.status,
                                       "Pending"
-                                    )
+                                    ),
                                   },
-                                },
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "label",
-                                {
-                                  staticClass: "option option-2",
-                                  attrs: { for: "option-2" },
-                                },
-                                [
-                                  _c("div", { staticClass: "dot" }),
-                                  _vm._v(" "),
-                                  _c("span", [_vm._v("Pending")]),
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c("input", {
-                                directives: [
+                                  on: {
+                                    change: function ($event) {
+                                      return _vm.$set(
+                                        _vm.project,
+                                        "status",
+                                        "Pending"
+                                      )
+                                    },
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "label",
                                   {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.project.status,
-                                    expression: "project.status",
+                                    staticClass: "option option-2",
+                                    attrs: { for: "option-2" },
                                   },
-                                ],
-                                attrs: {
-                                  value: "Done",
-                                  type: "radio",
-                                  name: "select",
-                                  id: "option-3",
-                                },
-                                domProps: {
-                                  checked: _vm._q(_vm.project.status, "Done"),
-                                },
-                                on: {
-                                  change: function ($event) {
-                                    return _vm.$set(
-                                      _vm.project,
-                                      "status",
-                                      "Done"
-                                    )
+                                  [
+                                    _c("div", { staticClass: "dot" }),
+                                    _vm._v(" "),
+                                    _c("span", [_vm._v("Pending")]),
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.project.status,
+                                      expression: "project.status",
+                                    },
+                                  ],
+                                  attrs: {
+                                    value: "Done",
+                                    type: "radio",
+                                    name: "select",
+                                    id: "option-3",
                                   },
-                                },
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "label",
-                                {
-                                  staticClass: "option option-3",
-                                  attrs: { for: "option-3" },
-                                },
-                                [
-                                  _c("div", { staticClass: "dot" }),
-                                  _vm._v(" "),
-                                  _c("span", [_vm._v("Done")]),
-                                ]
-                              ),
+                                  domProps: {
+                                    checked: _vm._q(_vm.project.status, "Done"),
+                                  },
+                                  on: {
+                                    change: function ($event) {
+                                      return _vm.$set(
+                                        _vm.project,
+                                        "status",
+                                        "Done"
+                                      )
+                                    },
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "option option-3",
+                                    attrs: { for: "option-3" },
+                                  },
+                                  [
+                                    _c("div", { staticClass: "dot" }),
+                                    _vm._v(" "),
+                                    _c("span", [_vm._v("Done")]),
+                                  ]
+                                ),
+                              ]),
                               _vm._v(" "),
                               _vm.theErrors.type
                                 ? _c(

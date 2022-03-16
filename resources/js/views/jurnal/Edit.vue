@@ -209,7 +209,7 @@ export default {
                 })
             if (response.status === 200) {
                 for (var i = 0; i < response.data.data.length; i++) {
-                    let label = response.data.data[i].name + ' (' + response.data.data[i].code + ', ' + response.data.data[i].type + ')'
+                    let label = response.data.data[i].name + ' (' + response.data.data[i].code + ')'
                     let id = String(response.data.data[i].id)
                     this.chartOptions.push({ label, id })
                     if(id == this.journal.chart_account_id) {
@@ -360,14 +360,14 @@ export default {
                         this.journal.user_id = ''
                         this.theErrors = []
 
-                        // if(this.$route.query.page == 'proses') {
-                        //     this.$router.push({ name: 'jurnalproses' })
-                        // } else if(this.$route.query.page == 'verif'){
-                        //     this.$router.push({ name: 'jurnalverif' })
-                        // }
-                        // else {
-                        //     }
+                        if(this.$route.query.page == 'proses') {
+                            this.$router.push({ name: 'jurnalproses' })
+                        } else if(this.$route.query.page == 'verif'){
+                            this.$router.push({ name: 'jurnalverif' })
+                        }
+                        else {
                             this.$router.push({ name: 'jurnal' })
+                        }
 
                         this.$toasted.show("Sukses mengedit jurnal", {
                             type: 'success',

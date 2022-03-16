@@ -56,18 +56,20 @@
                             </div>
                             <div class="mb-3 row">
                                 <label for="example-text-input" class="col-md-2 col-form-label">Tipe</label>
-                                <div class="col md-10 wrapper">
-                                    <input value="1" type="radio" name="select" id="option-1" v-model="chart.type">
-                                    <label for="option-1" class="option option-1" style="margin-left:0">
-                                        <div class="dot"></div>
-                                        <span>Pemasukan</span>
-                                    </label>
+                                 <div class="col md-10">
+                                    <div class="col wrapper">
+                                        <input value="1" type="radio" name="select" id="option-1" v-model="chart.type">
+                                        <label for="option-1" class="option option-1" style="margin-left:0">
+                                            <div class="dot"></div>
+                                            <span>Pemasukan</span>
+                                        </label>
 
-                                    <input value="2" type="radio" name="select" id="option-2" v-model="chart.type">
-                                    <label for="option-2" class="option option-2">
-                                        <div class="dot"></div>
-                                        <span>Pengeluaran</span>
-                                    </label>
+                                        <input value="2" type="radio" name="select" id="option-2" v-model="chart.type">
+                                        <label for="option-2" class="option option-2">
+                                            <div class="dot"></div>
+                                            <span>Pengeluaran</span>
+                                        </label>
+                                    </div>
                                     <div v-if="theErrors.type" class="mt-1 text-danger">{{ theErrors.type[0] }}</div>
                                 </div>
                             </div>
@@ -150,7 +152,7 @@ export default {
                     this.$router.push({ name: 'chart' })
                 }
             } catch (e) {
-                this.$toasted.show("Something went wrong", {
+                this.$toasted.show("Something went wrong : " + e.response.statusText, {
                         type: 'error',
                         duration: 3000,
                         position: 'top-center',

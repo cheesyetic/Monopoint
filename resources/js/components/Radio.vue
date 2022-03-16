@@ -22,7 +22,7 @@ export default {
     padding: .2rem 1rem;
     background: #fff;
     height: 100%;
-    width: 100%;
+    width: auto;
     display: flex;
     align-items: center;
     justify-content: center;

@@ -94,7 +94,7 @@
                                                     <td>
                                                         {{ journal.user_id }}
                                                     </td>
-                                                    <td><span class="badge rounded-pill bg-soft-success font-size-12">{{ journal.project_id }}</span></td>
+                                                    <td>{{ journal.project_id }}</td>
                                                     <td>
                                                         {{ journal.chart_account.name }}
                                                     </td>

@@ -103,7 +103,7 @@
                                                     <td>
                                                         {{ journal.chart_account.name }}
                                                     </td>
-                                                    <td><span class="badge rounded-pill bg-soft-success font-size-12">{{ journal.project_id }}</span></td>
+                                                    <td>{{ journal.project_id }}</td>
                                                     <td>
                                                         <div class="btn-group">
                                                             <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu <i class="uil-angle-down"></i></button>

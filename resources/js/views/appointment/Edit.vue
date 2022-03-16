@@ -175,7 +175,7 @@ export default {
 
             this.appointment.user_id = []
             this.appointment.length = 0
-            console.log(this.appointment.user_id)
+            // console.log(this.appointment.user_id)
             for (var i = 0; i < this.partnerSelected.length; i++) {
                 this.appointment.user_id[i] = this.partnerSelected[i].id
             }
@@ -198,7 +198,7 @@ export default {
                     this.$router.push({ name: 'appointment' })
                 }
             } catch (e) {
-                this.$toasted.show("Something went wrong", {
+                this.$toasted.show("Something went wrong : " + e.response.statusText, {
                         type: 'error',
                         duration: 3000,
                         position: 'top-center',
