@@ -50,7 +50,7 @@
                             <div class="mb-3 row">
                                 <label for="example-text-input" class="col-md-2 col-form-label">No Rekening</label>
                                 <div class="col-md-10">
-                                    <input class="form-control" type="text" v-model="bank.account_number">
+                                    <input class="form-control" type="number" v-model="bank.account_number">
                                     <div v-if="theErrors.account_number" class="mt-1 text-danger">{{ theErrors.account_number[0] }}</div>
                                 </div>
                             </div>

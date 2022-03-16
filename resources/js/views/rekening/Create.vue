@@ -35,7 +35,7 @@
                             <div class="mb-3 row">
                                 <label for="example-date-input" class="col-md-2 col-form-label">Nomor Rekening</label>
                                 <div class="col-md-10">
-                                    <input class="form-control" type="text" v-model="bankCreate.account_number" name="number">
+                                    <input class="form-control" type="number" v-model="bankCreate.account_number" name="number">
                                     <div v-if="theErrors.account_number" class="mt-1 text-danger">{{ theErrors.account_number[0] }}</div>
                                 </div>
                             </div>

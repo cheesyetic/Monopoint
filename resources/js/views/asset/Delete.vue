@@ -1,5 +1,5 @@
 <template>
-    <button class="btn btn-danger" ref="deleteProject" @click="destroyAsset"><i class="uil-trash"></i> Delete</button>
+    <button class="btn btn-danger" ref="deleteProject" @click="destroyAsset"><i class="uil-trash"></i> <span class="d-sm-none d-md-none d-lg-none d-xl-block">Delete</span></button>
 </template>
 
 <script>
@@ -12,7 +12,11 @@ export default {
             try {
                 let q = window.confirm("Are you sure you want to delete this asset?")
                 if (q) {
-                    let responseDelete = await axios.delete(`/api/asset/${this.endpoint}`)
+                    let responseDelete = await axios.delete(`/api/asset/${this.endpoint}`, {
+                        headers: {
+                            'Authorization': 'Bearer ' + this.auth.token
+                        }
+                    })
                     if (responseDelete.status == 200) {
                         this.$toasted.show(responseDelete.data.message, {
                             type: 'success',

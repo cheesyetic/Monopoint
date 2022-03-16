@@ -2127,6 +2127,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     this.getUser();
   },
   methods: {
+    ping: function ping() {
+      console.log("ping");
+    },
     getUser: function getUser() {
       var _this = this;
 
@@ -2136,8 +2139,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                _this.ping();
+
                 console.log("GET USER BOSQ");
-                _context.next = 3;
+                _context.next = 4;
                 return axios.get('/api/user', {
                   headers: {
                     'Authorization': 'Bearer ' + _this.auth.token
@@ -2152,7 +2157,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 });
 
-              case 3:
+              case 4:
                 responseUser = _context.sent;
                 console.log("responseUser.data");
                 console.log(responseUser.data);
@@ -2174,7 +2179,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   });
                 }
 
-              case 7:
+              case 8:
               case "end":
                 return _context.stop();
             }
@@ -2468,13 +2473,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['auth'],
-  // data() {
-  //   return {
-  //     loggedIn: localStorage.getItem('loggedIn'),
-  //     token: localStorage.getItem('token'),
-  //     user: []
-  //   }
-  // },
+  data: function data() {
+    return {
+      topnav_admin: true,
+      topnav: {
+        jurnal: false,
+        admin: false
+      }
+    }; //     loggedIn: localStorage.getItem('loggedIn'),
+    //     token: localStorage.getItem('token'),
+    //     user: []
+  },
   // created() {
   //     axios.get('http://localhost:8000/api/user', {headers: {'Authorization': 'Bearer '+this.token}})
   //     .then(response => {
@@ -4031,7 +4040,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
 
                 _context.next = 5;
-                return axios["delete"]("/api/asset/".concat(_this.endpoint));
+                return axios["delete"]("/api/asset/".concat(_this.endpoint), {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 5:
                 responseDelete = _context.sent;
@@ -4323,6 +4336,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
 //
 //
 //
@@ -4916,7 +4930,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
 
                 _context.next = 5;
-                return axios["delete"]("/api/chartaccount/".concat(_this.endpoint));
+                return axios["delete"]("/api/chartaccount/".concat(_this.endpoint), {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 5:
                 responseDelete = _context.sent;
@@ -6501,7 +6519,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     position: 'top-center'
                   });
 
-                  _this.$refs.deleteJournal.parentElement.parentElement.remove();
+                  _this.$refs.deleteJournal.parentElement.parentElement.parentElement.parentElement.remove();
                 } else {
                   _this.$toasted.show("Error deleting journal", {
                     type: 'error',
@@ -6558,6 +6576,8 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
 //
 //
 //
@@ -6724,7 +6744,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context2.sent;
 
                 if (response.status === 200) {
-                  console.log(response);
+                  // console.log(response)
                   _this2.journalHistories = response.data.data;
                   _this2.journalHistories.date = moment(String(_this2.journalHistories.date)).format('yyyy-MM-DD') + 'T' + moment(String(_this2.journalHistories.date)).format('hh:mm:ss');
                   _this2.loading = false;
@@ -8952,7 +8972,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context3.next = 2;
                 return axios.get('/api/journal', {
                   params: {
-                    category: 1,
+                    category: 3,
                     keyword: _this3.filter_keyword,
                     chart: _this3.filter_chartaccount,
                     reimburse: _this3.filter_reimburse,
@@ -9011,6 +9031,8 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
 //
 //
 //
@@ -39367,12 +39389,38 @@ var render = function () {
                   ),
                   _vm._v(" "),
                   _c("li", { staticClass: "nav-item dropdown" }, [
-                    _vm._m(2),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "nav-link dropdown-toggle arrow-none",
+                        attrs: {
+                          href: "#",
+                          id: "topnav-jurnal",
+                          role: "button",
+                        },
+                        on: {
+                          click: function ($event) {
+                            $event.preventDefault()
+                            _vm.topnav.jurnal = !_vm.topnav.jurnal
+                          },
+                        },
+                      },
+                      [
+                        _c("i", { staticClass: "uil-file-landscape me-2" }),
+                        _vm._v("Jurnal "),
+                        _c("div", {
+                          class: _vm.topnav.jurnal
+                            ? "bx bxs-pin"
+                            : "arrow-down",
+                        }),
+                      ]
+                    ),
                     _vm._v(" "),
                     _c(
                       "div",
                       {
                         staticClass: "dropdown-menu",
+                        class: _vm.topnav.jurnal ? "show" : "",
                         attrs: { "aria-labelledby": "topnav-jurnal" },
                       },
                       [
@@ -39409,12 +39457,38 @@ var render = function () {
                   _vm._v(" "),
                   _vm.auth.user.type == 0
                     ? _c("li", { staticClass: "nav-item dropdown" }, [
-                        _vm._m(3),
+                        _c(
+                          "a",
+                          {
+                            staticClass: "nav-link dropdown-toggle arrow-none",
+                            attrs: {
+                              href: "#",
+                              id: "topnav-admin",
+                              role: "button",
+                            },
+                            on: {
+                              click: function ($event) {
+                                $event.preventDefault()
+                                _vm.topnav.admin = !_vm.topnav.admin
+                              },
+                            },
+                          },
+                          [
+                            _c("i", { staticClass: "uil-apps me-2" }),
+                            _vm._v("Master Data "),
+                            _c("div", {
+                              class: _vm.topnav.admin
+                                ? "bx bxs-pin"
+                                : "arrow-down",
+                            }),
+                          ]
+                        ),
                         _vm._v(" "),
                         _c(
                           "div",
                           {
                             staticClass: "dropdown-menu",
+                            class: _vm.topnav.admin ? "show" : "",
                             attrs: { "aria-labelledby": "topnav-admin" },
                           },
                           [
@@ -39561,40 +39635,6 @@ var staticRenderFns = [
             ]),
           ]
         ),
-      ]
-    )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "nav-link dropdown-toggle arrow-none",
-        attrs: { href: "#", id: "topnav-jurnal", role: "button" },
-      },
-      [
-        _c("i", { staticClass: "uil-file-landscape me-2" }),
-        _vm._v("Jurnal "),
-        _c("div", { staticClass: "arrow-down" }),
-      ]
-    )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "nav-link dropdown-toggle arrow-none",
-        attrs: { href: "#", id: "topnav-admin", role: "button" },
-      },
-      [
-        _c("i", { staticClass: "uil-apps me-2" }),
-        _vm._v("Master Data "),
-        _c("div", { staticClass: "arrow-down" }),
       ]
     )
   },
@@ -41505,7 +41545,13 @@ var render = function () {
       staticClass: "btn btn-danger",
       on: { click: _vm.destroyAsset },
     },
-    [_c("i", { staticClass: "uil-trash" }), _vm._v(" Delete")]
+    [
+      _c("i", { staticClass: "uil-trash" }),
+      _vm._v(" "),
+      _c("span", { staticClass: "d-sm-none d-md-none d-lg-none d-xl-block" }, [
+        _vm._v("Delete"),
+      ]),
+    ]
   )
 }
 var staticRenderFns = []
@@ -41700,7 +41746,7 @@ var render = function () {
                                   },
                                 ],
                                 staticClass: "form-control",
-                                attrs: { type: "text" },
+                                attrs: { type: "number" },
                                 domProps: { value: _vm.asset.quantity },
                                 on: {
                                   input: function ($event) {
@@ -42023,11 +42069,22 @@ var render = function () {
                                             _vm._v(" "),
                                             _c(
                                               "p",
-                                              { staticClass: "card-text" },
+                                              { staticClass: "card-text mb-0" },
                                               [
                                                 _vm._v(
-                                                  "Jumlah :" +
-                                                    _vm._s(asset.value)
+                                                  "Jumlah : " +
+                                                    _vm._s(asset.quantity)
+                                                ),
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "p",
+                                              { staticClass: "card-text my-0" },
+                                              [
+                                                _vm._v(
+                                                  "Total : Rp " +
+                                                    _vm._s(asset.total)
                                                 ),
                                               ]
                                             ),
@@ -42070,7 +42127,15 @@ var render = function () {
                                                   _c("i", {
                                                     staticClass: "uil-edit-alt",
                                                   }),
-                                                  _vm._v(" Edit"),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "span",
+                                                    {
+                                                      staticClass:
+                                                        "d-sm-none d-md-none d-lg-none d-xl-block",
+                                                    },
+                                                    [_vm._v("Edit")]
+                                                  ),
                                                 ]
                                               ),
                                               _vm._v(" "),
@@ -45581,36 +45646,59 @@ var render = function () {
           _vm._v(" "),
           _c("p", [_vm._v(_vm._s(_vm.format_date(_vm.journal.date)))]),
           _vm._v(" "),
-          _c("br"),
+          _c("div", {}, [
+            _c(
+              "a",
+              {
+                staticClass: "btn btn-primary",
+                attrs: {
+                  href: _vm.journal.filebukti,
+                  role: "button",
+                  target: "__blank",
+                },
+              },
+              [
+                _c("i", { staticClass: "uil-image" }),
+                _vm._v(" Lihat File Bukti"),
+              ]
+            ),
+          ]),
           _vm._v(" "),
-          _c("p", [_vm._v("Remark : " + _vm._s(_vm.journal.remark))]),
+          _c("hr"),
           _vm._v(" "),
-          _c("p", [_vm._v("Ref : " + _vm._s(_vm.journal.ref))]),
+          _c("p", { staticClass: "my-1" }, [
+            _vm._v("Remark : " + _vm._s(_vm.journal.remark)),
+          ]),
           _vm._v(" "),
-          _c("p", [
+          _c("p", { staticClass: "my-1" }, [
+            _vm._v("Ref : " + _vm._s(_vm.journal.ref)),
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "my-1" }, [
             _vm._v(
               "Reimburse : " + _vm._s(_vm.journal.is_reimburse ? "Ya" : "Tidak")
             ),
           ]),
           _vm._v(" "),
-          _c("p", [
+          _c("p", { staticClass: "my-1" }, [
             _vm._v("Chart Account : " + _vm._s(_vm.journal.chart_account_name)),
           ]),
           _vm._v(" "),
-          _c("p", [
-            _vm._v(
-              "Accounting Period : " +
-                _vm._s(_vm.journal.accounting_period_name)
-            ),
+          _c("p", { staticClass: "my-1" }, [
+            _vm._v("Period : " + _vm._s(_vm.journal.accounting_period_name)),
           ]),
           _vm._v(" "),
-          _c("p", [_vm._v("Bank : " + _vm._s(_vm.journal.bank_account_name))]),
+          _c("p", { staticClass: "my-1" }, [
+            _vm._v("Bank : " + _vm._s(_vm.journal.bank_account_name)),
+          ]),
           _vm._v(" "),
-          _c("p", [_vm._v("Project : " + _vm._s(_vm.journal.project_name))]),
+          _c("p", { staticClass: "my-1" }, [
+            _vm._v("Project : " + _vm._s(_vm.journal.project_name)),
+          ]),
           _vm._v(" "),
-          _c("p", [_vm._v("Pengaju : " + _vm._s(_vm.journal.user_name))]),
-          _vm._v(" "),
-          _c("p", [_vm._v("File Bukti : " + _vm._s(_vm.journal.filebukti))]),
+          _c("p", { staticClass: "my-1" }, [
+            _vm._v("User : " + _vm._s(_vm.journal.user_name)),
+          ]),
         ]),
         _vm._v(" "),
         _vm._m(1),
@@ -49449,54 +49537,71 @@ var render = function () {
                       _c("div", { staticClass: "card p-4" }, [
                         _c("h4", [_vm._v(_vm._s(_vm.journal.title))]),
                         _vm._v(" "),
-                        _c("p", { staticClass: "mb-0" }, [
-                          _vm._v(_vm._s(_vm.journal.date)),
+                        _c("p", {}, [_vm._v(_vm._s(_vm.journal.date))]),
+                        _vm._v(" "),
+                        _c("div", {}, [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-primary",
+                              attrs: {
+                                href: _vm.journal.filebukti,
+                                role: "button",
+                                target: "__blank",
+                              },
+                            },
+                            [
+                              _c("i", { staticClass: "uil-image" }),
+                              _vm._v(" Lihat File Bukti"),
+                            ]
+                          ),
                         ]),
                         _vm._v(" "),
                         _c("hr"),
                         _vm._v(" "),
-                        _c("p", [
+                        _c("p", { staticClass: "my-1" }, [
                           _vm._v("Remark : " + _vm._s(_vm.journal.remark)),
                         ]),
                         _vm._v(" "),
-                        _c("p", [_vm._v("Ref : " + _vm._s(_vm.journal.ref))]),
+                        _c("p", { staticClass: "my-1" }, [
+                          _vm._v("Ref : " + _vm._s(_vm.journal.ref)),
+                        ]),
                         _vm._v(" "),
-                        _c("p", [
+                        _c("p", { staticClass: "my-1" }, [
                           _vm._v(
-                            "Reimburse : " + _vm._s(_vm.journal.is_reimburse)
+                            "Reimburse : " +
+                              _vm._s(_vm.journal.is_reimburse ? "Ya" : "Tidak")
                           ),
                         ]),
                         _vm._v(" "),
-                        _c("p", [
+                        _c("p", { staticClass: "my-1" }, [
                           _vm._v(
-                            "Chart_account : " +
-                              _vm._s(_vm.journal.chart_account_id)
+                            "Chart Account : " +
+                              _vm._s(_vm.journal.chart_account_name)
                           ),
                         ]),
                         _vm._v(" "),
-                        _c("p", [
+                        _c("p", { staticClass: "my-1" }, [
                           _vm._v(
                             "Period : " +
-                              _vm._s(_vm.journal.accounting_period_id)
+                              _vm._s(_vm.journal.accounting_period_name)
                           ),
                         ]),
                         _vm._v(" "),
-                        _c("p", [
+                        _c("p", { staticClass: "my-1" }, [
                           _vm._v(
-                            "Bank : " + _vm._s(_vm.journal.bank_account_id)
+                            "Bank : " + _vm._s(_vm.journal.bank_account_name)
                           ),
                         ]),
                         _vm._v(" "),
-                        _c("p", [
-                          _vm._v("Project : " + _vm._s(_vm.journal.project_id)),
+                        _c("p", { staticClass: "my-1" }, [
+                          _vm._v(
+                            "Project : " + _vm._s(_vm.journal.project_name)
+                          ),
                         ]),
                         _vm._v(" "),
-                        _c("p", [
-                          _vm._v("User : " + _vm._s(_vm.journal.user_id)),
-                        ]),
-                        _vm._v(" "),
-                        _c("p", [
-                          _vm._v("File : " + _vm._s(_vm.journal.filebukti)),
+                        _c("p", { staticClass: "my-1" }, [
+                          _vm._v("User : " + _vm._s(_vm.journal.user_name)),
                         ]),
                       ]),
                     ]),
@@ -52486,7 +52591,7 @@ var render = function () {
                           },
                         ],
                         staticClass: "form-control",
-                        attrs: { type: "text", name: "number" },
+                        attrs: { type: "number", name: "number" },
                         domProps: { value: _vm.bankCreate.account_number },
                         on: {
                           input: function ($event) {
@@ -52756,7 +52861,7 @@ var render = function () {
                                   },
                                 ],
                                 staticClass: "form-control",
-                                attrs: { type: "text" },
+                                attrs: { type: "number" },
                                 domProps: { value: _vm.bank.account_number },
                                 on: {
                                   input: function ($event) {

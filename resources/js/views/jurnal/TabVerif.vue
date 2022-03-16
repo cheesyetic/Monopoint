@@ -269,7 +269,7 @@ export default {
         async getJurnal() {
             let response = await axios.get('/api/journal', {
                     params: {
-                        category: 1,
+                        category: 3,
                         keyword: this.filter_keyword,
                         chart: this.filter_chartaccount,
                         reimburse: this.filter_reimburse,
