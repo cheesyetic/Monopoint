@@ -242,7 +242,7 @@ class JournalController extends Controller
 
         try {
             if($file = $request->file('filebukti')){
-                $imageName = time().'.'.$request->filebukti->extension();
+                $imageName = Str::random(2) . time().'.'.$request->filebukti->extension();
                 $path = $file->storeAs('uploads', $imageName, 'public');
                 $input['filebukti'] = '/storage/'.$path;
             }
@@ -358,9 +358,9 @@ class JournalController extends Controller
 
             $input = $request->all();
             if($file = $request->file('buktireimburse')){
-                $imageName = time().'.'.$request->buktireimburse->extension();
+                $imageName = Str::random(2) . time().'.'.$request->buktireimburse->extension();
                 $path = $file->storeAs('uploads', $imageName, 'public');
-                $input['filebukti'] = '/storage/'.$path;
+                $input['buktireimburse'] = '/storage/'.$path;
             }
             $journal->buktireimburse = $input;
         }
