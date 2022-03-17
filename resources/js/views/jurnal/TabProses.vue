@@ -40,7 +40,7 @@
                                     <span class="input-group-text border-bottom"><i class="uil-search"></i></span>
                                     </div>
                                     <input type="text" v-model="filter_keyword" @change="getJurnal" class="form-control" placeholder="Search">
-                                    <button type="button" class="btn btn-secondary waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".modal-proses"><i class="uil-filter"></i> Filter</button>
+                                    <button type="button" class="btn btn-secondary waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".bs-example-modal-sm"><i class="uil-filter"></i> Filter</button>
                                 </div>
                                 <table class="table table-centered mb-0">
                                     <thead class="table-light">
@@ -114,50 +114,7 @@
                                             </transition-group>
                                         </transition>
                                 </table>
-                                <div class="modal fade modal-proses" tabindex="-1" aria-labelledby="mySmallModalLabel" aria-modal="true" role="dialog">
-                                    <div class="modal-dialog modal-sm">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Filter</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                            <div class="mb-2">
-                                                    <label for="example-text-input" class="col col-form-label">Reimburse</label>
-                                                    <div class="">
-                                                        <input value="1" type="radio" name="reimburse2" v-model="filter_reimburse" id="option-1">
-                                                        <label for="option-1" class="option option-1 m-0">
-                                                            <div class="dot"></div>
-                                                            <span>Ya</span>
-                                                        </label>
-                                                        <input value="0" type="radio" name="reimburse2" v-model="filter_reimburse" id="option-2">
-                                                        <label for="option-2" class="option option-2 m-0 my-1">
-                                                            <div class="dot"></div>
-                                                            <span>Tidak</span>
-                                                        </label>
-                                                        <input value="" type="radio" name="reimburse2" v-model="filter_reimburse" id="option-3" selected>
-                                                        <label for="option-3" class="option option-3 m-0">
-                                                            <div class="dot"></div>
-                                                            <span>Semua</span>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div class="mb-2">
-                                                    <label class="form-label" for="exampleDropdownFormPassword">Bulan</label>
-                                                    <v-select :options="monthOptions" @change="getJurnal" :reduce="month => month.code" label="month" v-model="filter_month"></v-select>
-                                                </div>
-                                                <div class="mb-2">
-                                                    <label class="form-label">Chart Account</label>
-                                                    <v-select :options="chartOptions" @input="selectId($event)" :disabled="chartLoading"></v-select>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary waves-effect" @click="getJurnal" data-bs-dismiss="modal">Terapkan</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <filter-journal @filterjournal="filtering" :auth="auth"></filter-journal>
                             </div>
                             <!-- Akhir Table -->
                         </div>
@@ -171,11 +128,13 @@
 
 <script>
 import DeleteJournal from './Delete'
+import FilterJournal from './Filter'
 import Loading from '../../components/loading'
 export default {
     props: ['auth'],
     components: {
         DeleteJournal,
+        FilterJournal,
         Loading,
     },
     data() {
@@ -185,25 +144,26 @@ export default {
             chartOptions: [],
             chartLoading: true,
             filter_keyword: '',
-            filter_reimburse: '',
-            filter_month: '',
-            filter_chartaccount: '',
+            // filter_reimburse: '',
+            // filter_month: '',
+            // filter_chartaccount: '',
+            params: '',
             loadingExcel: false,
-            monthOptions: [
-                {month: 'Semua', code: ''},
-                {month: 'Januari', code: '01'},
-                {month: 'Februari', code: '02'},
-                {month: 'Maret', code: '03'},
-                {month: 'April', code: '04'},
-                {month: 'Mei', code: '05'},
-                {month: 'Juni', code: '06'},
-                {month: 'Juli', code: '07'},
-                {month: 'Agustus', code: '08'},
-                {month: 'September', code: '09'},
-                {month: 'Oktober', code: '10'},
-                {month: 'November', code: '11'},
-                {month: 'Desember', code: '12'}
-            ],
+            // monthOptions: [
+            //     {month: 'Semua', code: ''},
+            //     {month: 'Januari', code: '01'},
+            //     {month: 'Februari', code: '02'},
+            //     {month: 'Maret', code: '03'},
+            //     {month: 'April', code: '04'},
+            //     {month: 'Mei', code: '05'},
+            //     {month: 'Juni', code: '06'},
+            //     {month: 'Juli', code: '07'},
+            //     {month: 'Agustus', code: '08'},
+            //     {month: 'September', code: '09'},
+            //     {month: 'Oktober', code: '10'},
+            //     {month: 'November', code: '11'},
+            //     {month: 'Desember', code: '12'}
+            // ],
         };
     },
 
@@ -213,6 +173,11 @@ export default {
     },
 
     methods: {
+        filtering(event) {
+            console.log("Filtering")
+            this.params = event
+            console.log(this.params)
+        },
         selectId(e) {
             this.filter_chartaccount = e.id
         },
@@ -271,9 +236,11 @@ export default {
                     params: {
                         category: 2,
                         keyword: this.filter_keyword,
-                        chart: this.filter_chartaccount,
-                        reimburse: this.filter_reimburse,
-                        date: this.filter_month,
+                        chart: this.params.chart,
+                        reimburse: this.params.reimburse,
+                        sortname: this.params.sortname,
+                        sortdate: this.params.sortdate,
+                        date: this.params.month,
                     },
                     headers: {
                         'Authorization': 'Bearer ' + this.auth.token

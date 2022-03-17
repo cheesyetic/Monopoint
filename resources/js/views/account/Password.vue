@@ -38,12 +38,14 @@
                                             <div class="form-group">
                                                 <label for="">Password Baru</label>
                                                 <input type="password" class="form-control" v-model="account.new_password">
+                                                <div v-if="theErrors.new_password" class="mt-1 text-danger">{{ theErrors.new_password[0] }}</div>
                                             </div>
                                         </div>
                                         <div class="col-md-6 my-2">
                                             <div class="form-group">
                                                 <label for="">Konfirmasi Password Baru</label>
                                                 <input type="password" class="form-control" v-model="account.confirm_password">
+                                                <div v-if="theErrors.confirm_password" class="mt-1 text-danger">{{ theErrors.confirm_password[0] }}</div>
                                             </div>
                                         </div>
                                         <div class="row mt-4">
@@ -119,14 +121,14 @@ export default {
                     this.$router.push({ name: 'akun' })
                 }
             } catch (e) {
-                this.$toasted.show("Something went wrong : " + e.response.data.message, {
+                this.$toasted.show("Something went wrong : " + e.response.statusText, {
                         type: 'error',
                         duration: 3000,
                         position: 'top-center',
                     })
-                console.log(e.response.data)
+                // console.log(e.response.data)
                 this.theErrors = e.response.data;
-                console.log(this.theErrors)
+                // console.log(this.theErrors)
 
             }
         }

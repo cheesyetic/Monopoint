@@ -31,18 +31,21 @@
                                             <div class="form-group">
                                                 <label for="">Nama</label>
                                                 <input type="text" class="form-control" v-model="account.name">
+                                                <div v-if="theErrors.name" class="mt-1 text-danger">{{ theErrors.name[0] }}</div>
                                             </div>
                                         </div>
                                         <div class="col-md-6 my-2">
                                             <div class="form-group">
                                                 <label for="">Email</label>
                                                 <input type="text" class="form-control" v-model="account.email">
+                                                <div v-if="theErrors.email" class="mt-1 text-danger">{{ theErrors.email[0] }}</div>
                                             </div>
                                         </div>
                                         <div class="col-md-6 my-2">
                                             <div class="form-group">
                                                 <label for="">Phone Number</label>
-                                                <input type="text" class="form-control" v-model="account.phone_number">
+                                                <input type="number" class="form-control" v-model="account.phone_number">
+                                                <div v-if="theErrors.phone_number" class="mt-1 text-danger">{{ theErrors.phone_number[0] }}</div>
                                             </div>
                                         </div>
                                         <div class="row mt-4">
@@ -111,7 +114,7 @@ export default {
                     this.$router.push({ name: 'akun' })
                 }
             } catch (e) {
-                this.$toasted.show("Something went wrong", {
+                this.$toasted.show("Something went wrong : " + e.response.statusText, {
                         type: 'error',
                         duration: 3000,
                         position: 'top-center',

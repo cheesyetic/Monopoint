@@ -114,7 +114,8 @@
                                             </transition-group>
                                         </transition>
                                 </table>
-                                <div class="modal fade bs-example-modal-sm" tabindex="-1" aria-labelledby="mySmallModalLabel" aria-modal="true" role="dialog">
+                                <filter-journal @filterjournal="filtering" :auth="auth"></filter-journal>
+                                <!-- <div class="modal fade bs-example-modal-sm" tabindex="-1" aria-labelledby="mySmallModalLabel" aria-modal="true" role="dialog">
                                     <div class="modal-dialog modal-sm">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -157,7 +158,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                             <!-- End table -->
                         </div>
@@ -171,11 +172,13 @@
 
 <script>
 import DeleteJournal from './Delete'
+import FilterJournal from './Filter'
 import Loading from '../../components/loading'
 export default {
     props: ['auth'],
     components: {
         DeleteJournal,
+        FilterJournal,
         Loading,
     },
     data() {
@@ -185,25 +188,26 @@ export default {
             chartOptions: [],
             chartLoading: true,
             filter_keyword: '',
-            filter_reimburse: '',
-            filter_month: '',
-            filter_chartaccount: '',
+            // filter_reimburse: '',
+            // filter_month: '',
+            // filter_chartaccount: '',
             loadingExcel: false,
-            monthOptions: [
-                {month: 'Semua', code: ''},
-                {month: 'Januari', code: '01'},
-                {month: 'Februari', code: '02'},
-                {month: 'Maret', code: '03'},
-                {month: 'April', code: '04'},
-                {month: 'Mei', code: '05'},
-                {month: 'Juni', code: '06'},
-                {month: 'Juli', code: '07'},
-                {month: 'Agustus', code: '08'},
-                {month: 'September', code: '09'},
-                {month: 'Oktober', code: '10'},
-                {month: 'November', code: '11'},
-                {month: 'Desember', code: '12'}
-            ],
+            params: '',
+            // monthOptions: [
+            //     {month: 'Semua', code: ''},
+            //     {month: 'Januari', code: '01'},
+            //     {month: 'Februari', code: '02'},
+            //     {month: 'Maret', code: '03'},
+            //     {month: 'April', code: '04'},
+            //     {month: 'Mei', code: '05'},
+            //     {month: 'Juni', code: '06'},
+            //     {month: 'Juli', code: '07'},
+            //     {month: 'Agustus', code: '08'},
+            //     {month: 'September', code: '09'},
+            //     {month: 'Oktober', code: '10'},
+            //     {month: 'November', code: '11'},
+            //     {month: 'Desember', code: '12'}
+            // ],
         };
     },
 
@@ -213,6 +217,11 @@ export default {
     },
 
     methods: {
+        filtering(event) {
+            console.log("Filtering")
+            this.params = event
+            console.log(this.params)
+        },
         selectId(e) {
             this.filter_chartaccount = e.id
         },
@@ -265,13 +274,16 @@ export default {
             }
         },
         async getJurnal() {
+            // this.params.category = 1
             let response = await axios.get('/api/journal', {
                     params: {
                         category: 1,
                         keyword: this.filter_keyword,
-                        chart: this.filter_chartaccount,
-                        reimburse: this.filter_reimburse,
-                        date: this.filter_month,
+                        chart: this.params.chart,
+                        reimburse: this.params.reimburse,
+                        sortname: this.params.sortname,
+                        sortdate: this.params.sortdate,
+                        date: this.params.month,
                     },
                     headers: {
                         'Authorization': 'Bearer ' + this.auth.token

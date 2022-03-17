@@ -40,7 +40,7 @@
                                     <span class="input-group-text border-bottom"><i class="uil-search"></i></span>
                                     </div>
                                     <input type="text" v-model="filter_keyword" @change="getJurnal" class="form-control" placeholder="Search">
-                                    <button type="button" class="btn btn-secondary waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".modal-verif"><i class="uil-filter"></i> Filter</button>
+                                    <button type="button" class="btn btn-secondary waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".bs-example-modal-sm"><i class="uil-filter"></i> Filter</button>
                                 </div>
                                 <table class="table table-centered mb-0">
                                     <thead class="table-light">
@@ -116,7 +116,8 @@
                                             </transition-group>
                                         </transition>
                                 </table>
-                                <div class="modal fade modal-verif" tabindex="-1" aria-labelledby="mySmallModalLabel" aria-modal="true" role="dialog">
+                                <filter-journal @filterjournal="filtering" :auth="auth"></filter-journal>
+                                <!-- <div class="modal fade modal-verif" tabindex="-1" aria-labelledby="mySmallModalLabel" aria-modal="true" role="dialog">
                                     <div class="modal-dialog modal-sm">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -159,7 +160,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                             <!-- End Table -->
                         </div>
@@ -173,11 +174,13 @@
 
 <script>
 import DeleteJournal from './Delete'
+import FilterJournal from './Filter'
 import Loading from '../../components/loading'
 export default {
     props: ['auth'],
     components: {
         DeleteJournal,
+        FilterJournal,
         Loading,
     },
     data() {
@@ -187,25 +190,26 @@ export default {
             chartOptions: [],
             chartLoading: true,
             filter_keyword: '',
-            filter_reimburse: '',
-            filter_month: '',
-            filter_chartaccount: '',
+            // filter_reimburse: '',
+            // filter_month: '',
+            // filter_chartaccount: '',
             loadingExcel: false,
-            monthOptions: [
-                {month: 'Semua', code: ''},
-                {month: 'Januari', code: '01'},
-                {month: 'Februari', code: '02'},
-                {month: 'Maret', code: '03'},
-                {month: 'April', code: '04'},
-                {month: 'Mei', code: '05'},
-                {month: 'Juni', code: '06'},
-                {month: 'Juli', code: '07'},
-                {month: 'Agustus', code: '08'},
-                {month: 'September', code: '09'},
-                {month: 'Oktober', code: '10'},
-                {month: 'November', code: '11'},
-                {month: 'Desember', code: '12'}
-            ],
+            params: '',
+            // monthOptions: [
+            //     {month: 'Semua', code: ''},
+            //     {month: 'Januari', code: '01'},
+            //     {month: 'Februari', code: '02'},
+            //     {month: 'Maret', code: '03'},
+            //     {month: 'April', code: '04'},
+            //     {month: 'Mei', code: '05'},
+            //     {month: 'Juni', code: '06'},
+            //     {month: 'Juli', code: '07'},
+            //     {month: 'Agustus', code: '08'},
+            //     {month: 'September', code: '09'},
+            //     {month: 'Oktober', code: '10'},
+            //     {month: 'November', code: '11'},
+            //     {month: 'Desember', code: '12'}
+            // ],
         };
     },
 
@@ -215,6 +219,11 @@ export default {
     },
 
     methods: {
+        filtering(event) {
+            console.log("Filtering")
+            this.params = event
+            console.log(this.params)
+        },
         selectId(e) {
             this.filter_chartaccount = e.id
         },
@@ -271,9 +280,11 @@ export default {
                     params: {
                         category: 3,
                         keyword: this.filter_keyword,
-                        chart: this.filter_chartaccount,
-                        reimburse: this.filter_reimburse,
-                        date: this.filter_month,
+                        chart: this.params.chart,
+                        reimburse: this.params.reimburse,
+                        sortname: this.params.sortname,
+                        sortdate: this.params.sortdate,
+                        date: this.params.month,
                     },
                     headers: {
                         'Authorization': 'Bearer ' + this.auth.token

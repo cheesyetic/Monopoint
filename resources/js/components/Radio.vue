@@ -88,4 +88,58 @@ input[type="radio"]{
 #option-3:checked:checked ~ .option-3 span{
   color: #fff;
 }
+
+#name-option-1:checked:checked ~ .option-1,
+#name-option-2:checked:checked ~ .option-2,
+#name-option-3:checked:checked ~ .option-3{
+  border-color: #5B73E8;
+  background: #5B73E8;
+}
+#name-option-1:checked:checked ~ .option-1 .dot,
+#name-option-2:checked:checked ~ .option-2 .dot,
+#name-option-3:checked:checked ~ .option-3 .dot{
+  background: #fff;
+}
+#name-option-1:checked:checked ~ .option-1 .dot::before,
+#name-option-2:checked:checked ~ .option-2 .dot::before,
+#name-option-3:checked:checked ~ .option-3 .dot::before{
+  opacity: 1;
+  transform: scale(1);
+}
+.option span{
+  font-size: 16px;
+  color: #808080;
+}
+#name-option-1:checked:checked ~ .option-1 span,
+#name-option-2:checked:checked ~ .option-2 span,
+#name-option-3:checked:checked ~ .option-3 span{
+  color: #fff;
+}
+
+#date-option-1:checked:checked ~ .option-1,
+#date-option-2:checked:checked ~ .option-2,
+#date-option-3:checked:checked ~ .option-3{
+  border-color: #5B73E8;
+  background: #5B73E8;
+}
+#date-option-1:checked:checked ~ .option-1 .dot,
+#date-option-2:checked:checked ~ .option-2 .dot,
+#date-option-3:checked:checked ~ .option-3 .dot{
+  background: #fff;
+}
+#date-option-1:checked:checked ~ .option-1 .dot::before,
+#date-option-2:checked:checked ~ .option-2 .dot::before,
+#date-option-3:checked:checked ~ .option-3 .dot::before{
+  opacity: 1;
+  transform: scale(1);
+}
+.option span{
+  font-size: 16px;
+  color: #808080;
+}
+#date-option-1:checked:checked ~ .option-1 span,
+#date-option-2:checked:checked ~ .option-2 span,
+#date-option-3:checked:checked ~ .option-3 span{
+  color: #fff;
+}
 </style>
