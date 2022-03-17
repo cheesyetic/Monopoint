@@ -55,24 +55,26 @@
                             </div>
                             <div class="mb-3 row">
                                 <label for="example-date-input" class="col-md-2 col-form-label">Tipe Akun</label>
-                                <div class="col md-10 wrapper">
-                                    <input value="0" type="radio" name="select" id="option-1" v-model="accountCreate.type">
-                                    <label for="option-1" class="option option-1" style="margin-left:0">
-                                        <div class="dot"></div>
-                                        <span>Admin</span>
-                                    </label>
+                                <div class="col md-10">
+                                    <div class="col wrapper">
+                                        <input value="0" type="radio" name="select" id="option-1" v-model="accountCreate.type">
+                                        <label for="option-1" class="option option-1" style="margin-left:0">
+                                            <div class="dot"></div>
+                                            <span>Admin</span>
+                                        </label>
 
-                                    <input value="1" type="radio" name="select" id="option-2" v-model="accountCreate.type">
-                                    <label for="option-2" class="option option-2">
-                                        <div class="dot"></div>
-                                        <span>Keuangan</span>
-                                    </label>
+                                        <input value="1" type="radio" name="select" id="option-2" v-model="accountCreate.type">
+                                        <label for="option-2" class="option option-2">
+                                            <div class="dot"></div>
+                                            <span>Keuangan</span>
+                                        </label>
 
-                                    <input value="2" type="radio" name="select" id="option-3" v-model="accountCreate.type">
-                                    <label for="option-3" class="option option-3">
-                                        <div class="dot"></div>
-                                        <span>Staff</span>
-                                    </label>
+                                        <input value="2" type="radio" name="select" id="option-3" v-model="accountCreate.type">
+                                        <label for="option-3" class="option option-3">
+                                            <div class="dot"></div>
+                                            <span>Staff</span>
+                                        </label>
+                                    </div>
                                     <div v-if="theErrors.type" class="mt-1 text-danger">{{ theErrors.type[0] }}</div>
                                 </div>
                             </div>
@@ -127,7 +129,7 @@ export default {
         // },
         async store() {
             try {
-                console.log(this.accountCreate)
+                // console.log(this.accountCreate)
                 let responseCreate = await axios.post('/api/account', this.accountCreate, {
                     headers: {
                         'Authorization': 'Bearer ' + this.auth.token
@@ -150,13 +152,13 @@ export default {
                     })
                 }
             } catch (e) {
-                this.$toasted.show("Something went wrong : " + e, {
+                this.$toasted.show("Something went wrong : " + e.response.statusText, {
                         type: 'error',
                         duration: 3000,
                         position: 'top-center',
                     })
-                console.log(e)
-                // this.theErrors = e.responseCreate.data;
+                // console.log(e.response)
+                this.theErrors = e.response.data;
             }
         }
     }

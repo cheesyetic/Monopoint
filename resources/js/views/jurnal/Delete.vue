@@ -23,7 +23,7 @@ export default {
                             position: 'top-center',
                         })
 
-                        this.$refs.deleteJournal.parentElement.parentElement.remove()
+                        this.$refs.deleteJournal.parentElement.parentElement.parentElement.parentElement.remove()
                     }
                     else {
                         this.$toasted.show("Error deleting journal", {

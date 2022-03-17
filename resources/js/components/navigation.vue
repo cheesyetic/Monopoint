@@ -89,10 +89,10 @@
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-jurnal" role="button">
-                                <i class="uil-file-landscape me-2"></i>Jurnal <div class="arrow-down"></div>
+                            <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-jurnal" role="button" @click.prevent="topnav.jurnal = !topnav.jurnal">
+                                <i class="uil-file-landscape me-2"></i>Jurnal <div :class=" topnav.jurnal ? 'bx bxs-pin' : 'arrow-down'"></div>
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="topnav-jurnal">
+                            <div class="dropdown-menu" aria-labelledby="topnav-jurnal" :class=" topnav.jurnal ? 'show' : '' ">
 
                                 <router-link :to="{name: 'jurnal'}" class="dropdown-item">Draft</router-link>
                                 <router-link :to="{name: 'jurnalproses'}" class="dropdown-item">Proses</router-link>
@@ -102,10 +102,10 @@
                         </li>
 
                         <li class="nav-item dropdown" v-if="auth.user.type == 0">
-                            <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-admin" role="button">
-                                <i class="uil-apps me-2"></i>Master Data <div class="arrow-down"></div>
+                            <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-admin" role="button" @click.prevent="topnav.admin = !topnav.admin">
+                                <i class="uil-apps me-2"></i>Master Data <div :class=" topnav.admin ? 'bx bxs-pin' : 'arrow-down'"></div>
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="topnav-admin">
+                            <div class="dropdown-menu" aria-labelledby="topnav-admin" :class=" topnav.admin ? 'show' : '' ">
 
                                 <router-link :to="{name: 'karyawan'}" class="dropdown-item">Karyawan</router-link>
                                 <router-link :to="{name: 'periode'}" class="dropdown-item">Periode</router-link>
@@ -127,13 +127,18 @@
 <script>
 export default {
     props: ['auth'],
-    // data() {
-    //   return {
+    data() {
+        return {
+            topnav_admin: true ,
+            topnav: {
+                jurnal: false,
+                admin: false,
+            }
+        }
     //     loggedIn: localStorage.getItem('loggedIn'),
     //     token: localStorage.getItem('token'),
     //     user: []
-    //   }
-    // },
+    },
 
     // created() {
     //     axios.get('http://localhost:8000/api/user', {headers: {'Authorization': 'Bearer '+this.token}})

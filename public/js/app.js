@@ -2136,50 +2136,42 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                console.log("GET USER BOSQ");
+                _context.prev = 0;
                 _context.next = 3;
                 return axios.get('/api/user', {
                   headers: {
                     'Authorization': 'Bearer ' + _this.auth.token
                   }
                 }).then(function (response) {
-                  console.log("response");
-                  console.log(response.message);
+                  // console.log("response")
+                  // console.log(response.message)
                   _this.auth.user = response.data; // assign response to state user
 
                   // assign response to state user
-                  _this.token(); // this.$emit('user', this.user)
-
+                  _this.token();
                 });
 
               case 3:
                 responseUser = _context.sent;
-                console.log("responseUser.data");
-                console.log(responseUser.data);
+                _context.next = 10;
+                break;
 
-                if (responseUser.status === 200) {
-                  console.log(response);
-                  _this.auth.user = response.data; // assign response to state user
+              case 6:
+                _context.prev = 6;
+                _context.t0 = _context["catch"](0);
+                // console.log("logout")
+                localStorage.removeItem("loggedIn");
 
-                  _this.token(); // this.$emit('user', this.user)
+                _this.$router.push({
+                  name: 'login'
+                });
 
-
-                  console.log("200 bosq");
-                } else {
-                  console.log("response AUAYAYAYA");
-                  localStorage.removeItem("loggedIn");
-
-                  _this.$router.push({
-                    name: 'login'
-                  });
-                }
-
-              case 7:
+              case 10:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee);
+        }, _callee, null, [[0, 6]]);
       }))();
     },
     token: function token() {
@@ -2468,13 +2460,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['auth'],
-  // data() {
-  //   return {
-  //     loggedIn: localStorage.getItem('loggedIn'),
-  //     token: localStorage.getItem('token'),
-  //     user: []
-  //   }
-  // },
+  data: function data() {
+    return {
+      topnav_admin: true,
+      topnav: {
+        jurnal: false,
+        admin: false
+      }
+    }; //     loggedIn: localStorage.getItem('loggedIn'),
+    //     token: localStorage.getItem('token'),
+    //     user: []
+  },
   // created() {
   //     axios.get('http://localhost:8000/api/user', {headers: {'Authorization': 'Bearer '+this.token}})
   //     .then(response => {
@@ -2657,7 +2653,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context2.prev = 0;
                 _context2.next = 3;
-                return axios.post('/api/account/' + _this2.auth.user_token, _this2.account);
+                return axios.post('/api/account/' + _this2.auth.user_token, _this2.account, {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this2.auth.token
+                  }
+                });
 
               case 3:
                 response = _context2.sent;
@@ -2870,6 +2870,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['auth'],
@@ -2878,7 +2879,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      account: [],
+      account: [{
+        old_password: '',
+        new_password: '',
+        confirm_password: ''
+      }],
       // successMessage: [],
       theErrors: [],
       loading: true
@@ -2897,9 +2902,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.prev = 0;
                 console.log("this.account");
                 formdata = new FormData();
-                formdata.append('old_password', _this.account.old_password);
-                formdata.append('new_password', _this.account.new_password);
-                formdata.append('confirm_password', _this.account.confirm_password);
+
+                if (_this.account.old_password != undefined) {
+                  formdata.append('old_password', _this.account.old_password);
+                }
+
+                if (_this.account.new_password != undefined) {
+                  formdata.append('new_password', _this.account.new_password);
+                }
+
+                if (_this.account.confirm_password != undefined) {
+                  formdata.append('confirm_password', _this.account.confirm_password);
+                }
+
                 console.log(formdata);
                 _context.next = 9;
                 return axios.post('/api/changepassword', formdata, {
@@ -2926,7 +2941,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   });
                 }
 
-                _context.next = 16;
+                _context.next = 19;
                 break;
 
               case 13:
@@ -2937,10 +2952,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
-                }); // this.theErrors = e.response.data;
+                });
 
+                console.log(_context.t0.response.data);
+                _this.theErrors = _context.t0.response.data;
+                console.log(_this.theErrors);
 
-              case 16:
+              case 19:
               case "end":
                 return _context.stop();
             }
@@ -3045,6 +3063,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['auth'],
@@ -3064,6 +3083,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       },
       partnerLoading: false,
       partnerOptions: [],
+      requestLoading: false,
       // successMessage: [],
       theErrors: []
     };
@@ -3131,23 +3151,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                console.log("this.appointmentCreate");
-                console.log(_this2.appointmentCreate);
+                _this2.requestLoading = true;
 
                 for (i = 0; i < _this2.appointmentCreate.user_id.length; i++) {
                   _this2.appointmentCreate.user_id[i] = _this2.appointmentCreate.user_id[i].id;
                 }
 
-                _context2.prev = 3;
+                _context2.prev = 2;
                 console.log(_this2.appointmentCreate);
-                _context2.next = 7;
+                _context2.next = 6;
                 return axios.post('/api/appointment', _this2.appointmentCreate, {
                   headers: {
                     'Authorization': 'Bearer ' + _this2.auth.token
                   }
                 });
 
-              case 7:
+              case 6:
                 responseCreate = _context2.sent;
 
                 if (responseCreate.status == 201) {
@@ -3170,24 +3189,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context2.next = 15;
                 break;
 
-              case 11:
-                _context2.prev = 11;
-                _context2.t0 = _context2["catch"](3);
+              case 10:
+                _context2.prev = 10;
+                _context2.t0 = _context2["catch"](2);
 
-                _this2.$toasted.show("Something went wrong : " + _context2.t0, {
+                _this2.$toasted.show("Something went wrong : " + _context2.t0.response.statusText, {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
                 });
 
-                console.log(_context2.t0); // this.theErrors = e.responseCreate.data;
+                _this2.requestLoading = false;
+                _this2.theErrors = _context2.t0.response.data;
 
               case 15:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[3, 11]]);
+        }, _callee2, null, [[2, 10]]);
       }))();
     }
   }
@@ -3493,7 +3513,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context2.sent;
 
                 if (!(response.status === 200)) {
-                  _context2.next = 26;
+                  _context2.next = 24;
                   break;
                 }
 
@@ -3545,20 +3565,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 break;
 
               case 21:
-                console.log(">> Selected Partner");
-                console.log(_this2.partnerSelected);
+                // console.log(">> Selected Partner")
+                // console.log(this.partnerSelected)
                 _this2.loading = false;
-                _context2.next = 27;
+                _context2.next = 25;
                 break;
 
-              case 26:
+              case 24:
                 _this2.$toasted.show("Something went wrong, please try again later", {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
                 });
 
-              case 27:
+              case 25:
               case "end":
                 return _context2.stop();
             }
@@ -3577,22 +3597,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _this3.loadingCRUD = true;
                 _this3.appointment.user_id = [];
-                _this3.appointment.length = 0;
-                console.log(_this3.appointment.user_id);
+                _this3.appointment.length = 0; // console.log(this.appointment.user_id)
 
                 for (i = 0; i < _this3.partnerSelected.length; i++) {
                   _this3.appointment.user_id[i] = _this3.partnerSelected[i].id;
                 }
 
-                _context3.prev = 5;
-                _context3.next = 8;
+                _context3.prev = 4;
+                _context3.next = 7;
                 return axios.post('/api/appointment/' + _this3.$route.params.token, _this3.appointment, {
                   headers: {
                     'Authorization': 'Bearer ' + _this3.auth.token
                   }
                 });
 
-              case 8:
+              case 7:
                 response = _context3.sent;
 
                 // console.log(response.status)
@@ -3610,14 +3629,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   });
                 }
 
-                _context3.next = 17;
+                _context3.next = 16;
                 break;
 
-              case 12:
-                _context3.prev = 12;
-                _context3.t0 = _context3["catch"](5);
+              case 11:
+                _context3.prev = 11;
+                _context3.t0 = _context3["catch"](4);
 
-                _this3.$toasted.show("Something went wrong", {
+                _this3.$toasted.show("Something went wrong : " + _context3.t0.response.statusText, {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
@@ -3626,12 +3645,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this3.theErrors = _context3.t0.response.data;
                 _this3.loadingCRUD = false;
 
-              case 17:
+              case 16:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[5, 12]]);
+        }, _callee3, null, [[4, 11]]);
       }))();
     }
   }
@@ -3911,6 +3930,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['auth'],
@@ -3958,23 +3979,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   });
                 }
 
-                _context.next = 13;
+                _context.next = 12;
                 break;
 
               case 8:
                 _context.prev = 8;
                 _context.t0 = _context["catch"](0);
 
-                _this.$toasted.show("Something went wrong : " + _context.t0, {
+                _this.$toasted.show("Something went wrong : " + _context.t0.response.statusText, {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
-                });
+                }); // console.log(e)
 
-                console.log(_context.t0);
-                _this.theErrors = _context.t0.responseCreate.data;
 
-              case 13:
+                _this.theErrors = _context.t0.response.data;
+
+              case 12:
               case "end":
                 return _context.stop();
             }
@@ -4031,7 +4052,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
 
                 _context.next = 5;
-                return axios["delete"]("/api/asset/".concat(_this.endpoint));
+                return axios["delete"]("/api/asset/".concat(_this.endpoint), {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 5:
                 responseDelete = _context.sent;
@@ -4100,6 +4125,8 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
 //
 //
 //
@@ -4281,7 +4308,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context2.prev = 7;
                 _context2.t0 = _context2["catch"](0);
 
-                _this2.$toasted.show("Something went wrong", {
+                _this2.$toasted.show("Something went wrong : " + _context2.t0.response.statusText, {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
@@ -4323,6 +4350,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
 //
 //
 //
@@ -4548,73 +4576,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   // name: 'Login',
@@ -4639,7 +4600,6 @@ __webpack_require__.r(__webpack_exports__);
       if (this.user.email && this.user.password) {
         axios__WEBPACK_IMPORTED_MODULE_0___default().get('/sanctum/csrf-cookie').then(function (response) {
           //debug cookie
-          console.log(response);
           axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/login', {
             email: _this.user.email,
             password: _this.user.password
@@ -4787,6 +4747,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -4851,13 +4813,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.prev = 7;
                 _context.t0 = _context["catch"](0);
 
-                _this.$toasted.show("Something went wrong : " + _context.t0, {
+                _this.$toasted.show("Something went wrong : " + _context.t0.response.statusText, {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
-                });
+                }); // console.log(e)
 
-                console.log(_context.t0); // this.theErrors = e.responseCreate.data;
+
+                _this.theErrors = _context.t0.response.data;
 
               case 11:
               case "end":
@@ -4916,7 +4879,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
 
                 _context.next = 5;
-                return axios["delete"]("/api/chartaccount/".concat(_this.endpoint));
+                return axios["delete"]("/api/chartaccount/".concat(_this.endpoint), {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
 
               case 5:
                 responseDelete = _context.sent;
@@ -4985,6 +4952,8 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
 //
 //
 //
@@ -5177,7 +5146,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context2.prev = 7;
                 _context2.t0 = _context2["catch"](0);
 
-                _this2.$toasted.show("Something went wrong", {
+                _this2.$toasted.show("Something went wrong : " + _context2.t0.response.statusText, {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
@@ -6085,6 +6054,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['auth'],
@@ -6113,7 +6086,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         balance: '',
         bank_account_id: '',
         project_id: '',
-        user_id: '1'
+        user_id: ''
       },
       // successMessage: [],
       theErrors: []
@@ -6396,18 +6369,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     duration: 3000,
                     position: 'top-center'
                   });
-                })["catch"](function (e) {
-                  console.log("responseCreate gagal");
-
-                  _this5.$toasted.show("Something went wrong : " + e, {
-                    type: 'error',
-                    duration: 3000,
-                    position: 'top-center'
-                  });
-
-                  console.log(e);
-                  console.log("responseCreate gagal");
-                  console.log("ERRR:: ", e.response.data);
                 });
 
               case 16:
@@ -6422,11 +6383,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
-                });
+                }); // console.log(e)
 
-                console.log(_context5.t0);
+
                 console.log("responseCreate gagal");
-                console.log("ERRR:: ", _context5.t0.response.data); // this.theErrors = e.responseCreate.data;
+                _this5.theErrors = _context5.t0.response.data;
+                console.log(_this5.theErrors);
 
               case 24:
               case "end":
@@ -6501,7 +6463,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     position: 'top-center'
                   });
 
-                  _this.$refs.deleteJournal.parentElement.parentElement.remove();
+                  _this.$refs.deleteJournal.parentElement.parentElement.parentElement.parentElement.remove();
                 } else {
                   _this.$toasted.show("Error deleting journal", {
                     type: 'error',
@@ -6558,6 +6520,8 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
 //
 //
 //
@@ -6724,7 +6688,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context2.sent;
 
                 if (response.status === 200) {
-                  console.log(response);
+                  // console.log(response)
                   _this2.journalHistories = response.data.data;
                   _this2.journalHistories.date = moment(String(_this2.journalHistories.date)).format('yyyy-MM-DD') + 'T' + moment(String(_this2.journalHistories.date)).format('hh:mm:ss');
                   _this2.loading = false;
@@ -6918,6 +6882,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['auth'],
@@ -6927,12 +6895,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       chartOptions: [],
+      chartSelected: '',
       chartLoading: true,
       bankOptions: [],
+      bankSelected: '',
       bankLoading: true,
       projectOptions: [],
+      projectSelected: '',
       projectLoading: true,
       periodOptions: [],
+      periodSelected: '',
       periodLoading: true,
       journal: {},
       // successMessage: [],
@@ -6977,23 +6949,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context.sent;
 
                 if (response.status === 200) {
-                  // this.periodOptions = response.data.data
-                  console.log(response.data.data.length);
-
                   for (i = 0; i < response.data.data.length; i++) {
-                    label = response.data.data[i].id + " - " + response.data.data[i].name + ' (' + response.data.data[i].code + ', ' + response.data.data[i].type + ')';
+                    label = response.data.data[i].name + ' (' + response.data.data[i].code + ')';
                     id = String(response.data.data[i].id);
 
                     _this.chartOptions.push({
                       label: label,
                       id: id
                     });
+
+                    if (id == _this.journal.chart_account_id) {
+                      _this.chartSelected = {
+                        label: label,
+                        id: id
+                      };
+                    }
                   }
 
                   _this.chartLoading = false;
                 } else {
-                  8;
-
                   _this.$toasted.show("Failed to load period", {
                     type: 'error',
                     duration: 3000,
@@ -7029,17 +7003,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context2.sent;
 
                 if (response.status === 200) {
-                  // this.periodOptions = response.data.data
-                  console.log(response.data.data.length);
-
                   for (i = 0; i < response.data.data.length; i++) {
-                    label = response.data.data[i].id + " - " + response.data.data[i].name + ' (' + response.data.data[i].start + ' - ' + response.data.data[i].end + ')';
+                    label = response.data.data[i].name + ' (' + response.data.data[i].start + ' - ' + response.data.data[i].end + ')';
                     id = String(response.data.data[i].id);
 
                     _this2.periodOptions.push({
                       label: label,
                       id: id
                     });
+
+                    if (id == _this2.journal.accounting_period_id) {
+                      _this2.periodSelected = {
+                        label: label,
+                        id: id
+                      };
+                    }
                   }
 
                   _this2.periodLoading = false;
@@ -7079,17 +7057,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context3.sent;
 
                 if (response.status === 200) {
-                  // this.periodOptions = response.data.data
-                  console.log(response.data.data.length);
-
                   for (i = 0; i < response.data.data.length; i++) {
-                    label = response.data.data[i].id + " - " + response.data.data[i].name;
+                    label = response.data.data[i].name;
                     id = String(response.data.data[i].id);
 
                     _this3.projectOptions.push({
                       label: label,
                       id: id
                     });
+
+                    if (id == _this3.journal.project_id) {
+                      _this3.projectSelected = {
+                        label: label,
+                        id: id
+                      };
+                    }
                   }
 
                   _this3.projectLoading = false;
@@ -7129,17 +7111,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context4.sent;
 
                 if (response.status === 200) {
-                  // this.periodOptions = response.data.data
-                  console.log(response.data.data.length);
-
                   for (i = 0; i < response.data.data.length; i++) {
-                    label = response.data.data[i].id + " - " + response.data.data[i].name;
+                    label = response.data.data[i].name;
                     id = String(response.data.data[i].id);
 
                     _this4.bankOptions.push({
                       label: label,
                       id: id
                     });
+
+                    if (id == _this4.journal.bank_account_id) {
+                      _this4.bankSelected = {
+                        label: label,
+                        id: id
+                      };
+                    }
                   }
 
                   _this4.bankLoading = false;
@@ -7222,11 +7208,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
 
                 formdata.append('is_reimburse', _this6.journal.is_reimburse);
-                formdata.append('chart_account_id', _this6.journal.chart_account_id);
-                formdata.append('accounting_period_id', _this6.journal.accounting_period_id);
+                formdata.append('chart_account_id', _this6.chartSelected.id);
+                formdata.append('accounting_period_id', _this6.periodSelected.id);
                 formdata.append('balance', _this6.journal.balance);
-                formdata.append('bank_account_id', _this6.journal.bank_account_id);
-                formdata.append('project_id', _this6.journal.project_id);
+                formdata.append('bank_account_id', _this6.bankSelected.id);
+                formdata.append('project_id', _this6.projectSelected.id); // formdata.append('project_id', this.journal.project_id)
+
                 formdata.append('user_id', _this6.auth.user.id);
                 _this6.loadingEdit = true;
                 _context6.next = 18;
@@ -7249,45 +7236,49 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this6.journal.user_id = '';
                   _this6.theErrors = [];
 
-                  _this6.$router.push({
-                    name: 'jurnal'
-                  });
+                  if (_this6.$route.query.page == 'proses') {
+                    _this6.$router.push({
+                      name: 'jurnalproses'
+                    });
+                  } else if (_this6.$route.query.page == 'verif') {
+                    _this6.$router.push({
+                      name: 'jurnalverif'
+                    });
+                  } else {
+                    _this6.$router.push({
+                      name: 'jurnal'
+                    });
+                  }
 
                   _this6.$toasted.show("Sukses mengedit jurnal", {
                     type: 'success',
                     duration: 3000,
                     position: 'top-center'
                   });
-                })["catch"](function (e) {
-                  _this6.$toasted.show("Something went wrong : " + e, {
-                    type: 'error',
-                    duration: 3000,
-                    position: 'top-center'
-                  });
-
-                  console.log(e);
-                  console.log("ERRR:: ", e.response.data);
                 });
 
               case 18:
-                _context6.next = 26;
+                _context6.next = 25;
                 break;
 
               case 20:
                 _context6.prev = 20;
                 _context6.t0 = _context6["catch"](0);
+                _this6.loadingEdit = false;
 
                 _this6.$toasted.show("Something went wrong : " + _context6.t0, {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
-                });
+                }); // console.log(e)
+                // console.log("responseCreate gagal")
+                // console.log("ERRR:: ", e.response.data)
+                // this.theErrors = e.response.data;
 
-                console.log(_context6.t0);
-                console.log("responseCreate gagal");
-                console.log("ERRR:: ", _context6.t0.response.data); // this.theErrors = e.responseCreate.data;
 
-              case 26:
+                _this6.theErrors = _context6.t0.response.data;
+
+              case 25:
               case "end":
                 return _context6.stop();
             }
@@ -7444,171 +7435,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee, null, [[0, 10]]);
-      }))();
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/Index.vue?vue&type=script&lang=js&":
-/*!**************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/Index.vue?vue&type=script&lang=js& ***!
-  \**************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _TabDraft__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TabDraft */ "./resources/js/views/jurnal/TabDraft.vue");
-/* harmony import */ var _TabProses__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TabProses */ "./resources/js/views/jurnal/TabProses.vue");
-/* harmony import */ var _TabVerif__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./TabVerif */ "./resources/js/views/jurnal/TabVerif.vue");
-/* harmony import */ var _Delete__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Delete */ "./resources/js/views/jurnal/Delete.vue");
-/* harmony import */ var _components_loading__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/loading */ "./resources/js/components/loading.vue");
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['auth'],
-  components: {
-    DeleteJournal: _Delete__WEBPACK_IMPORTED_MODULE_4__["default"],
-    TabDraft: _TabDraft__WEBPACK_IMPORTED_MODULE_1__["default"],
-    TabProses: _TabProses__WEBPACK_IMPORTED_MODULE_2__["default"],
-    TabVerif: _TabVerif__WEBPACK_IMPORTED_MODULE_3__["default"],
-    Loading: _components_loading__WEBPACK_IMPORTED_MODULE_5__["default"]
-  },
-  data: function data() {
-    return {
-      loadingExcel: false
-    };
-  },
-  methods: {
-    exportExcel: function exportExcel() {
-      var _this = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.prev = 0;
-                _this.loadingExcel = true;
-                _context.next = 4;
-                return axios.get("/api/journal/export", {
-                  headers: {
-                    'Authorization': 'Bearer ' + _this.auth.token
-                  }
-                });
-
-              case 4:
-                response = _context.sent;
-
-                if (response.status == 200) {
-                  _this.$toasted.show(response.data.message, {
-                    type: 'success',
-                    duration: 3000,
-                    position: 'top-center'
-                  });
-                }
-
-                _this.loadingExcel = false;
-                _context.next = 12;
-                break;
-
-              case 9:
-                _context.prev = 9;
-                _context.t0 = _context["catch"](0);
-
-                // console.log(e)
-                _this.$toasted.show("Something went wrong : " + _context.t0, {
-                  type: 'error',
-                  duration: 3000,
-                  position: 'top-center'
-                });
-
-              case 12:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, null, [[0, 9]]);
       }))();
     }
   }
@@ -8952,7 +8778,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context3.next = 2;
                 return axios.get('/api/journal', {
                   params: {
-                    category: 1,
+                    category: 3,
                     keyword: _this3.filter_keyword,
                     chart: _this3.filter_chartaccount,
                     reimburse: _this3.filter_reimburse,
@@ -9011,6 +8837,8 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
 //
 //
 //
@@ -9178,7 +9006,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 if (!_this2.verif) {
-                  _context2.next = 18;
+                  _context2.next = 16;
                   break;
                 }
 
@@ -9200,29 +9028,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this2.filebukti = '';
                   _this2.theErrors = [];
 
-                  _this2.$router.push({
-                    name: 'jurnal'
-                  });
+                  if (_this2.$route.query.page == 'proses') {
+                    _this2.$router.push({
+                      name: 'jurnalproses'
+                    });
+                  } else if (_this2.$route.query.page == 'verif') {
+                    _this2.$router.push({
+                      name: 'jurnalverif'
+                    });
+                  } else {
+                    _this2.$router.push({
+                      name: 'jurnal'
+                    });
+                  }
 
                   _this2.$toasted.show("Sukses verifikasi jurnal", {
                     type: 'success',
                     duration: 3000,
                     position: 'top-center'
                   });
-                })["catch"](function (e) {
-                  _this2.$toasted.show("Something went wrong : " + e, {
-                    type: 'error',
-                    duration: 3000,
-                    position: 'top-center'
-                  });
-
-                  console.log(e);
-                  console.log("Gagal verifikasi jurnal");
-                  console.log("ERRR:: ", e.response.data);
                 });
 
               case 7:
-                _context2.next = 16;
+                _context2.next = 14;
                 break;
 
               case 9:
@@ -9234,24 +9062,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
-                });
+                }); // console.log(e)
+                // console.log("Gagal verifikasi jurnal")
+                // console.log("ERRR:: ", e.response.data)
 
-                console.log(_context2.t0);
-                console.log("Gagal verifikasi jurnal");
-                console.log("ERRR:: ", _context2.t0.response.data); // this.theErrors = e.responseCreate.data;
 
-              case 16:
-                _context2.next = 33;
+                _this2.theErrors = _context2.t0.response.data;
+
+              case 14:
+                _context2.next = 29;
                 break;
 
-              case 18:
-                _context2.prev = 18;
+              case 16:
+                _context2.prev = 16;
                 _this2.loadingAcc = true;
                 _formdata = new FormData();
 
                 _formdata.append('note_decline', _this2.note_decline);
 
-                _context2.next = 24;
+                _context2.next = 22;
                 return axios.post('/api/declinejournal/' + _this2.$route.params.token, _formdata, {
                   headers: {
                     'Authorization': 'Bearer ' + _this2.auth.token
@@ -9259,52 +9088,53 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (response) {
                   _this2.theErrors = [];
 
-                  _this2.$router.push({
-                    name: 'jurnal'
-                  });
+                  if (_this2.$route.query.page == 'proses') {
+                    _this2.$router.push({
+                      name: 'jurnalproses'
+                    });
+                  } else if (_this2.$route.query.page == 'verif') {
+                    _this2.$router.push({
+                      name: 'jurnalverif'
+                    });
+                  } else {
+                    _this2.$router.push({
+                      name: 'jurnal'
+                    });
+                  }
 
                   _this2.$toasted.show("Sukses menolak verifikasi jurnal", {
                     type: 'success',
                     duration: 3000,
                     position: 'top-center'
                   });
-                })["catch"](function (error) {
-                  _this2.$toasted.show("Something went wrong : " + e, {
-                    type: 'error',
-                    duration: 3000,
-                    position: 'top-center'
-                  });
-
-                  console.log(e);
-                  console.log("Gagal verifikasi jurnal");
-                  console.log("ERRR:: ", e.response.data);
                 });
 
-              case 24:
-                _context2.next = 33;
+              case 22:
+                _context2.next = 29;
                 break;
 
-              case 26:
-                _context2.prev = 26;
-                _context2.t1 = _context2["catch"](18);
+              case 24:
+                _context2.prev = 24;
+                _context2.t1 = _context2["catch"](16);
                 _this2.loadingAcc = false;
 
                 _this2.$toasted.show("Something went wrong : " + _context2.t1, {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
-                });
+                }); // console.log(e)
+                // console.log("Gagal verifikasi jurnal")
+                // console.log("ERRR:: ", e.response.data)
 
-                console.log(_context2.t1);
-                console.log("Gagal verifikasi jurnal");
-                console.log("ERRR:: ", _context2.t1.response.data); // this.theErrors = e.responseCreate.data;
 
-              case 33:
+                _this2.theErrors = _context2.t1.response.data;
+
+              case 29:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[1, 9], [18, 26]]);
+        }, _callee2, null, [[1, 9], [16, 24]]);
       }))();
     }
   }
@@ -9332,6 +9162,8 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
 //
 //
 //
@@ -9463,15 +9295,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.prev = 0;
-                console.log(_this.accountCreate);
-                _context.next = 4;
+                _context.next = 3;
                 return axios.post('/api/account', _this.accountCreate, {
                   headers: {
                     'Authorization': 'Bearer ' + _this.auth.token
                   }
                 });
 
-              case 4:
+              case 3:
                 responseCreate = _context.sent;
 
                 if (responseCreate.status == 201) {
@@ -9493,27 +9324,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   });
                 }
 
-                _context.next = 12;
+                _context.next = 11;
                 break;
 
-              case 8:
-                _context.prev = 8;
+              case 7:
+                _context.prev = 7;
                 _context.t0 = _context["catch"](0);
 
-                _this.$toasted.show("Something went wrong : " + _context.t0, {
+                _this.$toasted.show("Something went wrong : " + _context.t0.response.statusText, {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
-                });
+                }); // console.log(e.response)
 
-                console.log(_context.t0); // this.theErrors = e.responseCreate.data;
 
-              case 12:
+                _this.theErrors = _context.t0.response.data;
+
+              case 11:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 8]]);
+        }, _callee, null, [[0, 7]]);
       }))();
     }
   }
@@ -10154,13 +9986,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.prev = 7;
                 _context.t0 = _context["catch"](0);
 
-                _this.$toasted.show("Something went wrong : " + _context.t0, {
+                _this.$toasted.show("Something went wrong : " + _context.t0.response.statusText, {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
                 });
 
-                _this.theErrors = _context.t0.responseCreate.data;
+                _this.theErrors = _context.t0.response.data;
 
               case 11:
               case "end":
@@ -10795,6 +10627,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -10854,23 +10688,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   });
                 }
 
-                _context.next = 13;
+                _context.next = 12;
                 break;
 
               case 8:
                 _context.prev = 8;
                 _context.t0 = _context["catch"](0);
 
-                _this.$toasted.show("Something went wrong : " + _context.t0, {
+                _this.$toasted.show("Something went wrong : " + _context.t0.response.statusText, {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
-                });
+                }); // console.log(e)
 
-                console.log(_context.t0);
-                _this.theErrors = _context.t0.responseCreate.data;
 
-              case 13:
+                _this.theErrors = _context.t0.response.data;
+
+              case 12:
               case "end":
                 return _context.stop();
             }
@@ -11083,6 +10917,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -11187,7 +11023,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context2.prev = 7;
                 _context2.t0 = _context2["catch"](0);
 
-                _this2.$toasted.show("Something went wrong", {
+                _this2.$toasted.show("Something went wrong : " + _context2.t0.response.statusText, {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
@@ -11509,13 +11345,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.prev = 8;
                 _context.t0 = _context["catch"](0);
 
-                _this.$toasted.show("Something went wrong : " + _context.t0, {
+                _this.$toasted.show("Something went wrong : " + _context.t0.response.statusText, {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
-                });
+                }); // console.log(e)
 
-                console.log(_context.t0); // this.theErrors = e.responseCreate.data;
+
+                _this.theErrors = _context.t0.response.data;
 
               case 12:
               case "end":
@@ -11815,7 +11652,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context2.prev = 7;
                 _context2.t0 = _context2["catch"](0);
 
-                _this2.$toasted.show("Something went wrong", {
+                _this2.$toasted.show("Something went wrong : " + _context2.t0.response.statusText, {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
@@ -12094,33 +11931,31 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _views_account_Index__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../views/account/Index */ "./resources/js/views/account/Index.vue");
 /* harmony import */ var _views_account_Edit__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../views/account/Edit */ "./resources/js/views/account/Edit.vue");
 /* harmony import */ var _views_account_Password__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../views/account/Password */ "./resources/js/views/account/Password.vue");
-/* harmony import */ var _views_jurnal_Index__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../views/jurnal/Index */ "./resources/js/views/jurnal/Index.vue");
-/* harmony import */ var _views_jurnal_Edit__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../views/jurnal/Edit */ "./resources/js/views/jurnal/Edit.vue");
-/* harmony import */ var _views_jurnal_Create__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../views/jurnal/Create */ "./resources/js/views/jurnal/Create.vue");
-/* harmony import */ var _views_jurnal_Verif__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../views/jurnal/Verif */ "./resources/js/views/jurnal/Verif.vue");
-/* harmony import */ var _views_jurnal_Detail__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../views/jurnal/Detail */ "./resources/js/views/jurnal/Detail.vue");
-/* harmony import */ var _views_jurnal_Import__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../views/jurnal/Import */ "./resources/js/views/jurnal/Import.vue");
-/* harmony import */ var _views_jurnal_TabDraft__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../views/jurnal/TabDraft */ "./resources/js/views/jurnal/TabDraft.vue");
-/* harmony import */ var _views_jurnal_TabProses__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../views/jurnal/TabProses */ "./resources/js/views/jurnal/TabProses.vue");
-/* harmony import */ var _views_jurnal_TabVerif__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../views/jurnal/TabVerif */ "./resources/js/views/jurnal/TabVerif.vue");
-/* harmony import */ var _views_karyawan_Index__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../views/karyawan/Index */ "./resources/js/views/karyawan/Index.vue");
-/* harmony import */ var _views_karyawan_Edit__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../views/karyawan/Edit */ "./resources/js/views/karyawan/Edit.vue");
-/* harmony import */ var _views_karyawan_Create__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../views/karyawan/Create */ "./resources/js/views/karyawan/Create.vue");
-/* harmony import */ var _views_rekening_Index__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../views/rekening/Index */ "./resources/js/views/rekening/Index.vue");
-/* harmony import */ var _views_rekening_Edit__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../views/rekening/Edit */ "./resources/js/views/rekening/Edit.vue");
-/* harmony import */ var _views_rekening_Create__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../views/rekening/Create */ "./resources/js/views/rekening/Create.vue");
-/* harmony import */ var _views_periode_Index__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../views/periode/Index */ "./resources/js/views/periode/Index.vue");
-/* harmony import */ var _views_periode_Edit__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../views/periode/Edit */ "./resources/js/views/periode/Edit.vue");
-/* harmony import */ var _views_project_Index__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../views/project/Index */ "./resources/js/views/project/Index.vue");
-/* harmony import */ var _views_project_Edit__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../views/project/Edit */ "./resources/js/views/project/Edit.vue");
-/* harmony import */ var _views_project_Create__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../views/project/Create */ "./resources/js/views/project/Create.vue");
-/* harmony import */ var _views_asset_Index__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../views/asset/Index */ "./resources/js/views/asset/Index.vue");
-/* harmony import */ var _views_asset_Edit__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../views/asset/Edit */ "./resources/js/views/asset/Edit.vue");
-/* harmony import */ var _views_asset_Create__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ../views/asset/Create */ "./resources/js/views/asset/Create.vue");
-/* harmony import */ var _views_chart_Index__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ../views/chart/Index */ "./resources/js/views/chart/Index.vue");
-/* harmony import */ var _views_chart_Edit__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ../views/chart/Edit */ "./resources/js/views/chart/Edit.vue");
-/* harmony import */ var _views_chart_Create__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ../views/chart/Create */ "./resources/js/views/chart/Create.vue");
-
+/* harmony import */ var _views_jurnal_Edit__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../views/jurnal/Edit */ "./resources/js/views/jurnal/Edit.vue");
+/* harmony import */ var _views_jurnal_Create__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../views/jurnal/Create */ "./resources/js/views/jurnal/Create.vue");
+/* harmony import */ var _views_jurnal_Verif__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../views/jurnal/Verif */ "./resources/js/views/jurnal/Verif.vue");
+/* harmony import */ var _views_jurnal_Detail__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../views/jurnal/Detail */ "./resources/js/views/jurnal/Detail.vue");
+/* harmony import */ var _views_jurnal_Import__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../views/jurnal/Import */ "./resources/js/views/jurnal/Import.vue");
+/* harmony import */ var _views_jurnal_TabDraft__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../views/jurnal/TabDraft */ "./resources/js/views/jurnal/TabDraft.vue");
+/* harmony import */ var _views_jurnal_TabProses__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../views/jurnal/TabProses */ "./resources/js/views/jurnal/TabProses.vue");
+/* harmony import */ var _views_jurnal_TabVerif__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../views/jurnal/TabVerif */ "./resources/js/views/jurnal/TabVerif.vue");
+/* harmony import */ var _views_karyawan_Index__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../views/karyawan/Index */ "./resources/js/views/karyawan/Index.vue");
+/* harmony import */ var _views_karyawan_Edit__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../views/karyawan/Edit */ "./resources/js/views/karyawan/Edit.vue");
+/* harmony import */ var _views_karyawan_Create__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../views/karyawan/Create */ "./resources/js/views/karyawan/Create.vue");
+/* harmony import */ var _views_rekening_Index__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../views/rekening/Index */ "./resources/js/views/rekening/Index.vue");
+/* harmony import */ var _views_rekening_Edit__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../views/rekening/Edit */ "./resources/js/views/rekening/Edit.vue");
+/* harmony import */ var _views_rekening_Create__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../views/rekening/Create */ "./resources/js/views/rekening/Create.vue");
+/* harmony import */ var _views_periode_Index__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../views/periode/Index */ "./resources/js/views/periode/Index.vue");
+/* harmony import */ var _views_periode_Edit__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../views/periode/Edit */ "./resources/js/views/periode/Edit.vue");
+/* harmony import */ var _views_project_Index__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../views/project/Index */ "./resources/js/views/project/Index.vue");
+/* harmony import */ var _views_project_Edit__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../views/project/Edit */ "./resources/js/views/project/Edit.vue");
+/* harmony import */ var _views_project_Create__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../views/project/Create */ "./resources/js/views/project/Create.vue");
+/* harmony import */ var _views_asset_Index__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../views/asset/Index */ "./resources/js/views/asset/Index.vue");
+/* harmony import */ var _views_asset_Edit__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../views/asset/Edit */ "./resources/js/views/asset/Edit.vue");
+/* harmony import */ var _views_asset_Create__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../views/asset/Create */ "./resources/js/views/asset/Create.vue");
+/* harmony import */ var _views_chart_Index__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ../views/chart/Index */ "./resources/js/views/chart/Index.vue");
+/* harmony import */ var _views_chart_Edit__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ../views/chart/Edit */ "./resources/js/views/chart/Edit.vue");
+/* harmony import */ var _views_chart_Create__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ../views/chart/Create */ "./resources/js/views/chart/Create.vue");
 
 
 
@@ -12206,108 +12041,108 @@ __webpack_require__.r(__webpack_exports__);
     {
       path: '/jurnal-draft',
       name: 'jurnal',
-      component: _views_jurnal_TabDraft__WEBPACK_IMPORTED_MODULE_15__["default"]
+      component: _views_jurnal_TabDraft__WEBPACK_IMPORTED_MODULE_14__["default"]
     }, {
       path: '/jurnal-proses',
       name: 'jurnalproses',
-      component: _views_jurnal_TabProses__WEBPACK_IMPORTED_MODULE_16__["default"]
+      component: _views_jurnal_TabProses__WEBPACK_IMPORTED_MODULE_15__["default"]
     }, {
       path: '/jurnal-verif',
       name: 'jurnalverif',
-      component: _views_jurnal_TabVerif__WEBPACK_IMPORTED_MODULE_17__["default"]
+      component: _views_jurnal_TabVerif__WEBPACK_IMPORTED_MODULE_16__["default"]
     }, {
       path: '/jurnal/edit/:token',
       name: 'jurnal.edit',
-      component: _views_jurnal_Edit__WEBPACK_IMPORTED_MODULE_10__["default"]
+      component: _views_jurnal_Edit__WEBPACK_IMPORTED_MODULE_9__["default"]
     }, {
       path: '/jurnal/create',
       name: 'jurnal.create',
-      component: _views_jurnal_Create__WEBPACK_IMPORTED_MODULE_11__["default"]
+      component: _views_jurnal_Create__WEBPACK_IMPORTED_MODULE_10__["default"]
     }, {
       path: '/jurnal/import',
       name: 'jurnal.import',
-      component: _views_jurnal_Import__WEBPACK_IMPORTED_MODULE_14__["default"]
+      component: _views_jurnal_Import__WEBPACK_IMPORTED_MODULE_13__["default"]
     }, {
       path: '/jurnal/detail/:token',
       name: 'jurnal.detail',
-      component: _views_jurnal_Detail__WEBPACK_IMPORTED_MODULE_13__["default"]
+      component: _views_jurnal_Detail__WEBPACK_IMPORTED_MODULE_12__["default"]
     }, {
       path: '/jurnal/verification/:token',
       name: 'jurnal.verif',
-      component: _views_jurnal_Verif__WEBPACK_IMPORTED_MODULE_12__["default"]
+      component: _views_jurnal_Verif__WEBPACK_IMPORTED_MODULE_11__["default"]
     }, {
       path: '/admin/karyawan',
       name: 'karyawan',
-      component: _views_karyawan_Index__WEBPACK_IMPORTED_MODULE_18__["default"]
+      component: _views_karyawan_Index__WEBPACK_IMPORTED_MODULE_17__["default"]
     }, {
       path: '/admin/karyawan/edit/:token',
       name: 'karyawan.edit',
-      component: _views_karyawan_Edit__WEBPACK_IMPORTED_MODULE_19__["default"]
+      component: _views_karyawan_Edit__WEBPACK_IMPORTED_MODULE_18__["default"]
     }, {
       path: '/admin/karyawan/create',
       name: 'karyawan.create',
-      component: _views_karyawan_Create__WEBPACK_IMPORTED_MODULE_20__["default"]
+      component: _views_karyawan_Create__WEBPACK_IMPORTED_MODULE_19__["default"]
     }, // REKENING BANK
     {
       path: '/admin/rekening',
       name: 'rekening',
-      component: _views_rekening_Index__WEBPACK_IMPORTED_MODULE_21__["default"]
+      component: _views_rekening_Index__WEBPACK_IMPORTED_MODULE_20__["default"]
     }, {
       path: '/admin/rekening/edit/:token',
       name: 'rekening.edit',
-      component: _views_rekening_Edit__WEBPACK_IMPORTED_MODULE_22__["default"]
+      component: _views_rekening_Edit__WEBPACK_IMPORTED_MODULE_21__["default"]
     }, {
       path: '/admin/rekening/create',
       name: 'rekening.create',
-      component: _views_rekening_Create__WEBPACK_IMPORTED_MODULE_23__["default"]
+      component: _views_rekening_Create__WEBPACK_IMPORTED_MODULE_22__["default"]
     }, // PERIODE
     {
       path: '/admin/periode',
       name: 'periode',
-      component: _views_periode_Index__WEBPACK_IMPORTED_MODULE_24__["default"]
+      component: _views_periode_Index__WEBPACK_IMPORTED_MODULE_23__["default"]
     }, {
       path: '/admin/periode/:token',
       name: 'periode.edit',
-      component: _views_periode_Edit__WEBPACK_IMPORTED_MODULE_25__["default"]
+      component: _views_periode_Edit__WEBPACK_IMPORTED_MODULE_24__["default"]
     }, // PROJECT
     {
       path: '/admin/project',
       name: 'project',
-      component: _views_project_Index__WEBPACK_IMPORTED_MODULE_26__["default"]
+      component: _views_project_Index__WEBPACK_IMPORTED_MODULE_25__["default"]
     }, {
       path: '/admin/project/edit/:token',
       name: 'project.edit',
-      component: _views_project_Edit__WEBPACK_IMPORTED_MODULE_27__["default"]
+      component: _views_project_Edit__WEBPACK_IMPORTED_MODULE_26__["default"]
     }, {
       path: '/admin/project/create',
       name: 'project.create',
-      component: _views_project_Create__WEBPACK_IMPORTED_MODULE_28__["default"]
+      component: _views_project_Create__WEBPACK_IMPORTED_MODULE_27__["default"]
     }, // ASSET
     {
       path: '/admin/asset',
       name: 'asset',
-      component: _views_asset_Index__WEBPACK_IMPORTED_MODULE_29__["default"]
+      component: _views_asset_Index__WEBPACK_IMPORTED_MODULE_28__["default"]
     }, {
       path: '/admin/asset/edit/:token',
       name: 'asset.edit',
-      component: _views_asset_Edit__WEBPACK_IMPORTED_MODULE_30__["default"]
+      component: _views_asset_Edit__WEBPACK_IMPORTED_MODULE_29__["default"]
     }, {
       path: '/admin/asset/create',
       name: 'asset.create',
-      component: _views_asset_Create__WEBPACK_IMPORTED_MODULE_31__["default"]
+      component: _views_asset_Create__WEBPACK_IMPORTED_MODULE_30__["default"]
     }, // CHART ACCOUNT
     {
       path: '/admin/chart',
       name: 'chart',
-      component: _views_chart_Index__WEBPACK_IMPORTED_MODULE_32__["default"]
+      component: _views_chart_Index__WEBPACK_IMPORTED_MODULE_31__["default"]
     }, {
       path: '/admin/chart/edit/:token',
       name: 'chart.edit',
-      component: _views_chart_Edit__WEBPACK_IMPORTED_MODULE_33__["default"]
+      component: _views_chart_Edit__WEBPACK_IMPORTED_MODULE_32__["default"]
     }, {
       path: '/admin/chart/create',
       name: 'chart.create',
-      component: _views_chart_Create__WEBPACK_IMPORTED_MODULE_34__["default"]
+      component: _views_chart_Create__WEBPACK_IMPORTED_MODULE_33__["default"]
     }]
   }]
 });
@@ -12403,7 +12238,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.wrapper{\n  display: inline-flex;\n  align-items: center;\n  justify-content: space-evenly;\n  border-radius: 5px;\n}\n.option{\n  background: #fff;\n  height: 100%;\n  width: 100%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: .5rem;\n  margin: 0 8px;\n  border-radius: 5px;\n  cursor: pointer;\n  border: 2px solid lightgrey;\n  transition: all 0.3s ease;\n}\n.option:first-child {\n  margin-left: 0;\n}\n.option:last-child {\n  margin-right: 0;\n}\n.option .dot{\n  height: 16px;\n  width: 16px;\n  background: #d9d9d9;\n  border-radius: 50%;\n  position: relative;\n}\n.option .dot::before{\n  position: absolute;\n  content: \"\";\n  top: 4px;\n  left: 4px;\n  width: 8px;\n  height: 8px;\n  background: #5B73E8;\n  border-radius: 50%;\n  opacity: 0;\n  transform: scale(1.5);\n  transition: all 0.3s ease;\n}\ninput[type=\"radio\"]{\n  display: none;\n}\n#option-1:checked:checked ~ .option-1,\n#option-2:checked:checked ~ .option-2,\n#option-3:checked:checked ~ .option-3{\n  border-color: #5B73E8;\n  background: #5B73E8;\n}\n#option-1:checked:checked ~ .option-1 .dot,\n#option-2:checked:checked ~ .option-2 .dot,\n#option-3:checked:checked ~ .option-3 .dot{\n  background: #fff;\n}\n#option-1:checked:checked ~ .option-1 .dot::before,\n#option-2:checked:checked ~ .option-2 .dot::before,\n#option-3:checked:checked ~ .option-3 .dot::before{\n  opacity: 1;\n  transform: scale(1);\n}\n.option span{\n  font-size: 16px;\n  color: #808080;\n}\n#option-1:checked:checked ~ .option-1 span,\n#option-2:checked:checked ~ .option-2 span,\n#option-3:checked:checked ~ .option-3 span{\n  color: #fff;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.wrapper{\n  display: inline-flex;\n  align-items: center;\n  justify-content: space-evenly;\n  border-radius: 5px;\n}\n.option{\n    min-height: 39px;\n    min-width: 100px;\n    padding: .2rem 1rem;\n    background: #fff;\n    height: 100%;\n    width: auto;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    gap: .5rem;\n    margin: 0 8px;\n    border-radius: 5px;\n    cursor: pointer;\n    border: 2px solid lightgrey;\n    transition: all 0.3s ease;\n}\n.option:first-child {\n  margin-left: 0;\n}\n.option:last-child {\n  margin-right: 0;\n}\n.option .dot{\n  height: 16px;\n  width: 16px;\n  background: #d9d9d9;\n  border-radius: 50%;\n  position: relative;\n}\n.option .dot::before{\n  position: absolute;\n  content: \"\";\n  top: 4px;\n  left: 4px;\n  width: 8px;\n  height: 8px;\n  background: #5B73E8;\n  border-radius: 50%;\n  opacity: 0;\n  transform: scale(1.5);\n  transition: all 0.3s ease;\n}\ninput[type=\"radio\"]{\n  display: none;\n}\n#option-1:checked:checked ~ .option-1,\n#option-2:checked:checked ~ .option-2,\n#option-3:checked:checked ~ .option-3{\n  border-color: #5B73E8;\n  background: #5B73E8;\n}\n#option-1:checked:checked ~ .option-1 .dot,\n#option-2:checked:checked ~ .option-2 .dot,\n#option-3:checked:checked ~ .option-3 .dot{\n  background: #fff;\n}\n#option-1:checked:checked ~ .option-1 .dot::before,\n#option-2:checked:checked ~ .option-2 .dot::before,\n#option-3:checked:checked ~ .option-3 .dot::before{\n  opacity: 1;\n  transform: scale(1);\n}\n.option span{\n  font-size: 16px;\n  color: #808080;\n}\n#option-1:checked:checked ~ .option-1 span,\n#option-2:checked:checked ~ .option-2 span,\n#option-3:checked:checked ~ .option-3 span{\n  color: #fff;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -36399,45 +36234,6 @@ component.options.__file = "resources/js/views/jurnal/Import.vue"
 
 /***/ }),
 
-/***/ "./resources/js/views/jurnal/Index.vue":
-/*!*********************************************!*\
-  !*** ./resources/js/views/jurnal/Index.vue ***!
-  \*********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _Index_vue_vue_type_template_id_bbf1e4d8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Index.vue?vue&type=template&id=bbf1e4d8& */ "./resources/js/views/jurnal/Index.vue?vue&type=template&id=bbf1e4d8&");
-/* harmony import */ var _Index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Index.vue?vue&type=script&lang=js& */ "./resources/js/views/jurnal/Index.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _Index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Index_vue_vue_type_template_id_bbf1e4d8___WEBPACK_IMPORTED_MODULE_0__.render,
-  _Index_vue_vue_type_template_id_bbf1e4d8___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/views/jurnal/Index.vue"
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
-
-/***/ }),
-
 /***/ "./resources/js/views/jurnal/TabDraft.vue":
 /*!************************************************!*\
   !*** ./resources/js/views/jurnal/TabDraft.vue ***!
@@ -37652,22 +37448,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/views/jurnal/Index.vue?vue&type=script&lang=js&":
-/*!**********************************************************************!*\
-  !*** ./resources/js/views/jurnal/Index.vue?vue&type=script&lang=js& ***!
-  \**********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Index.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/Index.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
 /***/ "./resources/js/views/jurnal/TabDraft.vue?vue&type=script&lang=js&":
 /*!*************************************************************************!*\
   !*** ./resources/js/views/jurnal/TabDraft.vue?vue&type=script&lang=js& ***!
@@ -38469,23 +38249,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Import_vue_vue_type_template_id_18c1745a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Import_vue_vue_type_template_id_18c1745a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Import.vue?vue&type=template&id=18c1745a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/Import.vue?vue&type=template&id=18c1745a&");
-
-
-/***/ }),
-
-/***/ "./resources/js/views/jurnal/Index.vue?vue&type=template&id=bbf1e4d8&":
-/*!****************************************************************************!*\
-  !*** ./resources/js/views/jurnal/Index.vue?vue&type=template&id=bbf1e4d8& ***!
-  \****************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_template_id_bbf1e4d8___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_template_id_bbf1e4d8___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
-/* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_template_id_bbf1e4d8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Index.vue?vue&type=template&id=bbf1e4d8& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/Index.vue?vue&type=template&id=bbf1e4d8&");
 
 
 /***/ }),
@@ -39367,12 +39130,38 @@ var render = function () {
                   ),
                   _vm._v(" "),
                   _c("li", { staticClass: "nav-item dropdown" }, [
-                    _vm._m(2),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "nav-link dropdown-toggle arrow-none",
+                        attrs: {
+                          href: "#",
+                          id: "topnav-jurnal",
+                          role: "button",
+                        },
+                        on: {
+                          click: function ($event) {
+                            $event.preventDefault()
+                            _vm.topnav.jurnal = !_vm.topnav.jurnal
+                          },
+                        },
+                      },
+                      [
+                        _c("i", { staticClass: "uil-file-landscape me-2" }),
+                        _vm._v("Jurnal "),
+                        _c("div", {
+                          class: _vm.topnav.jurnal
+                            ? "bx bxs-pin"
+                            : "arrow-down",
+                        }),
+                      ]
+                    ),
                     _vm._v(" "),
                     _c(
                       "div",
                       {
                         staticClass: "dropdown-menu",
+                        class: _vm.topnav.jurnal ? "show" : "",
                         attrs: { "aria-labelledby": "topnav-jurnal" },
                       },
                       [
@@ -39409,12 +39198,38 @@ var render = function () {
                   _vm._v(" "),
                   _vm.auth.user.type == 0
                     ? _c("li", { staticClass: "nav-item dropdown" }, [
-                        _vm._m(3),
+                        _c(
+                          "a",
+                          {
+                            staticClass: "nav-link dropdown-toggle arrow-none",
+                            attrs: {
+                              href: "#",
+                              id: "topnav-admin",
+                              role: "button",
+                            },
+                            on: {
+                              click: function ($event) {
+                                $event.preventDefault()
+                                _vm.topnav.admin = !_vm.topnav.admin
+                              },
+                            },
+                          },
+                          [
+                            _c("i", { staticClass: "uil-apps me-2" }),
+                            _vm._v("Master Data "),
+                            _c("div", {
+                              class: _vm.topnav.admin
+                                ? "bx bxs-pin"
+                                : "arrow-down",
+                            }),
+                          ]
+                        ),
                         _vm._v(" "),
                         _c(
                           "div",
                           {
                             staticClass: "dropdown-menu",
+                            class: _vm.topnav.admin ? "show" : "",
                             attrs: { "aria-labelledby": "topnav-admin" },
                           },
                           [
@@ -39561,40 +39376,6 @@ var staticRenderFns = [
             ]),
           ]
         ),
-      ]
-    )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "nav-link dropdown-toggle arrow-none",
-        attrs: { href: "#", id: "topnav-jurnal", role: "button" },
-      },
-      [
-        _c("i", { staticClass: "uil-file-landscape me-2" }),
-        _vm._v("Jurnal "),
-        _c("div", { staticClass: "arrow-down" }),
-      ]
-    )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "nav-link dropdown-toggle arrow-none",
-        attrs: { href: "#", id: "topnav-admin", role: "button" },
-      },
-      [
-        _c("i", { staticClass: "uil-apps me-2" }),
-        _vm._v("Master Data "),
-        _c("div", { staticClass: "arrow-down" }),
       ]
     )
   },
@@ -40117,6 +39898,12 @@ var render = function () {
                               },
                             },
                           }),
+                          _vm._v(" "),
+                          _vm.theErrors.old_password
+                            ? _c("div", { staticClass: "mt-1 text-danger" }, [
+                                _vm._v(_vm._s(_vm.theErrors.old_password[0])),
+                              ])
+                            : _vm._e(),
                         ]),
                       ]),
                       _vm._v(" "),
@@ -40496,8 +40283,18 @@ var render = function () {
                     ),
                   ]),
                   _vm._v(" "),
-                  _vm._m(1),
-                ]
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "submit", disabled: _vm.requestLoading },
+                    },
+                    [_c("i", { staticClass: "uil-plus" }), _vm._v(" Buat")]
+                  ),
+                  _vm._v(" "),
+                  _vm.requestLoading ? _c("loading") : _vm._e(),
+                ],
+                1
               ),
             ]),
           ]),
@@ -40515,16 +40312,6 @@ var staticRenderFns = [
       _c("i", { staticClass: "uil-meeting-board" }),
       _vm._v(" Buat Appointment Baru"),
     ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-      [_c("i", { staticClass: "uil-plus" }), _vm._v(" Buat")]
-    )
   },
 ]
 render._withStripped = true
@@ -41350,10 +41137,8 @@ var render = function () {
                       [_vm._v("Harga Satuan")]
                     ),
                     _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "col-md-10 d-flex align-items-center" },
-                      [
+                    _c("div", { staticClass: "col-md-10" }, [
+                      _c("div", { staticClass: "d-flex align-items-center" }, [
                         _c(
                           "p",
                           {
@@ -41390,14 +41175,14 @@ var render = function () {
                             },
                           },
                         }),
-                        _vm._v(" "),
-                        _vm.theErrors.price
-                          ? _c("div", { staticClass: "mt-1 text-danger" }, [
-                              _vm._v(_vm._s(_vm.theErrors.price[0])),
-                            ])
-                          : _vm._e(),
-                      ]
-                    ),
+                      ]),
+                      _vm._v(" "),
+                      _vm.theErrors.price
+                        ? _c("div", { staticClass: "mt-1 text-danger" }, [
+                            _vm._v(_vm._s(_vm.theErrors.price[0])),
+                          ])
+                        : _vm._e(),
+                    ]),
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "mb-3 row" }, [
@@ -41505,7 +41290,13 @@ var render = function () {
       staticClass: "btn btn-danger",
       on: { click: _vm.destroyAsset },
     },
-    [_c("i", { staticClass: "uil-trash" }), _vm._v(" Delete")]
+    [
+      _c("i", { staticClass: "uil-trash" }),
+      _vm._v(" "),
+      _c("span", { staticClass: "d-sm-none d-md-none d-lg-none d-xl-block" }, [
+        _vm._v("Delete"),
+      ]),
+    ]
   )
 }
 var staticRenderFns = []
@@ -41700,7 +41491,7 @@ var render = function () {
                                   },
                                 ],
                                 staticClass: "form-control",
-                                attrs: { type: "text" },
+                                attrs: { type: "number" },
                                 domProps: { value: _vm.asset.quantity },
                                 on: {
                                   input: function ($event) {
@@ -41736,59 +41527,58 @@ var render = function () {
                               [_vm._v("Harga Satuan")]
                             ),
                             _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "col-md-10 d-flex align-items-center",
-                              },
-                              [
-                                _c(
-                                  "p",
-                                  {
-                                    staticStyle: {
-                                      margin: "0",
-                                      "margin-right": "1rem",
-                                    },
-                                  },
-                                  [_vm._v("IDR")]
-                                ),
-                                _vm._v(" "),
-                                _c("input", {
-                                  directives: [
+                            _c("div", { staticClass: "col-md-10" }, [
+                              _c(
+                                "div",
+                                { staticClass: "d-flex align-items-center" },
+                                [
+                                  _c(
+                                    "p",
                                     {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.asset.price,
-                                      expression: "asset.price",
+                                      staticStyle: {
+                                        margin: "0",
+                                        "margin-right": "1rem",
+                                      },
                                     },
-                                  ],
-                                  staticClass: "form-control flex-grow",
-                                  attrs: { type: "number" },
-                                  domProps: { value: _vm.asset.price },
-                                  on: {
-                                    input: function ($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        _vm.asset,
-                                        "price",
-                                        $event.target.value
-                                      )
+                                    [_vm._v("IDR")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.asset.price,
+                                        expression: "asset.price",
+                                      },
+                                    ],
+                                    staticClass: "form-control flex-grow",
+                                    attrs: { type: "number" },
+                                    domProps: { value: _vm.asset.price },
+                                    on: {
+                                      input: function ($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.asset,
+                                          "price",
+                                          $event.target.value
+                                        )
+                                      },
                                     },
-                                  },
-                                }),
-                                _vm._v(" "),
-                                _vm.theErrors.price
-                                  ? _c(
-                                      "div",
-                                      { staticClass: "mt-1 text-danger" },
-                                      [_vm._v(_vm._s(_vm.theErrors.price[0]))]
-                                    )
-                                  : _vm._e(),
-                              ]
-                            ),
+                                  }),
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _vm.theErrors.price
+                                ? _c(
+                                    "div",
+                                    { staticClass: "mt-1 text-danger" },
+                                    [_vm._v(_vm._s(_vm.theErrors.price[0]))]
+                                  )
+                                : _vm._e(),
+                            ]),
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "mb-3 row" }, [
@@ -42023,11 +41813,22 @@ var render = function () {
                                             _vm._v(" "),
                                             _c(
                                               "p",
-                                              { staticClass: "card-text" },
+                                              { staticClass: "card-text mb-0" },
                                               [
                                                 _vm._v(
-                                                  "Jumlah :" +
-                                                    _vm._s(asset.value)
+                                                  "Jumlah : " +
+                                                    _vm._s(asset.quantity)
+                                                ),
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "p",
+                                              { staticClass: "card-text my-0" },
+                                              [
+                                                _vm._v(
+                                                  "Total : Rp " +
+                                                    _vm._s(asset.total)
                                                 ),
                                               ]
                                             ),
@@ -42070,7 +41871,15 @@ var render = function () {
                                                   _c("i", {
                                                     staticClass: "uil-edit-alt",
                                                   }),
-                                                  _vm._v(" Edit"),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "span",
+                                                    {
+                                                      staticClass:
+                                                        "d-sm-none d-md-none d-lg-none d-xl-block",
+                                                    },
+                                                    [_vm._v("Edit")]
+                                                  ),
                                                 ]
                                               ),
                                               _vm._v(" "),
@@ -42205,7 +42014,7 @@ var render = function () {
                                   { staticClass: "mt-2 alert alert-danger" },
                                   [
                                     _vm._v(
-                                      "\r\n                                                Masukkan Email\r\n                                            "
+                                      "\n                                                Masukkan Email\n                                            "
                                     ),
                                   ]
                                 )
@@ -42252,7 +42061,7 @@ var render = function () {
                                   { staticClass: "mt-2 alert alert-danger" },
                                   [
                                     _vm._v(
-                                      "\r\n                                                Masukkan Password\r\n                                            "
+                                      "\n                                                Masukkan Password\n                                            "
                                     ),
                                   ]
                                 )
@@ -42502,7 +42311,7 @@ var render = function () {
                           },
                         ],
                         staticClass: "form-control",
-                        attrs: { type: "text" },
+                        attrs: { type: "number" },
                         domProps: { value: _vm.chartCreate.code },
                         on: {
                           input: function ($event) {
@@ -42536,60 +42345,62 @@ var render = function () {
                       [_vm._v("Tipe")]
                     ),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col md-10 wrapper" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.chartCreate.type,
-                            expression: "chartCreate.type",
+                    _c("div", { staticClass: "col md-10" }, [
+                      _c("div", { staticClass: "col wrapper" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.chartCreate.type,
+                              expression: "chartCreate.type",
+                            },
+                          ],
+                          attrs: {
+                            value: "1",
+                            type: "radio",
+                            name: "select",
+                            id: "option-1",
                           },
-                        ],
-                        attrs: {
-                          value: "1",
-                          type: "radio",
-                          name: "select",
-                          id: "option-1",
-                        },
-                        domProps: {
-                          checked: _vm._q(_vm.chartCreate.type, "1"),
-                        },
-                        on: {
-                          change: function ($event) {
-                            return _vm.$set(_vm.chartCreate, "type", "1")
+                          domProps: {
+                            checked: _vm._q(_vm.chartCreate.type, "1"),
                           },
-                        },
-                      }),
-                      _vm._v(" "),
-                      _vm._m(1),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.chartCreate.type,
-                            expression: "chartCreate.type",
+                          on: {
+                            change: function ($event) {
+                              return _vm.$set(_vm.chartCreate, "type", "1")
+                            },
                           },
-                        ],
-                        attrs: {
-                          value: "0",
-                          type: "radio",
-                          name: "select",
-                          id: "option-2",
-                        },
-                        domProps: {
-                          checked: _vm._q(_vm.chartCreate.type, "0"),
-                        },
-                        on: {
-                          change: function ($event) {
-                            return _vm.$set(_vm.chartCreate, "type", "0")
+                        }),
+                        _vm._v(" "),
+                        _vm._m(1),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.chartCreate.type,
+                              expression: "chartCreate.type",
+                            },
+                          ],
+                          attrs: {
+                            value: "0",
+                            type: "radio",
+                            name: "select",
+                            id: "option-2",
                           },
-                        },
-                      }),
-                      _vm._v(" "),
-                      _vm._m(2),
+                          domProps: {
+                            checked: _vm._q(_vm.chartCreate.type, "0"),
+                          },
+                          on: {
+                            change: function ($event) {
+                              return _vm.$set(_vm.chartCreate, "type", "0")
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        _vm._m(2),
+                      ]),
                       _vm._v(" "),
                       _vm.theErrors.type
                         ? _c("div", { staticClass: "mt-1 text-danger" }, [
@@ -42886,7 +42697,7 @@ var render = function () {
                                   },
                                 ],
                                 staticClass: "form-control",
-                                attrs: { type: "text" },
+                                attrs: { type: "number" },
                                 domProps: { value: _vm.chart.code },
                                 on: {
                                   input: function ($event) {
@@ -42922,83 +42733,85 @@ var render = function () {
                               [_vm._v("Tipe")]
                             ),
                             _vm._v(" "),
-                            _c("div", { staticClass: "col md-10 wrapper" }, [
-                              _c("input", {
-                                directives: [
+                            _c("div", { staticClass: "col md-10" }, [
+                              _c("div", { staticClass: "col wrapper" }, [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.chart.type,
+                                      expression: "chart.type",
+                                    },
+                                  ],
+                                  attrs: {
+                                    value: "1",
+                                    type: "radio",
+                                    name: "select",
+                                    id: "option-1",
+                                  },
+                                  domProps: {
+                                    checked: _vm._q(_vm.chart.type, "1"),
+                                  },
+                                  on: {
+                                    change: function ($event) {
+                                      return _vm.$set(_vm.chart, "type", "1")
+                                    },
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "label",
                                   {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.chart.type,
-                                    expression: "chart.type",
+                                    staticClass: "option option-1",
+                                    staticStyle: { "margin-left": "0" },
+                                    attrs: { for: "option-1" },
                                   },
-                                ],
-                                attrs: {
-                                  value: "1",
-                                  type: "radio",
-                                  name: "select",
-                                  id: "option-1",
-                                },
-                                domProps: {
-                                  checked: _vm._q(_vm.chart.type, "1"),
-                                },
-                                on: {
-                                  change: function ($event) {
-                                    return _vm.$set(_vm.chart, "type", "1")
+                                  [
+                                    _c("div", { staticClass: "dot" }),
+                                    _vm._v(" "),
+                                    _c("span", [_vm._v("Pemasukan")]),
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.chart.type,
+                                      expression: "chart.type",
+                                    },
+                                  ],
+                                  attrs: {
+                                    value: "2",
+                                    type: "radio",
+                                    name: "select",
+                                    id: "option-2",
                                   },
-                                },
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "label",
-                                {
-                                  staticClass: "option option-1",
-                                  staticStyle: { "margin-left": "0" },
-                                  attrs: { for: "option-1" },
-                                },
-                                [
-                                  _c("div", { staticClass: "dot" }),
-                                  _vm._v(" "),
-                                  _c("span", [_vm._v("Pemasukan")]),
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c("input", {
-                                directives: [
+                                  domProps: {
+                                    checked: _vm._q(_vm.chart.type, "2"),
+                                  },
+                                  on: {
+                                    change: function ($event) {
+                                      return _vm.$set(_vm.chart, "type", "2")
+                                    },
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "label",
                                   {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.chart.type,
-                                    expression: "chart.type",
+                                    staticClass: "option option-2",
+                                    attrs: { for: "option-2" },
                                   },
-                                ],
-                                attrs: {
-                                  value: "2",
-                                  type: "radio",
-                                  name: "select",
-                                  id: "option-2",
-                                },
-                                domProps: {
-                                  checked: _vm._q(_vm.chart.type, "2"),
-                                },
-                                on: {
-                                  change: function ($event) {
-                                    return _vm.$set(_vm.chart, "type", "2")
-                                  },
-                                },
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "label",
-                                {
-                                  staticClass: "option option-2",
-                                  attrs: { for: "option-2" },
-                                },
-                                [
-                                  _c("div", { staticClass: "dot" }),
-                                  _vm._v(" "),
-                                  _c("span", [_vm._v("Pengeluaran")]),
-                                ]
-                              ),
+                                  [
+                                    _c("div", { staticClass: "dot" }),
+                                    _vm._v(" "),
+                                    _c("span", [_vm._v("Pengeluaran")]),
+                                  ]
+                                ),
+                              ]),
                               _vm._v(" "),
                               _vm.theErrors.type
                                 ? _c(
@@ -43198,7 +43011,7 @@ var render = function () {
                                                   "p",
                                                   {
                                                     staticClass:
-                                                      "card-text text-success",
+                                                      "card-text text-success mb-1",
                                                   },
                                                   [
                                                     _c("i", {
@@ -43211,7 +43024,7 @@ var render = function () {
                                                   "p",
                                                   {
                                                     staticClass:
-                                                      "card-text text-danger",
+                                                      "card-text text-danger mb-1",
                                                   },
                                                   [
                                                     _c("i", {
@@ -45150,68 +44963,76 @@ var render = function () {
                       [_vm._v("Reimburse")]
                     ),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col md-10 wrapper" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.journalCreate.is_reimburse,
-                            expression: "journalCreate.is_reimburse",
+                    _c("div", { staticClass: "col md-10" }, [
+                      _c("div", { staticClass: "col wrapper" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.journalCreate.is_reimburse,
+                              expression: "journalCreate.is_reimburse",
+                            },
+                          ],
+                          attrs: {
+                            value: "1",
+                            type: "radio",
+                            name: "select",
+                            id: "option-1",
                           },
-                        ],
-                        attrs: {
-                          value: "1",
-                          type: "radio",
-                          name: "select",
-                          id: "option-1",
-                        },
-                        domProps: {
-                          checked: _vm._q(_vm.journalCreate.is_reimburse, "1"),
-                        },
-                        on: {
-                          change: function ($event) {
-                            return _vm.$set(
-                              _vm.journalCreate,
-                              "is_reimburse",
+                          domProps: {
+                            checked: _vm._q(
+                              _vm.journalCreate.is_reimburse,
                               "1"
-                            )
+                            ),
                           },
-                        },
-                      }),
-                      _vm._v(" "),
-                      _vm._m(1),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.journalCreate.is_reimburse,
-                            expression: "journalCreate.is_reimburse",
+                          on: {
+                            change: function ($event) {
+                              return _vm.$set(
+                                _vm.journalCreate,
+                                "is_reimburse",
+                                "1"
+                              )
+                            },
                           },
-                        ],
-                        attrs: {
-                          value: "0",
-                          type: "radio",
-                          name: "select",
-                          id: "option-3",
-                        },
-                        domProps: {
-                          checked: _vm._q(_vm.journalCreate.is_reimburse, "0"),
-                        },
-                        on: {
-                          change: function ($event) {
-                            return _vm.$set(
-                              _vm.journalCreate,
-                              "is_reimburse",
+                        }),
+                        _vm._v(" "),
+                        _vm._m(1),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.journalCreate.is_reimburse,
+                              expression: "journalCreate.is_reimburse",
+                            },
+                          ],
+                          attrs: {
+                            value: "0",
+                            type: "radio",
+                            name: "select",
+                            id: "option-3",
+                          },
+                          domProps: {
+                            checked: _vm._q(
+                              _vm.journalCreate.is_reimburse,
                               "0"
-                            )
+                            ),
                           },
-                        },
-                      }),
-                      _vm._v(" "),
-                      _vm._m(2),
+                          on: {
+                            change: function ($event) {
+                              return _vm.$set(
+                                _vm.journalCreate,
+                                "is_reimburse",
+                                "0"
+                              )
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        _vm._m(2),
+                      ]),
                       _vm._v(" "),
                       _vm.theErrors.is_reimburse
                         ? _c("div", { staticClass: "mt-1 text-danger" }, [
@@ -45238,9 +45059,9 @@ var render = function () {
                         on: { change: _vm.pictureUpload },
                       }),
                       _vm._v(" "),
-                      _vm.theErrors.ref
+                      _vm.theErrors.filebukti
                         ? _c("div", { staticClass: "mt-1 text-danger" }, [
-                            _vm._v(_vm._s(_vm.theErrors.ref[0])),
+                            _vm._v(_vm._s(_vm.theErrors.filebukti[0])),
                           ])
                         : _vm._e(),
                     ]),
@@ -45292,10 +45113,8 @@ var render = function () {
                       [_vm._v("Balance")]
                     ),
                     _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "col-md-10 d-flex align-items-center" },
-                      [
+                    _c("div", { staticClass: "col-md-10" }, [
+                      _c("div", { staticClass: "d-flex align-items-center" }, [
                         _c(
                           "p",
                           {
@@ -45317,6 +45136,7 @@ var render = function () {
                             },
                           ],
                           staticClass: "form-control flex-grow",
+                          class: _vm.theErrors.balance ? "is-invalid" : "",
                           attrs: { type: "number" },
                           domProps: { value: _vm.journalCreate.balance },
                           on: {
@@ -45332,14 +45152,14 @@ var render = function () {
                             },
                           },
                         }),
-                        _vm._v(" "),
-                        _vm.theErrors.balance
-                          ? _c("div", { staticClass: "mt-1 text-danger" }, [
-                              _vm._v(_vm._s(_vm.theErrors.balance[0])),
-                            ])
-                          : _vm._e(),
-                      ]
-                    ),
+                      ]),
+                      _vm._v(" "),
+                      _vm.theErrors.balance
+                        ? _c("div", { staticClass: "mt-1 text-danger" }, [
+                            _vm._v(_vm._s(_vm.theErrors.balance[0])),
+                          ])
+                        : _vm._e(),
+                    ]),
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "mb-3 row" }, [
@@ -45357,6 +45177,7 @@ var render = function () {
                       { staticClass: "col-md-10" },
                       [
                         _c("v-select", {
+                          staticClass: "is-invalid",
                           attrs: {
                             options: _vm.periodOptions,
                             value: _vm.journalCreate.accounting_period_id,
@@ -45581,36 +45402,59 @@ var render = function () {
           _vm._v(" "),
           _c("p", [_vm._v(_vm._s(_vm.format_date(_vm.journal.date)))]),
           _vm._v(" "),
-          _c("br"),
+          _c("div", {}, [
+            _c(
+              "a",
+              {
+                staticClass: "btn btn-primary",
+                attrs: {
+                  href: _vm.journal.filebukti,
+                  role: "button",
+                  target: "__blank",
+                },
+              },
+              [
+                _c("i", { staticClass: "uil-image" }),
+                _vm._v(" Lihat File Bukti"),
+              ]
+            ),
+          ]),
           _vm._v(" "),
-          _c("p", [_vm._v("Remark : " + _vm._s(_vm.journal.remark))]),
+          _c("hr"),
           _vm._v(" "),
-          _c("p", [_vm._v("Ref : " + _vm._s(_vm.journal.ref))]),
+          _c("p", { staticClass: "my-1" }, [
+            _vm._v("Remark : " + _vm._s(_vm.journal.remark)),
+          ]),
           _vm._v(" "),
-          _c("p", [
+          _c("p", { staticClass: "my-1" }, [
+            _vm._v("Ref : " + _vm._s(_vm.journal.ref)),
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "my-1" }, [
             _vm._v(
               "Reimburse : " + _vm._s(_vm.journal.is_reimburse ? "Ya" : "Tidak")
             ),
           ]),
           _vm._v(" "),
-          _c("p", [
+          _c("p", { staticClass: "my-1" }, [
             _vm._v("Chart Account : " + _vm._s(_vm.journal.chart_account_name)),
           ]),
           _vm._v(" "),
-          _c("p", [
-            _vm._v(
-              "Accounting Period : " +
-                _vm._s(_vm.journal.accounting_period_name)
-            ),
+          _c("p", { staticClass: "my-1" }, [
+            _vm._v("Period : " + _vm._s(_vm.journal.accounting_period_name)),
           ]),
           _vm._v(" "),
-          _c("p", [_vm._v("Bank : " + _vm._s(_vm.journal.bank_account_name))]),
+          _c("p", { staticClass: "my-1" }, [
+            _vm._v("Bank : " + _vm._s(_vm.journal.bank_account_name)),
+          ]),
           _vm._v(" "),
-          _c("p", [_vm._v("Project : " + _vm._s(_vm.journal.project_name))]),
+          _c("p", { staticClass: "my-1" }, [
+            _vm._v("Project : " + _vm._s(_vm.journal.project_name)),
+          ]),
           _vm._v(" "),
-          _c("p", [_vm._v("Pengaju : " + _vm._s(_vm.journal.user_name))]),
-          _vm._v(" "),
-          _c("p", [_vm._v("File Bukti : " + _vm._s(_vm.journal.filebukti))]),
+          _c("p", { staticClass: "my-1" }, [
+            _vm._v("User : " + _vm._s(_vm.journal.user_name)),
+          ]),
         ]),
         _vm._v(" "),
         _vm._m(1),
@@ -46099,97 +45943,99 @@ var render = function () {
                               [_vm._v("Reimburse")]
                             ),
                             _vm._v(" "),
-                            _c("div", { staticClass: "col md-10 wrapper" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.journal.is_reimburse,
-                                    expression: "journal.is_reimburse",
+                            _c("div", { staticClass: "col md-10" }, [
+                              _c("div", { staticClass: "col wrapper" }, [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.journal.is_reimburse,
+                                      expression: "journal.is_reimburse",
+                                    },
+                                  ],
+                                  attrs: {
+                                    value: "1",
+                                    type: "radio",
+                                    name: "select",
+                                    id: "option-1",
                                   },
-                                ],
-                                attrs: {
-                                  value: "1",
-                                  type: "radio",
-                                  name: "select",
-                                  id: "option-1",
-                                },
-                                domProps: {
-                                  checked: _vm._q(
-                                    _vm.journal.is_reimburse,
-                                    "1"
-                                  ),
-                                },
-                                on: {
-                                  change: function ($event) {
-                                    return _vm.$set(
-                                      _vm.journal,
-                                      "is_reimburse",
+                                  domProps: {
+                                    checked: _vm._q(
+                                      _vm.journal.is_reimburse,
                                       "1"
-                                    )
+                                    ),
                                   },
-                                },
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "label",
-                                {
-                                  staticClass: "option option-1",
-                                  staticStyle: { "margin-left": "0" },
-                                  attrs: { for: "option-1" },
-                                },
-                                [
-                                  _c("div", { staticClass: "dot" }),
-                                  _vm._v(" "),
-                                  _c("span", [_vm._v("Ya")]),
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c("input", {
-                                directives: [
+                                  on: {
+                                    change: function ($event) {
+                                      return _vm.$set(
+                                        _vm.journal,
+                                        "is_reimburse",
+                                        "1"
+                                      )
+                                    },
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "label",
                                   {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.journal.is_reimburse,
-                                    expression: "journal.is_reimburse",
+                                    staticClass: "option option-1",
+                                    staticStyle: { "margin-left": "0" },
+                                    attrs: { for: "option-1" },
                                   },
-                                ],
-                                attrs: {
-                                  value: "0",
-                                  type: "radio",
-                                  name: "select",
-                                  id: "option-3",
-                                },
-                                domProps: {
-                                  checked: _vm._q(
-                                    _vm.journal.is_reimburse,
-                                    "0"
-                                  ),
-                                },
-                                on: {
-                                  change: function ($event) {
-                                    return _vm.$set(
-                                      _vm.journal,
-                                      "is_reimburse",
+                                  [
+                                    _c("div", { staticClass: "dot" }),
+                                    _vm._v(" "),
+                                    _c("span", [_vm._v("Ya")]),
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.journal.is_reimburse,
+                                      expression: "journal.is_reimburse",
+                                    },
+                                  ],
+                                  attrs: {
+                                    value: "0",
+                                    type: "radio",
+                                    name: "select",
+                                    id: "option-3",
+                                  },
+                                  domProps: {
+                                    checked: _vm._q(
+                                      _vm.journal.is_reimburse,
                                       "0"
-                                    )
+                                    ),
                                   },
-                                },
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "label",
-                                {
-                                  staticClass: "option option-3",
-                                  attrs: { for: "option-3" },
-                                },
-                                [
-                                  _c("div", { staticClass: "dot" }),
-                                  _vm._v(" "),
-                                  _c("span", [_vm._v("Tidak")]),
-                                ]
-                              ),
+                                  on: {
+                                    change: function ($event) {
+                                      return _vm.$set(
+                                        _vm.journal,
+                                        "is_reimburse",
+                                        "0"
+                                      )
+                                    },
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "option option-3",
+                                    attrs: { for: "option-3" },
+                                  },
+                                  [
+                                    _c("div", { staticClass: "dot" }),
+                                    _vm._v(" "),
+                                    _c("span", [_vm._v("Tidak")]),
+                                  ]
+                                ),
+                              ]),
                               _vm._v(" "),
                               _vm.theErrors.is_reimburse
                                 ? _c(
@@ -46251,24 +46097,12 @@ var render = function () {
                                     options: _vm.chartOptions,
                                     disabled: _vm.chartLoading,
                                   },
-                                  on: {
-                                    input: function ($event) {
-                                      return _vm.selectId(
-                                        $event,
-                                        "chart_account_id"
-                                      )
-                                    },
-                                  },
                                   model: {
-                                    value: _vm.journal.chart_account_id,
+                                    value: _vm.chartSelected,
                                     callback: function ($$v) {
-                                      _vm.$set(
-                                        _vm.journal,
-                                        "chart_account_id",
-                                        $$v
-                                      )
+                                      _vm.chartSelected = $$v
                                     },
-                                    expression: "journal.chart_account_id",
+                                    expression: "chartSelected",
                                   },
                                 }),
                                 _vm._v(" "),
@@ -46300,59 +46134,61 @@ var render = function () {
                               [_vm._v("Balance")]
                             ),
                             _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "col-md-10 d-flex align-items-center",
-                              },
-                              [
-                                _c(
-                                  "p",
-                                  {
-                                    staticStyle: {
-                                      margin: "0",
-                                      "margin-right": "1rem",
-                                    },
-                                  },
-                                  [_vm._v("IDR")]
-                                ),
-                                _vm._v(" "),
-                                _c("input", {
-                                  directives: [
+                            _c("div", { staticClass: "col-md-10" }, [
+                              _c(
+                                "div",
+                                { staticClass: "d-flex align-items-center" },
+                                [
+                                  _c(
+                                    "p",
                                     {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.journal.balance,
-                                      expression: "journal.balance",
+                                      staticStyle: {
+                                        margin: "0",
+                                        "margin-right": "1rem",
+                                      },
                                     },
-                                  ],
-                                  staticClass: "form-control flex-grow",
-                                  attrs: { type: "number" },
-                                  domProps: { value: _vm.journal.balance },
-                                  on: {
-                                    input: function ($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        _vm.journal,
-                                        "balance",
-                                        $event.target.value
-                                      )
+                                    [_vm._v("IDR")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.journal.balance,
+                                        expression: "journal.balance",
+                                      },
+                                    ],
+                                    staticClass: "form-control flex-grow",
+                                    class: _vm.theErrors.balance
+                                      ? "is-invalid"
+                                      : "",
+                                    attrs: { type: "number" },
+                                    domProps: { value: _vm.journal.balance },
+                                    on: {
+                                      input: function ($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.journal,
+                                          "balance",
+                                          $event.target.value
+                                        )
+                                      },
                                     },
-                                  },
-                                }),
-                                _vm._v(" "),
-                                _vm.theErrors.balance
-                                  ? _c(
-                                      "div",
-                                      { staticClass: "mt-1 text-danger" },
-                                      [_vm._v(_vm._s(_vm.theErrors.balance[0]))]
-                                    )
-                                  : _vm._e(),
-                              ]
-                            ),
+                                  }),
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _vm.theErrors.balance
+                                ? _c(
+                                    "div",
+                                    { staticClass: "mt-1 text-danger" },
+                                    [_vm._v(_vm._s(_vm.theErrors.balance[0]))]
+                                  )
+                                : _vm._e(),
+                            ]),
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "mb-3 row" }, [
@@ -46374,24 +46210,12 @@ var render = function () {
                                     options: _vm.periodOptions,
                                     disabled: _vm.periodLoading,
                                   },
-                                  on: {
-                                    input: function ($event) {
-                                      return _vm.selectId(
-                                        $event,
-                                        "accounting_period_id"
-                                      )
-                                    },
-                                  },
                                   model: {
-                                    value: _vm.journal.accounting_period_id,
+                                    value: _vm.periodSelected,
                                     callback: function ($$v) {
-                                      _vm.$set(
-                                        _vm.journal,
-                                        "accounting_period_id",
-                                        $$v
-                                      )
+                                      _vm.periodSelected = $$v
                                     },
-                                    expression: "journal.accounting_period_id",
+                                    expression: "periodSelected",
                                   },
                                 }),
                                 _vm._v(" "),
@@ -46433,24 +46257,12 @@ var render = function () {
                                     options: _vm.bankOptions,
                                     disabled: _vm.bankLoading,
                                   },
-                                  on: {
-                                    input: function ($event) {
-                                      return _vm.selectId(
-                                        $event,
-                                        "bank_account_id"
-                                      )
-                                    },
-                                  },
                                   model: {
-                                    value: _vm.journal.bank_account_id,
+                                    value: _vm.bankSelected,
                                     callback: function ($$v) {
-                                      _vm.$set(
-                                        _vm.journal,
-                                        "bank_account_id",
-                                        $$v
-                                      )
+                                      _vm.bankSelected = $$v
                                     },
-                                    expression: "journal.bank_account_id",
+                                    expression: "bankSelected",
                                   },
                                 }),
                                 _vm._v(" "),
@@ -46491,17 +46303,12 @@ var render = function () {
                                     options: _vm.projectOptions,
                                     disabled: _vm.projectLoading,
                                   },
-                                  on: {
-                                    input: function ($event) {
-                                      return _vm.selectId($event, "project_id")
-                                    },
-                                  },
                                   model: {
-                                    value: _vm.journal.project_id,
+                                    value: _vm.projectSelected,
                                     callback: function ($$v) {
-                                      _vm.$set(_vm.journal, "project_id", $$v)
+                                      _vm.projectSelected = $$v
                                     },
-                                    expression: "journal.project_id",
+                                    expression: "projectSelected",
                                   },
                                 }),
                                 _vm._v(" "),
@@ -46708,244 +46515,6 @@ var staticRenderFns = [
       "button",
       { staticClass: "btn btn-primary", attrs: { type: "submit" } },
       [_c("i", { staticClass: "bx bx-import" }), _vm._v(" Import")]
-    )
-  },
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/Index.vue?vue&type=template&id=bbf1e4d8&":
-/*!*******************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/Index.vue?vue&type=template&id=bbf1e4d8& ***!
-  \*******************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* binding */ render),
-/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
-/* harmony export */ });
-var render = function () {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "main-content" }, [
-    _c("div", { staticClass: "page-content" }, [
-      _c("div", { staticClass: "container-fluid" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-12" }, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "page-title-box d-flex align-items-center justify-content-between",
-              },
-              [
-                _vm._m(0),
-                _vm._v(" "),
-                _c("div", { staticClass: "page-title-right" }, [
-                  _c(
-                    "ol",
-                    { staticClass: "breadcrumb m-0" },
-                    [
-                      _c(
-                        "li",
-                        { staticClass: "breadcrumb-item m-auto" },
-                        [
-                          _c(
-                            "router-link",
-                            { attrs: { to: { name: "dashboard" } } },
-                            [_vm._v("Dashboard")]
-                          ),
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "li",
-                        { staticClass: "breadcrumb-item m-auto active" },
-                        [_vm._v("Jurnal")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-success",
-                          staticStyle: { "margin-left": "8px" },
-                          on: {
-                            click: function ($event) {
-                              return _vm.exportExcel()
-                            },
-                          },
-                        },
-                        [
-                          _c("i", { staticClass: "uil-table" }),
-                          _vm._v(" Export Excel "),
-                          _vm.loadingExcel
-                            ? _c("loading", { attrs: { size: "18" } })
-                            : _vm._e(),
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "router-link",
-                        {
-                          staticClass: "btn btn-primary mx-2",
-                          attrs: { exact: "", to: { name: "jurnal.create" } },
-                        },
-                        [
-                          _c("i", { staticClass: "uil-plus" }),
-                          _vm._v(" Buat Jurnal Baru"),
-                        ]
-                      ),
-                    ],
-                    1
-                  ),
-                ]),
-              ]
-            ),
-          ]),
-        ]),
-        _vm._v(" "),
-        _vm._m(1),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "tab-content p-3 text-muted card border-top-0" },
-          [
-            _c(
-              "div",
-              {
-                staticClass: "tab-pane active",
-                attrs: { id: "home1", role: "tabpanel" },
-              },
-              [_c("tab-draft", { attrs: { auth: _vm.auth } })],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "tab-pane",
-                attrs: { id: "profile1", role: "tabpanel" },
-              },
-              [_c("tab-proses", { attrs: { auth: _vm.auth } })],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "tab-pane",
-                attrs: { id: "messages1", role: "tabpanel" },
-              },
-              [_c("tab-verif", { attrs: { auth: _vm.auth } })],
-              1
-            ),
-          ]
-        ),
-      ]),
-    ]),
-  ])
-}
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h4", { staticClass: "mb-0" }, [
-      _c("i", { staticClass: "uil-file-landscape" }),
-      _vm._v(" Jurnal"),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "ul",
-      {
-        staticClass: "nav nav-tabs nav-tabs nav-justified",
-        attrs: { role: "tablist" },
-      },
-      [
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link active",
-              attrs: {
-                "data-bs-toggle": "tab",
-                href: "#home1",
-                role: "tab",
-                "aria-selected": "true",
-              },
-            },
-            [
-              _c("span", { staticClass: "d-block" }, [
-                _c("i", { staticClass: "uil-clipboard" }),
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "d-none d-sm-block" }, [
-                _vm._v("Draft"),
-              ]),
-            ]
-          ),
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link",
-              attrs: {
-                "data-bs-toggle": "tab",
-                href: "#profile1",
-                role: "tab",
-                "aria-selected": "false",
-              },
-            },
-            [
-              _c("span", { staticClass: "d-block" }, [
-                _c("i", { staticClass: "uil-process" }),
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "d-none d-sm-block" }, [
-                _vm._v("Diproses"),
-              ]),
-            ]
-          ),
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link",
-              attrs: {
-                "data-bs-toggle": "tab",
-                href: "#messages1",
-                role: "tab",
-                "aria-selected": "false",
-              },
-            },
-            [
-              _c("span", { staticClass: "d-block" }, [
-                _c("i", { staticClass: "uil-file-check" }),
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "d-none d-sm-block" }, [
-                _vm._v("Terverif"),
-              ]),
-            ]
-          ),
-        ]),
-      ]
     )
   },
 ]
@@ -47221,14 +46790,7 @@ var render = function () {
                                         ]),
                                         _vm._v(" "),
                                         _c("td", [
-                                          _c(
-                                            "span",
-                                            {
-                                              staticClass:
-                                                "badge rounded-pill bg-soft-success font-size-12",
-                                            },
-                                            [_vm._v(_vm._s(journal.project_id))]
-                                          ),
+                                          _vm._v(_vm._s(journal.project_id)),
                                         ]),
                                         _vm._v(" "),
                                         _c("td", [
@@ -47971,14 +47533,7 @@ var render = function () {
                                         ]),
                                         _vm._v(" "),
                                         _c("td", [
-                                          _c(
-                                            "span",
-                                            {
-                                              staticClass:
-                                                "badge rounded-pill bg-soft-success font-size-12",
-                                            },
-                                            [_vm._v(_vm._s(journal.project_id))]
-                                          ),
+                                          _vm._v(_vm._s(journal.project_id)),
                                         ]),
                                         _vm._v(" "),
                                         _c("td", [
@@ -48036,6 +47591,9 @@ var render = function () {
                                                             token:
                                                               journal.token,
                                                           },
+                                                          query: {
+                                                            page: "proses",
+                                                          },
                                                         },
                                                       },
                                                     },
@@ -48060,6 +47618,9 @@ var render = function () {
                                                               params: {
                                                                 token:
                                                                   journal.token,
+                                                              },
+                                                              query: {
+                                                                page: "proses",
                                                               },
                                                             },
                                                           },
@@ -48093,6 +47654,9 @@ var render = function () {
                                                               params: {
                                                                 token:
                                                                   journal.token,
+                                                              },
+                                                              query: {
+                                                                page: "proses",
                                                               },
                                                             },
                                                           },
@@ -48772,14 +48336,7 @@ var render = function () {
                                         ]),
                                         _vm._v(" "),
                                         _c("td", [
-                                          _c(
-                                            "span",
-                                            {
-                                              staticClass:
-                                                "badge rounded-pill bg-soft-success font-size-12",
-                                            },
-                                            [_vm._v(_vm._s(journal.project_id))]
-                                          ),
+                                          _vm._v(_vm._s(journal.project_id)),
                                         ]),
                                         _vm._v(" "),
                                         _c("td", [
@@ -48826,6 +48383,9 @@ var render = function () {
                                                           params: {
                                                             token:
                                                               journal.token,
+                                                          },
+                                                          query: {
+                                                            page: "verif",
                                                           },
                                                         },
                                                       },
@@ -49449,54 +49009,71 @@ var render = function () {
                       _c("div", { staticClass: "card p-4" }, [
                         _c("h4", [_vm._v(_vm._s(_vm.journal.title))]),
                         _vm._v(" "),
-                        _c("p", { staticClass: "mb-0" }, [
-                          _vm._v(_vm._s(_vm.journal.date)),
+                        _c("p", {}, [_vm._v(_vm._s(_vm.journal.date))]),
+                        _vm._v(" "),
+                        _c("div", {}, [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-primary",
+                              attrs: {
+                                href: _vm.journal.filebukti,
+                                role: "button",
+                                target: "__blank",
+                              },
+                            },
+                            [
+                              _c("i", { staticClass: "uil-image" }),
+                              _vm._v(" Lihat File Bukti"),
+                            ]
+                          ),
                         ]),
                         _vm._v(" "),
                         _c("hr"),
                         _vm._v(" "),
-                        _c("p", [
+                        _c("p", { staticClass: "my-1" }, [
                           _vm._v("Remark : " + _vm._s(_vm.journal.remark)),
                         ]),
                         _vm._v(" "),
-                        _c("p", [_vm._v("Ref : " + _vm._s(_vm.journal.ref))]),
+                        _c("p", { staticClass: "my-1" }, [
+                          _vm._v("Ref : " + _vm._s(_vm.journal.ref)),
+                        ]),
                         _vm._v(" "),
-                        _c("p", [
+                        _c("p", { staticClass: "my-1" }, [
                           _vm._v(
-                            "Reimburse : " + _vm._s(_vm.journal.is_reimburse)
+                            "Reimburse : " +
+                              _vm._s(_vm.journal.is_reimburse ? "Ya" : "Tidak")
                           ),
                         ]),
                         _vm._v(" "),
-                        _c("p", [
+                        _c("p", { staticClass: "my-1" }, [
                           _vm._v(
-                            "Chart_account : " +
-                              _vm._s(_vm.journal.chart_account_id)
+                            "Chart Account : " +
+                              _vm._s(_vm.journal.chart_account_name)
                           ),
                         ]),
                         _vm._v(" "),
-                        _c("p", [
+                        _c("p", { staticClass: "my-1" }, [
                           _vm._v(
                             "Period : " +
-                              _vm._s(_vm.journal.accounting_period_id)
+                              _vm._s(_vm.journal.accounting_period_name)
                           ),
                         ]),
                         _vm._v(" "),
-                        _c("p", [
+                        _c("p", { staticClass: "my-1" }, [
                           _vm._v(
-                            "Bank : " + _vm._s(_vm.journal.bank_account_id)
+                            "Bank : " + _vm._s(_vm.journal.bank_account_name)
                           ),
                         ]),
                         _vm._v(" "),
-                        _c("p", [
-                          _vm._v("Project : " + _vm._s(_vm.journal.project_id)),
+                        _c("p", { staticClass: "my-1" }, [
+                          _vm._v(
+                            "Project : " + _vm._s(_vm.journal.project_name)
+                          ),
                         ]),
                         _vm._v(" "),
-                        _c("p", [
-                          _vm._v("User : " + _vm._s(_vm.journal.user_id)),
-                        ]),
-                        _vm._v(" "),
-                        _c("p", [
-                          _vm._v("File : " + _vm._s(_vm.journal.filebukti)),
+                        _c("p", { staticClass: "my-1" }, [
+                          _vm._v("User : " + _vm._s(_vm.journal.user_name)),
                         ]),
                       ]),
                     ]),
@@ -49800,87 +49377,89 @@ var render = function () {
                       [_vm._v("Tipe Akun")]
                     ),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col md-10 wrapper" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.accountCreate.type,
-                            expression: "accountCreate.type",
+                    _c("div", { staticClass: "col md-10" }, [
+                      _c("div", { staticClass: "col wrapper" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.accountCreate.type,
+                              expression: "accountCreate.type",
+                            },
+                          ],
+                          attrs: {
+                            value: "0",
+                            type: "radio",
+                            name: "select",
+                            id: "option-1",
                           },
-                        ],
-                        attrs: {
-                          value: "0",
-                          type: "radio",
-                          name: "select",
-                          id: "option-1",
-                        },
-                        domProps: {
-                          checked: _vm._q(_vm.accountCreate.type, "0"),
-                        },
-                        on: {
-                          change: function ($event) {
-                            return _vm.$set(_vm.accountCreate, "type", "0")
+                          domProps: {
+                            checked: _vm._q(_vm.accountCreate.type, "0"),
                           },
-                        },
-                      }),
-                      _vm._v(" "),
-                      _vm._m(1),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.accountCreate.type,
-                            expression: "accountCreate.type",
+                          on: {
+                            change: function ($event) {
+                              return _vm.$set(_vm.accountCreate, "type", "0")
+                            },
                           },
-                        ],
-                        attrs: {
-                          value: "1",
-                          type: "radio",
-                          name: "select",
-                          id: "option-2",
-                        },
-                        domProps: {
-                          checked: _vm._q(_vm.accountCreate.type, "1"),
-                        },
-                        on: {
-                          change: function ($event) {
-                            return _vm.$set(_vm.accountCreate, "type", "1")
+                        }),
+                        _vm._v(" "),
+                        _vm._m(1),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.accountCreate.type,
+                              expression: "accountCreate.type",
+                            },
+                          ],
+                          attrs: {
+                            value: "1",
+                            type: "radio",
+                            name: "select",
+                            id: "option-2",
                           },
-                        },
-                      }),
-                      _vm._v(" "),
-                      _vm._m(2),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.accountCreate.type,
-                            expression: "accountCreate.type",
+                          domProps: {
+                            checked: _vm._q(_vm.accountCreate.type, "1"),
                           },
-                        ],
-                        attrs: {
-                          value: "2",
-                          type: "radio",
-                          name: "select",
-                          id: "option-3",
-                        },
-                        domProps: {
-                          checked: _vm._q(_vm.accountCreate.type, "2"),
-                        },
-                        on: {
-                          change: function ($event) {
-                            return _vm.$set(_vm.accountCreate, "type", "2")
+                          on: {
+                            change: function ($event) {
+                              return _vm.$set(_vm.accountCreate, "type", "1")
+                            },
                           },
-                        },
-                      }),
-                      _vm._v(" "),
-                      _vm._m(3),
+                        }),
+                        _vm._v(" "),
+                        _vm._m(2),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.accountCreate.type,
+                              expression: "accountCreate.type",
+                            },
+                          ],
+                          attrs: {
+                            value: "2",
+                            type: "radio",
+                            name: "select",
+                            id: "option-3",
+                          },
+                          domProps: {
+                            checked: _vm._q(_vm.accountCreate.type, "2"),
+                          },
+                          on: {
+                            change: function ($event) {
+                              return _vm.$set(_vm.accountCreate, "type", "2")
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        _vm._m(3),
+                      ]),
                       _vm._v(" "),
                       _vm.theErrors.type
                         ? _c("div", { staticClass: "mt-1 text-danger" }, [
@@ -50816,7 +50395,7 @@ var render = function () {
     "button",
     {
       ref: "deletePeriod",
-      staticClass: "btn btn-danger",
+      staticClass: "btn btn-danger mb-1",
       on: { click: _vm.destroyPeriod },
     },
     [_c("i", { staticClass: "uil-trash" }), _vm._v(" Delete")]
@@ -51298,7 +50877,8 @@ var render = function () {
                                         _c(
                                           "button",
                                           {
-                                            staticClass: "btn btn-secondary",
+                                            staticClass:
+                                              "btn btn-secondary mb-1",
                                             class: period.status
                                               ? "disabled"
                                               : "",
@@ -51319,7 +50899,7 @@ var render = function () {
                                         _c(
                                           "router-link",
                                           {
-                                            staticClass: "btn btn-primary",
+                                            staticClass: "btn btn-primary mb-1",
                                             attrs: {
                                               to: {
                                                 name: "periode.edit",
@@ -51537,98 +51117,107 @@ var render = function () {
                       [_vm._v("Status")]
                     ),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col md-10 wrapper" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.projectCreate.status,
-                            expression: "projectCreate.status",
+                    _c("div", { staticClass: "col md-10" }, [
+                      _c("div", { staticClass: "col wrapper" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.projectCreate.status,
+                              expression: "projectCreate.status",
+                            },
+                          ],
+                          attrs: {
+                            value: "In Progress",
+                            type: "radio",
+                            name: "select",
+                            id: "option-1",
                           },
-                        ],
-                        attrs: {
-                          value: "In Progress",
-                          type: "radio",
-                          name: "select",
-                          id: "option-1",
-                        },
-                        domProps: {
-                          checked: _vm._q(
-                            _vm.projectCreate.status,
-                            "In Progress"
-                          ),
-                        },
-                        on: {
-                          change: function ($event) {
-                            return _vm.$set(
-                              _vm.projectCreate,
-                              "status",
+                          domProps: {
+                            checked: _vm._q(
+                              _vm.projectCreate.status,
                               "In Progress"
-                            )
+                            ),
                           },
-                        },
-                      }),
-                      _vm._v(" "),
-                      _vm._m(1),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.projectCreate.status,
-                            expression: "projectCreate.status",
+                          on: {
+                            change: function ($event) {
+                              return _vm.$set(
+                                _vm.projectCreate,
+                                "status",
+                                "In Progress"
+                              )
+                            },
                           },
-                        ],
-                        attrs: {
-                          value: "Pending",
-                          type: "radio",
-                          name: "select",
-                          id: "option-2",
-                        },
-                        domProps: {
-                          checked: _vm._q(_vm.projectCreate.status, "Pending"),
-                        },
-                        on: {
-                          change: function ($event) {
-                            return _vm.$set(
-                              _vm.projectCreate,
-                              "status",
+                        }),
+                        _vm._v(" "),
+                        _vm._m(1),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.projectCreate.status,
+                              expression: "projectCreate.status",
+                            },
+                          ],
+                          attrs: {
+                            value: "Pending",
+                            type: "radio",
+                            name: "select",
+                            id: "option-2",
+                          },
+                          domProps: {
+                            checked: _vm._q(
+                              _vm.projectCreate.status,
                               "Pending"
-                            )
+                            ),
                           },
-                        },
-                      }),
-                      _vm._v(" "),
-                      _vm._m(2),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.projectCreate.status,
-                            expression: "projectCreate.status",
+                          on: {
+                            change: function ($event) {
+                              return _vm.$set(
+                                _vm.projectCreate,
+                                "status",
+                                "Pending"
+                              )
+                            },
                           },
-                        ],
-                        attrs: {
-                          value: "Done",
-                          type: "radio",
-                          name: "select",
-                          id: "option-3",
-                        },
-                        domProps: {
-                          checked: _vm._q(_vm.projectCreate.status, "Done"),
-                        },
-                        on: {
-                          change: function ($event) {
-                            return _vm.$set(_vm.projectCreate, "status", "Done")
+                        }),
+                        _vm._v(" "),
+                        _vm._m(2),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.projectCreate.status,
+                              expression: "projectCreate.status",
+                            },
+                          ],
+                          attrs: {
+                            value: "Done",
+                            type: "radio",
+                            name: "select",
+                            id: "option-3",
                           },
-                        },
-                      }),
-                      _vm._v(" "),
-                      _vm._m(3),
+                          domProps: {
+                            checked: _vm._q(_vm.projectCreate.status, "Done"),
+                          },
+                          on: {
+                            change: function ($event) {
+                              return _vm.$set(
+                                _vm.projectCreate,
+                                "status",
+                                "Done"
+                              )
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        _vm._m(3),
+                      ]),
                       _vm._v(" "),
                       _vm.theErrors.status
                         ? _c("div", { staticClass: "mt-1 text-danger" }, [
@@ -51928,139 +51517,141 @@ var render = function () {
                               [_vm._v("Status")]
                             ),
                             _vm._v(" "),
-                            _c("div", { staticClass: "col md-10 wrapper" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.project.status,
-                                    expression: "project.status",
+                            _c("div", { staticClass: "col md-10" }, [
+                              _c("div", { staticClass: "col wrapper" }, [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.project.status,
+                                      expression: "project.status",
+                                    },
+                                  ],
+                                  attrs: {
+                                    value: "In Progress",
+                                    type: "radio",
+                                    name: "select",
+                                    id: "option-1",
                                   },
-                                ],
-                                attrs: {
-                                  value: "In Progress",
-                                  type: "radio",
-                                  name: "select",
-                                  id: "option-1",
-                                },
-                                domProps: {
-                                  checked: _vm._q(
-                                    _vm.project.status,
-                                    "In Progress"
-                                  ),
-                                },
-                                on: {
-                                  change: function ($event) {
-                                    return _vm.$set(
-                                      _vm.project,
-                                      "status",
+                                  domProps: {
+                                    checked: _vm._q(
+                                      _vm.project.status,
                                       "In Progress"
-                                    )
+                                    ),
                                   },
-                                },
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "label",
-                                {
-                                  staticClass: "option option-1",
-                                  staticStyle: { "margin-left": "0" },
-                                  attrs: { for: "option-1" },
-                                },
-                                [
-                                  _c("div", { staticClass: "dot" }),
-                                  _vm._v(" "),
-                                  _c("span", [_vm._v("In Progress")]),
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c("input", {
-                                directives: [
+                                  on: {
+                                    change: function ($event) {
+                                      return _vm.$set(
+                                        _vm.project,
+                                        "status",
+                                        "In Progress"
+                                      )
+                                    },
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "label",
                                   {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.project.status,
-                                    expression: "project.status",
+                                    staticClass: "option option-1",
+                                    staticStyle: { "margin-left": "0" },
+                                    attrs: { for: "option-1" },
                                   },
-                                ],
-                                attrs: {
-                                  value: "Pending",
-                                  type: "radio",
-                                  name: "select",
-                                  id: "option-2",
-                                },
-                                domProps: {
-                                  checked: _vm._q(
-                                    _vm.project.status,
-                                    "Pending"
-                                  ),
-                                },
-                                on: {
-                                  change: function ($event) {
-                                    return _vm.$set(
-                                      _vm.project,
-                                      "status",
+                                  [
+                                    _c("div", { staticClass: "dot" }),
+                                    _vm._v(" "),
+                                    _c("span", [_vm._v("In Progress")]),
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.project.status,
+                                      expression: "project.status",
+                                    },
+                                  ],
+                                  attrs: {
+                                    value: "Pending",
+                                    type: "radio",
+                                    name: "select",
+                                    id: "option-2",
+                                  },
+                                  domProps: {
+                                    checked: _vm._q(
+                                      _vm.project.status,
                                       "Pending"
-                                    )
+                                    ),
                                   },
-                                },
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "label",
-                                {
-                                  staticClass: "option option-2",
-                                  attrs: { for: "option-2" },
-                                },
-                                [
-                                  _c("div", { staticClass: "dot" }),
-                                  _vm._v(" "),
-                                  _c("span", [_vm._v("Pending")]),
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c("input", {
-                                directives: [
+                                  on: {
+                                    change: function ($event) {
+                                      return _vm.$set(
+                                        _vm.project,
+                                        "status",
+                                        "Pending"
+                                      )
+                                    },
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "label",
                                   {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.project.status,
-                                    expression: "project.status",
+                                    staticClass: "option option-2",
+                                    attrs: { for: "option-2" },
                                   },
-                                ],
-                                attrs: {
-                                  value: "Done",
-                                  type: "radio",
-                                  name: "select",
-                                  id: "option-3",
-                                },
-                                domProps: {
-                                  checked: _vm._q(_vm.project.status, "Done"),
-                                },
-                                on: {
-                                  change: function ($event) {
-                                    return _vm.$set(
-                                      _vm.project,
-                                      "status",
-                                      "Done"
-                                    )
+                                  [
+                                    _c("div", { staticClass: "dot" }),
+                                    _vm._v(" "),
+                                    _c("span", [_vm._v("Pending")]),
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.project.status,
+                                      expression: "project.status",
+                                    },
+                                  ],
+                                  attrs: {
+                                    value: "Done",
+                                    type: "radio",
+                                    name: "select",
+                                    id: "option-3",
                                   },
-                                },
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "label",
-                                {
-                                  staticClass: "option option-3",
-                                  attrs: { for: "option-3" },
-                                },
-                                [
-                                  _c("div", { staticClass: "dot" }),
-                                  _vm._v(" "),
-                                  _c("span", [_vm._v("Done")]),
-                                ]
-                              ),
+                                  domProps: {
+                                    checked: _vm._q(_vm.project.status, "Done"),
+                                  },
+                                  on: {
+                                    change: function ($event) {
+                                      return _vm.$set(
+                                        _vm.project,
+                                        "status",
+                                        "Done"
+                                      )
+                                    },
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "option option-3",
+                                    attrs: { for: "option-3" },
+                                  },
+                                  [
+                                    _c("div", { staticClass: "dot" }),
+                                    _vm._v(" "),
+                                    _c("span", [_vm._v("Done")]),
+                                  ]
+                                ),
+                              ]),
                               _vm._v(" "),
                               _vm.theErrors.type
                                 ? _c(
@@ -52486,7 +52077,7 @@ var render = function () {
                           },
                         ],
                         staticClass: "form-control",
-                        attrs: { type: "text", name: "number" },
+                        attrs: { type: "number", name: "number" },
                         domProps: { value: _vm.bankCreate.account_number },
                         on: {
                           input: function ($event) {
@@ -52756,7 +52347,7 @@ var render = function () {
                                   },
                                 ],
                                 staticClass: "form-control",
-                                attrs: { type: "text" },
+                                attrs: { type: "number" },
                                 domProps: { value: _vm.bank.account_number },
                                 on: {
                                   input: function ($event) {

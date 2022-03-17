@@ -103,12 +103,12 @@
                                                     <td>
                                                         {{ journal.chart_account.name }}
                                                     </td>
-                                                    <td><span class="badge rounded-pill bg-soft-success font-size-12">{{ journal.project_id }}</span></td>
+                                                    <td>{{ journal.project_id }}</td>
                                                     <td>
                                                         <div class="btn-group">
                                                             <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu <i class="uil-angle-down"></i></button>
                                                             <div class="dropdown-menu" style="">
-                                                                <router-link :to="{ name: 'jurnal.detail', params: { token: journal.token }}" class="dropdown-item"><i class="uil-document-layout-left"></i> Detail</router-link>
+                                                                <router-link :to="{ name: 'jurnal.detail', params: { token: journal.token }, query: { page: 'verif'} }" class="dropdown-item"><i class="uil-document-layout-left"></i> Detail</router-link>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -269,7 +269,7 @@ export default {
         async getJurnal() {
             let response = await axios.get('/api/journal', {
                     params: {
-                        category: 1,
+                        category: 3,
                         keyword: this.filter_keyword,
                         chart: this.filter_chartaccount,
                         reimburse: this.filter_reimburse,

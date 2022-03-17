@@ -1,5 +1,5 @@
 <template>
-    <button class="btn btn-danger" ref="deletePeriod" @click="destroyPeriod"><i class="uil-trash"></i> Delete</button>
+    <button class="btn btn-danger mb-1" ref="deletePeriod" @click="destroyPeriod"><i class="uil-trash"></i> Delete</button>
 </template>
 
 <script>

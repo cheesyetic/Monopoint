@@ -58,8 +58,8 @@
                                     <h4 class="card-title">{{ period.name }} <span class="badge rounded-pill bg-soft-success" v-if="period.status"><i class="uil-label"></i> Aktif</span></h4>
                                     <p class="card-text mb-0">Start : {{ format_date(period.start) }}</p>
                                     <p class="card-text">End : {{ format_date(period.end) }}</p>
-                                    <button @click="enable(period.token)" class="btn btn-secondary" :class="period.status ? 'disabled' : ''"><i class="uil-message"></i> Aktifkan</button>
-                                    <router-link :to="{ name: 'periode.edit', params: { token: period.token }}" class="btn btn-primary"><i class="uil-edit-alt"></i> Edit</router-link>
+                                    <button @click="enable(period.token)" class="btn btn-secondary mb-1" :class="period.status ? 'disabled' : ''"><i class="uil-message"></i> Aktifkan</button>
+                                    <router-link :to="{ name: 'periode.edit', params: { token: period.token }}" class="btn btn-primary mb-1"><i class="uil-edit-alt"></i> Edit</router-link>
                                     <delete-period :endpoint="period.token" :auth="auth"/>
                                 </div>
                             </div>

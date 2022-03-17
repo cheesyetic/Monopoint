@@ -8,16 +8,18 @@
                 <div class="card p-4">
                     <h4>{{ journal.title }}</h4>
                     <p>{{ format_date(journal.date) }}</p>
-                    <br>
-                    <p>Remark : {{ journal.remark }}</p>
-                    <p>Ref : {{ journal.ref }}</p>
-                    <p>Reimburse : {{ journal.is_reimburse ? "Ya" : "Tidak" }}</p>
-                    <p>Chart Account : {{ journal.chart_account_name }}</p>
-                    <p>Accounting Period : {{ journal.accounting_period_name }}</p>
-                    <p>Bank : {{ journal.bank_account_name }}</p>
-                    <p>Project : {{ journal.project_name }}</p>
-                    <p>Pengaju : {{ journal.user_name }}</p>
-                    <p>File Bukti : {{ journal.filebukti }}</p>
+                    <div class="">
+                        <a :href="journal.filebukti" class="btn btn-primary" role="button" target="__blank"><i class="uil-image"></i> Lihat File Bukti</a>
+                    </div>
+                    <hr>
+                    <p class="my-1">Remark : {{ journal.remark }}</p>
+                    <p class="my-1">Ref : {{ journal.ref }}</p>
+                    <p class="my-1">Reimburse : {{ journal.is_reimburse ? "Ya" : "Tidak" }}</p>
+                    <p class="my-1">Chart Account : {{ journal.chart_account_name }}</p>
+                    <p class="my-1">Period : {{ journal.accounting_period_name }}</p>
+                    <p class="my-1">Bank : {{ journal.bank_account_name }}</p>
+                    <p class="my-1">Project : {{ journal.project_name }}</p>
+                    <p class="my-1">User : {{ journal.user_name }}</p>
                     <!-- <img :src="journal.filebukti" alt="" srcset=""> -->
                 </div>
                 <div class="page-title-box d-flex align-items-center justify-content-between">
@@ -131,7 +133,7 @@ export default {
                     }
                 })
             if (response.status === 200) {
-                console.log(response)
+                // console.log(response)
                 this.journalHistories = response.data.data
                 this.journalHistories.date = moment(String(this.journalHistories.date)).format('yyyy-MM-DD') + 'T' + moment(String(this.journalHistories.date)).format('hh:mm:ss')
                 this.loading = false

@@ -60,11 +60,12 @@
                                         <div class="card-body row">
                                             <div class="col-9">
                                                 <h5 class="card-title">{{ asset.name }}</h5>
-                                                <p class="card-text">Jumlah :{{ asset.value }}</p>
+                                                <p class="card-text mb-0">Jumlah : {{ asset.quantity }}</p>
+                                                <p class="card-text my-0">Total : Rp {{ asset.total }}</p>
                                                 <p class="card-text">Tgl Pembelian : {{ format_date(asset.buy_time) }}</p>
                                             </div>
                                             <div class="col-3 row">
-                                                <router-link :to="{ name: 'asset.edit', params: { token: asset.token }}" class="btn btn-primary mb-2"><i class="uil-edit-alt"></i> Edit</router-link>
+                                                <router-link :to="{ name: 'asset.edit', params: { token: asset.token }}" class="btn btn-primary mb-2"><i class="uil-edit-alt"></i> <span class="d-sm-none d-md-none d-lg-none d-xl-block">Edit</span></router-link>
                                                 <delete-asset :endpoint="asset.token" :auth="auth"/>
                                             </div>
                                         </div>

@@ -82,12 +82,12 @@ export default {
                     this.$refs.close.click();
                 }
             } catch (e) {
-                this.$toasted.show("Something went wrong : " + e, {
+                this.$toasted.show("Something went wrong : " + e.response.statusText, {
                         type: 'error',
                         duration: 3000,
                         position: 'top-center',
                     })
-                this.theErrors = e.responseCreate.data;
+                this.theErrors = e.response.data;
             }
         }
     }

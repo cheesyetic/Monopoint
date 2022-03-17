@@ -41,9 +41,11 @@
                             </div>
                             <div class="mb-3 row">
                                 <label for="example-text-input" class="col-md-2 col-form-label">Harga Satuan</label>
-                                <div class="col-md-10 d-flex align-items-center">
-                                    <p style="margin:0;margin-right: 1rem">IDR</p>
-                                    <input class="form-control flex-grow" type="number" v-model="assetCreate.price">
+                                <div class="col-md-10">
+                                    <div class="d-flex align-items-center">
+                                        <p style="margin:0;margin-right: 1rem">IDR</p>
+                                        <input class="form-control flex-grow" type="number" v-model="assetCreate.price">
+                                    </div>
                                     <div v-if="theErrors.price" class="mt-1 text-danger">{{ theErrors.price[0] }}</div>
                                 </div>
                             </div>
@@ -98,13 +100,13 @@ export default {
                     })
                 }
             } catch (e) {
-                this.$toasted.show("Something went wrong : " + e, {
+                this.$toasted.show("Something went wrong : " + e.response.statusText, {
                         type: 'error',
                         duration: 3000,
                         position: 'top-center',
                     })
-                    console.log(e)
-                this.theErrors = e.responseCreate.data;
+                    // console.log(e)
+                this.theErrors = e.response.data;
             }
         }
     }

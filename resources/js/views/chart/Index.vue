@@ -60,8 +60,8 @@
                                         <div class="card-body row">
                                             <div class="col-8">
                                                 <h5 class="card-title">{{ chart.name }}</h5>
-                                                <p class="card-text text-success" v-if="chart.type == 1"><i class="uil-import"></i> Pemasukan</p>
-                                                <p class="card-text text-danger" v-else><i class="uil-export"></i> Pengeluaran</p>
+                                                <p class="card-text text-success mb-1" v-if="chart.type == 1"><i class="uil-import"></i> Pemasukan</p>
+                                                <p class="card-text text-danger mb-1" v-else><i class="uil-export"></i> Pengeluaran</p>
                                                 <p class="card-text">Kode akun : {{ chart.code }}</p>
                                             </div>
                                             <div class="col-4 row">

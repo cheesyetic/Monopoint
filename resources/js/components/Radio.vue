@@ -17,18 +17,21 @@ export default {
   border-radius: 5px;
 }
 .option{
-  background: #fff;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: .5rem;
-  margin: 0 8px;
-  border-radius: 5px;
-  cursor: pointer;
-  border: 2px solid lightgrey;
-  transition: all 0.3s ease;
+    min-height: 39px;
+    min-width: 100px;
+    padding: .2rem 1rem;
+    background: #fff;
+    height: 100%;
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    margin: 0 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 2px solid lightgrey;
+    transition: all 0.3s ease;
 }
 .option:first-child {
   margin-left: 0;

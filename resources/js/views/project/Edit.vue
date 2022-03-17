@@ -49,24 +49,26 @@
                             </div>
                             <div class="mb-3 row">
                                 <label for="example-text-input" class="col-md-2 col-form-label">Status</label>
-                                <div class="col md-10 wrapper">
-                                    <input value="In Progress" type="radio" name="select" id="option-1" v-model="project.status">
-                                    <label for="option-1" class="option option-1" style="margin-left:0">
-                                        <div class="dot"></div>
-                                        <span>In Progress</span>
-                                    </label>
+                                 <div class="col md-10">
+                                    <div class="col wrapper">
+                                        <input value="In Progress" type="radio" name="select" id="option-1" v-model="project.status">
+                                        <label for="option-1" class="option option-1" style="margin-left:0">
+                                            <div class="dot"></div>
+                                            <span>In Progress</span>
+                                        </label>
 
-                                    <input value="Pending" type="radio" name="select" id="option-2" v-model="project.status">
-                                    <label for="option-2" class="option option-2">
-                                        <div class="dot"></div>
-                                        <span>Pending</span>
-                                    </label>
+                                        <input value="Pending" type="radio" name="select" id="option-2" v-model="project.status">
+                                        <label for="option-2" class="option option-2">
+                                            <div class="dot"></div>
+                                            <span>Pending</span>
+                                        </label>
 
-                                    <input value="Done" type="radio" name="select" id="option-3" v-model="project.status">
-                                    <label for="option-3" class="option option-3">
-                                        <div class="dot"></div>
-                                        <span>Done</span>
-                                    </label>
+                                        <input value="Done" type="radio" name="select" id="option-3" v-model="project.status">
+                                        <label for="option-3" class="option option-3">
+                                            <div class="dot"></div>
+                                            <span>Done</span>
+                                        </label>
+                                    </div>
                                     <div v-if="theErrors.type" class="mt-1 text-danger">{{ theErrors.status[0] }}</div>
                                 </div>
                             </div>
@@ -144,7 +146,7 @@ export default {
                     this.$router.push({ name: 'project' })
                 }
             } catch (e) {
-                this.$toasted.show("Something went wrong", {
+                this.$toasted.show("Something went wrong : " + e.response.statusText, {
                         type: 'error',
                         duration: 3000,
                         position: 'top-center',
