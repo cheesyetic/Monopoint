@@ -80,7 +80,11 @@ class JournalController extends Controller
             $query->whereMonth('date','=', date($request->date));
         }
 
-        $journal = $query->orderBy('id', 'desc')->get();
+        $perPage = 20;
+        $page = $request->input('page', 1);
+        $total = $query->count();
+
+        $journal = $query->offset(($page - 1) * $perPage)->limit($perPage)->orderBy('id', 'desc')->get();
 
         foreach($journal as $value){
             $value->project_id = Project::findOrFail($value->project_id)->name;
@@ -94,7 +98,10 @@ class JournalController extends Controller
 
         $response =[
             'message' => 'List Journal',
-            'data' => $journal
+            'data' => $journal,
+            'total' => $total,
+            'page' => $page,
+            'last_page' => ceil($total / $perPage),
         ];
         return response()->json($response, Response::HTTP_OK);
     }
