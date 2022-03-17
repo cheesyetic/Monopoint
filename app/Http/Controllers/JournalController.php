@@ -356,11 +356,10 @@ class JournalController extends Controller
                 Response::HTTP_UNPROCESSABLE_ENTITY);
             }
 
-            $input = $request->all();
             if($file = $request->file('buktireimburse')){
                 $imageName = Str::random(2) . time().'.'.$request->buktireimburse->extension();
                 $path = $file->storeAs('uploads', $imageName, 'public');
-                $input['buktireimburse'] = '/storage/'.$path;
+                $input = '/storage/'.$path;
             }
             $journal->buktireimburse = $input;
         }
