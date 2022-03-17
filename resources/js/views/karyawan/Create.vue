@@ -49,7 +49,7 @@
                             <div class="mb-3 row">
                                 <label for="example-date-input" class="col-md-2 col-form-label">Nomor telepon</label>
                                 <div class="col-md-10">
-                                    <input class="form-control" type="text" v-model="accountCreate.phone_number">
+                                    <input class="form-control" type="number" v-model="accountCreate.phone_number">
                                     <div v-if="theErrors.phone_number" class="mt-1 text-danger">{{ theErrors.phone_number[0] }}</div>
                                 </div>
                             </div>

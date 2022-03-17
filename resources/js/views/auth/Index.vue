@@ -19,7 +19,7 @@
                             <div class="card-body p-4">
                                 <div class="text-center mt-2">
                                     <h5 class="text-primary">Welcome Back !</h5>
-                                    <p class="text-muted">Sign in to continue to Minible.</p>
+                                    <p class="text-muted">Masuk untuk mulai menggunakan Monopoint</p>
                                 </div>
                                 <div class="p-2 mt-4">
                                     <form @submit.prevent="login">
@@ -27,8 +27,8 @@
                                             <label class="form-label">EMAIL</label>
                                             <input type="email" class="form-control" v-model="user.email"
                                                 placeholder="Masukkan Email">
-                                            <div v-if="validation.email" class="mt-2 alert alert-danger">
-                                                Masukkan Email
+                                            <div v-if="theErrors.email" class="mt-2 alert alert-danger">
+                                                {{ theErrors.email[0] }}
                                             </div>
                                         </div>
 
@@ -36,13 +36,14 @@
                                             <label class="form-label">PASSWORD</label>
                                             <input type="password" class="form-control" v-model="user.password"
                                                 placeholder="Masukkan Password">
-                                            <div v-if="validation.password" class="mt-2 alert alert-danger">
-                                                Masukkan Password
+                                            <div v-if="theErrors.password" class="mt-2 alert alert-danger">
+                                                {{ theErrors.password[0] }}
                                             </div>
                                         </div>
 
                                         <!-- <button type="submit" class="btn btn-primary">LOGIN</button> -->
                                          <div class="mt-3 text-end">
+                                            <loading v-if="loading"/>
                                             <button class="btn btn-primary w-sm waves-effect waves-light" type="submit">Log In</button>
                                         </div>
                                     </form>
@@ -52,7 +53,7 @@
                         </div>
 
                         <div class="mt-5 text-center">
-                            <p>© Minible. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand</p>
+                            <p>© Kodig.id</p>
                         </div>
 
                     </div>
@@ -66,66 +67,71 @@
 </template>
 
 <script>
+    import Loading from '../../components/loading'
     import axios from 'axios'
 
     export default {
-        // name: 'Login',
+        components: {
+            Loading
+        },
 
         data() {
             return {
+                loading: false,
                 //state loggedIn with localStorage
                 loggedIn: localStorage.getItem('loggedIn'),
                 //state token
                 token: localStorage.getItem('token'),
                 //state user
                 user: [],
-                //state validation
-                validation: [],
-                //state login failed
-                loginFailed: null
+                theErrors: [],
             }
         },
         methods: {
 
             login() {
-                if (this.user.email && this.user.password) {
+                // if (this.user.email && this.user.password) {
+                    this.loading = true
                     axios.get('/sanctum/csrf-cookie')
                         .then(response => {
                             //debug cookie
-                            axios.post('/api/login', {
-                                email: this.user.email,
-                                password: this.user.password
-                            }).then(res => {
+                            let formdata = new FormData();
+                            formdata.append('email', this.user.email)
+                            formdata.append('password', this.user.password)
+                            axios.post('/api/login', formdata).then(res => {
                                 //debug user login
-                                console.log(res)
+                                // console.log(res)
                                 if (res.data.success) {
-                                    //set localStorage
                                     localStorage.setItem("loggedIn", "true")
-                                    //set localStorage Token
                                     localStorage.setItem("token", res.data.token)
-                                    //change state
                                     this.loggedIn = true
-                                    //redirect dashboard
+                                    this.loading = false
                                     return this.$router.push({ name: 'dashboard' })
-                                } else {
-                                    //set state login failed
-                                    this.loginFailed = true
                                 }
-                            }).catch(error => {
-                                console.log(error)
+                            }).catch(e => {
+                                this.$toasted.show("Something went wrong : " + e.response.data.message, {
+                                        type: 'error',
+                                        duration: 3000,
+                                        position: 'top-center',
+                                    })
+                                    // console.log(e)
+                                this.theErrors = e.response.data.errors;
+                                this.loading = false
+                                // console.log(this.theErrors)
                             })
+                            this.loading = false
                         })
-                }
+                // }
+                // this.loading = false
+                // this.theErrors = []
 
-                this.validation = []
+                // if (!this.user.email) {
+                //     this.theErrors.email = true
+                // }
 
-                if (!this.user.email) {
-                    this.validation.email = true
-                }
-
-                if (!this.user.password) {
-                    this.validation.password = true
-                }
+                // if (!this.user.password) {
+                //     this.theErrors.password = true
+                // }
 
             }
         },

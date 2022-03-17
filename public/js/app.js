@@ -4507,8 +4507,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_loading__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/loading */ "./resources/js/components/loading.vue");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+//
 //
 //
 //
@@ -4577,66 +4579,67 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  // name: 'Login',
+  components: {
+    Loading: _components_loading__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   data: function data() {
     return {
+      loading: false,
       //state loggedIn with localStorage
       loggedIn: localStorage.getItem('loggedIn'),
       //state token
       token: localStorage.getItem('token'),
       //state user
       user: [],
-      //state validation
-      validation: [],
-      //state login failed
-      loginFailed: null
+      theErrors: []
     };
   },
   methods: {
     login: function login() {
       var _this = this;
 
-      if (this.user.email && this.user.password) {
-        axios__WEBPACK_IMPORTED_MODULE_0___default().get('/sanctum/csrf-cookie').then(function (response) {
-          //debug cookie
-          axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/login', {
-            email: _this.user.email,
-            password: _this.user.password
-          }).then(function (res) {
-            //debug user login
-            console.log(res);
+      // if (this.user.email && this.user.password) {
+      this.loading = true;
+      axios__WEBPACK_IMPORTED_MODULE_1___default().get('/sanctum/csrf-cookie').then(function (response) {
+        //debug cookie
+        var formdata = new FormData();
+        formdata.append('email', _this.user.email);
+        formdata.append('password', _this.user.password);
+        axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/login', formdata).then(function (res) {
+          //debug user login
+          // console.log(res)
+          if (res.data.success) {
+            localStorage.setItem("loggedIn", "true");
+            localStorage.setItem("token", res.data.token);
+            _this.loggedIn = true;
+            _this.loading = false;
+            return _this.$router.push({
+              name: 'dashboard'
+            });
+          }
+        })["catch"](function (e) {
+          _this.$toasted.show("Something went wrong : " + e.response.data.message, {
+            type: 'error',
+            duration: 3000,
+            position: 'top-center'
+          }); // console.log(e)
 
-            if (res.data.success) {
-              //set localStorage
-              localStorage.setItem("loggedIn", "true"); //set localStorage Token
 
-              localStorage.setItem("token", res.data.token); //change state
-
-              _this.loggedIn = true; //redirect dashboard
-
-              return _this.$router.push({
-                name: 'dashboard'
-              });
-            } else {
-              //set state login failed
-              _this.loginFailed = true;
-            }
-          })["catch"](function (error) {
-            console.log(error);
-          });
+          _this.theErrors = e.response.data.errors;
+          _this.loading = false; // console.log(this.theErrors)
         });
-      }
-
-      this.validation = [];
-
-      if (!this.user.email) {
-        this.validation.email = true;
-      }
-
-      if (!this.user.password) {
-        this.validation.password = true;
-      }
+        _this.loading = false;
+      }); // }
+      // this.loading = false
+      // this.theErrors = []
+      // if (!this.user.email) {
+      //     this.theErrors.email = true
+      // }
+      // if (!this.user.password) {
+      //     this.theErrors.password = true
+      // }
     }
   },
   //check user already logged in
@@ -6186,7 +6189,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   console.log(response.data.data.length);
 
                   for (i = 0; i < response.data.data.length; i++) {
-                    label = response.data.data[i].id + ") " + response.data.data[i].name + ' (' + response.data.data[i].start + ' - ' + response.data.data[i].end + ')';
+                    label = response.data.data[i].name + ' (' + response.data.data[i].start + ' - ' + response.data.data[i].end + ')';
                     id = String(response.data.data[i].id);
 
                     _this2.periodOptions.push({
@@ -6520,6 +6523,8 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
 //
 //
 //
@@ -10753,7 +10758,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.prev = 0;
-                q = window.confirm("Are you sure you want to delete this period?");
+                q = window.confirm("Are you sure you want to delete this project?");
 
                 if (!q) {
                   _context.next = 7;
@@ -10778,13 +10783,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   });
 
                   _this.$refs.deleteProject.parentElement.parentElement.parentElement.parentElement.remove();
-                } else {
-                  _this.$toasted.show("Error deleting period", {
-                    type: 'error',
-                    duration: 3000,
-                    position: 'top-center'
-                  });
-                }
+                } // else {
+                //     this.$toasted.show("Error deleting project", {
+                //         type: 'error',
+                //         duration: 3000,
+                //         position: 'top-center',
+                //     })
+                // }
+
 
               case 7:
                 _context.next = 12;
@@ -11403,7 +11409,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.prev = 0;
-                q = window.confirm("Are you sure you want to delete this period?");
+                q = window.confirm("Are you sure you want to delete this bank account?");
 
                 if (!q) {
                   _context.next = 7;
@@ -11428,13 +11434,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   });
 
                   _this.$refs.deleteBank.parentElement.parentElement.parentElement.remove();
-                } else {
-                  _this.$toasted.show("Error deleting period", {
-                    type: 'error',
-                    duration: 3000,
-                    position: 'top-center'
-                  });
-                }
+                } // else {
+                //     this.$toasted.show("Error deleting bank account", {
+                //         type: 'error',
+                //         duration: 3000,
+                //         position: 'top-center',
+                //     })
+                // }
+
 
               case 7:
                 _context.next = 12;
@@ -42008,13 +42015,15 @@ var render = function () {
                               },
                             }),
                             _vm._v(" "),
-                            _vm.validation.email
+                            _vm.theErrors.email
                               ? _c(
                                   "div",
                                   { staticClass: "mt-2 alert alert-danger" },
                                   [
                                     _vm._v(
-                                      "\n                                                Masukkan Email\n                                            "
+                                      "\n                                                " +
+                                        _vm._s(_vm.theErrors.email[0]) +
+                                        "\n                                            "
                                     ),
                                   ]
                                 )
@@ -42055,27 +42064,46 @@ var render = function () {
                               },
                             }),
                             _vm._v(" "),
-                            _vm.validation.password
+                            _vm.theErrors.password
                               ? _c(
                                   "div",
                                   { staticClass: "mt-2 alert alert-danger" },
                                   [
                                     _vm._v(
-                                      "\n                                                Masukkan Password\n                                            "
+                                      "\n                                                " +
+                                        _vm._s(_vm.theErrors.password[0]) +
+                                        "\n                                            "
                                     ),
                                   ]
                                 )
                               : _vm._e(),
                           ]),
                           _vm._v(" "),
-                          _vm._m(2),
+                          _c(
+                            "div",
+                            { staticClass: "mt-3 text-end" },
+                            [
+                              _vm.loading ? _c("loading") : _vm._e(),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "btn btn-primary w-sm waves-effect waves-light",
+                                  attrs: { type: "submit" },
+                                },
+                                [_vm._v("Log In")]
+                              ),
+                            ],
+                            1
+                          ),
                         ]
                       ),
                     ]),
                   ]),
                 ]),
                 _vm._v(" "),
-                _vm._m(3),
+                _vm._m(2),
               ]),
             ]
           ),
@@ -42123,23 +42151,8 @@ var staticRenderFns = [
       _c("h5", { staticClass: "text-primary" }, [_vm._v("Welcome Back !")]),
       _vm._v(" "),
       _c("p", { staticClass: "text-muted" }, [
-        _vm._v("Sign in to continue to Minible."),
+        _vm._v("Masuk untuk mulai menggunakan Monopoint"),
       ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "mt-3 text-end" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary w-sm waves-effect waves-light",
-          attrs: { type: "submit" },
-        },
-        [_vm._v("Log In")]
-      ),
     ])
   },
   function () {
@@ -42147,11 +42160,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "mt-5 text-center" }, [
-      _c("p", [
-        _vm._v("© Minible. Crafted with "),
-        _c("i", { staticClass: "mdi mdi-heart text-danger" }),
-        _vm._v(" by Themesbrand"),
-      ]),
+      _c("p", [_vm._v("© Kodig.id")]),
     ])
   },
 ]
@@ -43153,7 +43162,7 @@ var render = function () {
       ]),
     ]),
     _vm._v(" "),
-    _vm._m(10),
+     false ? 0 : _vm._e(),
   ])
 }
 var staticRenderFns = [
@@ -44663,27 +44672,25 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("footer", { staticClass: "footer" }, [
-      _c("div", { staticClass: "container-fluid" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-sm-6" }, [
-            _vm._v("\n                     © Minible.\n                "),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-sm-6" }, [
-            _c("div", { staticClass: "text-sm-end d-none d-sm-block" }, [
-              _vm._v("\n                        Crafted with "),
-              _c("i", { staticClass: "mdi mdi-heart text-danger" }),
-              _vm._v(" by "),
-              _c(
-                "a",
-                {
-                  staticClass: "text-reset",
-                  attrs: { href: "https://themesbrand.com/", target: "_blank" },
-                },
-                [_vm._v("Themesbrand")]
-              ),
-            ]),
+    return _c("div", { staticClass: "container-fluid" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-sm-6" }, [
+          _vm._v("\n                     © Minible.\n                "),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-sm-6" }, [
+          _c("div", { staticClass: "text-sm-end d-none d-sm-block" }, [
+            _vm._v("\n                        Crafted with "),
+            _c("i", { staticClass: "mdi mdi-heart text-danger" }),
+            _vm._v(" by "),
+            _c(
+              "a",
+              {
+                staticClass: "text-reset",
+                attrs: { href: "https://themesbrand.com/", target: "_blank" },
+              },
+              [_vm._v("Themesbrand")]
+            ),
           ]),
         ]),
       ]),
@@ -45136,7 +45143,6 @@ var render = function () {
                             },
                           ],
                           staticClass: "form-control flex-grow",
-                          class: _vm.theErrors.balance ? "is-invalid" : "",
                           attrs: { type: "number" },
                           domProps: { value: _vm.journalCreate.balance },
                           on: {
@@ -45177,10 +45183,8 @@ var render = function () {
                       { staticClass: "col-md-10" },
                       [
                         _c("v-select", {
-                          staticClass: "is-invalid",
                           attrs: {
                             options: _vm.periodOptions,
-                            value: _vm.journalCreate.accounting_period_id,
                             disabled: _vm.periodLoading,
                           },
                           on: {
@@ -45415,9 +45419,40 @@ var render = function () {
               },
               [
                 _c("i", { staticClass: "uil-image" }),
-                _vm._v(" Lihat File Bukti"),
+                _vm._v(
+                  " Lihat Bukti Pengajuan " + _vm._s(_vm.journal.filebukti)
+                ),
               ]
             ),
+            _vm._v(" "),
+            _vm.journal.buktireimburse
+              ? _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: {
+                      href: _vm.journal.buktireimburse,
+                      role: "button",
+                      target: "__blank",
+                    },
+                  },
+                  [
+                    _c("i", { staticClass: "uil-image" }),
+                    _vm._v(
+                      " Lihat Bukti Reimburse " +
+                        _vm._s(_vm.journal.buktireimburse)
+                    ),
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.journal.note_decline
+              ? _c("p", { staticClass: "mt-2 mb-0" }, [
+                  _vm._v(
+                    "Alasan penolakan : " + _vm._s(_vm.journal.note_decline)
+                  ),
+                ])
+              : _vm._e(),
           ]),
           _vm._v(" "),
           _c("hr"),
@@ -46160,9 +46195,6 @@ var render = function () {
                                       },
                                     ],
                                     staticClass: "form-control flex-grow",
-                                    class: _vm.theErrors.balance
-                                      ? "is-invalid"
-                                      : "",
                                     attrs: { type: "number" },
                                     domProps: { value: _vm.journal.balance },
                                     on: {
@@ -48943,11 +48975,17 @@ var render = function () {
                                     },
                                   }),
                                   _vm._v(" "),
-                                  _vm.theErrors.ref
+                                  _vm.theErrors.note_decline
                                     ? _c(
                                         "div",
                                         { staticClass: "mt-1 text-danger" },
-                                        [_vm._v(_vm._s(_vm.theErrors.ref[0]))]
+                                        [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm.theErrors.note_decline[0]
+                                            )
+                                          ),
+                                        ]
                                       )
                                     : _vm._e(),
                                 ]),
@@ -48969,11 +49007,17 @@ var render = function () {
                                     on: { change: _vm.pictureUpload },
                                   }),
                                   _vm._v(" "),
-                                  _vm.theErrors.ref
+                                  _vm.theErrors.buktireimburse
                                     ? _c(
                                         "div",
                                         { staticClass: "mt-1 text-danger" },
-                                        [_vm._v(_vm._s(_vm.theErrors.ref[0]))]
+                                        [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm.theErrors.buktireimburse[0]
+                                            )
+                                          ),
+                                        ]
                                       )
                                     : _vm._e(),
                                 ]),
@@ -49343,7 +49387,7 @@ var render = function () {
                           },
                         ],
                         staticClass: "form-control",
-                        attrs: { type: "text" },
+                        attrs: { type: "number" },
                         domProps: { value: _vm.accountCreate.phone_number },
                         on: {
                           input: function ($event) {
@@ -49817,7 +49861,7 @@ var render = function () {
                                   },
                                 ],
                                 staticClass: "form-control",
-                                attrs: { type: "text" },
+                                attrs: { type: "number" },
                                 domProps: { value: _vm.account.phone_number },
                                 on: {
                                   input: function ($event) {

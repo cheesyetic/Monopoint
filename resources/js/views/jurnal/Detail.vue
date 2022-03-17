@@ -9,7 +9,9 @@
                     <h4>{{ journal.title }}</h4>
                     <p>{{ format_date(journal.date) }}</p>
                     <div class="">
-                        <a :href="journal.filebukti" class="btn btn-primary" role="button" target="__blank"><i class="uil-image"></i> Lihat File Bukti</a>
+                        <a :href="journal.filebukti" class="btn btn-primary" role="button" target="__blank"><i class="uil-image"></i> Lihat Bukti Pengajuan {{ journal.filebukti }}</a>
+                        <a :href="journal.buktireimburse" v-if="journal.buktireimburse" class="btn btn-primary" role="button" target="__blank"><i class="uil-image"></i> Lihat Bukti Reimburse {{journal.buktireimburse}}</a>
+                        <p v-if="journal.note_decline" class="mt-2 mb-0">Alasan penolakan : {{ journal.note_decline }}</p>
                     </div>
                     <hr>
                     <p class="my-1">Remark : {{ journal.remark }}</p>

@@ -57,7 +57,7 @@
                             <div class="mb-3 row">
                                 <label for="example-text-input" class="col-md-2 col-form-label">Telepon</label>
                                 <div class="col-md-10">
-                                    <input class="form-control" type="text" v-model="account.phone_number">
+                                    <input class="form-control" type="number" v-model="account.phone_number">
                                     <div v-if="theErrors.phone_number" class="mt-1 text-danger">{{ theErrors.phone_number[0] }}</div>
                                 </div>
                             </div>
