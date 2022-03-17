@@ -192,7 +192,7 @@ class JournalController extends Controller
             $journal->accounting_period_name = $journal->accountingperiod->name;
         }
         else $journal->accounting_period_name = "Data terhapus";
-        if( $journal->bank_account != null){
+        if( $journal->bankaccount != null){
             $journal->bank_account_name = $journal->bankaccount->name;
         }
         else $journal->bank_account_name = "Data terhapus";
@@ -351,10 +351,10 @@ class JournalController extends Controller
                 'buktireimburse' => ['required', 'mimes:png,jpg,jpeg,doc,docx,pdf,txt,csv', 'max:2048'],
             ]);
 
-        if($validator->fails()){
-            return response()->json($validator->errors(),
-            Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
+            if($validator->fails()){
+                return response()->json($validator->errors(),
+                Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
 
             $input = $request->all();
             if($file = $request->file('buktireimburse')){
@@ -390,6 +390,16 @@ class JournalController extends Controller
     public function declineStatus(Request $request, $token){
         $id = Crypt::decryptString($token);
         $journal = Journal::findOrFail($id);
+
+        $validator = Validator::make($request->all(), [
+            'note_decline' => ['required'],
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors(),
+            Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
         $user = auth()->user()->name;
 
         $journal->note_decline = $request->note_decline;

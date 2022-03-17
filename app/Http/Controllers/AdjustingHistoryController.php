@@ -36,11 +36,11 @@ class AdjustingHistoryController extends Controller
                 $value->user_name = $value->user->name;
             }
             else $value->user_name = "Data terhapus";
-            if( $value->chart_account != null){
+            if( $value->chartaccount != null){
                 $value->chart_account_name = $value->chartaccount->name;;
             }
             else $value->chart_account_name = "Data terhapus";
-            if( $value->accounting_period != null){
+            if( $value->accountingperiod != null){
                 $value->accounting_period_name = $value->accountingperiod->name;;
             }
             else $value->accounting_period_name = "Data terhapus";
