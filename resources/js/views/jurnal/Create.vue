@@ -94,7 +94,7 @@
                                 <div class="col-md-10">
                                     <div class="d-flex align-items-center">
                                         <p style="margin:0;margin-right: 1rem">IDR</p>
-                                        <input class="form-control flex-grow" type="number" v-model="journalCreate.balance" :class="theErrors.balance ? 'is-invalid' : ''">
+                                        <input class="form-control flex-grow" type="number" v-model="journalCreate.balance">
                                     </div>
                                     <div v-if="theErrors.balance" class="mt-1 text-danger">{{ theErrors.balance[0] }}</div>
                                 </div>
@@ -103,7 +103,7 @@
                             <div class="mb-3 row">
                                 <label for="example-date-input" class="col-md-2 col-form-label">Periode</label>
                                 <div class="col-md-10">
-                                    <v-select class="is-invalid" :options="periodOptions" :value="journalCreate.accounting_period_id" @input="selectId($event, 'accounting_period_id')" :disabled="periodLoading"></v-select>
+                                    <v-select :options="periodOptions" @input="selectId($event, 'accounting_period_id')" :disabled="periodLoading"></v-select>
                                     <div v-if="theErrors.accounting_period_id" class="mt-1 text-danger">{{ theErrors.accounting_period_id[0] }}</div>
                                 </div>
                             </div>
@@ -224,7 +224,7 @@ export default {
                 // this.periodOptions = response.data.data
                 console.log(response.data.data.length)
                 for (var i = 0; i < response.data.data.length; i++) {
-                    let label = response.data.data[i].id + ") " + response.data.data[i].name + ' (' + response.data.data[i].start + ' - ' + response.data.data[i].end + ')'
+                    let label = response.data.data[i].name + ' (' + response.data.data[i].start + ' - ' + response.data.data[i].end + ')'
                     let id = String(response.data.data[i].id)
                     this.periodOptions.push({ label, id })
                     if(response.data.data[i].status == 1) {

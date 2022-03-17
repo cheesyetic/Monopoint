@@ -531,7 +531,7 @@
     <!-- End Page-content -->
 
 
-    <footer class="footer">
+    <footer class="footer" v-if="0">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6">

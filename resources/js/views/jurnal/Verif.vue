@@ -49,14 +49,14 @@
                                 <label for="example-date-input" class="">Alasan Penolakan</label>
                                 <div class="col-md-10">
                                     <textarea class="form-control" type="text" v-model="note_decline"></textarea>
-                                    <div v-if="theErrors.ref" class="mt-1 text-danger">{{ theErrors.ref[0] }}</div>
+                                    <div v-if="theErrors.note_decline" class="mt-1 text-danger">{{ theErrors.note_decline[0] }}</div>
                                 </div>
                             </div>
                             <div class="my-3" v-if="journal.is_reimburse == 1 && verif">
                                 <label for="example-date-input" class="">File Bukti Verifikasi</label>
                                 <div class="">
                                     <input type="file" class="form-control-file" v-on:change="pictureUpload" accept="image/*">
-                                    <div v-if="theErrors.ref" class="mt-1 text-danger">{{ theErrors.ref[0] }}</div>
+                                    <div v-if="theErrors.buktireimburse" class="mt-1 text-danger">{{ theErrors.buktireimburse[0] }}</div>
                                 </div>
                             </div>
                             <button class="btn btn-primary" type="submit" :disabled="loadingAcc"><i class="uil-message"></i> Kirim <loading size="22" fill="#fff" v-if="loadingAcc"/></button>.

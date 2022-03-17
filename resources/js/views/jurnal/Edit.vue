@@ -110,7 +110,7 @@
                                 <div class="col-md-10">
                                     <div class="d-flex align-items-center">
                                         <p style="margin:0;margin-right: 1rem">IDR</p>
-                                        <input class="form-control flex-grow" type="number" v-model="journal.balance" :class="theErrors.balance ? 'is-invalid' : ''">
+                                        <input class="form-control flex-grow" type="number" v-model="journal.balance">
                                     </div>
                                     <div v-if="theErrors.balance" class="mt-1 text-danger">{{ theErrors.balance[0] }}</div>
                                 </div>

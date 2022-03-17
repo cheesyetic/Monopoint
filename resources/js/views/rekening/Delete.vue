@@ -10,7 +10,7 @@ export default {
         async destroyBank() {
             // console.log(this.endpoint)
             try {
-                let q = window.confirm("Are you sure you want to delete this period?")
+                let q = window.confirm("Are you sure you want to delete this bank account?")
                 if (q) {
                     let responseDelete = await axios.delete(`/api/bankaccount/${this.endpoint}`, {
                         headers: {
@@ -26,13 +26,13 @@ export default {
 
                         this.$refs.deleteBank.parentElement.parentElement.parentElement.remove()
                     }
-                    else {
-                        this.$toasted.show("Error deleting period", {
-                            type: 'error',
-                            duration: 3000,
-                            position: 'top-center',
-                        })
-                    }
+                    // else {
+                    //     this.$toasted.show("Error deleting bank account", {
+                    //         type: 'error',
+                    //         duration: 3000,
+                    //         position: 'top-center',
+                    //     })
+                    // }
                 }
 
             } catch (e) {
