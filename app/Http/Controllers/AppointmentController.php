@@ -67,7 +67,6 @@ class AppointmentController extends Controller
                 $input['user_id'] = $value;
                 UserAppointment::create($input);
             }
-        $this->mailJob($appointment->id);
         $response = [
             'message' => 'A new appointment row created',
             'data' => $appointment
