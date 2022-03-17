@@ -358,7 +358,7 @@ class JournalController extends Controller
 
             $input = $request->all();
             if($file = $request->file('buktireimburse')){
-                $imageName = time().'.'.$request->filebukti->extension();
+                $imageName = time().'.'.$request->buktireimburse->extension();
                 $path = $file->storeAs('uploads', $imageName, 'public');
                 $input['filebukti'] = '/storage/'.$path;
             }
