@@ -35,6 +35,7 @@ class LoginController extends Controller
                 'message' => 'These credentials do not match our records'
             ];
             return response()->json($response, Response::HTTP_BAD_REQUEST);
+        }
 
             $token = $user->createToken('ApiToken')->plainTextToken;
 
