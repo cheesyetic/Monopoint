@@ -6,11 +6,18 @@
                     <h4 class="mb-0"><i class="uil-document-layout-left"></i> Detail Jurnal</h4>
                 </div>
                 <div class="card p-4">
-                    <h4>{{ journal.title }}</h4>
+                    <h4>{{ journal.title }}
+                        <span
+                            class="badge rounded-pill"
+                            :class=" journal.status == 3 ? 'bg-soft-success' : 'bg-soft-danger'"
+                            v-if="journal.status == 3 || journal.status == 4">
+                            {{ journal.status == 3 ? 'Diterima' : 'Ditolak'}}
+                        </span>
+                    </h4>
                     <p>{{ format_date(journal.date) }}</p>
                     <div class="">
-                        <a :href="journal.filebukti" class="btn btn-primary" role="button" target="__blank"><i class="uil-image"></i> Lihat Bukti Pengajuan {{ journal.filebukti }}</a>
-                        <a :href="journal.buktireimburse" v-if="journal.buktireimburse" class="btn btn-primary" role="button" target="__blank"><i class="uil-image"></i> Lihat Bukti Reimburse {{journal.buktireimburse}}</a>
+                        <a :href="journal.filebukti" class="btn btn-primary" role="button" target="__blank"><i class="uil-image"></i> Lihat Bukti Pengajuan</a>
+                        <a :href="journal.buktireimburse" v-if="journal.buktireimburse" class="btn btn-primary" role="button" target="__blank"><i class="uil-image"></i> Lihat Bukti Reimburse</a>
                         <p v-if="journal.note_decline" class="mt-2 mb-0">Alasan penolakan : {{ journal.note_decline }}</p>
                     </div>
                     <hr>

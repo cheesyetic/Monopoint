@@ -62,10 +62,11 @@
                                                 <h5 class="card-title">{{ chart.name }}</h5>
                                                 <p class="card-text text-success mb-1" v-if="chart.type == 1"><i class="uil-import"></i> Pemasukan</p>
                                                 <p class="card-text text-danger mb-1" v-else><i class="uil-export"></i> Pengeluaran</p>
+                                                <p class="card-text mb-0">Balance : {{ chart.balance }}</p>
                                                 <p class="card-text">Kode akun : {{ chart.code }}</p>
                                             </div>
-                                            <div class="col-4 row">
-                                                <router-link :to="{ name: 'chart.edit', params: { token: chart.token }}" class="btn btn-primary mb-2"><i class="uil-edit-alt"></i> Edit</router-link>
+                                            <div class="col-4 d-flex flex-column">
+                                                <router-link :to="{ name: 'chart.edit', params: { token: chart.token }}" class="btn btn-primary mb-2" style="height: fit-content"><i class="uil-edit-alt"></i> Edit</router-link>
                                                 <delete-chart :endpoint="chart.token" :auth="auth"/>
                                             </div>
                                         </div>

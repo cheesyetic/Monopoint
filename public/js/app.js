@@ -2599,6 +2599,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['auth'],
@@ -2684,7 +2687,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context2.prev = 7;
                 _context2.t0 = _context2["catch"](0);
 
-                _this2.$toasted.show("Something went wrong", {
+                _this2.$toasted.show("Something went wrong : " + _context2.t0.response.statusText, {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
@@ -2871,6 +2874,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['auth'],
@@ -2941,24 +2946,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   });
                 }
 
-                _context.next = 19;
+                _context.next = 17;
                 break;
 
               case 13:
                 _context.prev = 13;
                 _context.t0 = _context["catch"](0);
 
-                _this.$toasted.show("Something went wrong : " + _context.t0.response.data.message, {
+                _this.$toasted.show("Something went wrong : " + _context.t0.response.statusText, {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
-                });
+                }); // console.log(e.response.data)
 
-                console.log(_context.t0.response.data);
-                _this.theErrors = _context.t0.response.data;
-                console.log(_this.theErrors);
 
-              case 19:
+                _this.theErrors = _context.t0.response.data; // console.log(this.theErrors)
+
+              case 17:
               case "end":
                 return _context.stop();
             }
@@ -5275,6 +5279,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -6610,6 +6615,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['auth'],
@@ -7296,6 +7308,237 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/Filter.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/Filter.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['auth'],
+  data: function data() {
+    return {
+      chartOptions: [],
+      chartLoading: true,
+      filter_keyword: '',
+      filter_reimburse: '',
+      filter_name: '',
+      filter_date: '',
+      filter_month: '',
+      filter_chartaccount: '',
+      monthOptions: [{
+        month: 'Semua',
+        id: ''
+      }, {
+        month: 'Januari',
+        id: '01'
+      }, {
+        month: 'Februari',
+        id: '02'
+      }, {
+        month: 'Maret',
+        id: '03'
+      }, {
+        month: 'April',
+        id: '04'
+      }, {
+        month: 'Mei',
+        id: '05'
+      }, {
+        month: 'Juni',
+        id: '06'
+      }, {
+        month: 'Juli',
+        id: '07'
+      }, {
+        month: 'Agustus',
+        id: '08'
+      }, {
+        month: 'September',
+        id: '09'
+      }, {
+        month: 'Oktober',
+        id: '10'
+      }, {
+        month: 'November',
+        id: '11'
+      }, {
+        month: 'Desember',
+        id: '12'
+      }],
+      params: {
+        category: 1,
+        keyword: this.filter_keyword,
+        chart: this.filter_chartaccount,
+        reimburse: this.filter_reimburse,
+        date: this.filter_month
+      }
+    };
+  },
+  mounted: function mounted() {
+    this.getChart();
+  },
+  methods: {
+    getChart: function getChart() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var response, label, id, i, _label, _id;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return axios.get('/api/chartaccount', {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
+
+              case 2:
+                response = _context.sent;
+
+                if (response.status === 200) {
+                  label = "Semua";
+                  id = "";
+
+                  _this.chartOptions.push({
+                    label: label,
+                    id: id
+                  });
+
+                  for (i = 0; i < response.data.data.length; i++) {
+                    _label = response.data.data[i].name;
+                    _id = String(response.data.data[i].id);
+
+                    _this.chartOptions.push({
+                      label: _label,
+                      id: _id
+                    });
+                  }
+
+                  _this.chartLoading = false;
+                } else {
+                  _this.$toasted.show("Failed to load Chart Account", {
+                    type: 'error',
+                    duration: 3000,
+                    position: 'top-center'
+                  });
+                }
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    // selectId(e) {
+    //     this.filter_chartaccount = e.id
+    // },
+    updateFilter: function updateFilter(event, target) {
+      console.log("ngupdate bosq"); // console.log(event)
+
+      this.params[target] = event;
+      this.$emit('filterjournal', this.params);
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/Import.vue?vue&type=script&lang=js&":
 /*!***************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/Import.vue?vue&type=script&lang=js& ***!
@@ -7461,7 +7704,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Delete__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Delete */ "./resources/js/views/jurnal/Delete.vue");
-/* harmony import */ var _components_loading__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/loading */ "./resources/js/components/loading.vue");
+/* harmony import */ var _Filter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Filter */ "./resources/js/views/jurnal/Filter.vue");
+/* harmony import */ var _components_loading__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/loading */ "./resources/js/components/loading.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -7639,13 +7883,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['auth'],
   components: {
     DeleteJournal: _Delete__WEBPACK_IMPORTED_MODULE_1__["default"],
-    Loading: _components_loading__WEBPACK_IMPORTED_MODULE_2__["default"]
+    FilterJournal: _Filter__WEBPACK_IMPORTED_MODULE_2__["default"],
+    Loading: _components_loading__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   data: function data() {
     return {
@@ -7654,50 +7901,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       chartOptions: [],
       chartLoading: true,
       filter_keyword: '',
-      filter_reimburse: '',
-      filter_month: '',
-      filter_chartaccount: '',
+      // filter_reimburse: '',
+      // filter_month: '',
+      // filter_chartaccount: '',
       loadingExcel: false,
-      monthOptions: [{
-        month: 'Semua',
-        code: ''
-      }, {
-        month: 'Januari',
-        code: '01'
-      }, {
-        month: 'Februari',
-        code: '02'
-      }, {
-        month: 'Maret',
-        code: '03'
-      }, {
-        month: 'April',
-        code: '04'
-      }, {
-        month: 'Mei',
-        code: '05'
-      }, {
-        month: 'Juni',
-        code: '06'
-      }, {
-        month: 'Juli',
-        code: '07'
-      }, {
-        month: 'Agustus',
-        code: '08'
-      }, {
-        month: 'September',
-        code: '09'
-      }, {
-        month: 'Oktober',
-        code: '10'
-      }, {
-        month: 'November',
-        code: '11'
-      }, {
-        month: 'Desember',
-        code: '12'
-      }]
+      params: '' // monthOptions: [
+      //     {month: 'Semua', code: ''},
+      //     {month: 'Januari', code: '01'},
+      //     {month: 'Februari', code: '02'},
+      //     {month: 'Maret', code: '03'},
+      //     {month: 'April', code: '04'},
+      //     {month: 'Mei', code: '05'},
+      //     {month: 'Juni', code: '06'},
+      //     {month: 'Juli', code: '07'},
+      //     {month: 'Agustus', code: '08'},
+      //     {month: 'September', code: '09'},
+      //     {month: 'Oktober', code: '10'},
+      //     {month: 'November', code: '11'},
+      //     {month: 'Desember', code: '12'}
+      // ],
+
     };
   },
   mounted: function mounted() {
@@ -7705,6 +7928,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     this.getChart();
   },
   methods: {
+    filtering: function filtering(event) {
+      console.log("Filtering");
+      this.params = event;
+      console.log(this.params);
+    },
     selectId: function selectId(e) {
       this.filter_chartaccount = e.id;
     },
@@ -7826,9 +8054,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   params: {
                     category: 1,
                     keyword: _this3.filter_keyword,
-                    chart: _this3.filter_chartaccount,
-                    reimburse: _this3.filter_reimburse,
-                    date: _this3.filter_month
+                    chart: _this3.params.chart,
+                    reimburse: _this3.params.reimburse,
+                    sortname: _this3.params.sortname,
+                    sortdate: _this3.params.sortdate,
+                    date: _this3.params.month
                   },
                   headers: {
                     'Authorization': 'Bearer ' + _this3.auth.token
@@ -7952,7 +8182,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Delete__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Delete */ "./resources/js/views/jurnal/Delete.vue");
-/* harmony import */ var _components_loading__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/loading */ "./resources/js/components/loading.vue");
+/* harmony import */ var _Filter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Filter */ "./resources/js/views/jurnal/Filter.vue");
+/* harmony import */ var _components_loading__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/loading */ "./resources/js/components/loading.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -8087,56 +8318,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['auth'],
   components: {
     DeleteJournal: _Delete__WEBPACK_IMPORTED_MODULE_1__["default"],
-    Loading: _components_loading__WEBPACK_IMPORTED_MODULE_2__["default"]
+    FilterJournal: _Filter__WEBPACK_IMPORTED_MODULE_2__["default"],
+    Loading: _components_loading__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   data: function data() {
     return {
@@ -8145,50 +8335,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       chartOptions: [],
       chartLoading: true,
       filter_keyword: '',
-      filter_reimburse: '',
-      filter_month: '',
-      filter_chartaccount: '',
-      loadingExcel: false,
-      monthOptions: [{
-        month: 'Semua',
-        code: ''
-      }, {
-        month: 'Januari',
-        code: '01'
-      }, {
-        month: 'Februari',
-        code: '02'
-      }, {
-        month: 'Maret',
-        code: '03'
-      }, {
-        month: 'April',
-        code: '04'
-      }, {
-        month: 'Mei',
-        code: '05'
-      }, {
-        month: 'Juni',
-        code: '06'
-      }, {
-        month: 'Juli',
-        code: '07'
-      }, {
-        month: 'Agustus',
-        code: '08'
-      }, {
-        month: 'September',
-        code: '09'
-      }, {
-        month: 'Oktober',
-        code: '10'
-      }, {
-        month: 'November',
-        code: '11'
-      }, {
-        month: 'Desember',
-        code: '12'
-      }]
+      // filter_reimburse: '',
+      // filter_month: '',
+      // filter_chartaccount: '',
+      params: '',
+      loadingExcel: false // monthOptions: [
+      //     {month: 'Semua', code: ''},
+      //     {month: 'Januari', code: '01'},
+      //     {month: 'Februari', code: '02'},
+      //     {month: 'Maret', code: '03'},
+      //     {month: 'April', code: '04'},
+      //     {month: 'Mei', code: '05'},
+      //     {month: 'Juni', code: '06'},
+      //     {month: 'Juli', code: '07'},
+      //     {month: 'Agustus', code: '08'},
+      //     {month: 'September', code: '09'},
+      //     {month: 'Oktober', code: '10'},
+      //     {month: 'November', code: '11'},
+      //     {month: 'Desember', code: '12'}
+      // ],
+
     };
   },
   mounted: function mounted() {
@@ -8196,6 +8362,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     this.getChart();
   },
   methods: {
+    filtering: function filtering(event) {
+      console.log("Filtering");
+      this.params = event;
+      console.log(this.params);
+    },
     selectId: function selectId(e) {
       this.filter_chartaccount = e.id;
     },
@@ -8320,9 +8491,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   params: {
                     category: 2,
                     keyword: _this3.filter_keyword,
-                    chart: _this3.filter_chartaccount,
-                    reimburse: _this3.filter_reimburse,
-                    date: _this3.filter_month
+                    chart: _this3.params.chart,
+                    reimburse: _this3.params.reimburse,
+                    sortname: _this3.params.sortname,
+                    sortdate: _this3.params.sortdate,
+                    date: _this3.params.month
                   },
                   headers: {
                     'Authorization': 'Bearer ' + _this3.auth.token
@@ -8418,7 +8591,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Delete__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Delete */ "./resources/js/views/jurnal/Delete.vue");
-/* harmony import */ var _components_loading__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/loading */ "./resources/js/components/loading.vue");
+/* harmony import */ var _Filter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Filter */ "./resources/js/views/jurnal/Filter.vue");
+/* harmony import */ var _components_loading__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/loading */ "./resources/js/components/loading.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -8598,13 +8772,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['auth'],
   components: {
     DeleteJournal: _Delete__WEBPACK_IMPORTED_MODULE_1__["default"],
-    Loading: _components_loading__WEBPACK_IMPORTED_MODULE_2__["default"]
+    FilterJournal: _Filter__WEBPACK_IMPORTED_MODULE_2__["default"],
+    Loading: _components_loading__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   data: function data() {
     return {
@@ -8613,50 +8790,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       chartOptions: [],
       chartLoading: true,
       filter_keyword: '',
-      filter_reimburse: '',
-      filter_month: '',
-      filter_chartaccount: '',
+      // filter_reimburse: '',
+      // filter_month: '',
+      // filter_chartaccount: '',
       loadingExcel: false,
-      monthOptions: [{
-        month: 'Semua',
-        code: ''
-      }, {
-        month: 'Januari',
-        code: '01'
-      }, {
-        month: 'Februari',
-        code: '02'
-      }, {
-        month: 'Maret',
-        code: '03'
-      }, {
-        month: 'April',
-        code: '04'
-      }, {
-        month: 'Mei',
-        code: '05'
-      }, {
-        month: 'Juni',
-        code: '06'
-      }, {
-        month: 'Juli',
-        code: '07'
-      }, {
-        month: 'Agustus',
-        code: '08'
-      }, {
-        month: 'September',
-        code: '09'
-      }, {
-        month: 'Oktober',
-        code: '10'
-      }, {
-        month: 'November',
-        code: '11'
-      }, {
-        month: 'Desember',
-        code: '12'
-      }]
+      params: '' // monthOptions: [
+      //     {month: 'Semua', code: ''},
+      //     {month: 'Januari', code: '01'},
+      //     {month: 'Februari', code: '02'},
+      //     {month: 'Maret', code: '03'},
+      //     {month: 'April', code: '04'},
+      //     {month: 'Mei', code: '05'},
+      //     {month: 'Juni', code: '06'},
+      //     {month: 'Juli', code: '07'},
+      //     {month: 'Agustus', code: '08'},
+      //     {month: 'September', code: '09'},
+      //     {month: 'Oktober', code: '10'},
+      //     {month: 'November', code: '11'},
+      //     {month: 'Desember', code: '12'}
+      // ],
+
     };
   },
   mounted: function mounted() {
@@ -8664,6 +8817,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     this.getChart();
   },
   methods: {
+    filtering: function filtering(event) {
+      console.log("Filtering");
+      this.params = event;
+      console.log(this.params);
+    },
     selectId: function selectId(e) {
       this.filter_chartaccount = e.id;
     },
@@ -8785,9 +8943,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   params: {
                     category: 3,
                     keyword: _this3.filter_keyword,
-                    chart: _this3.filter_chartaccount,
-                    reimburse: _this3.filter_reimburse,
-                    date: _this3.filter_month
+                    chart: _this3.params.chart,
+                    reimburse: _this3.params.reimburse,
+                    sortname: _this3.params.sortname,
+                    sortdate: _this3.params.sortdate,
+                    date: _this3.params.month
                   },
                   headers: {
                     'Authorization': 'Bearer ' + _this3.auth.token
@@ -12245,7 +12405,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.wrapper{\n  display: inline-flex;\n  align-items: center;\n  justify-content: space-evenly;\n  border-radius: 5px;\n}\n.option{\n    min-height: 39px;\n    min-width: 100px;\n    padding: .2rem 1rem;\n    background: #fff;\n    height: 100%;\n    width: auto;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    gap: .5rem;\n    margin: 0 8px;\n    border-radius: 5px;\n    cursor: pointer;\n    border: 2px solid lightgrey;\n    transition: all 0.3s ease;\n}\n.option:first-child {\n  margin-left: 0;\n}\n.option:last-child {\n  margin-right: 0;\n}\n.option .dot{\n  height: 16px;\n  width: 16px;\n  background: #d9d9d9;\n  border-radius: 50%;\n  position: relative;\n}\n.option .dot::before{\n  position: absolute;\n  content: \"\";\n  top: 4px;\n  left: 4px;\n  width: 8px;\n  height: 8px;\n  background: #5B73E8;\n  border-radius: 50%;\n  opacity: 0;\n  transform: scale(1.5);\n  transition: all 0.3s ease;\n}\ninput[type=\"radio\"]{\n  display: none;\n}\n#option-1:checked:checked ~ .option-1,\n#option-2:checked:checked ~ .option-2,\n#option-3:checked:checked ~ .option-3{\n  border-color: #5B73E8;\n  background: #5B73E8;\n}\n#option-1:checked:checked ~ .option-1 .dot,\n#option-2:checked:checked ~ .option-2 .dot,\n#option-3:checked:checked ~ .option-3 .dot{\n  background: #fff;\n}\n#option-1:checked:checked ~ .option-1 .dot::before,\n#option-2:checked:checked ~ .option-2 .dot::before,\n#option-3:checked:checked ~ .option-3 .dot::before{\n  opacity: 1;\n  transform: scale(1);\n}\n.option span{\n  font-size: 16px;\n  color: #808080;\n}\n#option-1:checked:checked ~ .option-1 span,\n#option-2:checked:checked ~ .option-2 span,\n#option-3:checked:checked ~ .option-3 span{\n  color: #fff;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.wrapper{\n  display: inline-flex;\n  align-items: center;\n  justify-content: space-evenly;\n  border-radius: 5px;\n}\n.option{\n    min-height: 39px;\n    min-width: 100px;\n    padding: .2rem 1rem;\n    background: #fff;\n    height: 100%;\n    width: auto;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    gap: .5rem;\n    margin: 0 8px;\n    border-radius: 5px;\n    cursor: pointer;\n    border: 2px solid lightgrey;\n    transition: all 0.3s ease;\n}\n.option:first-child {\n  margin-left: 0;\n}\n.option:last-child {\n  margin-right: 0;\n}\n.option .dot{\n  height: 16px;\n  width: 16px;\n  background: #d9d9d9;\n  border-radius: 50%;\n  position: relative;\n}\n.option .dot::before{\n  position: absolute;\n  content: \"\";\n  top: 4px;\n  left: 4px;\n  width: 8px;\n  height: 8px;\n  background: #5B73E8;\n  border-radius: 50%;\n  opacity: 0;\n  transform: scale(1.5);\n  transition: all 0.3s ease;\n}\ninput[type=\"radio\"]{\n  display: none;\n}\n#option-1:checked:checked ~ .option-1,\n#option-2:checked:checked ~ .option-2,\n#option-3:checked:checked ~ .option-3{\n  border-color: #5B73E8;\n  background: #5B73E8;\n}\n#option-1:checked:checked ~ .option-1 .dot,\n#option-2:checked:checked ~ .option-2 .dot,\n#option-3:checked:checked ~ .option-3 .dot{\n  background: #fff;\n}\n#option-1:checked:checked ~ .option-1 .dot::before,\n#option-2:checked:checked ~ .option-2 .dot::before,\n#option-3:checked:checked ~ .option-3 .dot::before{\n  opacity: 1;\n  transform: scale(1);\n}\n.option span{\n  font-size: 16px;\n  color: #808080;\n}\n#option-1:checked:checked ~ .option-1 span,\n#option-2:checked:checked ~ .option-2 span,\n#option-3:checked:checked ~ .option-3 span{\n  color: #fff;\n}\n#name-option-1:checked:checked ~ .option-1,\n#name-option-2:checked:checked ~ .option-2,\n#name-option-3:checked:checked ~ .option-3{\n  border-color: #5B73E8;\n  background: #5B73E8;\n}\n#name-option-1:checked:checked ~ .option-1 .dot,\n#name-option-2:checked:checked ~ .option-2 .dot,\n#name-option-3:checked:checked ~ .option-3 .dot{\n  background: #fff;\n}\n#name-option-1:checked:checked ~ .option-1 .dot::before,\n#name-option-2:checked:checked ~ .option-2 .dot::before,\n#name-option-3:checked:checked ~ .option-3 .dot::before{\n  opacity: 1;\n  transform: scale(1);\n}\n.option span{\n  font-size: 16px;\n  color: #808080;\n}\n#name-option-1:checked:checked ~ .option-1 span,\n#name-option-2:checked:checked ~ .option-2 span,\n#name-option-3:checked:checked ~ .option-3 span{\n  color: #fff;\n}\n#date-option-1:checked:checked ~ .option-1,\n#date-option-2:checked:checked ~ .option-2,\n#date-option-3:checked:checked ~ .option-3{\n  border-color: #5B73E8;\n  background: #5B73E8;\n}\n#date-option-1:checked:checked ~ .option-1 .dot,\n#date-option-2:checked:checked ~ .option-2 .dot,\n#date-option-3:checked:checked ~ .option-3 .dot{\n  background: #fff;\n}\n#date-option-1:checked:checked ~ .option-1 .dot::before,\n#date-option-2:checked:checked ~ .option-2 .dot::before,\n#date-option-3:checked:checked ~ .option-3 .dot::before{\n  opacity: 1;\n  transform: scale(1);\n}\n.option span{\n  font-size: 16px;\n  color: #808080;\n}\n#date-option-1:checked:checked ~ .option-1 span,\n#date-option-2:checked:checked ~ .option-2 span,\n#date-option-3:checked:checked ~ .option-3 span{\n  color: #fff;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -36202,6 +36362,45 @@ component.options.__file = "resources/js/views/jurnal/Edit.vue"
 
 /***/ }),
 
+/***/ "./resources/js/views/jurnal/Filter.vue":
+/*!**********************************************!*\
+  !*** ./resources/js/views/jurnal/Filter.vue ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Filter_vue_vue_type_template_id_18607c26___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Filter.vue?vue&type=template&id=18607c26& */ "./resources/js/views/jurnal/Filter.vue?vue&type=template&id=18607c26&");
+/* harmony import */ var _Filter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Filter.vue?vue&type=script&lang=js& */ "./resources/js/views/jurnal/Filter.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Filter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Filter_vue_vue_type_template_id_18607c26___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Filter_vue_vue_type_template_id_18607c26___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/views/jurnal/Filter.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/views/jurnal/Import.vue":
 /*!**********************************************!*\
   !*** ./resources/js/views/jurnal/Import.vue ***!
@@ -37439,6 +37638,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/views/jurnal/Filter.vue?vue&type=script&lang=js&":
+/*!***********************************************************************!*\
+  !*** ./resources/js/views/jurnal/Filter.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Filter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Filter.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/Filter.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Filter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/views/jurnal/Import.vue?vue&type=script&lang=js&":
 /*!***********************************************************************!*\
   !*** ./resources/js/views/jurnal/Import.vue?vue&type=script&lang=js& ***!
@@ -38239,6 +38454,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Edit_vue_vue_type_template_id_3bd9d990___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Edit_vue_vue_type_template_id_3bd9d990___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Edit.vue?vue&type=template&id=3bd9d990& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/Edit.vue?vue&type=template&id=3bd9d990&");
+
+
+/***/ }),
+
+/***/ "./resources/js/views/jurnal/Filter.vue?vue&type=template&id=18607c26&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/views/jurnal/Filter.vue?vue&type=template&id=18607c26& ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Filter_vue_vue_type_template_id_18607c26___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Filter_vue_vue_type_template_id_18607c26___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Filter_vue_vue_type_template_id_18607c26___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Filter.vue?vue&type=template&id=18607c26& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/Filter.vue?vue&type=template&id=18607c26&");
 
 
 /***/ }),
@@ -39513,6 +39745,12 @@ var render = function () {
                                 },
                               },
                             }),
+                            _vm._v(" "),
+                            _vm.theErrors.name
+                              ? _c("div", { staticClass: "mt-1 text-danger" }, [
+                                  _vm._v(_vm._s(_vm.theErrors.name[0])),
+                                ])
+                              : _vm._e(),
                           ]),
                         ]),
                         _vm._v(" "),
@@ -39547,6 +39785,12 @@ var render = function () {
                                 },
                               },
                             }),
+                            _vm._v(" "),
+                            _vm.theErrors.email
+                              ? _c("div", { staticClass: "mt-1 text-danger" }, [
+                                  _vm._v(_vm._s(_vm.theErrors.email[0])),
+                                ])
+                              : _vm._e(),
                           ]),
                         ]),
                         _vm._v(" "),
@@ -39566,7 +39810,7 @@ var render = function () {
                                 },
                               ],
                               staticClass: "form-control",
-                              attrs: { type: "text" },
+                              attrs: { type: "number" },
                               domProps: { value: _vm.account.phone_number },
                               on: {
                                 input: function ($event) {
@@ -39581,6 +39825,12 @@ var render = function () {
                                 },
                               },
                             }),
+                            _vm._v(" "),
+                            _vm.theErrors.phone_number
+                              ? _c("div", { staticClass: "mt-1 text-danger" }, [
+                                  _vm._v(_vm._s(_vm.theErrors.phone_number[0])),
+                                ])
+                              : _vm._e(),
                           ]),
                         ]),
                         _vm._v(" "),
@@ -39945,6 +40195,12 @@ var render = function () {
                               },
                             },
                           }),
+                          _vm._v(" "),
+                          _vm.theErrors.new_password
+                            ? _c("div", { staticClass: "mt-1 text-danger" }, [
+                                _vm._v(_vm._s(_vm.theErrors.new_password[0])),
+                              ])
+                            : _vm._e(),
                         ]),
                       ]),
                       _vm._v(" "),
@@ -39979,6 +40235,14 @@ var render = function () {
                               },
                             },
                           }),
+                          _vm._v(" "),
+                          _vm.theErrors.confirm_password
+                            ? _c("div", { staticClass: "mt-1 text-danger" }, [
+                                _vm._v(
+                                  _vm._s(_vm.theErrors.confirm_password[0])
+                                ),
+                              ])
+                            : _vm._e(),
                         ]),
                       ]),
                       _vm._v(" "),
@@ -42509,6 +42773,7 @@ var render = function () {
     {
       ref: "deleteChart",
       staticClass: "btn btn-danger",
+      staticStyle: { height: "fit-content" },
       on: { click: _vm.destroyChart },
     },
     [_c("i", { staticClass: "uil-trash" }), _vm._v(" Delete")]
@@ -43045,6 +43310,17 @@ var render = function () {
                                             _vm._v(" "),
                                             _c(
                                               "p",
+                                              { staticClass: "card-text mb-0" },
+                                              [
+                                                _vm._v(
+                                                  "Balance : " +
+                                                    _vm._s(chart.balance)
+                                                ),
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "p",
                                               { staticClass: "card-text" },
                                               [
                                                 _vm._v(
@@ -43057,13 +43333,19 @@ var render = function () {
                                           _vm._v(" "),
                                           _c(
                                             "div",
-                                            { staticClass: "col-4 row" },
+                                            {
+                                              staticClass:
+                                                "col-4 d-flex flex-column",
+                                            },
                                             [
                                               _c(
                                                 "router-link",
                                                 {
                                                   staticClass:
                                                     "btn btn-primary mb-2",
+                                                  staticStyle: {
+                                                    height: "fit-content",
+                                                  },
                                                   attrs: {
                                                     to: {
                                                       name: "chart.edit",
@@ -45402,7 +45684,30 @@ var render = function () {
         _vm._m(0),
         _vm._v(" "),
         _c("div", { staticClass: "card p-4" }, [
-          _c("h4", [_vm._v(_vm._s(_vm.journal.title))]),
+          _c("h4", [
+            _vm._v(_vm._s(_vm.journal.title) + "\n                    "),
+            _vm.journal.status == 3 || _vm.journal.status == 4
+              ? _c(
+                  "span",
+                  {
+                    staticClass: "badge rounded-pill",
+                    class:
+                      _vm.journal.status == 3
+                        ? "bg-soft-success"
+                        : "bg-soft-danger",
+                  },
+                  [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(
+                          _vm.journal.status == 3 ? "Diterima" : "Ditolak"
+                        ) +
+                        "\n                    "
+                    ),
+                  ]
+                )
+              : _vm._e(),
+          ]),
           _vm._v(" "),
           _c("p", [_vm._v(_vm._s(_vm.format_date(_vm.journal.date)))]),
           _vm._v(" "),
@@ -45419,9 +45724,7 @@ var render = function () {
               },
               [
                 _c("i", { staticClass: "uil-image" }),
-                _vm._v(
-                  " Lihat Bukti Pengajuan " + _vm._s(_vm.journal.filebukti)
-                ),
+                _vm._v(" Lihat Bukti Pengajuan"),
               ]
             ),
             _vm._v(" "),
@@ -45438,10 +45741,7 @@ var render = function () {
                   },
                   [
                     _c("i", { staticClass: "uil-image" }),
-                    _vm._v(
-                      " Lihat Bukti Reimburse " +
-                        _vm._s(_vm.journal.buktireimburse)
-                    ),
+                    _vm._v(" Lihat Bukti Reimburse"),
                   ]
                 )
               : _vm._e(),
@@ -46406,6 +46706,500 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/Filter.vue?vue&type=template&id=18607c26&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/Filter.vue?vue&type=template&id=18607c26& ***!
+  \********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "modal fade bs-example-modal-sm",
+      attrs: {
+        tabindex: "-1",
+        "aria-labelledby": "mySmallModalLabel",
+        "aria-modal": "true",
+        role: "dialog",
+      },
+    },
+    [
+      _c("div", { staticClass: "modal-dialog modal-sm" }, [
+        _c("div", { staticClass: "modal-content" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-body" }, [
+            _c("div", { staticClass: "mb-2" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "col col-form-label",
+                  attrs: { for: "example-text-input" },
+                },
+                [_vm._v("Reimburse")]
+              ),
+              _vm._v(" "),
+              _c("div", {}, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.filter_reimburse,
+                      expression: "filter_reimburse",
+                    },
+                  ],
+                  attrs: {
+                    value: "1",
+                    type: "radio",
+                    name: "reimburse",
+                    id: "option-1",
+                  },
+                  domProps: { checked: _vm._q(_vm.filter_reimburse, "1") },
+                  on: {
+                    change: [
+                      function ($event) {
+                        _vm.filter_reimburse = "1"
+                      },
+                      function ($event) {
+                        return _vm.updateFilter(
+                          _vm.filter_reimburse,
+                          "reimburse"
+                        )
+                      },
+                    ],
+                  },
+                }),
+                _vm._v(" "),
+                _vm._m(1),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.filter_reimburse,
+                      expression: "filter_reimburse",
+                    },
+                  ],
+                  attrs: {
+                    value: "0",
+                    type: "radio",
+                    name: "reimburse",
+                    id: "option-2",
+                  },
+                  domProps: { checked: _vm._q(_vm.filter_reimburse, "0") },
+                  on: {
+                    change: [
+                      function ($event) {
+                        _vm.filter_reimburse = "0"
+                      },
+                      function ($event) {
+                        return _vm.updateFilter(
+                          _vm.filter_reimburse,
+                          "reimburse"
+                        )
+                      },
+                    ],
+                  },
+                }),
+                _vm._v(" "),
+                _vm._m(2),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.filter_reimburse,
+                      expression: "filter_reimburse",
+                    },
+                  ],
+                  attrs: {
+                    value: "",
+                    type: "radio",
+                    name: "reimburse",
+                    id: "option-3",
+                    selected: "",
+                  },
+                  domProps: { checked: _vm._q(_vm.filter_reimburse, "") },
+                  on: {
+                    change: [
+                      function ($event) {
+                        _vm.filter_reimburse = ""
+                      },
+                      function ($event) {
+                        return _vm.updateFilter(
+                          _vm.filter_reimburse,
+                          "reimburse"
+                        )
+                      },
+                    ],
+                  },
+                }),
+                _vm._v(" "),
+                _vm._m(3),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "mb-2" },
+              [
+                _c("label", { staticClass: "form-label" }, [_vm._v("Bulan")]),
+                _vm._v(" "),
+                _c("v-select", {
+                  attrs: {
+                    options: _vm.monthOptions,
+                    reduce: function (month) {
+                      return month.id
+                    },
+                    label: "month",
+                  },
+                  on: {
+                    input: function ($event) {
+                      return _vm.updateFilter($event, "month")
+                    },
+                  },
+                  model: {
+                    value: _vm.filter_month,
+                    callback: function ($$v) {
+                      _vm.filter_month = $$v
+                    },
+                    expression: "filter_month",
+                  },
+                }),
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "mb-2" },
+              [
+                _c("label", { staticClass: "form-label" }, [
+                  _vm._v("Chart Account"),
+                ]),
+                _vm._v(" "),
+                _c("v-select", {
+                  attrs: {
+                    options: _vm.chartOptions,
+                    disabled: _vm.chartLoading,
+                  },
+                  on: {
+                    input: function ($event) {
+                      return _vm.updateFilter($event.id, "chart")
+                    },
+                  },
+                }),
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "mb-2" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "col col-form-label",
+                  attrs: { for: "example-text-input" },
+                },
+                [_vm._v("Name Sorting")]
+              ),
+              _vm._v(" "),
+              _c("div", {}, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.filter_name,
+                      expression: "filter_name",
+                    },
+                  ],
+                  attrs: {
+                    value: "ASC",
+                    type: "radio",
+                    name: "name",
+                    id: "name-option-1",
+                  },
+                  domProps: { checked: _vm._q(_vm.filter_name, "ASC") },
+                  on: {
+                    change: [
+                      function ($event) {
+                        _vm.filter_name = "ASC"
+                      },
+                      function ($event) {
+                        return _vm.updateFilter(_vm.filter_name, "sortname")
+                      },
+                    ],
+                  },
+                }),
+                _vm._v(" "),
+                _vm._m(4),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.filter_name,
+                      expression: "filter_name",
+                    },
+                  ],
+                  attrs: {
+                    value: "DESC",
+                    type: "radio",
+                    name: "name",
+                    id: "name-option-3",
+                    selected: "",
+                  },
+                  domProps: { checked: _vm._q(_vm.filter_name, "DESC") },
+                  on: {
+                    change: [
+                      function ($event) {
+                        _vm.filter_name = "DESC"
+                      },
+                      function ($event) {
+                        return _vm.updateFilter(_vm.filter_name, "sortname")
+                      },
+                    ],
+                  },
+                }),
+                _vm._v(" "),
+                _vm._m(5),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "mb-2" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "col col-form-label",
+                  attrs: { for: "example-text-input" },
+                },
+                [_vm._v("Date Sorting")]
+              ),
+              _vm._v(" "),
+              _c("div", {}, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.filter_date,
+                      expression: "filter_date",
+                    },
+                  ],
+                  attrs: {
+                    value: "ASC",
+                    type: "radio",
+                    name: "date",
+                    id: "date-option-1",
+                  },
+                  domProps: { checked: _vm._q(_vm.filter_date, "ASC") },
+                  on: {
+                    change: [
+                      function ($event) {
+                        _vm.filter_date = "ASC"
+                      },
+                      function ($event) {
+                        return _vm.updateFilter(_vm.filter_date, "sortdate")
+                      },
+                    ],
+                  },
+                }),
+                _vm._v(" "),
+                _vm._m(6),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.filter_date,
+                      expression: "filter_date",
+                    },
+                  ],
+                  attrs: {
+                    value: "DESC",
+                    type: "radio",
+                    name: "date",
+                    id: "date-option-3",
+                    selected: "",
+                  },
+                  domProps: { checked: _vm._q(_vm.filter_date, "DESC") },
+                  on: {
+                    change: [
+                      function ($event) {
+                        _vm.filter_date = "DESC"
+                      },
+                      function ($event) {
+                        return _vm.updateFilter(_vm.filter_date, "sortdate")
+                      },
+                    ],
+                  },
+                }),
+                _vm._v(" "),
+                _vm._m(7),
+              ]),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-footer" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary waves-effect",
+                attrs: { type: "button", "data-bs-dismiss": "modal" },
+                on: { click: _vm.$parent.getJurnal },
+              },
+              [_vm._v("Terapkan")]
+            ),
+          ]),
+        ]),
+      ]),
+    ]
+  )
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c("h5", { staticClass: "modal-title" }, [_vm._v("Filter")]),
+      _vm._v(" "),
+      _c("button", {
+        staticClass: "btn-close",
+        attrs: {
+          type: "button",
+          "data-bs-dismiss": "modal",
+          "aria-label": "Close",
+        },
+      }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "option option-1 m-0", attrs: { for: "option-1" } },
+      [
+        _c("div", { staticClass: "dot" }),
+        _vm._v(" "),
+        _c("span", [_vm._v("Ya")]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "option option-2 m-0 my-1", attrs: { for: "option-2" } },
+      [
+        _c("div", { staticClass: "dot" }),
+        _vm._v(" "),
+        _c("span", [_vm._v("Tidak")]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "option option-3 m-0", attrs: { for: "option-3" } },
+      [
+        _c("div", { staticClass: "dot" }),
+        _vm._v(" "),
+        _c("span", [_vm._v("Semua")]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "option option-1 m-0 mb-1",
+        attrs: { for: "name-option-1" },
+      },
+      [
+        _c("div", { staticClass: "dot" }),
+        _vm._v(" "),
+        _c("span", [_vm._v("A-Z")]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "option option-3 m-0", attrs: { for: "name-option-3" } },
+      [
+        _c("div", { staticClass: "dot" }),
+        _vm._v(" "),
+        _c("span", [_vm._v("Z-A")]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "option option-1 m-0 mb-1",
+        attrs: { for: "date-option-1" },
+      },
+      [
+        _c("div", { staticClass: "dot" }),
+        _vm._v(" "),
+        _c("span", [_vm._v("Jan-Des")]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "option option-3 m-0", attrs: { for: "date-option-3" } },
+      [
+        _c("div", { staticClass: "dot" }),
+        _vm._v(" "),
+        _c("span", [_vm._v("Des-Jan")]),
+      ]
+    )
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/Import.vue?vue&type=template&id=18c1745a&":
 /*!********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/Import.vue?vue&type=template&id=18c1745a& ***!
@@ -46693,464 +47487,300 @@ var render = function () {
           _c("div", { staticClass: "col-lg-12" }, [
             _c("div", { staticClass: "card" }, [
               _c("div", { staticClass: "card-body" }, [
-                _c("div", { staticClass: "table-responsive-sm" }, [
-                  _c("div", { staticClass: "input-group mb-2" }, [
-                    _vm._m(2),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.filter_keyword,
-                          expression: "filter_keyword",
-                        },
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "text", placeholder: "Search" },
-                      domProps: { value: _vm.filter_keyword },
-                      on: {
-                        change: _vm.getJurnal,
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.filter_keyword = $event.target.value
-                        },
-                      },
-                    }),
-                    _vm._v(" "),
-                    _vm._m(3),
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "table",
-                    { staticClass: "table table-centered mb-0" },
-                    [
-                      _vm._m(4),
+                _c(
+                  "div",
+                  { staticClass: "table-responsive-sm" },
+                  [
+                    _c("div", { staticClass: "input-group mb-2" }, [
+                      _vm._m(2),
                       _vm._v(" "),
-                      _vm.loading
-                        ? _c(
-                            "transition",
-                            {
-                              staticClass: "row ",
-                              attrs: {
-                                tag: "tbody",
-                                mode: "out-in",
-                                "enter-active-class":
-                                  "animate__animated animate__fadeIn animate__faster",
-                                "leave-active-class":
-                                  "animate__animated animate__fadeOut animate__faster",
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.filter_keyword,
+                            expression: "filter_keyword",
+                          },
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", placeholder: "Search" },
+                        domProps: { value: _vm.filter_keyword },
+                        on: {
+                          change: _vm.getJurnal,
+                          input: function ($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.filter_keyword = $event.target.value
+                          },
+                        },
+                      }),
+                      _vm._v(" "),
+                      _vm._m(3),
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "table",
+                      { staticClass: "table table-centered mb-0" },
+                      [
+                        _vm._m(4),
+                        _vm._v(" "),
+                        _vm.loading
+                          ? _c(
+                              "transition",
+                              {
+                                staticClass: "row ",
+                                attrs: {
+                                  tag: "tbody",
+                                  mode: "out-in",
+                                  "enter-active-class":
+                                    "animate__animated animate__fadeIn animate__faster",
+                                  "leave-active-class":
+                                    "animate__animated animate__fadeOut animate__faster",
+                                },
                               },
-                            },
-                            [_c("loading")],
-                            1
-                          )
-                        : _c(
-                            "transition",
-                            {
-                              attrs: {
-                                tag: "tbody",
-                                mode: "out-in",
-                                "enter-active-class":
-                                  "animate__animated animate__fadeIn",
-                                "leave-active-class":
-                                  "animate__animated animate__fadeOut",
+                              [_c("loading")],
+                              1
+                            )
+                          : _c(
+                              "transition",
+                              {
+                                attrs: {
+                                  tag: "tbody",
+                                  mode: "out-in",
+                                  "enter-active-class":
+                                    "animate__animated animate__fadeIn",
+                                  "leave-active-class":
+                                    "animate__animated animate__fadeOut",
+                                },
                               },
-                            },
-                            [
-                              !_vm.journals.length
-                                ? _c("tr", [
-                                    _c("td", { attrs: { colspan: "7" } }, [
-                                      _vm._v("No data available"),
-                                    ]),
-                                  ])
-                                : _c(
-                                    "transition-group",
-                                    { attrs: { tag: "tbody" } },
-                                    _vm._l(_vm.journals, function (journal) {
-                                      return _c("tr", { key: journal.token }, [
-                                        _c("td", [
-                                          _vm._v(_vm._s(journal.title)),
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _vm._v(
-                                            _vm._s(
-                                              _vm.format_date(journal.date)
-                                            )
-                                          ),
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _c(
-                                            "span",
-                                            {
-                                              staticClass:
-                                                "badge rounded-pill font-size-12",
-                                              class: journal.is_reimburse
-                                                ? "bg-soft-success"
-                                                : "bg-soft-danger",
-                                            },
-                                            [
+                              [
+                                !_vm.journals.length
+                                  ? _c("tr", [
+                                      _c("td", { attrs: { colspan: "7" } }, [
+                                        _vm._v("No data available"),
+                                      ]),
+                                    ])
+                                  : _c(
+                                      "transition-group",
+                                      { attrs: { tag: "tbody" } },
+                                      _vm._l(_vm.journals, function (journal) {
+                                        return _c(
+                                          "tr",
+                                          { key: journal.token },
+                                          [
+                                            _c("td", [
+                                              _vm._v(_vm._s(journal.title)),
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(
+                                                _vm._s(
+                                                  _vm.format_date(journal.date)
+                                                )
+                                              ),
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _c(
+                                                "span",
+                                                {
+                                                  staticClass:
+                                                    "badge rounded-pill font-size-12",
+                                                  class: journal.is_reimburse
+                                                    ? "bg-soft-success"
+                                                    : "bg-soft-danger",
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n                                                      " +
+                                                      _vm._s(
+                                                        journal.is_reimburse
+                                                          ? "Ya"
+                                                          : "Tidak"
+                                                      )
+                                                  ),
+                                                ]
+                                              ),
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(
+                                                "\n                                                      " +
+                                                  _vm._s(journal.remark) +
+                                                  "\n                                                  "
+                                              ),
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(
+                                                "\n                                                      " +
+                                                  _vm._s(journal.user_id) +
+                                                  "\n                                                  "
+                                              ),
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(
+                                                _vm._s(journal.project_id)
+                                              ),
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
                                               _vm._v(
                                                 "\n                                                      " +
                                                   _vm._s(
-                                                    journal.is_reimburse
-                                                      ? "Ya"
-                                                      : "Tidak"
-                                                  )
+                                                    journal.chart_account.name
+                                                  ) +
+                                                  "\n                                                  "
                                               ),
-                                            ]
-                                          ),
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _vm._v(
-                                            "\n                                                      " +
-                                              _vm._s(journal.remark) +
-                                              "\n                                                  "
-                                          ),
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _vm._v(
-                                            "\n                                                      " +
-                                              _vm._s(journal.user_id) +
-                                              "\n                                                  "
-                                          ),
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _vm._v(_vm._s(journal.project_id)),
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _vm._v(
-                                            "\n                                                      " +
-                                              _vm._s(
-                                                journal.chart_account.name
-                                              ) +
-                                              "\n                                                  "
-                                          ),
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _c(
-                                            "div",
-                                            { staticClass: "btn-group" },
-                                            [
-                                              _c(
-                                                "button",
-                                                {
-                                                  staticClass:
-                                                    "btn btn-primary dropdown-toggle waves-effect waves-light",
-                                                  attrs: {
-                                                    type: "button",
-                                                    "data-bs-toggle":
-                                                      "dropdown",
-                                                    "aria-haspopup": "true",
-                                                    "aria-expanded": "false",
-                                                  },
-                                                },
-                                                [
-                                                  _vm._v("Menu "),
-                                                  _c("i", {
-                                                    staticClass:
-                                                      "uil-angle-down",
-                                                  }),
-                                                ]
-                                              ),
-                                              _vm._v(" "),
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
                                               _c(
                                                 "div",
-                                                {
-                                                  staticClass: "dropdown-menu",
-                                                },
+                                                { staticClass: "btn-group" },
                                                 [
-                                                  _c(
-                                                    "router-link",
-                                                    {
-                                                      staticClass:
-                                                        "dropdown-item",
-                                                      attrs: {
-                                                        to: {
-                                                          name: "jurnal.detail",
-                                                          params: {
-                                                            token:
-                                                              journal.token,
-                                                          },
-                                                        },
-                                                      },
-                                                    },
-                                                    [
-                                                      _c("i", {
-                                                        staticClass:
-                                                          "uil-document-layout-left",
-                                                      }),
-                                                      _vm._v(" Detail"),
-                                                    ]
-                                                  ),
-                                                  _vm._v(" "),
                                                   _c(
                                                     "button",
                                                     {
                                                       staticClass:
-                                                        "dropdown-item",
-                                                      on: {
-                                                        click: function (
-                                                          $event
-                                                        ) {
-                                                          return _vm.ajukanDialog(
-                                                            journal.token
-                                                          )
-                                                        },
+                                                        "btn btn-primary dropdown-toggle waves-effect waves-light",
+                                                      attrs: {
+                                                        type: "button",
+                                                        "data-bs-toggle":
+                                                          "dropdown",
+                                                        "aria-haspopup": "true",
+                                                        "aria-expanded":
+                                                          "false",
                                                       },
                                                     },
                                                     [
+                                                      _vm._v("Menu "),
                                                       _c("i", {
                                                         staticClass:
-                                                          "uil-message",
+                                                          "uil-angle-down",
                                                       }),
-                                                      _vm._v(" Ajukan"),
                                                     ]
                                                   ),
-                                                  _vm._v(" "),
-                                                  _c("div", {
-                                                    staticClass:
-                                                      "dropdown-divider",
-                                                  }),
                                                   _vm._v(" "),
                                                   _c(
-                                                    "router-link",
+                                                    "div",
                                                     {
                                                       staticClass:
-                                                        "dropdown-item",
-                                                      attrs: {
-                                                        to: {
-                                                          name: "jurnal.edit",
-                                                          params: {
-                                                            token:
-                                                              journal.token,
-                                                          },
-                                                        },
-                                                      },
+                                                        "dropdown-menu",
                                                     },
                                                     [
-                                                      _c("i", {
+                                                      _c(
+                                                        "router-link",
+                                                        {
+                                                          staticClass:
+                                                            "dropdown-item",
+                                                          attrs: {
+                                                            to: {
+                                                              name: "jurnal.detail",
+                                                              params: {
+                                                                token:
+                                                                  journal.token,
+                                                              },
+                                                            },
+                                                          },
+                                                        },
+                                                        [
+                                                          _c("i", {
+                                                            staticClass:
+                                                              "uil-document-layout-left",
+                                                          }),
+                                                          _vm._v(" Detail"),
+                                                        ]
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "button",
+                                                        {
+                                                          staticClass:
+                                                            "dropdown-item",
+                                                          on: {
+                                                            click: function (
+                                                              $event
+                                                            ) {
+                                                              return _vm.ajukanDialog(
+                                                                journal.token
+                                                              )
+                                                            },
+                                                          },
+                                                        },
+                                                        [
+                                                          _c("i", {
+                                                            staticClass:
+                                                              "uil-message",
+                                                          }),
+                                                          _vm._v(" Ajukan"),
+                                                        ]
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c("div", {
                                                         staticClass:
-                                                          "uil-edit-alt",
+                                                          "dropdown-divider",
                                                       }),
-                                                      _vm._v(" Edit"),
-                                                    ]
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "router-link",
+                                                        {
+                                                          staticClass:
+                                                            "dropdown-item",
+                                                          attrs: {
+                                                            to: {
+                                                              name: "jurnal.edit",
+                                                              params: {
+                                                                token:
+                                                                  journal.token,
+                                                              },
+                                                            },
+                                                          },
+                                                        },
+                                                        [
+                                                          _c("i", {
+                                                            staticClass:
+                                                              "uil-edit-alt",
+                                                          }),
+                                                          _vm._v(" Edit"),
+                                                        ]
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c("delete-journal", {
+                                                        attrs: {
+                                                          endpoint:
+                                                            journal.token,
+                                                          auth: _vm.auth,
+                                                        },
+                                                      }),
+                                                    ],
+                                                    1
                                                   ),
-                                                  _vm._v(" "),
-                                                  _c("delete-journal", {
-                                                    attrs: {
-                                                      endpoint: journal.token,
-                                                      auth: _vm.auth,
-                                                    },
-                                                  }),
-                                                ],
-                                                1
+                                                ]
                                               ),
-                                            ]
-                                          ),
-                                        ]),
-                                      ])
-                                    }),
-                                    0
-                                  ),
-                            ],
-                            1
-                          ),
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "modal fade bs-example-modal-sm",
-                      attrs: {
-                        tabindex: "-1",
-                        "aria-labelledby": "mySmallModalLabel",
-                        "aria-modal": "true",
-                        role: "dialog",
-                      },
-                    },
-                    [
-                      _c("div", { staticClass: "modal-dialog modal-sm" }, [
-                        _c("div", { staticClass: "modal-content" }, [
-                          _vm._m(5),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "modal-body" }, [
-                            _c("div", { staticClass: "mb-2" }, [
-                              _c(
-                                "label",
-                                {
-                                  staticClass: "col col-form-label",
-                                  attrs: { for: "example-text-input" },
-                                },
-                                [_vm._v("Reimburse")]
-                              ),
-                              _vm._v(" "),
-                              _c("div", {}, [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.filter_reimburse,
-                                      expression: "filter_reimburse",
-                                    },
-                                  ],
-                                  attrs: {
-                                    value: "1",
-                                    type: "radio",
-                                    name: "reimburse",
-                                    id: "option-1",
-                                  },
-                                  domProps: {
-                                    checked: _vm._q(_vm.filter_reimburse, "1"),
-                                  },
-                                  on: {
-                                    change: function ($event) {
-                                      _vm.filter_reimburse = "1"
-                                    },
-                                  },
-                                }),
-                                _vm._v(" "),
-                                _vm._m(6),
-                                _vm._v(" "),
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.filter_reimburse,
-                                      expression: "filter_reimburse",
-                                    },
-                                  ],
-                                  attrs: {
-                                    value: "0",
-                                    type: "radio",
-                                    name: "reimburse",
-                                    id: "option-2",
-                                  },
-                                  domProps: {
-                                    checked: _vm._q(_vm.filter_reimburse, "0"),
-                                  },
-                                  on: {
-                                    change: function ($event) {
-                                      _vm.filter_reimburse = "0"
-                                    },
-                                  },
-                                }),
-                                _vm._v(" "),
-                                _vm._m(7),
-                                _vm._v(" "),
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.filter_reimburse,
-                                      expression: "filter_reimburse",
-                                    },
-                                  ],
-                                  attrs: {
-                                    value: "",
-                                    type: "radio",
-                                    name: "reimburse",
-                                    id: "option-3",
-                                    selected: "",
-                                  },
-                                  domProps: {
-                                    checked: _vm._q(_vm.filter_reimburse, ""),
-                                  },
-                                  on: {
-                                    change: function ($event) {
-                                      _vm.filter_reimburse = ""
-                                    },
-                                  },
-                                }),
-                                _vm._v(" "),
-                                _vm._m(8),
-                              ]),
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "mb-2" },
-                              [
-                                _c("label", { staticClass: "form-label" }, [
-                                  _vm._v("Bulan"),
-                                ]),
-                                _vm._v(" "),
-                                _c("v-select", {
-                                  attrs: {
-                                    options: _vm.monthOptions,
-                                    reduce: function (month) {
-                                      return month.code
-                                    },
-                                    label: "month",
-                                  },
-                                  model: {
-                                    value: _vm.filter_month,
-                                    callback: function ($$v) {
-                                      _vm.filter_month = $$v
-                                    },
-                                    expression: "filter_month",
-                                  },
-                                }),
+                                            ]),
+                                          ]
+                                        )
+                                      }),
+                                      0
+                                    ),
                               ],
                               1
                             ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "mb-2" },
-                              [
-                                _c("label", { staticClass: "form-label" }, [
-                                  _vm._v("Chart Account"),
-                                ]),
-                                _vm._v(" "),
-                                _c("v-select", {
-                                  attrs: {
-                                    options: _vm.chartOptions,
-                                    disabled: _vm.chartLoading,
-                                  },
-                                  on: {
-                                    input: function ($event) {
-                                      return _vm.selectId($event)
-                                    },
-                                  },
-                                }),
-                              ],
-                              1
-                            ),
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "modal-footer" }, [
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-primary waves-effect",
-                                attrs: {
-                                  type: "button",
-                                  "data-bs-dismiss": "modal",
-                                },
-                                on: { click: _vm.getJurnal },
-                              },
-                              [_vm._v("Terapkan")]
-                            ),
-                          ]),
-                        ]),
-                      ]),
-                    ]
-                  ),
-                ]),
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("filter-journal", {
+                      attrs: { auth: _vm.auth },
+                      on: { filterjournal: _vm.filtering },
+                    }),
+                  ],
+                  1
+                ),
               ]),
             ]),
           ]),
@@ -47241,65 +47871,6 @@ var staticRenderFns = [
         _c("th"),
       ]),
     ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c("h5", { staticClass: "modal-title" }, [_vm._v("Filter")]),
-      _vm._v(" "),
-      _c("button", {
-        staticClass: "btn-close",
-        attrs: {
-          type: "button",
-          "data-bs-dismiss": "modal",
-          "aria-label": "Close",
-        },
-      }),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      { staticClass: "option option-1 m-0", attrs: { for: "option-1" } },
-      [
-        _c("div", { staticClass: "dot" }),
-        _vm._v(" "),
-        _c("span", [_vm._v("Ya")]),
-      ]
-    )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      { staticClass: "option option-2 m-0 my-1", attrs: { for: "option-2" } },
-      [
-        _c("div", { staticClass: "dot" }),
-        _vm._v(" "),
-        _c("span", [_vm._v("Tidak")]),
-      ]
-    )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      { staticClass: "option option-3 m-0", attrs: { for: "option-3" } },
-      [
-        _c("div", { staticClass: "dot" }),
-        _vm._v(" "),
-        _c("span", [_vm._v("Semua")]),
-      ]
-    )
   },
 ]
 render._withStripped = true
@@ -47436,217 +48007,199 @@ var render = function () {
           _c("div", { staticClass: "col-lg-12" }, [
             _c("div", { staticClass: "card" }, [
               _c("div", { staticClass: "card-body" }, [
-                _c("div", { staticClass: "table-responsive-sm" }, [
-                  _c("div", { staticClass: "input-group mb-2" }, [
-                    _vm._m(2),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.filter_keyword,
-                          expression: "filter_keyword",
-                        },
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "text", placeholder: "Search" },
-                      domProps: { value: _vm.filter_keyword },
-                      on: {
-                        change: _vm.getJurnal,
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.filter_keyword = $event.target.value
-                        },
-                      },
-                    }),
-                    _vm._v(" "),
-                    _vm._m(3),
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "table",
-                    { staticClass: "table table-centered mb-0" },
-                    [
-                      _vm._m(4),
+                _c(
+                  "div",
+                  { staticClass: "table-responsive-sm" },
+                  [
+                    _c("div", { staticClass: "input-group mb-2" }, [
+                      _vm._m(2),
                       _vm._v(" "),
-                      _vm.loading
-                        ? _c(
-                            "transition",
-                            {
-                              staticClass: "row ",
-                              attrs: {
-                                tag: "tbody",
-                                mode: "out-in",
-                                "enter-active-class":
-                                  "animate__animated animate__fadeIn animate__faster",
-                                "leave-active-class":
-                                  "animate__animated animate__fadeOut animate__faster",
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.filter_keyword,
+                            expression: "filter_keyword",
+                          },
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", placeholder: "Search" },
+                        domProps: { value: _vm.filter_keyword },
+                        on: {
+                          change: _vm.getJurnal,
+                          input: function ($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.filter_keyword = $event.target.value
+                          },
+                        },
+                      }),
+                      _vm._v(" "),
+                      _vm._m(3),
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "table",
+                      { staticClass: "table table-centered mb-0" },
+                      [
+                        _vm._m(4),
+                        _vm._v(" "),
+                        _vm.loading
+                          ? _c(
+                              "transition",
+                              {
+                                staticClass: "row ",
+                                attrs: {
+                                  tag: "tbody",
+                                  mode: "out-in",
+                                  "enter-active-class":
+                                    "animate__animated animate__fadeIn animate__faster",
+                                  "leave-active-class":
+                                    "animate__animated animate__fadeOut animate__faster",
+                                },
                               },
-                            },
-                            [_c("loading")],
-                            1
-                          )
-                        : _c(
-                            "transition",
-                            {
-                              attrs: {
-                                tag: "tbody",
-                                mode: "out-in",
-                                "enter-active-class":
-                                  "animate__animated animate__fadeIn",
-                                "leave-active-class":
-                                  "animate__animated animate__fadeOut",
+                              [_c("loading")],
+                              1
+                            )
+                          : _c(
+                              "transition",
+                              {
+                                attrs: {
+                                  tag: "tbody",
+                                  mode: "out-in",
+                                  "enter-active-class":
+                                    "animate__animated animate__fadeIn",
+                                  "leave-active-class":
+                                    "animate__animated animate__fadeOut",
+                                },
                               },
-                            },
-                            [
-                              !_vm.journals.length
-                                ? _c("tr", [
-                                    _c("td", { attrs: { colspan: "7" } }, [
-                                      _vm._v("No data available"),
-                                    ]),
-                                  ])
-                                : _c(
-                                    "transition-group",
-                                    { attrs: { tag: "tbody" } },
-                                    _vm._l(_vm.journals, function (journal) {
-                                      return _c("tr", { key: journal.token }, [
-                                        _c("td", [
-                                          _vm._v(_vm._s(journal.title)),
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _vm._v(
-                                            _vm._s(
-                                              _vm.format_date(journal.date)
-                                            )
-                                          ),
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _c(
-                                            "span",
-                                            {
-                                              staticClass:
-                                                "badge rounded-pill font-size-12",
-                                              class: journal.is_reimburse
-                                                ? "bg-soft-success"
-                                                : "bg-soft-danger",
-                                            },
-                                            [
+                              [
+                                !_vm.journals.length
+                                  ? _c("tr", [
+                                      _c("td", { attrs: { colspan: "7" } }, [
+                                        _vm._v("No data available"),
+                                      ]),
+                                    ])
+                                  : _c(
+                                      "transition-group",
+                                      { attrs: { tag: "tbody" } },
+                                      _vm._l(_vm.journals, function (journal) {
+                                        return _c(
+                                          "tr",
+                                          { key: journal.token },
+                                          [
+                                            _c("td", [
+                                              _vm._v(_vm._s(journal.title)),
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(
+                                                _vm._s(
+                                                  _vm.format_date(journal.date)
+                                                )
+                                              ),
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _c(
+                                                "span",
+                                                {
+                                                  staticClass:
+                                                    "badge rounded-pill font-size-12",
+                                                  class: journal.is_reimburse
+                                                    ? "bg-soft-success"
+                                                    : "bg-soft-danger",
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n                                                      " +
+                                                      _vm._s(
+                                                        journal.is_reimburse
+                                                          ? "Ya"
+                                                          : "Tidak"
+                                                      )
+                                                  ),
+                                                ]
+                                              ),
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(
+                                                "\n                                                      " +
+                                                  _vm._s(journal.remark) +
+                                                  "\n                                                  "
+                                              ),
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(
+                                                "\n                                                      " +
+                                                  _vm._s(journal.user_id) +
+                                                  "\n                                                  "
+                                              ),
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(
+                                                _vm._s(journal.project_id)
+                                              ),
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
                                               _vm._v(
                                                 "\n                                                      " +
                                                   _vm._s(
-                                                    journal.is_reimburse
-                                                      ? "Ya"
-                                                      : "Tidak"
-                                                  )
+                                                    journal.chart_account.name
+                                                  ) +
+                                                  "\n                                                  "
                                               ),
-                                            ]
-                                          ),
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _vm._v(
-                                            "\n                                                      " +
-                                              _vm._s(journal.remark) +
-                                              "\n                                                  "
-                                          ),
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _vm._v(
-                                            "\n                                                      " +
-                                              _vm._s(journal.user_id) +
-                                              "\n                                                  "
-                                          ),
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _vm._v(_vm._s(journal.project_id)),
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _vm._v(
-                                            "\n                                                      " +
-                                              _vm._s(
-                                                journal.chart_account.name
-                                              ) +
-                                              "\n                                                  "
-                                          ),
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _c(
-                                            "div",
-                                            { staticClass: "btn-group" },
-                                            [
-                                              _c(
-                                                "button",
-                                                {
-                                                  staticClass:
-                                                    "btn btn-primary dropdown-toggle waves-effect waves-light",
-                                                  attrs: {
-                                                    type: "button",
-                                                    "data-bs-toggle":
-                                                      "dropdown",
-                                                    "aria-haspopup": "true",
-                                                    "aria-expanded": "false",
-                                                  },
-                                                },
-                                                [
-                                                  _vm._v("Menu "),
-                                                  _c("i", {
-                                                    staticClass:
-                                                      "uil-angle-down",
-                                                  }),
-                                                ]
-                                              ),
-                                              _vm._v(" "),
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
                                               _c(
                                                 "div",
-                                                {
-                                                  staticClass: "dropdown-menu",
-                                                },
+                                                { staticClass: "btn-group" },
                                                 [
                                                   _c(
-                                                    "router-link",
+                                                    "button",
                                                     {
                                                       staticClass:
-                                                        "dropdown-item",
+                                                        "btn btn-primary dropdown-toggle waves-effect waves-light",
                                                       attrs: {
-                                                        to: {
-                                                          name: "jurnal.detail",
-                                                          params: {
-                                                            token:
-                                                              journal.token,
-                                                          },
-                                                          query: {
-                                                            page: "proses",
-                                                          },
-                                                        },
+                                                        type: "button",
+                                                        "data-bs-toggle":
+                                                          "dropdown",
+                                                        "aria-haspopup": "true",
+                                                        "aria-expanded":
+                                                          "false",
                                                       },
                                                     },
                                                     [
+                                                      _vm._v("Menu "),
                                                       _c("i", {
                                                         staticClass:
-                                                          "uil-document-layout-left",
+                                                          "uil-angle-down",
                                                       }),
-                                                      _vm._v(" Detail"),
                                                     ]
                                                   ),
                                                   _vm._v(" "),
-                                                  _vm.auth.user.type != 2
-                                                    ? _c(
+                                                  _c(
+                                                    "div",
+                                                    {
+                                                      staticClass:
+                                                        "dropdown-menu",
+                                                    },
+                                                    [
+                                                      _c(
                                                         "router-link",
                                                         {
                                                           staticClass:
                                                             "dropdown-item",
                                                           attrs: {
                                                             to: {
-                                                              name: "jurnal.verif",
+                                                              name: "jurnal.detail",
                                                               params: {
                                                                 token:
                                                                   journal.token,
@@ -47660,266 +48213,113 @@ var render = function () {
                                                         [
                                                           _c("i", {
                                                             staticClass:
-                                                              "uil-file-check",
+                                                              "uil-document-layout-left",
                                                           }),
-                                                          _vm._v(" Verifikasi"),
+                                                          _vm._v(" Detail"),
                                                         ]
-                                                      )
-                                                    : _vm._e(),
-                                                  _vm._v(" "),
-                                                  _vm.auth.user.type != 2
-                                                    ? _c("div", {
-                                                        staticClass:
-                                                          "dropdown-divider",
-                                                      })
-                                                    : _vm._e(),
-                                                  _vm._v(" "),
-                                                  _vm.auth.user.type != 2
-                                                    ? _c(
-                                                        "router-link",
-                                                        {
-                                                          staticClass:
-                                                            "dropdown-item",
-                                                          attrs: {
-                                                            to: {
-                                                              name: "jurnal.edit",
-                                                              params: {
-                                                                token:
-                                                                  journal.token,
-                                                              },
-                                                              query: {
-                                                                page: "proses",
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _vm.auth.user.type != 2
+                                                        ? _c(
+                                                            "router-link",
+                                                            {
+                                                              staticClass:
+                                                                "dropdown-item",
+                                                              attrs: {
+                                                                to: {
+                                                                  name: "jurnal.verif",
+                                                                  params: {
+                                                                    token:
+                                                                      journal.token,
+                                                                  },
+                                                                  query: {
+                                                                    page: "proses",
+                                                                  },
+                                                                },
                                                               },
                                                             },
-                                                          },
-                                                        },
-                                                        [
-                                                          _c("i", {
+                                                            [
+                                                              _c("i", {
+                                                                staticClass:
+                                                                  "uil-file-check",
+                                                              }),
+                                                              _vm._v(
+                                                                " Verifikasi"
+                                                              ),
+                                                            ]
+                                                          )
+                                                        : _vm._e(),
+                                                      _vm._v(" "),
+                                                      _vm.auth.user.type != 2
+                                                        ? _c("div", {
                                                             staticClass:
-                                                              "uil-edit-alt",
-                                                          }),
-                                                          _vm._v(" Edit"),
-                                                        ]
-                                                      )
-                                                    : _vm._e(),
-                                                  _vm._v(" "),
-                                                  _vm.auth.user.type != 2
-                                                    ? _c("delete-journal", {
-                                                        attrs: {
-                                                          endpoint:
-                                                            journal.token,
-                                                          auth: _vm.auth,
-                                                        },
-                                                      })
-                                                    : _vm._e(),
-                                                ],
-                                                1
+                                                              "dropdown-divider",
+                                                          })
+                                                        : _vm._e(),
+                                                      _vm._v(" "),
+                                                      _vm.auth.user.type != 2
+                                                        ? _c(
+                                                            "router-link",
+                                                            {
+                                                              staticClass:
+                                                                "dropdown-item",
+                                                              attrs: {
+                                                                to: {
+                                                                  name: "jurnal.edit",
+                                                                  params: {
+                                                                    token:
+                                                                      journal.token,
+                                                                  },
+                                                                  query: {
+                                                                    page: "proses",
+                                                                  },
+                                                                },
+                                                              },
+                                                            },
+                                                            [
+                                                              _c("i", {
+                                                                staticClass:
+                                                                  "uil-edit-alt",
+                                                              }),
+                                                              _vm._v(" Edit"),
+                                                            ]
+                                                          )
+                                                        : _vm._e(),
+                                                      _vm._v(" "),
+                                                      _vm.auth.user.type != 2
+                                                        ? _c("delete-journal", {
+                                                            attrs: {
+                                                              endpoint:
+                                                                journal.token,
+                                                              auth: _vm.auth,
+                                                            },
+                                                          })
+                                                        : _vm._e(),
+                                                    ],
+                                                    1
+                                                  ),
+                                                ]
                                               ),
-                                            ]
-                                          ),
-                                        ]),
-                                      ])
-                                    }),
-                                    0
-                                  ),
-                            ],
-                            1
-                          ),
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "modal fade modal-proses",
-                      attrs: {
-                        tabindex: "-1",
-                        "aria-labelledby": "mySmallModalLabel",
-                        "aria-modal": "true",
-                        role: "dialog",
-                      },
-                    },
-                    [
-                      _c("div", { staticClass: "modal-dialog modal-sm" }, [
-                        _c("div", { staticClass: "modal-content" }, [
-                          _vm._m(5),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "modal-body" }, [
-                            _c("div", { staticClass: "mb-2" }, [
-                              _c(
-                                "label",
-                                {
-                                  staticClass: "col col-form-label",
-                                  attrs: { for: "example-text-input" },
-                                },
-                                [_vm._v("Reimburse")]
-                              ),
-                              _vm._v(" "),
-                              _c("div", {}, [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.filter_reimburse,
-                                      expression: "filter_reimburse",
-                                    },
-                                  ],
-                                  attrs: {
-                                    value: "1",
-                                    type: "radio",
-                                    name: "reimburse2",
-                                    id: "option-1",
-                                  },
-                                  domProps: {
-                                    checked: _vm._q(_vm.filter_reimburse, "1"),
-                                  },
-                                  on: {
-                                    change: function ($event) {
-                                      _vm.filter_reimburse = "1"
-                                    },
-                                  },
-                                }),
-                                _vm._v(" "),
-                                _vm._m(6),
-                                _vm._v(" "),
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.filter_reimburse,
-                                      expression: "filter_reimburse",
-                                    },
-                                  ],
-                                  attrs: {
-                                    value: "0",
-                                    type: "radio",
-                                    name: "reimburse2",
-                                    id: "option-2",
-                                  },
-                                  domProps: {
-                                    checked: _vm._q(_vm.filter_reimburse, "0"),
-                                  },
-                                  on: {
-                                    change: function ($event) {
-                                      _vm.filter_reimburse = "0"
-                                    },
-                                  },
-                                }),
-                                _vm._v(" "),
-                                _vm._m(7),
-                                _vm._v(" "),
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.filter_reimburse,
-                                      expression: "filter_reimburse",
-                                    },
-                                  ],
-                                  attrs: {
-                                    value: "",
-                                    type: "radio",
-                                    name: "reimburse2",
-                                    id: "option-3",
-                                    selected: "",
-                                  },
-                                  domProps: {
-                                    checked: _vm._q(_vm.filter_reimburse, ""),
-                                  },
-                                  on: {
-                                    change: function ($event) {
-                                      _vm.filter_reimburse = ""
-                                    },
-                                  },
-                                }),
-                                _vm._v(" "),
-                                _vm._m(8),
-                              ]),
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "mb-2" },
-                              [
-                                _c(
-                                  "label",
-                                  {
-                                    staticClass: "form-label",
-                                    attrs: {
-                                      for: "exampleDropdownFormPassword",
-                                    },
-                                  },
-                                  [_vm._v("Bulan")]
-                                ),
-                                _vm._v(" "),
-                                _c("v-select", {
-                                  attrs: {
-                                    options: _vm.monthOptions,
-                                    reduce: function (month) {
-                                      return month.code
-                                    },
-                                    label: "month",
-                                  },
-                                  on: { change: _vm.getJurnal },
-                                  model: {
-                                    value: _vm.filter_month,
-                                    callback: function ($$v) {
-                                      _vm.filter_month = $$v
-                                    },
-                                    expression: "filter_month",
-                                  },
-                                }),
+                                            ]),
+                                          ]
+                                        )
+                                      }),
+                                      0
+                                    ),
                               ],
                               1
                             ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "mb-2" },
-                              [
-                                _c("label", { staticClass: "form-label" }, [
-                                  _vm._v("Chart Account"),
-                                ]),
-                                _vm._v(" "),
-                                _c("v-select", {
-                                  attrs: {
-                                    options: _vm.chartOptions,
-                                    disabled: _vm.chartLoading,
-                                  },
-                                  on: {
-                                    input: function ($event) {
-                                      return _vm.selectId($event)
-                                    },
-                                  },
-                                }),
-                              ],
-                              1
-                            ),
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "modal-footer" }, [
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-primary waves-effect",
-                                attrs: {
-                                  type: "button",
-                                  "data-bs-dismiss": "modal",
-                                },
-                                on: { click: _vm.getJurnal },
-                              },
-                              [_vm._v("Terapkan")]
-                            ),
-                          ]),
-                        ]),
-                      ]),
-                    ]
-                  ),
-                ]),
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("filter-journal", {
+                      attrs: { auth: _vm.auth },
+                      on: { filterjournal: _vm.filtering },
+                    }),
+                  ],
+                  1
+                ),
               ]),
             ]),
           ]),
@@ -47981,7 +48381,7 @@ var staticRenderFns = [
         attrs: {
           type: "button",
           "data-bs-toggle": "modal",
-          "data-bs-target": ".modal-proses",
+          "data-bs-target": ".bs-example-modal-sm",
         },
       },
       [_c("i", { staticClass: "uil-filter" }), _vm._v(" Filter")]
@@ -48010,65 +48410,6 @@ var staticRenderFns = [
         _c("th"),
       ]),
     ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c("h5", { staticClass: "modal-title" }, [_vm._v("Filter")]),
-      _vm._v(" "),
-      _c("button", {
-        staticClass: "btn-close",
-        attrs: {
-          type: "button",
-          "data-bs-dismiss": "modal",
-          "aria-label": "Close",
-        },
-      }),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      { staticClass: "option option-1 m-0", attrs: { for: "option-1" } },
-      [
-        _c("div", { staticClass: "dot" }),
-        _vm._v(" "),
-        _c("span", [_vm._v("Ya")]),
-      ]
-    )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      { staticClass: "option option-2 m-0 my-1", attrs: { for: "option-2" } },
-      [
-        _c("div", { staticClass: "dot" }),
-        _vm._v(" "),
-        _c("span", [_vm._v("Tidak")]),
-      ]
-    )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      { staticClass: "option option-3 m-0", attrs: { for: "option-3" } },
-      [
-        _c("div", { staticClass: "dot" }),
-        _vm._v(" "),
-        _c("span", [_vm._v("Semua")]),
-      ]
-    )
   },
 ]
 render._withStripped = true
@@ -48205,431 +48546,266 @@ var render = function () {
           _c("div", { staticClass: "col-lg-12" }, [
             _c("div", { staticClass: "card" }, [
               _c("div", { staticClass: "card-body" }, [
-                _c("div", { staticClass: "table-responsive-sm" }, [
-                  _c("div", { staticClass: "input-group mb-2" }, [
-                    _vm._m(2),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.filter_keyword,
-                          expression: "filter_keyword",
-                        },
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "text", placeholder: "Search" },
-                      domProps: { value: _vm.filter_keyword },
-                      on: {
-                        change: _vm.getJurnal,
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.filter_keyword = $event.target.value
-                        },
-                      },
-                    }),
-                    _vm._v(" "),
-                    _vm._m(3),
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "table",
-                    { staticClass: "table table-centered mb-0" },
-                    [
-                      _vm._m(4),
+                _c(
+                  "div",
+                  { staticClass: "table-responsive-sm" },
+                  [
+                    _c("div", { staticClass: "input-group mb-2" }, [
+                      _vm._m(2),
                       _vm._v(" "),
-                      _vm.loading
-                        ? _c(
-                            "transition",
-                            {
-                              staticClass: "row ",
-                              attrs: {
-                                tag: "tbody",
-                                mode: "out-in",
-                                "enter-active-class":
-                                  "animate__animated animate__fadeIn animate__faster",
-                                "leave-active-class":
-                                  "animate__animated animate__fadeOut animate__faster",
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.filter_keyword,
+                            expression: "filter_keyword",
+                          },
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", placeholder: "Search" },
+                        domProps: { value: _vm.filter_keyword },
+                        on: {
+                          change: _vm.getJurnal,
+                          input: function ($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.filter_keyword = $event.target.value
+                          },
+                        },
+                      }),
+                      _vm._v(" "),
+                      _vm._m(3),
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "table",
+                      { staticClass: "table table-centered mb-0" },
+                      [
+                        _vm._m(4),
+                        _vm._v(" "),
+                        _vm.loading
+                          ? _c(
+                              "transition",
+                              {
+                                staticClass: "row ",
+                                attrs: {
+                                  tag: "tbody",
+                                  mode: "out-in",
+                                  "enter-active-class":
+                                    "animate__animated animate__fadeIn animate__faster",
+                                  "leave-active-class":
+                                    "animate__animated animate__fadeOut animate__faster",
+                                },
                               },
-                            },
-                            [_c("loading")],
-                            1
-                          )
-                        : _c(
-                            "transition",
-                            {
-                              attrs: {
-                                tag: "tbody",
-                                mode: "out-in",
-                                "enter-active-class":
-                                  "animate__animated animate__fadeIn",
-                                "leave-active-class":
-                                  "animate__animated animate__fadeOut",
+                              [_c("loading")],
+                              1
+                            )
+                          : _c(
+                              "transition",
+                              {
+                                attrs: {
+                                  tag: "tbody",
+                                  mode: "out-in",
+                                  "enter-active-class":
+                                    "animate__animated animate__fadeIn",
+                                  "leave-active-class":
+                                    "animate__animated animate__fadeOut",
+                                },
                               },
-                            },
-                            [
-                              !_vm.journals.length
-                                ? _c("tr", [
-                                    _c("td", { attrs: { colspan: "7" } }, [
-                                      _vm._v("No data available"),
-                                    ]),
-                                  ])
-                                : _c(
-                                    "transition-group",
-                                    { attrs: { tag: "tbody" } },
-                                    _vm._l(_vm.journals, function (journal) {
-                                      return _c("tr", { key: journal.token }, [
-                                        _c("td", [
-                                          _vm._v(_vm._s(journal.title)),
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _vm._v(
-                                            _vm._s(
-                                              _vm.format_date(journal.date)
-                                            )
-                                          ),
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _c(
-                                            "span",
-                                            {
-                                              staticClass:
-                                                "badge rounded-pill font-size-12",
-                                              class: journal.is_reimburse
-                                                ? "bg-soft-success"
-                                                : "bg-soft-danger",
-                                            },
-                                            [
+                              [
+                                !_vm.journals.length
+                                  ? _c("tr", [
+                                      _c("td", { attrs: { colspan: "7" } }, [
+                                        _vm._v("No data available"),
+                                      ]),
+                                    ])
+                                  : _c(
+                                      "transition-group",
+                                      { attrs: { tag: "tbody" } },
+                                      _vm._l(_vm.journals, function (journal) {
+                                        return _c(
+                                          "tr",
+                                          { key: journal.token },
+                                          [
+                                            _c("td", [
+                                              _vm._v(_vm._s(journal.title)),
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
                                               _vm._v(
-                                                "\n                                                      " +
-                                                  _vm._s(
-                                                    journal.is_reimburse
-                                                      ? "Ya"
-                                                      : "Tidak"
-                                                  )
+                                                _vm._s(
+                                                  _vm.format_date(journal.date)
+                                                )
                                               ),
-                                            ]
-                                          ),
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _c(
-                                            "span",
-                                            {
-                                              staticClass:
-                                                "badge rounded-pill font-size-12",
-                                              class:
-                                                journal.status == 3
-                                                  ? "bg-soft-success"
-                                                  : "bg-soft-danger",
-                                            },
-                                            [
-                                              _vm._v(
-                                                "\n                                                      " +
-                                                  _vm._s(
-                                                    journal.status == 3
-                                                      ? "Diterima"
-                                                      : "Ditolak"
-                                                  )
-                                              ),
-                                            ]
-                                          ),
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _vm._v(
-                                            "\n                                                      " +
-                                              _vm._s(journal.remark) +
-                                              "\n                                                  "
-                                          ),
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _vm._v(
-                                            "\n                                                      " +
-                                              _vm._s(journal.user_id) +
-                                              "\n                                                  "
-                                          ),
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _vm._v(
-                                            "\n                                                      " +
-                                              _vm._s(
-                                                journal.chart_account.name
-                                              ) +
-                                              "\n                                                  "
-                                          ),
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _vm._v(_vm._s(journal.project_id)),
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _c(
-                                            "div",
-                                            { staticClass: "btn-group" },
-                                            [
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
                                               _c(
-                                                "button",
+                                                "span",
                                                 {
                                                   staticClass:
-                                                    "btn btn-primary dropdown-toggle waves-effect waves-light",
-                                                  attrs: {
-                                                    type: "button",
-                                                    "data-bs-toggle":
-                                                      "dropdown",
-                                                    "aria-haspopup": "true",
-                                                    "aria-expanded": "false",
-                                                  },
+                                                    "badge rounded-pill font-size-12",
+                                                  class: journal.is_reimburse
+                                                    ? "bg-soft-success"
+                                                    : "bg-soft-danger",
                                                 },
                                                 [
-                                                  _vm._v("Menu "),
-                                                  _c("i", {
-                                                    staticClass:
-                                                      "uil-angle-down",
-                                                  }),
+                                                  _vm._v(
+                                                    "\n                                                      " +
+                                                      _vm._s(
+                                                        journal.is_reimburse
+                                                          ? "Ya"
+                                                          : "Tidak"
+                                                      )
+                                                  ),
                                                 ]
                                               ),
-                                              _vm._v(" "),
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
                                               _c(
-                                                "div",
+                                                "span",
                                                 {
-                                                  staticClass: "dropdown-menu",
+                                                  staticClass:
+                                                    "badge rounded-pill font-size-12",
+                                                  class:
+                                                    journal.status == 3
+                                                      ? "bg-soft-success"
+                                                      : "bg-soft-danger",
                                                 },
                                                 [
+                                                  _vm._v(
+                                                    "\n                                                      " +
+                                                      _vm._s(
+                                                        journal.status == 3
+                                                          ? "Diterima"
+                                                          : "Ditolak"
+                                                      )
+                                                  ),
+                                                ]
+                                              ),
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(
+                                                "\n                                                      " +
+                                                  _vm._s(journal.remark) +
+                                                  "\n                                                  "
+                                              ),
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(
+                                                "\n                                                      " +
+                                                  _vm._s(journal.user_id) +
+                                                  "\n                                                  "
+                                              ),
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(
+                                                "\n                                                      " +
+                                                  _vm._s(
+                                                    journal.chart_account.name
+                                                  ) +
+                                                  "\n                                                  "
+                                              ),
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(
+                                                _vm._s(journal.project_id)
+                                              ),
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _c(
+                                                "div",
+                                                { staticClass: "btn-group" },
+                                                [
                                                   _c(
-                                                    "router-link",
+                                                    "button",
                                                     {
                                                       staticClass:
-                                                        "dropdown-item",
+                                                        "btn btn-primary dropdown-toggle waves-effect waves-light",
                                                       attrs: {
-                                                        to: {
-                                                          name: "jurnal.detail",
-                                                          params: {
-                                                            token:
-                                                              journal.token,
-                                                          },
-                                                          query: {
-                                                            page: "verif",
-                                                          },
-                                                        },
+                                                        type: "button",
+                                                        "data-bs-toggle":
+                                                          "dropdown",
+                                                        "aria-haspopup": "true",
+                                                        "aria-expanded":
+                                                          "false",
                                                       },
                                                     },
                                                     [
+                                                      _vm._v("Menu "),
                                                       _c("i", {
                                                         staticClass:
-                                                          "uil-document-layout-left",
+                                                          "uil-angle-down",
                                                       }),
-                                                      _vm._v(" Detail"),
                                                     ]
                                                   ),
-                                                ],
-                                                1
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "div",
+                                                    {
+                                                      staticClass:
+                                                        "dropdown-menu",
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "router-link",
+                                                        {
+                                                          staticClass:
+                                                            "dropdown-item",
+                                                          attrs: {
+                                                            to: {
+                                                              name: "jurnal.detail",
+                                                              params: {
+                                                                token:
+                                                                  journal.token,
+                                                              },
+                                                              query: {
+                                                                page: "verif",
+                                                              },
+                                                            },
+                                                          },
+                                                        },
+                                                        [
+                                                          _c("i", {
+                                                            staticClass:
+                                                              "uil-document-layout-left",
+                                                          }),
+                                                          _vm._v(" Detail"),
+                                                        ]
+                                                      ),
+                                                    ],
+                                                    1
+                                                  ),
+                                                ]
                                               ),
-                                            ]
-                                          ),
-                                        ]),
-                                      ])
-                                    }),
-                                    0
-                                  ),
-                            ],
-                            1
-                          ),
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "modal fade modal-verif",
-                      attrs: {
-                        tabindex: "-1",
-                        "aria-labelledby": "mySmallModalLabel",
-                        "aria-modal": "true",
-                        role: "dialog",
-                      },
-                    },
-                    [
-                      _c("div", { staticClass: "modal-dialog modal-sm" }, [
-                        _c("div", { staticClass: "modal-content" }, [
-                          _vm._m(5),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "modal-body" }, [
-                            _c("div", { staticClass: "mb-2" }, [
-                              _c(
-                                "label",
-                                {
-                                  staticClass: "col col-form-label",
-                                  attrs: { for: "example-text-input" },
-                                },
-                                [_vm._v("Reimburse")]
-                              ),
-                              _vm._v(" "),
-                              _c("div", {}, [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.filter_reimburse,
-                                      expression: "filter_reimburse",
-                                    },
-                                  ],
-                                  attrs: {
-                                    value: "1",
-                                    type: "radio",
-                                    name: "reimburse3",
-                                    id: "option-1",
-                                  },
-                                  domProps: {
-                                    checked: _vm._q(_vm.filter_reimburse, "1"),
-                                  },
-                                  on: {
-                                    change: function ($event) {
-                                      _vm.filter_reimburse = "1"
-                                    },
-                                  },
-                                }),
-                                _vm._v(" "),
-                                _vm._m(6),
-                                _vm._v(" "),
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.filter_reimburse,
-                                      expression: "filter_reimburse",
-                                    },
-                                  ],
-                                  attrs: {
-                                    value: "0",
-                                    type: "radio",
-                                    name: "reimburse3",
-                                    id: "option-2",
-                                  },
-                                  domProps: {
-                                    checked: _vm._q(_vm.filter_reimburse, "0"),
-                                  },
-                                  on: {
-                                    change: function ($event) {
-                                      _vm.filter_reimburse = "0"
-                                    },
-                                  },
-                                }),
-                                _vm._v(" "),
-                                _vm._m(7),
-                                _vm._v(" "),
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.filter_reimburse,
-                                      expression: "filter_reimburse",
-                                    },
-                                  ],
-                                  attrs: {
-                                    value: "",
-                                    type: "radio",
-                                    name: "reimburse3",
-                                    id: "option-3",
-                                    selected: "",
-                                  },
-                                  domProps: {
-                                    checked: _vm._q(_vm.filter_reimburse, ""),
-                                  },
-                                  on: {
-                                    change: function ($event) {
-                                      _vm.filter_reimburse = ""
-                                    },
-                                  },
-                                }),
-                                _vm._v(" "),
-                                _vm._m(8),
-                              ]),
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "mb-2" },
-                              [
-                                _c("label", { staticClass: "form-label" }, [
-                                  _vm._v("Bulan"),
-                                ]),
-                                _vm._v(" "),
-                                _c("v-select", {
-                                  attrs: {
-                                    options: _vm.monthOptions,
-                                    reduce: function (month) {
-                                      return month.code
-                                    },
-                                    label: "month",
-                                  },
-                                  model: {
-                                    value: _vm.filter_month,
-                                    callback: function ($$v) {
-                                      _vm.filter_month = $$v
-                                    },
-                                    expression: "filter_month",
-                                  },
-                                }),
+                                            ]),
+                                          ]
+                                        )
+                                      }),
+                                      0
+                                    ),
                               ],
                               1
                             ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "mb-2" },
-                              [
-                                _c("label", { staticClass: "form-label" }, [
-                                  _vm._v("Chart Account"),
-                                ]),
-                                _vm._v(" "),
-                                _c("v-select", {
-                                  attrs: {
-                                    options: _vm.chartOptions,
-                                    disabled: _vm.chartLoading,
-                                  },
-                                  on: {
-                                    input: function ($event) {
-                                      return _vm.selectId($event)
-                                    },
-                                  },
-                                }),
-                              ],
-                              1
-                            ),
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "modal-footer" }, [
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-primary waves-effect",
-                                attrs: {
-                                  type: "button",
-                                  "data-bs-dismiss": "modal",
-                                },
-                                on: { click: _vm.getJurnal },
-                              },
-                              [_vm._v("Terapkan")]
-                            ),
-                          ]),
-                        ]),
-                      ]),
-                    ]
-                  ),
-                ]),
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("filter-journal", {
+                      attrs: { auth: _vm.auth },
+                      on: { filterjournal: _vm.filtering },
+                    }),
+                  ],
+                  1
+                ),
               ]),
             ]),
           ]),
@@ -48691,7 +48867,7 @@ var staticRenderFns = [
         attrs: {
           type: "button",
           "data-bs-toggle": "modal",
-          "data-bs-target": ".modal-verif",
+          "data-bs-target": ".bs-example-modal-sm",
         },
       },
       [_c("i", { staticClass: "uil-filter" }), _vm._v(" Filter")]
@@ -48722,65 +48898,6 @@ var staticRenderFns = [
         _c("th"),
       ]),
     ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c("h5", { staticClass: "modal-title" }, [_vm._v("Filter")]),
-      _vm._v(" "),
-      _c("button", {
-        staticClass: "btn-close",
-        attrs: {
-          type: "button",
-          "data-bs-dismiss": "modal",
-          "aria-label": "Close",
-        },
-      }),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      { staticClass: "option option-1 m-0", attrs: { for: "option-1" } },
-      [
-        _c("div", { staticClass: "dot" }),
-        _vm._v(" "),
-        _c("span", [_vm._v("Ya")]),
-      ]
-    )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      { staticClass: "option option-2 m-0 my-1", attrs: { for: "option-2" } },
-      [
-        _c("div", { staticClass: "dot" }),
-        _vm._v(" "),
-        _c("span", [_vm._v("Tidak")]),
-      ]
-    )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      { staticClass: "option option-3 m-0", attrs: { for: "option-3" } },
-      [
-        _c("div", { staticClass: "dot" }),
-        _vm._v(" "),
-        _c("span", [_vm._v("Semua")]),
-      ]
-    )
   },
 ]
 render._withStripped = true

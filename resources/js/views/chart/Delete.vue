@@ -1,5 +1,5 @@
 <template>
-    <button class="btn btn-danger" ref="deleteChart" @click="destroyChart"><i class="uil-trash"></i> Delete</button>
+    <button class="btn btn-danger" ref="deleteChart" @click="destroyChart" style="height: fit-content"><i class="uil-trash"></i> Delete</button>
 </template>
 
 <script>
