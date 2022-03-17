@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Console\Commands\AppointmentCron;
 use App\Jobs\AppointmentReminder;
+use App\Mail\AppointmentReminder as MailAppointmentReminder;
 use App\Models\Appointment;
 use App\Models\UserAppointment;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -188,33 +190,27 @@ class AppointmentController extends Controller
         }
     }
 
-    public function mailJob($id){
-        $appointment = Appointment::findOrFail($id);
+    public function mailJob(){
+        $appointment = Appointment::get();
         $user_appointment = $appointment->user_appointment;
-        foreach($user_appointment as $value){
-            $email = $value->user->email;
-            $details=[
-                'email' => $email,
-                'name' => $value->name,
-                'user_name' => $value->user->name,
-                'date' => $appointment->date,
-            ];
-            $now = Carbon::now();
-            $appointment_date = (Carbon::create($appointment->date));
-            $diffInDays = $appointment_date->diffInDays($now);
-            $diffInMinutes = $appointment_date->diffInMinutes($now);
-            if($diffInDays <= 1){
-                AppointmentReminder::dispatch($details);
-            } elseif($diffInDays <3){
-                AppointmentReminder::dispatch($details);
-                AppointmentReminder::dispatch($details)->delay(now()->addDays($diffInDays - 1));
-            } else{
-                AppointmentReminder::dispatch($details);
-                AppointmentReminder::dispatch($details)->delay(now()->addDays($diffInDays - 3));
-                AppointmentReminder::dispatch($details)->delay(now()->addDays($diffInDays - 1));
-            }
-            if($diffInMinutes > 180){
-                AppointmentReminder::dispatch($details)->delay(now()->addMinutes($diffInMinutes - 180));
+        foreach($appointment as $app){
+        $user_appointment = $app->user_appointment;
+            foreach($user_appointment as $value){
+                $email = $value->user->email;
+                $details=[
+                    'email' => $email,
+                    'name' => $value->name,
+                    'user_name' => $value->user->name,
+                    'date' => $app->date,
+                ];
+                $now = Carbon::now();
+                $appointment_date = (Carbon::create($app->date));
+                $diffInDays = $appointment_date->diffInDays($now);
+                if($diffInDays <= 1){
+                    Mail::to($email)->send(new MailAppointmentReminder($details));
+                } elseif($diffInDays == 3){
+                    Mail::to($email)->send(new MailAppointmentReminder($details));
+                }
             }
         }
 

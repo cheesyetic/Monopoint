@@ -30,11 +30,11 @@ class LoginController extends Controller
         $user->token = Crypt::encryptString($user->id);
 
         if (!$user || !Hash::check($request->password, $user->password)) {
-            return response([
-                'success'   => false,
-                'message' => ['These credentials do not match our records.']
-            ], 404);
-        }
+            $response = [
+                'success' => false,
+                'message' => 'These credentials do not match our records'
+            ];
+            return response()->json($response, Response::HTTP_BAD_REQUEST);
 
             $token = $user->createToken('ApiToken')->plainTextToken;
 

@@ -101,7 +101,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     //Appointment
     Route::resource('/appointment', AppointmentController::class)->except('update', 'create', 'edit');
-    Route::get('/appointmentmail/{id}', [AppointmentController::class, 'mailJob']);
+    Route::get('/appointmentmail', [AppointmentController::class, 'mailJob']);
     Route::post('/appointment/{id}', [AppointmentController::class, 'update']);   
 
     //Journal

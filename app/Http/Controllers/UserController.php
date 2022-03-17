@@ -176,8 +176,8 @@ class UserController extends Controller
         );
         $validator = Validator::make($input, $rules);
         if ($validator->fails()) {
-            $arr = array("message" => $validator->errors()->first(), "data" => array());
-            return response()->json($arr, Response::HTTP_UNPROCESSABLE_ENTITY);
+            return response()->json($validator->errors(),
+            Response::HTTP_UNPROCESSABLE_ENTITY);
         } else {
             try {
                 if ((Hash::check(request('old_password'), auth()->user()->password)) == false) {
