@@ -116,7 +116,6 @@ export default {
             this.journal[target] = e.id
         },
         pictureUpload: function() {
-            console.log("ganti gambar")
             // this.journal.filebukti = this.$refs.filebukti.files[0]
             this.filebukti = event.target.files[0]
         },
@@ -157,9 +156,9 @@ export default {
                             this.filebukti = ''
                             this.theErrors = []
 
-                            if(this.$route.query.page == 'proses') {
+                            if(this.$route.query.page_phase == 'proses') {
                                 this.$router.push({ name: 'jurnalproses' })
-                            } else if(this.$route.query.page == 'verif'){
+                            } else if(this.$route.query.page_phase == 'verif'){
                                 this.$router.push({ name: 'jurnalverif' })
                             }
                             else {
@@ -173,16 +172,6 @@ export default {
                             })
                         }
                     )
-                    // .catch((e) => {
-                    //     this.$toasted.show("Something went wrong : " + e, {
-                    //         type: 'error',
-                    //         duration: 3000,
-                    //         position: 'top-center',
-                    //     })
-                    //     console.log(e)
-                    //     console.log("Gagal verifikasi jurnal")
-                    //     console.log("ERRR:: ", e.response.data)
-                    // })
 
                 } catch (e) {
                     this.loadingAcc = false
@@ -209,9 +198,9 @@ export default {
                         response => {
                             this.theErrors = []
 
-                            if(this.$route.query.page == 'proses') {
+                            if(this.$route.query.page_phase == 'proses') {
                                 this.$router.push({ name: 'jurnalproses' })
-                            } else if(this.$route.query.page == 'verif'){
+                            } else if(this.$route.query.page_phase == 'verif'){
                                 this.$router.push({ name: 'jurnalverif' })
                             }
                             else {
@@ -225,17 +214,6 @@ export default {
                             })
                         }
                     )
-                    // .catch((error) => {
-                    //     this.$toasted.show("Something went wrong : " + e, {
-                    //         type: 'error',
-                    //         duration: 3000,
-                    //         position: 'top-center',
-                    //     })
-                    //     console.log(e)
-                    //     console.log("Gagal verifikasi jurnal")
-                    //     console.log("ERRR:: ", e.response.data)
-                    // })
-
                 } catch (e) {
                     this.loadingAcc = false
                     this.$toasted.show("Something went wrong : " + e, {
@@ -243,9 +221,6 @@ export default {
                             duration: 3000,
                             position: 'top-center',
                         })
-                        // console.log(e)
-                        // console.log("Gagal verifikasi jurnal")
-                        // console.log("ERRR:: ", e.response.data)
                     this.theErrors = e.response.data;
                 }
             }

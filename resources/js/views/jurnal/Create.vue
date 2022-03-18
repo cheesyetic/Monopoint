@@ -198,7 +198,7 @@ export default {
                 })
             if (response.status === 200) {
                 // this.periodOptions = response.data.data
-                console.log(response.data.data.length)
+                // console.log(response.data.data.length)
                 for (var i = 0; i < response.data.data.length; i++) {
                     let label = response.data.data[i].name + ' (' + response.data.data[i].code + ', ' + response.data.data[i].type + ')'
                     let id = String(response.data.data[i].id)
@@ -231,7 +231,7 @@ export default {
                         this.journalCreate.accounting_period_id = id
                     }
                 }
-                console.log(this.journalCreate.accounting_period_id + "periodeny broe")
+                // console.log(this.journalCreate.accounting_period_id + "periodeny broe")
                 this.periodLoading = false
             } else {
                 this.$toasted.show("Failed to load period", {
@@ -334,28 +334,13 @@ export default {
                         })
                     }
                 )
-                // .catch((e) => {
-                //     console.log("responseCreate gagal")
-                //     this.$toasted.show("Something went wrong : " + e, {
-                //         type: 'error',
-                //         duration: 3000,
-                //         position: 'top-center',
-                //     })
-                //     console.log(e)
-                //     console.log("responseCreate gagal")
-                //     console.log("ERRR:: ", e.response.data)
-                // })
-
             } catch (e) {
                 this.$toasted.show("Something went wrong : " + e, {
                         type: 'error',
                         duration: 3000,
                         position: 'top-center',
                     })
-                // console.log(e)
-                console.log("responseCreate gagal")
                 this.theErrors = e.response.data;
-                console.log(this.theErrors)
             }
         }
     }

@@ -6141,8 +6141,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 if (response.status === 200) {
                   // this.periodOptions = response.data.data
-                  console.log(response.data.data.length);
-
+                  // console.log(response.data.data.length)
                   for (i = 0; i < response.data.data.length; i++) {
                     label = response.data.data[i].name + ' (' + response.data.data[i].code + ', ' + response.data.data[i].type + ')';
                     id = String(response.data.data[i].id);
@@ -6205,9 +6204,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     if (response.data.data[i].status == 1) {
                       _this2.journalCreate.accounting_period_id = id;
                     }
-                  }
+                  } // console.log(this.journalCreate.accounting_period_id + "periodeny broe")
 
-                  console.log(_this2.journalCreate.accounting_period_id + "periodeny broe");
+
                   _this2.periodLoading = false;
                 } else {
                   _this2.$toasted.show("Failed to load period", {
@@ -6380,7 +6379,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 16:
-                _context5.next = 24;
+                _context5.next = 22;
                 break;
 
               case 18:
@@ -6391,14 +6390,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
-                }); // console.log(e)
+                });
 
-
-                console.log("responseCreate gagal");
                 _this5.theErrors = _context5.t0.response.data;
-                console.log(_this5.theErrors);
 
-              case 24:
+              case 22:
               case "end":
                 return _context5.stop();
             }
@@ -7253,11 +7249,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this6.journal.user_id = '';
                   _this6.theErrors = [];
 
-                  if (_this6.$route.query.page == 'proses') {
+                  if (_this6.$route.query.page_phase == 'proses') {
                     _this6.$router.push({
                       name: 'jurnalproses'
                     });
-                  } else if (_this6.$route.query.page == 'verif') {
+                  } else if (_this6.$route.query.page_phase == 'verif') {
                     _this6.$router.push({
                       name: 'jurnalverif'
                     });
@@ -7673,9 +7669,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
-                });
+                }); // console.log(e)
 
-                console.log(_context.t0); // this.theErrors = e.responseCreate.data;
+
+                _this.theErrors = _context.t0.response.data;
 
               case 14:
               case "end":
@@ -7685,6 +7682,53 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee, null, [[0, 10]]);
       }))();
     }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/Pagination.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/Pagination.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['page', 'last_page'],
+  data: function data() {
+    return {
+      routeName: this.$route.name
+    };
   }
 });
 
@@ -7706,6 +7750,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Delete__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Delete */ "./resources/js/views/jurnal/Delete.vue");
 /* harmony import */ var _Filter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Filter */ "./resources/js/views/jurnal/Filter.vue");
 /* harmony import */ var _components_loading__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/loading */ "./resources/js/components/loading.vue");
+/* harmony import */ var _Pagination__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Pagination */ "./resources/js/views/jurnal/Pagination.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -7884,6 +7929,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+
 
 
 
@@ -7892,7 +7939,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   components: {
     DeleteJournal: _Delete__WEBPACK_IMPORTED_MODULE_1__["default"],
     FilterJournal: _Filter__WEBPACK_IMPORTED_MODULE_2__["default"],
-    Loading: _components_loading__WEBPACK_IMPORTED_MODULE_3__["default"]
+    Loading: _components_loading__WEBPACK_IMPORTED_MODULE_3__["default"],
+    Pagination: _Pagination__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   data: function data() {
     return {
@@ -7901,26 +7949,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       chartOptions: [],
       chartLoading: true,
       filter_keyword: '',
-      // filter_reimburse: '',
-      // filter_month: '',
-      // filter_chartaccount: '',
       loadingExcel: false,
-      params: '' // monthOptions: [
-      //     {month: 'Semua', code: ''},
-      //     {month: 'Januari', code: '01'},
-      //     {month: 'Februari', code: '02'},
-      //     {month: 'Maret', code: '03'},
-      //     {month: 'April', code: '04'},
-      //     {month: 'Mei', code: '05'},
-      //     {month: 'Juni', code: '06'},
-      //     {month: 'Juli', code: '07'},
-      //     {month: 'Agustus', code: '08'},
-      //     {month: 'September', code: '09'},
-      //     {month: 'Oktober', code: '10'},
-      //     {month: 'November', code: '11'},
-      //     {month: 'Desember', code: '12'}
-      // ],
-
+      params: '',
+      page: '',
+      last_page: ''
     };
   },
   mounted: function mounted() {
@@ -7929,9 +7961,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   methods: {
     filtering: function filtering(event) {
-      console.log("Filtering");
       this.params = event;
-      console.log(this.params);
     },
     selectId: function selectId(e) {
       this.filter_chartaccount = e.id;
@@ -8058,7 +8088,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     reimburse: _this3.params.reimburse,
                     sortname: _this3.params.sortname,
                     sortdate: _this3.params.sortdate,
-                    date: _this3.params.month
+                    date: _this3.params.month,
+                    page: _this3.$route.query.page
                   },
                   headers: {
                     'Authorization': 'Bearer ' + _this3.auth.token
@@ -8070,6 +8101,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 if (response.status === 200) {
                   _this3.journals = response.data.data;
+                  _this3.page = response.data.page;
+                  _this3.last_page = response.data.last_page;
                 }
 
                 _this3.loading = false;
@@ -8146,7 +8179,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 9:
                 _context4.prev = 9;
                 _context4.t0 = _context4["catch"](0);
-                // console.log(e)
                 _this5.loading = false;
 
                 _this5.$toasted.show("Something went wrong : " + _context4.t0.message, {
@@ -8184,6 +8216,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Delete__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Delete */ "./resources/js/views/jurnal/Delete.vue");
 /* harmony import */ var _Filter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Filter */ "./resources/js/views/jurnal/Filter.vue");
 /* harmony import */ var _components_loading__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/loading */ "./resources/js/components/loading.vue");
+/* harmony import */ var _Pagination__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Pagination */ "./resources/js/views/jurnal/Pagination.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -8318,6 +8351,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+
 
 
 
@@ -8326,7 +8361,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   components: {
     DeleteJournal: _Delete__WEBPACK_IMPORTED_MODULE_1__["default"],
     FilterJournal: _Filter__WEBPACK_IMPORTED_MODULE_2__["default"],
-    Loading: _components_loading__WEBPACK_IMPORTED_MODULE_3__["default"]
+    Loading: _components_loading__WEBPACK_IMPORTED_MODULE_3__["default"],
+    Pagination: _Pagination__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   data: function data() {
     return {
@@ -8335,26 +8371,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       chartOptions: [],
       chartLoading: true,
       filter_keyword: '',
-      // filter_reimburse: '',
-      // filter_month: '',
-      // filter_chartaccount: '',
       params: '',
-      loadingExcel: false // monthOptions: [
-      //     {month: 'Semua', code: ''},
-      //     {month: 'Januari', code: '01'},
-      //     {month: 'Februari', code: '02'},
-      //     {month: 'Maret', code: '03'},
-      //     {month: 'April', code: '04'},
-      //     {month: 'Mei', code: '05'},
-      //     {month: 'Juni', code: '06'},
-      //     {month: 'Juli', code: '07'},
-      //     {month: 'Agustus', code: '08'},
-      //     {month: 'September', code: '09'},
-      //     {month: 'Oktober', code: '10'},
-      //     {month: 'November', code: '11'},
-      //     {month: 'Desember', code: '12'}
-      // ],
-
+      loadingExcel: false,
+      page: '',
+      last_page: ''
     };
   },
   mounted: function mounted() {
@@ -8363,9 +8383,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   methods: {
     filtering: function filtering(event) {
-      console.log("Filtering");
       this.params = event;
-      console.log(this.params);
     },
     selectId: function selectId(e) {
       this.filter_chartaccount = e.id;
@@ -8495,7 +8513,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     reimburse: _this3.params.reimburse,
                     sortname: _this3.params.sortname,
                     sortdate: _this3.params.sortdate,
-                    date: _this3.params.month
+                    date: _this3.params.month,
+                    page: _this3.$route.query.page
                   },
                   headers: {
                     'Authorization': 'Bearer ' + _this3.auth.token
@@ -8507,12 +8526,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 if (response.status === 200) {
                   _this3.journals = response.data.data;
+                  _this3.page = response.data.page;
+                  _this3.last_page = response.data.last_page;
                 }
 
-                console.log(_this3.journals);
                 _this3.loading = false;
 
-              case 6:
+              case 5:
               case "end":
                 return _context3.stop();
             }
@@ -8537,41 +8557,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           _this4.verifikasi(token);
         }
       });
-    } // async verifikasi(token) {
-    //     try {
-    //         this.loading = true
-    //         let formdata = new FormData()
-    //         let response = await axios.post(`/api/verifjournal/${token}`, formdata, {
-    //             headers: {
-    //                 'Authorization': 'Bearer ' + this.auth.token
-    //             }
-    //         })
-    //         if (response.status == 200) {
-    //             this.$toasted.show(response.data.message, {
-    //                 type: 'success',
-    //                 duration: 3000,
-    //                 position: 'top-center',
-    //             })
-    //             this.getJurnal()
-    //         }
-    //         else {
-    //             this.loading = false
-    //             this.$toasted.show("Error verifikasi jurnal", {
-    //                 type: 'error',
-    //                 duration: 3000,
-    //                 position: 'top-center',
-    //             })
-    //         }
-    //     } catch (e) {
-    //         // console.log(e)
-    //         this.$toasted.show("Something went wrong : " + e, {
-    //             type: 'error',
-    //             duration: 3000,
-    //             position: 'top-center',
-    //         })
-    //     }
-    // }
-
+    }
   }
 });
 
@@ -8593,6 +8579,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Delete__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Delete */ "./resources/js/views/jurnal/Delete.vue");
 /* harmony import */ var _Filter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Filter */ "./resources/js/views/jurnal/Filter.vue");
 /* harmony import */ var _components_loading__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/loading */ "./resources/js/components/loading.vue");
+/* harmony import */ var _Pagination__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Pagination */ "./resources/js/views/jurnal/Pagination.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -8730,49 +8717,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 
 
@@ -8781,7 +8726,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   components: {
     DeleteJournal: _Delete__WEBPACK_IMPORTED_MODULE_1__["default"],
     FilterJournal: _Filter__WEBPACK_IMPORTED_MODULE_2__["default"],
-    Loading: _components_loading__WEBPACK_IMPORTED_MODULE_3__["default"]
+    Loading: _components_loading__WEBPACK_IMPORTED_MODULE_3__["default"],
+    Pagination: _Pagination__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   data: function data() {
     return {
@@ -8790,26 +8736,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       chartOptions: [],
       chartLoading: true,
       filter_keyword: '',
-      // filter_reimburse: '',
-      // filter_month: '',
-      // filter_chartaccount: '',
       loadingExcel: false,
-      params: '' // monthOptions: [
-      //     {month: 'Semua', code: ''},
-      //     {month: 'Januari', code: '01'},
-      //     {month: 'Februari', code: '02'},
-      //     {month: 'Maret', code: '03'},
-      //     {month: 'April', code: '04'},
-      //     {month: 'Mei', code: '05'},
-      //     {month: 'Juni', code: '06'},
-      //     {month: 'Juli', code: '07'},
-      //     {month: 'Agustus', code: '08'},
-      //     {month: 'September', code: '09'},
-      //     {month: 'Oktober', code: '10'},
-      //     {month: 'November', code: '11'},
-      //     {month: 'Desember', code: '12'}
-      // ],
-
+      params: '',
+      page: '',
+      last_page: ''
     };
   },
   mounted: function mounted() {
@@ -8818,9 +8748,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   methods: {
     filtering: function filtering(event) {
-      console.log("Filtering");
       this.params = event;
-      console.log(this.params);
     },
     selectId: function selectId(e) {
       this.filter_chartaccount = e.id;
@@ -8947,7 +8875,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     reimburse: _this3.params.reimburse,
                     sortname: _this3.params.sortname,
                     sortdate: _this3.params.sortdate,
-                    date: _this3.params.month
+                    date: _this3.params.month,
+                    page: _this3.$route.query.page
                   },
                   headers: {
                     'Authorization': 'Bearer ' + _this3.auth.token
@@ -8959,6 +8888,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 if (response.status === 200) {
                   _this3.journals = response.data.data;
+                  _this3.page = response.data.page;
+                  _this3.last_page = response.data.last_page;
                 }
 
                 console.log(_this3.journals);
@@ -9117,8 +9048,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.journal[target] = e.id;
     },
     pictureUpload: function pictureUpload() {
-      console.log("ganti gambar"); // this.journal.filebukti = this.$refs.filebukti.files[0]
-
+      // this.journal.filebukti = this.$refs.filebukti.files[0]
       this.filebukti = event.target.files[0];
     },
     findJurnal: function findJurnal() {
@@ -9193,11 +9123,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this2.filebukti = '';
                   _this2.theErrors = [];
 
-                  if (_this2.$route.query.page == 'proses') {
+                  if (_this2.$route.query.page_phase == 'proses') {
                     _this2.$router.push({
                       name: 'jurnalproses'
                     });
-                  } else if (_this2.$route.query.page == 'verif') {
+                  } else if (_this2.$route.query.page_phase == 'verif') {
                     _this2.$router.push({
                       name: 'jurnalverif'
                     });
@@ -9253,11 +9183,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (response) {
                   _this2.theErrors = [];
 
-                  if (_this2.$route.query.page == 'proses') {
+                  if (_this2.$route.query.page_phase == 'proses') {
                     _this2.$router.push({
                       name: 'jurnalproses'
                     });
-                  } else if (_this2.$route.query.page == 'verif') {
+                  } else if (_this2.$route.query.page_phase == 'verif') {
                     _this2.$router.push({
                       name: 'jurnalverif'
                     });
@@ -9287,10 +9217,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
-                }); // console.log(e)
-                // console.log("Gagal verifikasi jurnal")
-                // console.log("ERRR:: ", e.response.data)
-
+                });
 
                 _this2.theErrors = _context2.t1.response.data;
 
@@ -36440,6 +36367,45 @@ component.options.__file = "resources/js/views/jurnal/Import.vue"
 
 /***/ }),
 
+/***/ "./resources/js/views/jurnal/Pagination.vue":
+/*!**************************************************!*\
+  !*** ./resources/js/views/jurnal/Pagination.vue ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Pagination_vue_vue_type_template_id_0739e770___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Pagination.vue?vue&type=template&id=0739e770& */ "./resources/js/views/jurnal/Pagination.vue?vue&type=template&id=0739e770&");
+/* harmony import */ var _Pagination_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Pagination.vue?vue&type=script&lang=js& */ "./resources/js/views/jurnal/Pagination.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Pagination_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Pagination_vue_vue_type_template_id_0739e770___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Pagination_vue_vue_type_template_id_0739e770___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/views/jurnal/Pagination.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/views/jurnal/TabDraft.vue":
 /*!************************************************!*\
   !*** ./resources/js/views/jurnal/TabDraft.vue ***!
@@ -37670,6 +37636,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/views/jurnal/Pagination.vue?vue&type=script&lang=js&":
+/*!***************************************************************************!*\
+  !*** ./resources/js/views/jurnal/Pagination.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Pagination_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Pagination.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/Pagination.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Pagination_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/views/jurnal/TabDraft.vue?vue&type=script&lang=js&":
 /*!*************************************************************************!*\
   !*** ./resources/js/views/jurnal/TabDraft.vue?vue&type=script&lang=js& ***!
@@ -38488,6 +38470,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Import_vue_vue_type_template_id_18c1745a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Import_vue_vue_type_template_id_18c1745a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Import.vue?vue&type=template&id=18c1745a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/Import.vue?vue&type=template&id=18c1745a&");
+
+
+/***/ }),
+
+/***/ "./resources/js/views/jurnal/Pagination.vue?vue&type=template&id=0739e770&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/views/jurnal/Pagination.vue?vue&type=template&id=0739e770& ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Pagination_vue_vue_type_template_id_0739e770___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Pagination_vue_vue_type_template_id_0739e770___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Pagination_vue_vue_type_template_id_0739e770___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Pagination.vue?vue&type=template&id=0739e770& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/Pagination.vue?vue&type=template&id=0739e770&");
 
 
 /***/ }),
@@ -47305,9 +47304,9 @@ var render = function () {
                         on: { change: _vm.fileUpload },
                       }),
                       _vm._v(" "),
-                      _vm.theErrors.ref
+                      _vm.theErrors.file
                         ? _c("div", { staticClass: "mt-1 text-danger" }, [
-                            _vm._v(_vm._s(_vm.theErrors.ref[0])),
+                            _vm._v(_vm._s(_vm.theErrors.file[0])),
                           ])
                         : _vm._e(),
                     ]),
@@ -47344,6 +47343,132 @@ var staticRenderFns = [
     )
   },
 ]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/Pagination.vue?vue&type=template&id=0739e770&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/jurnal/Pagination.vue?vue&type=template&id=0739e770& ***!
+  \************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row mt-4" }, [
+    _c("div", { staticClass: "col-sm-6" }, [
+      _c("div", [
+        _c("p", { staticClass: "mb-sm-0" }, [
+          _vm._v("Page " + _vm._s(_vm.page) + " of " + _vm._s(_vm.last_page)),
+        ]),
+      ]),
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-sm-6" }, [
+      _c("div", { staticClass: "float-sm-end" }, [
+        _c(
+          "ul",
+          { staticClass: "pagination pagination-rounded mb-sm-0" },
+          [
+            _c(
+              "li",
+              {
+                staticClass: "page-item",
+                class: _vm.page == 1 ? "disabled" : "",
+                on: { click: _vm.$parent.getJurnal },
+              },
+              [
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "page-link",
+                    attrs: {
+                      to: {
+                        name: _vm.routeName,
+                        query: {
+                          page: _vm.page > 0 ? parseInt(_vm.page) - 1 : 1,
+                        },
+                      },
+                    },
+                  },
+                  [_c("i", { staticClass: "mdi mdi-chevron-left" })]
+                ),
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _vm._l(_vm.last_page, function (i) {
+              return _c(
+                "li",
+                {
+                  key: i,
+                  staticClass: "page-item",
+                  class: i == _vm.page ? "active" : "",
+                  on: { click: _vm.$parent.getJurnal },
+                },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "page-link",
+                      attrs: {
+                        to: { name: _vm.routeName, query: { page: i } },
+                      },
+                    },
+                    [_vm._v(_vm._s(i))]
+                  ),
+                ],
+                1
+              )
+            }),
+            _vm._v(" "),
+            _c(
+              "li",
+              {
+                staticClass: "page-item",
+                class: _vm.page == _vm.last_page ? "disabled" : "",
+                on: { click: _vm.$parent.getJurnal },
+              },
+              [
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "page-link",
+                    attrs: {
+                      to: {
+                        name: _vm.routeName,
+                        query: {
+                          page:
+                            _vm.page < _vm.last_page
+                              ? parseInt(_vm.page) + 1
+                              : _vm.last_page,
+                        },
+                      },
+                    },
+                  },
+                  [_c("i", { staticClass: "mdi mdi-chevron-right" })]
+                ),
+              ],
+              1
+            ),
+          ],
+          2
+        ),
+      ]),
+    ]),
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -47486,302 +47611,322 @@ var render = function () {
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-lg-12" }, [
             _c("div", { staticClass: "card" }, [
-              _c("div", { staticClass: "card-body" }, [
-                _c(
-                  "div",
-                  { staticClass: "table-responsive-sm" },
-                  [
-                    _c("div", { staticClass: "input-group mb-2" }, [
-                      _vm._m(2),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.filter_keyword,
-                            expression: "filter_keyword",
-                          },
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "text", placeholder: "Search" },
-                        domProps: { value: _vm.filter_keyword },
-                        on: {
-                          change: _vm.getJurnal,
-                          input: function ($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.filter_keyword = $event.target.value
-                          },
-                        },
-                      }),
-                      _vm._v(" "),
-                      _vm._m(3),
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "table",
-                      { staticClass: "table table-centered mb-0" },
-                      [
-                        _vm._m(4),
+              _c(
+                "div",
+                { staticClass: "card-body" },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "table-responsive-sm" },
+                    [
+                      _c("div", { staticClass: "input-group mb-2" }, [
+                        _vm._m(2),
                         _vm._v(" "),
-                        _vm.loading
-                          ? _c(
-                              "transition",
-                              {
-                                staticClass: "row ",
-                                attrs: {
-                                  tag: "tbody",
-                                  mode: "out-in",
-                                  "enter-active-class":
-                                    "animate__animated animate__fadeIn animate__faster",
-                                  "leave-active-class":
-                                    "animate__animated animate__fadeOut animate__faster",
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.filter_keyword,
+                              expression: "filter_keyword",
+                            },
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text", placeholder: "Search" },
+                          domProps: { value: _vm.filter_keyword },
+                          on: {
+                            change: _vm.getJurnal,
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.filter_keyword = $event.target.value
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        _vm._m(3),
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "table",
+                        { staticClass: "table table-centered mb-0" },
+                        [
+                          _vm._m(4),
+                          _vm._v(" "),
+                          _vm.loading
+                            ? _c(
+                                "transition",
+                                {
+                                  staticClass: "row ",
+                                  attrs: {
+                                    tag: "tbody",
+                                    mode: "out-in",
+                                    "enter-active-class":
+                                      "animate__animated animate__fadeIn animate__faster",
+                                    "leave-active-class":
+                                      "animate__animated animate__fadeOut animate__faster",
+                                  },
                                 },
-                              },
-                              [_c("loading")],
-                              1
-                            )
-                          : _c(
-                              "transition",
-                              {
-                                attrs: {
-                                  tag: "tbody",
-                                  mode: "out-in",
-                                  "enter-active-class":
-                                    "animate__animated animate__fadeIn",
-                                  "leave-active-class":
-                                    "animate__animated animate__fadeOut",
+                                [_c("loading")],
+                                1
+                              )
+                            : _c(
+                                "transition",
+                                {
+                                  attrs: {
+                                    tag: "tbody",
+                                    mode: "out-in",
+                                    "enter-active-class":
+                                      "animate__animated animate__fadeIn",
+                                    "leave-active-class":
+                                      "animate__animated animate__fadeOut",
+                                  },
                                 },
-                              },
-                              [
-                                !_vm.journals.length
-                                  ? _c("tr", [
-                                      _c("td", { attrs: { colspan: "7" } }, [
-                                        _vm._v("No data available"),
-                                      ]),
-                                    ])
-                                  : _c(
-                                      "transition-group",
-                                      { attrs: { tag: "tbody" } },
-                                      _vm._l(_vm.journals, function (journal) {
-                                        return _c(
-                                          "tr",
-                                          { key: journal.token },
-                                          [
-                                            _c("td", [
-                                              _vm._v(_vm._s(journal.title)),
-                                            ]),
-                                            _vm._v(" "),
-                                            _c("td", [
-                                              _vm._v(
-                                                _vm._s(
-                                                  _vm.format_date(journal.date)
-                                                )
-                                              ),
-                                            ]),
-                                            _vm._v(" "),
-                                            _c("td", [
-                                              _c(
-                                                "span",
-                                                {
-                                                  staticClass:
-                                                    "badge rounded-pill font-size-12",
-                                                  class: journal.is_reimburse
-                                                    ? "bg-soft-success"
-                                                    : "bg-soft-danger",
-                                                },
-                                                [
+                                [
+                                  !_vm.journals.length
+                                    ? _c("tr", [
+                                        _c("td", { attrs: { colspan: "7" } }, [
+                                          _vm._v("No data available"),
+                                        ]),
+                                      ])
+                                    : _c(
+                                        "transition-group",
+                                        { attrs: { tag: "tbody" } },
+                                        _vm._l(
+                                          _vm.journals,
+                                          function (journal) {
+                                            return _c(
+                                              "tr",
+                                              { key: journal.token },
+                                              [
+                                                _c("td", [
+                                                  _vm._v(_vm._s(journal.title)),
+                                                ]),
+                                                _vm._v(" "),
+                                                _c("td", [
+                                                  _vm._v(
+                                                    _vm._s(
+                                                      _vm.format_date(
+                                                        journal.date
+                                                      )
+                                                    )
+                                                  ),
+                                                ]),
+                                                _vm._v(" "),
+                                                _c("td", [
+                                                  _c(
+                                                    "span",
+                                                    {
+                                                      staticClass:
+                                                        "badge rounded-pill font-size-12",
+                                                      class:
+                                                        journal.is_reimburse
+                                                          ? "bg-soft-success"
+                                                          : "bg-soft-danger",
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                                                      " +
+                                                          _vm._s(
+                                                            journal.is_reimburse
+                                                              ? "Ya"
+                                                              : "Tidak"
+                                                          )
+                                                      ),
+                                                    ]
+                                                  ),
+                                                ]),
+                                                _vm._v(" "),
+                                                _c("td", [
+                                                  _vm._v(
+                                                    "\n                                                      " +
+                                                      _vm._s(journal.remark) +
+                                                      "\n                                                  "
+                                                  ),
+                                                ]),
+                                                _vm._v(" "),
+                                                _c("td", [
+                                                  _vm._v(
+                                                    "\n                                                      " +
+                                                      _vm._s(journal.user_id) +
+                                                      "\n                                                  "
+                                                  ),
+                                                ]),
+                                                _vm._v(" "),
+                                                _c("td", [
+                                                  _vm._v(
+                                                    _vm._s(journal.project_id)
+                                                  ),
+                                                ]),
+                                                _vm._v(" "),
+                                                _c("td", [
                                                   _vm._v(
                                                     "\n                                                      " +
                                                       _vm._s(
-                                                        journal.is_reimburse
-                                                          ? "Ya"
-                                                          : "Tidak"
-                                                      )
+                                                        journal.chart_account
+                                                          .name
+                                                      ) +
+                                                      "\n                                                  "
                                                   ),
-                                                ]
-                                              ),
-                                            ]),
-                                            _vm._v(" "),
-                                            _c("td", [
-                                              _vm._v(
-                                                "\n                                                      " +
-                                                  _vm._s(journal.remark) +
-                                                  "\n                                                  "
-                                              ),
-                                            ]),
-                                            _vm._v(" "),
-                                            _c("td", [
-                                              _vm._v(
-                                                "\n                                                      " +
-                                                  _vm._s(journal.user_id) +
-                                                  "\n                                                  "
-                                              ),
-                                            ]),
-                                            _vm._v(" "),
-                                            _c("td", [
-                                              _vm._v(
-                                                _vm._s(journal.project_id)
-                                              ),
-                                            ]),
-                                            _vm._v(" "),
-                                            _c("td", [
-                                              _vm._v(
-                                                "\n                                                      " +
-                                                  _vm._s(
-                                                    journal.chart_account.name
-                                                  ) +
-                                                  "\n                                                  "
-                                              ),
-                                            ]),
-                                            _vm._v(" "),
-                                            _c("td", [
-                                              _c(
-                                                "div",
-                                                { staticClass: "btn-group" },
-                                                [
-                                                  _c(
-                                                    "button",
-                                                    {
-                                                      staticClass:
-                                                        "btn btn-primary dropdown-toggle waves-effect waves-light",
-                                                      attrs: {
-                                                        type: "button",
-                                                        "data-bs-toggle":
-                                                          "dropdown",
-                                                        "aria-haspopup": "true",
-                                                        "aria-expanded":
-                                                          "false",
-                                                      },
-                                                    },
-                                                    [
-                                                      _vm._v("Menu "),
-                                                      _c("i", {
-                                                        staticClass:
-                                                          "uil-angle-down",
-                                                      }),
-                                                    ]
-                                                  ),
-                                                  _vm._v(" "),
+                                                ]),
+                                                _vm._v(" "),
+                                                _c("td", [
                                                   _c(
                                                     "div",
                                                     {
-                                                      staticClass:
-                                                        "dropdown-menu",
+                                                      staticClass: "btn-group",
                                                     },
                                                     [
-                                                      _c(
-                                                        "router-link",
-                                                        {
-                                                          staticClass:
-                                                            "dropdown-item",
-                                                          attrs: {
-                                                            to: {
-                                                              name: "jurnal.detail",
-                                                              params: {
-                                                                token:
-                                                                  journal.token,
-                                                              },
-                                                            },
-                                                          },
-                                                        },
-                                                        [
-                                                          _c("i", {
-                                                            staticClass:
-                                                              "uil-document-layout-left",
-                                                          }),
-                                                          _vm._v(" Detail"),
-                                                        ]
-                                                      ),
-                                                      _vm._v(" "),
                                                       _c(
                                                         "button",
                                                         {
                                                           staticClass:
-                                                            "dropdown-item",
-                                                          on: {
-                                                            click: function (
-                                                              $event
-                                                            ) {
-                                                              return _vm.ajukanDialog(
-                                                                journal.token
-                                                              )
-                                                            },
+                                                            "btn btn-primary dropdown-toggle waves-effect waves-light",
+                                                          attrs: {
+                                                            type: "button",
+                                                            "data-bs-toggle":
+                                                              "dropdown",
+                                                            "aria-haspopup":
+                                                              "true",
+                                                            "aria-expanded":
+                                                              "false",
                                                           },
                                                         },
                                                         [
+                                                          _vm._v("Menu "),
                                                           _c("i", {
                                                             staticClass:
-                                                              "uil-message",
+                                                              "uil-angle-down",
                                                           }),
-                                                          _vm._v(" Ajukan"),
                                                         ]
                                                       ),
-                                                      _vm._v(" "),
-                                                      _c("div", {
-                                                        staticClass:
-                                                          "dropdown-divider",
-                                                      }),
                                                       _vm._v(" "),
                                                       _c(
-                                                        "router-link",
+                                                        "div",
                                                         {
                                                           staticClass:
-                                                            "dropdown-item",
-                                                          attrs: {
-                                                            to: {
-                                                              name: "jurnal.edit",
-                                                              params: {
-                                                                token:
-                                                                  journal.token,
-                                                              },
-                                                            },
-                                                          },
+                                                            "dropdown-menu",
                                                         },
                                                         [
-                                                          _c("i", {
+                                                          _c(
+                                                            "router-link",
+                                                            {
+                                                              staticClass:
+                                                                "dropdown-item",
+                                                              attrs: {
+                                                                to: {
+                                                                  name: "jurnal.detail",
+                                                                  params: {
+                                                                    token:
+                                                                      journal.token,
+                                                                  },
+                                                                },
+                                                              },
+                                                            },
+                                                            [
+                                                              _c("i", {
+                                                                staticClass:
+                                                                  "uil-document-layout-left",
+                                                              }),
+                                                              _vm._v(" Detail"),
+                                                            ]
+                                                          ),
+                                                          _vm._v(" "),
+                                                          _c(
+                                                            "button",
+                                                            {
+                                                              staticClass:
+                                                                "dropdown-item",
+                                                              on: {
+                                                                click:
+                                                                  function (
+                                                                    $event
+                                                                  ) {
+                                                                    return _vm.ajukanDialog(
+                                                                      journal.token
+                                                                    )
+                                                                  },
+                                                              },
+                                                            },
+                                                            [
+                                                              _c("i", {
+                                                                staticClass:
+                                                                  "uil-message",
+                                                              }),
+                                                              _vm._v(" Ajukan"),
+                                                            ]
+                                                          ),
+                                                          _vm._v(" "),
+                                                          _c("div", {
                                                             staticClass:
-                                                              "uil-edit-alt",
+                                                              "dropdown-divider",
                                                           }),
-                                                          _vm._v(" Edit"),
-                                                        ]
+                                                          _vm._v(" "),
+                                                          _c(
+                                                            "router-link",
+                                                            {
+                                                              staticClass:
+                                                                "dropdown-item",
+                                                              attrs: {
+                                                                to: {
+                                                                  name: "jurnal.edit",
+                                                                  params: {
+                                                                    token:
+                                                                      journal.token,
+                                                                  },
+                                                                },
+                                                              },
+                                                            },
+                                                            [
+                                                              _c("i", {
+                                                                staticClass:
+                                                                  "uil-edit-alt",
+                                                              }),
+                                                              _vm._v(" Edit"),
+                                                            ]
+                                                          ),
+                                                          _vm._v(" "),
+                                                          _c("delete-journal", {
+                                                            attrs: {
+                                                              endpoint:
+                                                                journal.token,
+                                                              auth: _vm.auth,
+                                                            },
+                                                          }),
+                                                        ],
+                                                        1
                                                       ),
-                                                      _vm._v(" "),
-                                                      _c("delete-journal", {
-                                                        attrs: {
-                                                          endpoint:
-                                                            journal.token,
-                                                          auth: _vm.auth,
-                                                        },
-                                                      }),
-                                                    ],
-                                                    1
+                                                    ]
                                                   ),
-                                                ]
-                                              ),
-                                            ]),
-                                          ]
-                                        )
-                                      }),
-                                      0
-                                    ),
-                              ],
-                              1
-                            ),
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c("filter-journal", {
-                      attrs: { auth: _vm.auth },
-                      on: { filterjournal: _vm.filtering },
-                    }),
-                  ],
-                  1
-                ),
-              ]),
+                                                ]),
+                                              ]
+                                            )
+                                          }
+                                        ),
+                                        0
+                                      ),
+                                ],
+                                1
+                              ),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("filter-journal", {
+                        attrs: { auth: _vm.auth },
+                        on: { filterjournal: _vm.filtering },
+                      }),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("pagination", {
+                    attrs: { page: _vm.page, last_page: _vm.last_page },
+                  }),
+                ],
+                1
+              ),
             ]),
           ]),
         ]),
@@ -48006,234 +48151,219 @@ var render = function () {
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-lg-12" }, [
             _c("div", { staticClass: "card" }, [
-              _c("div", { staticClass: "card-body" }, [
-                _c(
-                  "div",
-                  { staticClass: "table-responsive-sm" },
-                  [
-                    _c("div", { staticClass: "input-group mb-2" }, [
-                      _vm._m(2),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.filter_keyword,
-                            expression: "filter_keyword",
-                          },
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "text", placeholder: "Search" },
-                        domProps: { value: _vm.filter_keyword },
-                        on: {
-                          change: _vm.getJurnal,
-                          input: function ($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.filter_keyword = $event.target.value
-                          },
-                        },
-                      }),
-                      _vm._v(" "),
-                      _vm._m(3),
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "table",
-                      { staticClass: "table table-centered mb-0" },
-                      [
-                        _vm._m(4),
+              _c(
+                "div",
+                { staticClass: "card-body" },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "table-responsive-sm" },
+                    [
+                      _c("div", { staticClass: "input-group mb-2" }, [
+                        _vm._m(2),
                         _vm._v(" "),
-                        _vm.loading
-                          ? _c(
-                              "transition",
-                              {
-                                staticClass: "row ",
-                                attrs: {
-                                  tag: "tbody",
-                                  mode: "out-in",
-                                  "enter-active-class":
-                                    "animate__animated animate__fadeIn animate__faster",
-                                  "leave-active-class":
-                                    "animate__animated animate__fadeOut animate__faster",
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.filter_keyword,
+                              expression: "filter_keyword",
+                            },
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text", placeholder: "Search" },
+                          domProps: { value: _vm.filter_keyword },
+                          on: {
+                            change: _vm.getJurnal,
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.filter_keyword = $event.target.value
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        _vm._m(3),
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "table",
+                        { staticClass: "table table-centered mb-0" },
+                        [
+                          _vm._m(4),
+                          _vm._v(" "),
+                          _vm.loading
+                            ? _c(
+                                "transition",
+                                {
+                                  staticClass: "row ",
+                                  attrs: {
+                                    tag: "tbody",
+                                    mode: "out-in",
+                                    "enter-active-class":
+                                      "animate__animated animate__fadeIn animate__faster",
+                                    "leave-active-class":
+                                      "animate__animated animate__fadeOut animate__faster",
+                                  },
                                 },
-                              },
-                              [_c("loading")],
-                              1
-                            )
-                          : _c(
-                              "transition",
-                              {
-                                attrs: {
-                                  tag: "tbody",
-                                  mode: "out-in",
-                                  "enter-active-class":
-                                    "animate__animated animate__fadeIn",
-                                  "leave-active-class":
-                                    "animate__animated animate__fadeOut",
+                                [_c("loading")],
+                                1
+                              )
+                            : _c(
+                                "transition",
+                                {
+                                  attrs: {
+                                    tag: "tbody",
+                                    mode: "out-in",
+                                    "enter-active-class":
+                                      "animate__animated animate__fadeIn",
+                                    "leave-active-class":
+                                      "animate__animated animate__fadeOut",
+                                  },
                                 },
-                              },
-                              [
-                                !_vm.journals.length
-                                  ? _c("tr", [
-                                      _c("td", { attrs: { colspan: "7" } }, [
-                                        _vm._v("No data available"),
-                                      ]),
-                                    ])
-                                  : _c(
-                                      "transition-group",
-                                      { attrs: { tag: "tbody" } },
-                                      _vm._l(_vm.journals, function (journal) {
-                                        return _c(
-                                          "tr",
-                                          { key: journal.token },
-                                          [
-                                            _c("td", [
-                                              _vm._v(_vm._s(journal.title)),
-                                            ]),
-                                            _vm._v(" "),
-                                            _c("td", [
-                                              _vm._v(
-                                                _vm._s(
-                                                  _vm.format_date(journal.date)
-                                                )
-                                              ),
-                                            ]),
-                                            _vm._v(" "),
-                                            _c("td", [
-                                              _c(
-                                                "span",
-                                                {
-                                                  staticClass:
-                                                    "badge rounded-pill font-size-12",
-                                                  class: journal.is_reimburse
-                                                    ? "bg-soft-success"
-                                                    : "bg-soft-danger",
-                                                },
-                                                [
+                                [
+                                  !_vm.journals.length
+                                    ? _c("tr", [
+                                        _c("td", { attrs: { colspan: "7" } }, [
+                                          _vm._v("No data available"),
+                                        ]),
+                                      ])
+                                    : _c(
+                                        "transition-group",
+                                        { attrs: { tag: "tbody" } },
+                                        _vm._l(
+                                          _vm.journals,
+                                          function (journal) {
+                                            return _c(
+                                              "tr",
+                                              { key: journal.token },
+                                              [
+                                                _c("td", [
+                                                  _vm._v(_vm._s(journal.title)),
+                                                ]),
+                                                _vm._v(" "),
+                                                _c("td", [
+                                                  _vm._v(
+                                                    _vm._s(
+                                                      _vm.format_date(
+                                                        journal.date
+                                                      )
+                                                    )
+                                                  ),
+                                                ]),
+                                                _vm._v(" "),
+                                                _c("td", [
+                                                  _c(
+                                                    "span",
+                                                    {
+                                                      staticClass:
+                                                        "badge rounded-pill font-size-12",
+                                                      class:
+                                                        journal.is_reimburse
+                                                          ? "bg-soft-success"
+                                                          : "bg-soft-danger",
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                                                      " +
+                                                          _vm._s(
+                                                            journal.is_reimburse
+                                                              ? "Ya"
+                                                              : "Tidak"
+                                                          )
+                                                      ),
+                                                    ]
+                                                  ),
+                                                ]),
+                                                _vm._v(" "),
+                                                _c("td", [
+                                                  _vm._v(
+                                                    "\n                                                      " +
+                                                      _vm._s(journal.remark) +
+                                                      "\n                                                  "
+                                                  ),
+                                                ]),
+                                                _vm._v(" "),
+                                                _c("td", [
+                                                  _vm._v(
+                                                    "\n                                                      " +
+                                                      _vm._s(journal.user_id) +
+                                                      "\n                                                  "
+                                                  ),
+                                                ]),
+                                                _vm._v(" "),
+                                                _c("td", [
+                                                  _vm._v(
+                                                    _vm._s(journal.project_id)
+                                                  ),
+                                                ]),
+                                                _vm._v(" "),
+                                                _c("td", [
                                                   _vm._v(
                                                     "\n                                                      " +
                                                       _vm._s(
-                                                        journal.is_reimburse
-                                                          ? "Ya"
-                                                          : "Tidak"
-                                                      )
+                                                        journal.chart_account
+                                                          .name
+                                                      ) +
+                                                      "\n                                                  "
                                                   ),
-                                                ]
-                                              ),
-                                            ]),
-                                            _vm._v(" "),
-                                            _c("td", [
-                                              _vm._v(
-                                                "\n                                                      " +
-                                                  _vm._s(journal.remark) +
-                                                  "\n                                                  "
-                                              ),
-                                            ]),
-                                            _vm._v(" "),
-                                            _c("td", [
-                                              _vm._v(
-                                                "\n                                                      " +
-                                                  _vm._s(journal.user_id) +
-                                                  "\n                                                  "
-                                              ),
-                                            ]),
-                                            _vm._v(" "),
-                                            _c("td", [
-                                              _vm._v(
-                                                _vm._s(journal.project_id)
-                                              ),
-                                            ]),
-                                            _vm._v(" "),
-                                            _c("td", [
-                                              _vm._v(
-                                                "\n                                                      " +
-                                                  _vm._s(
-                                                    journal.chart_account.name
-                                                  ) +
-                                                  "\n                                                  "
-                                              ),
-                                            ]),
-                                            _vm._v(" "),
-                                            _c("td", [
-                                              _c(
-                                                "div",
-                                                { staticClass: "btn-group" },
-                                                [
-                                                  _c(
-                                                    "button",
-                                                    {
-                                                      staticClass:
-                                                        "btn btn-primary dropdown-toggle waves-effect waves-light",
-                                                      attrs: {
-                                                        type: "button",
-                                                        "data-bs-toggle":
-                                                          "dropdown",
-                                                        "aria-haspopup": "true",
-                                                        "aria-expanded":
-                                                          "false",
-                                                      },
-                                                    },
-                                                    [
-                                                      _vm._v("Menu "),
-                                                      _c("i", {
-                                                        staticClass:
-                                                          "uil-angle-down",
-                                                      }),
-                                                    ]
-                                                  ),
-                                                  _vm._v(" "),
+                                                ]),
+                                                _vm._v(" "),
+                                                _c("td", [
                                                   _c(
                                                     "div",
                                                     {
-                                                      staticClass:
-                                                        "dropdown-menu",
+                                                      staticClass: "btn-group",
                                                     },
                                                     [
                                                       _c(
-                                                        "router-link",
+                                                        "button",
                                                         {
                                                           staticClass:
-                                                            "dropdown-item",
+                                                            "btn btn-primary dropdown-toggle waves-effect waves-light",
                                                           attrs: {
-                                                            to: {
-                                                              name: "jurnal.detail",
-                                                              params: {
-                                                                token:
-                                                                  journal.token,
-                                                              },
-                                                              query: {
-                                                                page: "proses",
-                                                              },
-                                                            },
+                                                            type: "button",
+                                                            "data-bs-toggle":
+                                                              "dropdown",
+                                                            "aria-haspopup":
+                                                              "true",
+                                                            "aria-expanded":
+                                                              "false",
                                                           },
                                                         },
                                                         [
+                                                          _vm._v("Menu "),
                                                           _c("i", {
                                                             staticClass:
-                                                              "uil-document-layout-left",
+                                                              "uil-angle-down",
                                                           }),
-                                                          _vm._v(" Detail"),
                                                         ]
                                                       ),
                                                       _vm._v(" "),
-                                                      _vm.auth.user.type != 2
-                                                        ? _c(
+                                                      _c(
+                                                        "div",
+                                                        {
+                                                          staticClass:
+                                                            "dropdown-menu",
+                                                        },
+                                                        [
+                                                          _c(
                                                             "router-link",
                                                             {
                                                               staticClass:
                                                                 "dropdown-item",
                                                               attrs: {
                                                                 to: {
-                                                                  name: "jurnal.verif",
+                                                                  name: "jurnal.detail",
                                                                   params: {
                                                                     token:
                                                                       journal.token,
                                                                   },
                                                                   query: {
-                                                                    page: "proses",
+                                                                    page_phase:
+                                                                      "proses",
                                                                   },
                                                                 },
                                                               },
@@ -48241,86 +48371,132 @@ var render = function () {
                                                             [
                                                               _c("i", {
                                                                 staticClass:
-                                                                  "uil-file-check",
+                                                                  "uil-document-layout-left",
                                                               }),
-                                                              _vm._v(
-                                                                " Verifikasi"
-                                                              ),
+                                                              _vm._v(" Detail"),
                                                             ]
-                                                          )
-                                                        : _vm._e(),
-                                                      _vm._v(" "),
-                                                      _vm.auth.user.type != 2
-                                                        ? _c("div", {
-                                                            staticClass:
-                                                              "dropdown-divider",
-                                                          })
-                                                        : _vm._e(),
-                                                      _vm._v(" "),
-                                                      _vm.auth.user.type != 2
-                                                        ? _c(
-                                                            "router-link",
-                                                            {
-                                                              staticClass:
-                                                                "dropdown-item",
-                                                              attrs: {
-                                                                to: {
-                                                                  name: "jurnal.edit",
-                                                                  params: {
-                                                                    token:
-                                                                      journal.token,
-                                                                  },
-                                                                  query: {
-                                                                    page: "proses",
+                                                          ),
+                                                          _vm._v(" "),
+                                                          _vm.auth.user.type !=
+                                                          2
+                                                            ? _c(
+                                                                "router-link",
+                                                                {
+                                                                  staticClass:
+                                                                    "dropdown-item",
+                                                                  attrs: {
+                                                                    to: {
+                                                                      name: "jurnal.verif",
+                                                                      params: {
+                                                                        token:
+                                                                          journal.token,
+                                                                      },
+                                                                      query: {
+                                                                        page_phase:
+                                                                          "proses",
+                                                                      },
+                                                                    },
                                                                   },
                                                                 },
-                                                              },
-                                                            },
-                                                            [
-                                                              _c("i", {
+                                                                [
+                                                                  _c("i", {
+                                                                    staticClass:
+                                                                      "uil-file-check",
+                                                                  }),
+                                                                  _vm._v(
+                                                                    " Verifikasi"
+                                                                  ),
+                                                                ]
+                                                              )
+                                                            : _vm._e(),
+                                                          _vm._v(" "),
+                                                          _vm.auth.user.type !=
+                                                          2
+                                                            ? _c("div", {
                                                                 staticClass:
-                                                                  "uil-edit-alt",
-                                                              }),
-                                                              _vm._v(" Edit"),
-                                                            ]
-                                                          )
-                                                        : _vm._e(),
-                                                      _vm._v(" "),
-                                                      _vm.auth.user.type != 2
-                                                        ? _c("delete-journal", {
-                                                            attrs: {
-                                                              endpoint:
-                                                                journal.token,
-                                                              auth: _vm.auth,
-                                                            },
-                                                          })
-                                                        : _vm._e(),
-                                                    ],
-                                                    1
+                                                                  "dropdown-divider",
+                                                              })
+                                                            : _vm._e(),
+                                                          _vm._v(" "),
+                                                          _vm.auth.user.type !=
+                                                          2
+                                                            ? _c(
+                                                                "router-link",
+                                                                {
+                                                                  staticClass:
+                                                                    "dropdown-item",
+                                                                  attrs: {
+                                                                    to: {
+                                                                      name: "jurnal.edit",
+                                                                      params: {
+                                                                        token:
+                                                                          journal.token,
+                                                                      },
+                                                                      query: {
+                                                                        page_phase:
+                                                                          "proses",
+                                                                      },
+                                                                    },
+                                                                  },
+                                                                },
+                                                                [
+                                                                  _c("i", {
+                                                                    staticClass:
+                                                                      "uil-edit-alt",
+                                                                  }),
+                                                                  _vm._v(
+                                                                    " Edit"
+                                                                  ),
+                                                                ]
+                                                              )
+                                                            : _vm._e(),
+                                                          _vm._v(" "),
+                                                          _vm.auth.user.type !=
+                                                          2
+                                                            ? _c(
+                                                                "delete-journal",
+                                                                {
+                                                                  attrs: {
+                                                                    endpoint:
+                                                                      journal.token,
+                                                                    auth: _vm.auth,
+                                                                  },
+                                                                }
+                                                              )
+                                                            : _vm._e(),
+                                                        ],
+                                                        1
+                                                      ),
+                                                    ]
                                                   ),
-                                                ]
-                                              ),
-                                            ]),
-                                          ]
-                                        )
-                                      }),
-                                      0
-                                    ),
-                              ],
-                              1
-                            ),
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c("filter-journal", {
-                      attrs: { auth: _vm.auth },
-                      on: { filterjournal: _vm.filtering },
-                    }),
-                  ],
-                  1
-                ),
-              ]),
+                                                ]),
+                                              ]
+                                            )
+                                          }
+                                        ),
+                                        0
+                                      ),
+                                ],
+                                1
+                              ),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("filter-journal", {
+                        attrs: { auth: _vm.auth },
+                        on: { filterjournal: _vm.filtering },
+                      }),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("pagination", {
+                    attrs: { page: _vm.page, last_page: _vm.last_page },
+                  }),
+                ],
+                1
+              ),
             ]),
           ]),
         ]),
@@ -48545,268 +48721,288 @@ var render = function () {
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-lg-12" }, [
             _c("div", { staticClass: "card" }, [
-              _c("div", { staticClass: "card-body" }, [
-                _c(
-                  "div",
-                  { staticClass: "table-responsive-sm" },
-                  [
-                    _c("div", { staticClass: "input-group mb-2" }, [
-                      _vm._m(2),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.filter_keyword,
-                            expression: "filter_keyword",
-                          },
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "text", placeholder: "Search" },
-                        domProps: { value: _vm.filter_keyword },
-                        on: {
-                          change: _vm.getJurnal,
-                          input: function ($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.filter_keyword = $event.target.value
-                          },
-                        },
-                      }),
-                      _vm._v(" "),
-                      _vm._m(3),
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "table",
-                      { staticClass: "table table-centered mb-0" },
-                      [
-                        _vm._m(4),
+              _c(
+                "div",
+                { staticClass: "card-body" },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "table-responsive-sm" },
+                    [
+                      _c("div", { staticClass: "input-group mb-2" }, [
+                        _vm._m(2),
                         _vm._v(" "),
-                        _vm.loading
-                          ? _c(
-                              "transition",
-                              {
-                                staticClass: "row ",
-                                attrs: {
-                                  tag: "tbody",
-                                  mode: "out-in",
-                                  "enter-active-class":
-                                    "animate__animated animate__fadeIn animate__faster",
-                                  "leave-active-class":
-                                    "animate__animated animate__fadeOut animate__faster",
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.filter_keyword,
+                              expression: "filter_keyword",
+                            },
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text", placeholder: "Search" },
+                          domProps: { value: _vm.filter_keyword },
+                          on: {
+                            change: _vm.getJurnal,
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.filter_keyword = $event.target.value
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        _vm._m(3),
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "table",
+                        { staticClass: "table table-centered mb-0" },
+                        [
+                          _vm._m(4),
+                          _vm._v(" "),
+                          _vm.loading
+                            ? _c(
+                                "transition",
+                                {
+                                  staticClass: "row ",
+                                  attrs: {
+                                    tag: "tbody",
+                                    mode: "out-in",
+                                    "enter-active-class":
+                                      "animate__animated animate__fadeIn animate__faster",
+                                    "leave-active-class":
+                                      "animate__animated animate__fadeOut animate__faster",
+                                  },
                                 },
-                              },
-                              [_c("loading")],
-                              1
-                            )
-                          : _c(
-                              "transition",
-                              {
-                                attrs: {
-                                  tag: "tbody",
-                                  mode: "out-in",
-                                  "enter-active-class":
-                                    "animate__animated animate__fadeIn",
-                                  "leave-active-class":
-                                    "animate__animated animate__fadeOut",
+                                [_c("loading")],
+                                1
+                              )
+                            : _c(
+                                "transition",
+                                {
+                                  attrs: {
+                                    tag: "tbody",
+                                    mode: "out-in",
+                                    "enter-active-class":
+                                      "animate__animated animate__fadeIn",
+                                    "leave-active-class":
+                                      "animate__animated animate__fadeOut",
+                                  },
                                 },
-                              },
-                              [
-                                !_vm.journals.length
-                                  ? _c("tr", [
-                                      _c("td", { attrs: { colspan: "7" } }, [
-                                        _vm._v("No data available"),
-                                      ]),
-                                    ])
-                                  : _c(
-                                      "transition-group",
-                                      { attrs: { tag: "tbody" } },
-                                      _vm._l(_vm.journals, function (journal) {
-                                        return _c(
-                                          "tr",
-                                          { key: journal.token },
-                                          [
-                                            _c("td", [
-                                              _vm._v(_vm._s(journal.title)),
-                                            ]),
-                                            _vm._v(" "),
-                                            _c("td", [
-                                              _vm._v(
-                                                _vm._s(
-                                                  _vm.format_date(journal.date)
-                                                )
-                                              ),
-                                            ]),
-                                            _vm._v(" "),
-                                            _c("td", [
-                                              _c(
-                                                "span",
-                                                {
-                                                  staticClass:
-                                                    "badge rounded-pill font-size-12",
-                                                  class: journal.is_reimburse
-                                                    ? "bg-soft-success"
-                                                    : "bg-soft-danger",
-                                                },
-                                                [
+                                [
+                                  !_vm.journals.length
+                                    ? _c("tr", [
+                                        _c("td", { attrs: { colspan: "7" } }, [
+                                          _vm._v("No data available"),
+                                        ]),
+                                      ])
+                                    : _c(
+                                        "transition-group",
+                                        { attrs: { tag: "tbody" } },
+                                        _vm._l(
+                                          _vm.journals,
+                                          function (journal) {
+                                            return _c(
+                                              "tr",
+                                              { key: journal.token },
+                                              [
+                                                _c("td", [
+                                                  _vm._v(_vm._s(journal.title)),
+                                                ]),
+                                                _vm._v(" "),
+                                                _c("td", [
                                                   _vm._v(
-                                                    "\n                                                      " +
-                                                      _vm._s(
-                                                        journal.is_reimburse
-                                                          ? "Ya"
-                                                          : "Tidak"
+                                                    _vm._s(
+                                                      _vm.format_date(
+                                                        journal.date
                                                       )
+                                                    )
                                                   ),
-                                                ]
-                                              ),
-                                            ]),
-                                            _vm._v(" "),
-                                            _c("td", [
-                                              _c(
-                                                "span",
-                                                {
-                                                  staticClass:
-                                                    "badge rounded-pill font-size-12",
-                                                  class:
-                                                    journal.status == 3
-                                                      ? "bg-soft-success"
-                                                      : "bg-soft-danger",
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    "\n                                                      " +
-                                                      _vm._s(
-                                                        journal.status == 3
-                                                          ? "Diterima"
-                                                          : "Ditolak"
-                                                      )
-                                                  ),
-                                                ]
-                                              ),
-                                            ]),
-                                            _vm._v(" "),
-                                            _c("td", [
-                                              _vm._v(
-                                                "\n                                                      " +
-                                                  _vm._s(journal.remark) +
-                                                  "\n                                                  "
-                                              ),
-                                            ]),
-                                            _vm._v(" "),
-                                            _c("td", [
-                                              _vm._v(
-                                                "\n                                                      " +
-                                                  _vm._s(journal.user_id) +
-                                                  "\n                                                  "
-                                              ),
-                                            ]),
-                                            _vm._v(" "),
-                                            _c("td", [
-                                              _vm._v(
-                                                "\n                                                      " +
-                                                  _vm._s(
-                                                    journal.chart_account.name
-                                                  ) +
-                                                  "\n                                                  "
-                                              ),
-                                            ]),
-                                            _vm._v(" "),
-                                            _c("td", [
-                                              _vm._v(
-                                                _vm._s(journal.project_id)
-                                              ),
-                                            ]),
-                                            _vm._v(" "),
-                                            _c("td", [
-                                              _c(
-                                                "div",
-                                                { staticClass: "btn-group" },
-                                                [
+                                                ]),
+                                                _vm._v(" "),
+                                                _c("td", [
                                                   _c(
-                                                    "button",
+                                                    "span",
                                                     {
                                                       staticClass:
-                                                        "btn btn-primary dropdown-toggle waves-effect waves-light",
-                                                      attrs: {
-                                                        type: "button",
-                                                        "data-bs-toggle":
-                                                          "dropdown",
-                                                        "aria-haspopup": "true",
-                                                        "aria-expanded":
-                                                          "false",
-                                                      },
+                                                        "badge rounded-pill font-size-12",
+                                                      class:
+                                                        journal.is_reimburse
+                                                          ? "bg-soft-success"
+                                                          : "bg-soft-danger",
                                                     },
                                                     [
-                                                      _vm._v("Menu "),
-                                                      _c("i", {
-                                                        staticClass:
-                                                          "uil-angle-down",
-                                                      }),
+                                                      _vm._v(
+                                                        "\n                                                      " +
+                                                          _vm._s(
+                                                            journal.is_reimburse
+                                                              ? "Ya"
+                                                              : "Tidak"
+                                                          )
+                                                      ),
                                                     ]
                                                   ),
-                                                  _vm._v(" "),
+                                                ]),
+                                                _vm._v(" "),
+                                                _c("td", [
+                                                  _c(
+                                                    "span",
+                                                    {
+                                                      staticClass:
+                                                        "badge rounded-pill font-size-12",
+                                                      class:
+                                                        journal.status == 3
+                                                          ? "bg-soft-success"
+                                                          : "bg-soft-danger",
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                                                      " +
+                                                          _vm._s(
+                                                            journal.status == 3
+                                                              ? "Diterima"
+                                                              : "Ditolak"
+                                                          )
+                                                      ),
+                                                    ]
+                                                  ),
+                                                ]),
+                                                _vm._v(" "),
+                                                _c("td", [
+                                                  _vm._v(
+                                                    "\n                                                      " +
+                                                      _vm._s(journal.remark) +
+                                                      "\n                                                  "
+                                                  ),
+                                                ]),
+                                                _vm._v(" "),
+                                                _c("td", [
+                                                  _vm._v(
+                                                    "\n                                                      " +
+                                                      _vm._s(journal.user_id) +
+                                                      "\n                                                  "
+                                                  ),
+                                                ]),
+                                                _vm._v(" "),
+                                                _c("td", [
+                                                  _vm._v(
+                                                    "\n                                                      " +
+                                                      _vm._s(
+                                                        journal.chart_account
+                                                          .name
+                                                      ) +
+                                                      "\n                                                  "
+                                                  ),
+                                                ]),
+                                                _vm._v(" "),
+                                                _c("td", [
+                                                  _vm._v(
+                                                    _vm._s(journal.project_id)
+                                                  ),
+                                                ]),
+                                                _vm._v(" "),
+                                                _c("td", [
                                                   _c(
                                                     "div",
                                                     {
-                                                      staticClass:
-                                                        "dropdown-menu",
+                                                      staticClass: "btn-group",
                                                     },
                                                     [
                                                       _c(
-                                                        "router-link",
+                                                        "button",
                                                         {
                                                           staticClass:
-                                                            "dropdown-item",
+                                                            "btn btn-primary dropdown-toggle waves-effect waves-light",
                                                           attrs: {
-                                                            to: {
-                                                              name: "jurnal.detail",
-                                                              params: {
-                                                                token:
-                                                                  journal.token,
-                                                              },
-                                                              query: {
-                                                                page: "verif",
-                                                              },
-                                                            },
+                                                            type: "button",
+                                                            "data-bs-toggle":
+                                                              "dropdown",
+                                                            "aria-haspopup":
+                                                              "true",
+                                                            "aria-expanded":
+                                                              "false",
                                                           },
                                                         },
                                                         [
+                                                          _vm._v("Menu "),
                                                           _c("i", {
                                                             staticClass:
-                                                              "uil-document-layout-left",
+                                                              "uil-angle-down",
                                                           }),
-                                                          _vm._v(" Detail"),
                                                         ]
                                                       ),
-                                                    ],
-                                                    1
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "div",
+                                                        {
+                                                          staticClass:
+                                                            "dropdown-menu",
+                                                        },
+                                                        [
+                                                          _c(
+                                                            "router-link",
+                                                            {
+                                                              staticClass:
+                                                                "dropdown-item",
+                                                              attrs: {
+                                                                to: {
+                                                                  name: "jurnal.detail",
+                                                                  params: {
+                                                                    token:
+                                                                      journal.token,
+                                                                  },
+                                                                  query: {
+                                                                    page_phase:
+                                                                      "verif",
+                                                                  },
+                                                                },
+                                                              },
+                                                            },
+                                                            [
+                                                              _c("i", {
+                                                                staticClass:
+                                                                  "uil-document-layout-left",
+                                                              }),
+                                                              _vm._v(" Detail"),
+                                                            ]
+                                                          ),
+                                                        ],
+                                                        1
+                                                      ),
+                                                    ]
                                                   ),
-                                                ]
-                                              ),
-                                            ]),
-                                          ]
-                                        )
-                                      }),
-                                      0
-                                    ),
-                              ],
-                              1
-                            ),
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c("filter-journal", {
-                      attrs: { auth: _vm.auth },
-                      on: { filterjournal: _vm.filtering },
-                    }),
-                  ],
-                  1
-                ),
-              ]),
+                                                ]),
+                                              ]
+                                            )
+                                          }
+                                        ),
+                                        0
+                                      ),
+                                ],
+                                1
+                              ),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("filter-journal", {
+                        attrs: { auth: _vm.auth },
+                        on: { filterjournal: _vm.filtering },
+                      }),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("pagination", {
+                    attrs: { page: _vm.page, last_page: _vm.last_page },
+                  }),
+                ],
+                1
+              ),
             ]),
           ]),
         ]),

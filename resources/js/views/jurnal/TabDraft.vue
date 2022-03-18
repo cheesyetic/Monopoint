@@ -161,6 +161,7 @@
                                 </div> -->
                             </div>
                             <!-- End table -->
+                            <pagination :page="page" :last_page="last_page"></pagination>
                         </div>
                     </div>
                 </div>
@@ -174,12 +175,14 @@
 import DeleteJournal from './Delete'
 import FilterJournal from './Filter'
 import Loading from '../../components/loading'
+import Pagination from './Pagination'
 export default {
     props: ['auth'],
     components: {
         DeleteJournal,
         FilterJournal,
         Loading,
+        Pagination,
     },
     data() {
         return  {
@@ -188,26 +191,10 @@ export default {
             chartOptions: [],
             chartLoading: true,
             filter_keyword: '',
-            // filter_reimburse: '',
-            // filter_month: '',
-            // filter_chartaccount: '',
             loadingExcel: false,
             params: '',
-            // monthOptions: [
-            //     {month: 'Semua', code: ''},
-            //     {month: 'Januari', code: '01'},
-            //     {month: 'Februari', code: '02'},
-            //     {month: 'Maret', code: '03'},
-            //     {month: 'April', code: '04'},
-            //     {month: 'Mei', code: '05'},
-            //     {month: 'Juni', code: '06'},
-            //     {month: 'Juli', code: '07'},
-            //     {month: 'Agustus', code: '08'},
-            //     {month: 'September', code: '09'},
-            //     {month: 'Oktober', code: '10'},
-            //     {month: 'November', code: '11'},
-            //     {month: 'Desember', code: '12'}
-            // ],
+            page: '',
+            last_page: '',
         };
     },
 
@@ -218,9 +205,7 @@ export default {
 
     methods: {
         filtering(event) {
-            console.log("Filtering")
             this.params = event
-            console.log(this.params)
         },
         selectId(e) {
             this.filter_chartaccount = e.id
@@ -284,6 +269,7 @@ export default {
                         sortname: this.params.sortname,
                         sortdate: this.params.sortdate,
                         date: this.params.month,
+                        page: this.$route.query.page,
                     },
                     headers: {
                         'Authorization': 'Bearer ' + this.auth.token
@@ -291,6 +277,8 @@ export default {
                 })
             if (response.status === 200) {
                 this.journals = response.data.data
+                this.page = response.data.page
+                this.last_page = response.data.last_page
             }
             this.loading = false
         },
@@ -336,7 +324,6 @@ export default {
                     })
                 }
             } catch (e) {
-                // console.log(e)
                 this.loading = false
                 this.$toasted.show("Something went wrong : " + e.message, {
                     type: 'error',

@@ -29,7 +29,7 @@
                                 <label for="example-date-input" class="col-md-2 col-form-label">File Excel</label>
                                 <div class="col-md-10">
                                     <input type="file" class="form-control-file" v-on:change="fileUpload" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
-                                    <div v-if="theErrors.ref" class="mt-1 text-danger">{{ theErrors.ref[0] }}</div>
+                                    <div v-if="theErrors.file" class="mt-1 text-danger">{{ theErrors.file[0] }}</div>
                                 </div>
                             </div>
                             <button class="btn btn-primary" type="submit"><i class="bx bx-import"></i> Import</button>
@@ -94,8 +94,8 @@ export default {
                         duration: 3000,
                         position: 'top-center',
                     })
-                console.log(e)
-                // this.theErrors = e.responseCreate.data;
+                // console.log(e)
+                this.theErrors = e.response.data;
             }
         }
     }
