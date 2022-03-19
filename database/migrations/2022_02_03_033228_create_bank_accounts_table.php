@@ -17,6 +17,7 @@ class CreateBankAccountsTable extends Migration
             $table->id();
             $table->string('name', 45);
             $table->string('account_number', 45);
+            $table->double('balance');
             $table->timestamps();
         });
     }

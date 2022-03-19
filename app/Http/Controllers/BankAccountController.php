@@ -39,7 +39,8 @@ class BankAccountController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'max:45'],
-            'account_number' => ['required', 'max:45']
+            'account_number' => ['required', 'max:45'],
+            'balance' => ['required']
         ]);
 
         if($validator->fails()){
