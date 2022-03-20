@@ -5348,12 +5348,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 if (response.status === 200) {
                   _this.charts = response.data.data;
-                }
+                } // console.log(response.data.data)
 
-                console.log(response.data.data);
+
                 _this.loading = false;
 
-              case 6:
+              case 5:
               case "end":
                 return _context.stop();
             }
@@ -5382,6 +5382,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_loading__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/loading */ "./resources/js/components/loading.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -5491,523 +5500,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['auth'],
+  components: {
+    Loading: _components_loading__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
   data: function data() {
     return {
       series: [{
@@ -6075,8 +5573,56 @@ __webpack_require__.r(__webpack_exports__);
           offsetY: -25,
           offsetX: -5
         }
-      }
+      },
+      dashboard: {},
+      loading: true,
+      key: 0
     };
+  },
+  mounted: function mounted() {
+    this.getDashboard();
+  },
+  methods: {
+    getDashboard: function getDashboard() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return axios.get('/api/dashboard', {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
+
+              case 2:
+                response = _context.sent;
+
+                if (response.status === 200) {
+                  _this.dashboard = response.data;
+                }
+
+                console.log("this.dashboard");
+                console.log(response.data);
+                _this.loading = false;
+
+              case 7:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    format_date: function format_date(value) {
+      if (value) {
+        return moment(String(value)).format('Do MMMM YYYY');
+      }
+    }
   }
 });
 
@@ -8065,50 +7611,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -9280,7 +8782,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 if (!_this2.verif) {
-                  _context2.next = 16;
+                  _context2.next = 17;
                   break;
                 }
 
@@ -9324,15 +8826,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 7:
-                _context2.next = 14;
+                _context2.next = 15;
                 break;
 
               case 9:
                 _context2.prev = 9;
                 _context2.t0 = _context2["catch"](1);
                 _this2.loadingAcc = false;
+                console.log(_context2.t0.response);
 
-                _this2.$toasted.show("Something went wrong : " + _context2.t0, {
+                _this2.$toasted.show("Something went wrong : " + _context2.t0.response.data.message, {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
@@ -9343,18 +8846,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _this2.theErrors = _context2.t0.response.data;
 
-              case 14:
-                _context2.next = 29;
+              case 15:
+                _context2.next = 30;
                 break;
 
-              case 16:
-                _context2.prev = 16;
+              case 17:
+                _context2.prev = 17;
                 _this2.loadingAcc = true;
                 _formdata = new FormData();
 
                 _formdata.append('note_decline', _this2.note_decline);
 
-                _context2.next = 22;
+                _context2.next = 23;
                 return axios.post('/api/declinejournal/' + _this2.$route.params.token, _formdata, {
                   headers: {
                     'Authorization': 'Bearer ' + _this2.auth.token
@@ -9383,13 +8886,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   });
                 });
 
-              case 22:
-                _context2.next = 29;
+              case 23:
+                _context2.next = 30;
                 break;
 
-              case 24:
-                _context2.prev = 24;
-                _context2.t1 = _context2["catch"](16);
+              case 25:
+                _context2.prev = 25;
+                _context2.t1 = _context2["catch"](17);
                 _this2.loadingAcc = false;
 
                 _this2.$toasted.show("Something went wrong : " + _context2.t1, {
@@ -9400,12 +8903,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _this2.theErrors = _context2.t1.response.data;
 
-              case 29:
+              case 30:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[1, 9], [16, 24]]);
+        }, _callee2, null, [[1, 9], [17, 25]]);
       }))();
     }
   }
@@ -11556,6 +11059,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['auth'],
@@ -11597,6 +11110,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 if (responseCreate.status == 201) {
                   _this.bankCreate.name = '';
                   _this.bankCreate.account_number = '';
+                  _this.bankCreate.balance = '';
                   _this.theErrors = [];
 
                   _this.$router.push({
@@ -11967,6 +11481,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
 //
 //
 //
@@ -43885,1119 +43400,633 @@ var render = function () {
       _c("div", { staticClass: "container-fluid" }, [
         _vm._m(0),
         _vm._v(" "),
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-md-6 col-xl-3" }, [
-            _c("div", { staticClass: "card" }, [
-              _c("div", { staticClass: "card-body" }, [
-                _c(
-                  "div",
-                  {
-                    staticClass: "float-end mt-2",
-                    staticStyle: { position: "relative" },
-                  },
-                  [
-                    _c(
-                      "div",
-                      {
-                        staticStyle: { "min-height": "46px" },
-                        attrs: { id: "orders-chart" },
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "apexcharts-canvas apexcharts3a6zad0c apexcharts-theme-light",
-                            staticStyle: { width: "45px", height: "46px" },
-                            attrs: { id: "apexcharts3a6zad0c" },
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
-                                staticClass: "apexcharts-svg",
-                                staticStyle: { background: "transparent" },
-                                attrs: {
-                                  id: "SvgjsSvg1048",
-                                  width: "45",
-                                  height: "46",
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  version: "1.1",
-                                  "xmlns:xlink": "http://www.w3.org/1999/xlink",
-                                  "xmlns:svgjs": "http://svgjs.com/svgjs",
-                                  "xmlns:data": "ApexChartsNS",
-                                  transform: "translate(0, 0)",
-                                },
-                              },
-                              [
-                                _c(
-                                  "g",
-                                  {
-                                    staticClass:
-                                      "apexcharts-inner apexcharts-graphical",
-                                    attrs: {
-                                      id: "SvgjsG1050",
-                                      transform: "translate(0, 0)",
-                                    },
+        _c(
+          "div",
+          { staticClass: "row" },
+          [
+            _c("div", { staticClass: "col-md-6 col-xl-3" }, [
+              _c("div", { staticClass: "card" }, [
+                _c("div", { staticClass: "card-body" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "float-end mt-2",
+                      staticStyle: { position: "relative" },
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticStyle: { "min-height": "46px" },
+                          attrs: { id: "orders-chart" },
+                        },
+                        [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "apexcharts-canvas apexcharts3a6zad0c apexcharts-theme-light",
+                              staticStyle: { width: "45px", height: "46px" },
+                              attrs: { id: "apexcharts3a6zad0c" },
+                            },
+                            [
+                              _c(
+                                "svg",
+                                {
+                                  staticClass: "apexcharts-svg",
+                                  staticStyle: { background: "transparent" },
+                                  attrs: {
+                                    id: "SvgjsSvg1048",
+                                    width: "45",
+                                    height: "46",
+                                    xmlns: "http://www.w3.org/2000/svg",
+                                    version: "1.1",
+                                    "xmlns:xlink":
+                                      "http://www.w3.org/1999/xlink",
+                                    "xmlns:svgjs": "http://svgjs.com/svgjs",
+                                    "xmlns:data": "ApexChartsNS",
+                                    transform: "translate(0, 0)",
                                   },
-                                  [
-                                    _c(
-                                      "defs",
-                                      { attrs: { id: "SvgjsDefs1049" } },
-                                      [
-                                        _c(
-                                          "clipPath",
-                                          {
-                                            attrs: {
-                                              id: "gridRectMask3a6zad0c",
-                                            },
-                                          },
-                                          [
-                                            _c("rect", {
-                                              attrs: {
-                                                id: "SvgjsRect1052",
-                                                width: "51",
-                                                height: "47",
-                                                x: "-3",
-                                                y: "-1",
-                                                rx: "0",
-                                                ry: "0",
-                                                opacity: "1",
-                                                "stroke-width": "0",
-                                                stroke: "none",
-                                                "stroke-dasharray": "0",
-                                                fill: "#fff",
-                                              },
-                                            }),
-                                          ]
-                                        ),
-                                        _c(
-                                          "clipPath",
-                                          {
-                                            attrs: {
-                                              id: "gridRectMarkerMask3a6zad0c",
-                                            },
-                                          },
-                                          [
-                                            _c("rect", {
-                                              attrs: {
-                                                id: "SvgjsRect1053",
-                                                width: "49",
-                                                height: "49",
-                                                x: "-2",
-                                                y: "-2",
-                                                rx: "0",
-                                                ry: "0",
-                                                opacity: "1",
-                                                "stroke-width": "0",
-                                                stroke: "none",
-                                                "stroke-dasharray": "0",
-                                                fill: "#fff",
-                                              },
-                                            }),
-                                          ]
-                                        ),
-                                      ]
-                                    ),
-                                    _c(
-                                      "g",
-                                      {
-                                        staticClass: "apexcharts-radialbar",
-                                        attrs: { id: "SvgjsG1054" },
-                                      },
-                                      [
-                                        _c(
-                                          "g",
-                                          { attrs: { id: "SvgjsG1055" } },
-                                          [
-                                            _c(
-                                              "g",
-                                              {
-                                                staticClass:
-                                                  "apexcharts-tracks",
-                                                attrs: { id: "SvgjsG1056" },
-                                              },
-                                              [
-                                                _c(
-                                                  "g",
-                                                  {
-                                                    staticClass:
-                                                      "apexcharts-radialbar-track apexcharts-track",
-                                                    attrs: {
-                                                      id: "SvgjsG1057",
-                                                      rel: "1",
-                                                    },
-                                                  },
-                                                  [
-                                                    _c("path", {
-                                                      staticClass:
-                                                        "apexcharts-radialbar-area",
-                                                      attrs: {
-                                                        id: "apexcharts-radialbarTrack-0",
-                                                        d: "M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 22.497318152626402 7.134146575498747",
-                                                        fill: "none",
-                                                        "fill-opacity": "1",
-                                                        stroke:
-                                                          "rgba(242,242,242,0.85)",
-                                                        "stroke-opacity": "1",
-                                                        "stroke-linecap":
-                                                          "butt",
-                                                        "stroke-width":
-                                                          "4.258536585365854",
-                                                        "stroke-dasharray": "0",
-                                                        "data:pathOrig":
-                                                          "M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 22.497318152626402 7.134146575498747",
-                                                      },
-                                                    }),
-                                                  ]
-                                                ),
-                                              ]
-                                            ),
-                                            _c(
-                                              "g",
-                                              { attrs: { id: "SvgjsG1059" } },
-                                              [
-                                                _c(
-                                                  "g",
-                                                  {
-                                                    staticClass:
-                                                      "apexcharts-series apexcharts-radial-series",
-                                                    attrs: {
-                                                      id: "SvgjsG1061",
-                                                      seriesName: "seriesx1",
-                                                      rel: "1",
-                                                      "data:realIndex": "0",
-                                                    },
-                                                  },
-                                                  [
-                                                    _c("path", {
-                                                      staticClass:
-                                                        "apexcharts-radialbar-area apexcharts-radialbar-slice-0",
-                                                      attrs: {
-                                                        id: "SvgjsPath1062",
-                                                        d: "M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 7.886204749611055 27.248309913566267",
-                                                        fill: "none",
-                                                        "fill-opacity": "0.85",
-                                                        stroke:
-                                                          "rgba(52,195,143,0.85)",
-                                                        "stroke-opacity": "1",
-                                                        "stroke-linecap":
-                                                          "butt",
-                                                        "stroke-width":
-                                                          "4.390243902439025",
-                                                        "stroke-dasharray": "0",
-                                                        "data:angle": "252",
-                                                        "data:value": "70",
-                                                        index: "0",
-                                                        j: "0",
-                                                        "data:pathOrig":
-                                                          "M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 7.886204749611055 27.248309913566267",
-                                                      },
-                                                    }),
-                                                  ]
-                                                ),
-                                                _c("circle", {
-                                                  staticClass:
-                                                    "apexcharts-radialbar-hollow",
-                                                  attrs: {
-                                                    id: "SvgjsCircle1060",
-                                                    r: "13.23658536585366",
-                                                    cx: "22.5",
-                                                    cy: "22.5",
-                                                    fill: "transparent",
-                                                  },
-                                                }),
-                                              ]
-                                            ),
-                                          ]
-                                        ),
-                                      ]
-                                    ),
-                                    _c("line", {
-                                      staticClass: "apexcharts-ycrosshairs",
-                                      attrs: {
-                                        id: "SvgjsLine1063",
-                                        x1: "0",
-                                        y1: "0",
-                                        x2: "45",
-                                        y2: "0",
-                                        stroke: "#b6b6b6",
-                                        "stroke-dasharray": "0",
-                                        "stroke-width": "1",
-                                      },
-                                    }),
-                                    _c("line", {
+                                },
+                                [
+                                  _c(
+                                    "g",
+                                    {
                                       staticClass:
-                                        "apexcharts-ycrosshairs-hidden",
+                                        "apexcharts-inner apexcharts-graphical",
                                       attrs: {
-                                        id: "SvgjsLine1064",
-                                        x1: "0",
-                                        y1: "0",
-                                        x2: "45",
-                                        y2: "0",
-                                        "stroke-dasharray": "0",
-                                        "stroke-width": "0",
+                                        id: "SvgjsG1050",
+                                        transform: "translate(0, 0)",
                                       },
-                                    }),
-                                  ]
-                                ),
-                                _c("g", {
-                                  staticClass: "apexcharts-annotations",
-                                  attrs: { id: "SvgjsG1051" },
-                                }),
-                              ]
-                            ),
-                            _c("div", { staticClass: "apexcharts-legend" }),
-                          ]
-                        ),
-                      ]
-                    ),
+                                    },
+                                    [
+                                      _c(
+                                        "defs",
+                                        { attrs: { id: "SvgjsDefs1049" } },
+                                        [
+                                          _c(
+                                            "clipPath",
+                                            {
+                                              attrs: {
+                                                id: "gridRectMask3a6zad0c",
+                                              },
+                                            },
+                                            [
+                                              _c("rect", {
+                                                attrs: {
+                                                  id: "SvgjsRect1052",
+                                                  width: "51",
+                                                  height: "47",
+                                                  x: "-3",
+                                                  y: "-1",
+                                                  rx: "0",
+                                                  ry: "0",
+                                                  opacity: "1",
+                                                  "stroke-width": "0",
+                                                  stroke: "none",
+                                                  "stroke-dasharray": "0",
+                                                  fill: "#fff",
+                                                },
+                                              }),
+                                            ]
+                                          ),
+                                          _c(
+                                            "clipPath",
+                                            {
+                                              attrs: {
+                                                id: "gridRectMarkerMask3a6zad0c",
+                                              },
+                                            },
+                                            [
+                                              _c("rect", {
+                                                attrs: {
+                                                  id: "SvgjsRect1053",
+                                                  width: "49",
+                                                  height: "49",
+                                                  x: "-2",
+                                                  y: "-2",
+                                                  rx: "0",
+                                                  ry: "0",
+                                                  opacity: "1",
+                                                  "stroke-width": "0",
+                                                  stroke: "none",
+                                                  "stroke-dasharray": "0",
+                                                  fill: "#fff",
+                                                },
+                                              }),
+                                            ]
+                                          ),
+                                        ]
+                                      ),
+                                      _c(
+                                        "g",
+                                        {
+                                          staticClass: "apexcharts-radialbar",
+                                          attrs: { id: "SvgjsG1054" },
+                                        },
+                                        [
+                                          _c(
+                                            "g",
+                                            { attrs: { id: "SvgjsG1055" } },
+                                            [
+                                              _c(
+                                                "g",
+                                                {
+                                                  staticClass:
+                                                    "apexcharts-tracks",
+                                                  attrs: { id: "SvgjsG1056" },
+                                                },
+                                                [
+                                                  _c(
+                                                    "g",
+                                                    {
+                                                      staticClass:
+                                                        "apexcharts-radialbar-track apexcharts-track",
+                                                      attrs: {
+                                                        id: "SvgjsG1057",
+                                                        rel: "1",
+                                                      },
+                                                    },
+                                                    [
+                                                      _c("path", {
+                                                        staticClass:
+                                                          "apexcharts-radialbar-area",
+                                                        attrs: {
+                                                          id: "apexcharts-radialbarTrack-0",
+                                                          d: "M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 22.497318152626402 7.134146575498747",
+                                                          fill: "none",
+                                                          "fill-opacity": "1",
+                                                          stroke:
+                                                            "rgba(242,242,242,0.85)",
+                                                          "stroke-opacity": "1",
+                                                          "stroke-linecap":
+                                                            "butt",
+                                                          "stroke-width":
+                                                            "4.258536585365854",
+                                                          "stroke-dasharray":
+                                                            "0",
+                                                          "data:pathOrig":
+                                                            "M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 22.497318152626402 7.134146575498747",
+                                                        },
+                                                      }),
+                                                    ]
+                                                  ),
+                                                ]
+                                              ),
+                                              _c(
+                                                "g",
+                                                { attrs: { id: "SvgjsG1059" } },
+                                                [
+                                                  _c(
+                                                    "g",
+                                                    {
+                                                      staticClass:
+                                                        "apexcharts-series apexcharts-radial-series",
+                                                      attrs: {
+                                                        id: "SvgjsG1061",
+                                                        seriesName: "seriesx1",
+                                                        rel: "1",
+                                                        "data:realIndex": "0",
+                                                      },
+                                                    },
+                                                    [
+                                                      _c("path", {
+                                                        staticClass:
+                                                          "apexcharts-radialbar-area apexcharts-radialbar-slice-0",
+                                                        attrs: {
+                                                          id: "SvgjsPath1062",
+                                                          d: "M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 7.886204749611055 27.248309913566267",
+                                                          fill: "none",
+                                                          "fill-opacity":
+                                                            "0.85",
+                                                          stroke:
+                                                            "rgba(52,195,143,0.85)",
+                                                          "stroke-opacity": "1",
+                                                          "stroke-linecap":
+                                                            "butt",
+                                                          "stroke-width":
+                                                            "4.390243902439025",
+                                                          "stroke-dasharray":
+                                                            "0",
+                                                          "data:angle": "252",
+                                                          "data:value": "70",
+                                                          index: "0",
+                                                          j: "0",
+                                                          "data:pathOrig":
+                                                            "M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 7.886204749611055 27.248309913566267",
+                                                        },
+                                                      }),
+                                                    ]
+                                                  ),
+                                                  _c("circle", {
+                                                    staticClass:
+                                                      "apexcharts-radialbar-hollow",
+                                                    attrs: {
+                                                      id: "SvgjsCircle1060",
+                                                      r: "13.23658536585366",
+                                                      cx: "22.5",
+                                                      cy: "22.5",
+                                                      fill: "transparent",
+                                                    },
+                                                  }),
+                                                ]
+                                              ),
+                                            ]
+                                          ),
+                                        ]
+                                      ),
+                                      _c("line", {
+                                        staticClass: "apexcharts-ycrosshairs",
+                                        attrs: {
+                                          id: "SvgjsLine1063",
+                                          x1: "0",
+                                          y1: "0",
+                                          x2: "45",
+                                          y2: "0",
+                                          stroke: "#b6b6b6",
+                                          "stroke-dasharray": "0",
+                                          "stroke-width": "1",
+                                        },
+                                      }),
+                                      _c("line", {
+                                        staticClass:
+                                          "apexcharts-ycrosshairs-hidden",
+                                        attrs: {
+                                          id: "SvgjsLine1064",
+                                          x1: "0",
+                                          y1: "0",
+                                          x2: "45",
+                                          y2: "0",
+                                          "stroke-dasharray": "0",
+                                          "stroke-width": "0",
+                                        },
+                                      }),
+                                    ]
+                                  ),
+                                  _c("g", {
+                                    staticClass: "apexcharts-annotations",
+                                    attrs: { id: "SvgjsG1051" },
+                                  }),
+                                ]
+                              ),
+                              _c("div", { staticClass: "apexcharts-legend" }),
+                            ]
+                          ),
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _vm._m(1),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("h4", { staticClass: "mb-1 mt-1" }, [
+                      _c("span", { attrs: { "data-plugin": "counterup" } }, [
+                        _vm._v("Rp " + _vm._s(_vm.dashboard.totaluang)),
+                      ]),
+                    ]),
                     _vm._v(" "),
-                    _vm._m(1),
-                  ]
-                ),
-                _vm._v(" "),
-                _vm._m(2),
-                _vm._v(" "),
-                _vm._m(3),
+                    _c("p", { staticClass: "text-muted mb-0" }, [
+                      _vm._v("Total Uang"),
+                    ]),
+                  ]),
+                ]),
               ]),
             ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-6 col-xl-3" }, [
-            _c("div", { staticClass: "card" }, [
-              _c("div", { staticClass: "card-body" }, [
-                _c(
-                  "div",
-                  {
-                    staticClass: "float-end mt-2",
-                    staticStyle: { position: "relative" },
-                  },
-                  [
-                    _c(
-                      "div",
-                      {
-                        staticStyle: { "min-height": "46px" },
-                        attrs: { id: "orders-chart" },
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "apexcharts-canvas apexcharts3a6zad0c apexcharts-theme-light",
-                            staticStyle: { width: "45px", height: "46px" },
-                            attrs: { id: "apexcharts3a6zad0c" },
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
-                                staticClass: "apexcharts-svg",
-                                staticStyle: { background: "transparent" },
-                                attrs: {
-                                  id: "SvgjsSvg1048",
-                                  width: "45",
-                                  height: "46",
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  version: "1.1",
-                                  "xmlns:xlink": "http://www.w3.org/1999/xlink",
-                                  "xmlns:svgjs": "http://svgjs.com/svgjs",
-                                  "xmlns:data": "ApexChartsNS",
-                                  transform: "translate(0, 0)",
-                                },
-                              },
-                              [
-                                _c(
-                                  "g",
-                                  {
-                                    staticClass:
-                                      "apexcharts-inner apexcharts-graphical",
-                                    attrs: {
-                                      id: "SvgjsG1050",
-                                      transform: "translate(0, 0)",
-                                    },
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-6 col-xl-3" }, [
+              _c("div", { staticClass: "card" }, [
+                _c("div", { staticClass: "card-body" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "float-end mt-2",
+                      staticStyle: { position: "relative" },
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticStyle: { "min-height": "46px" },
+                          attrs: { id: "orders-chart" },
+                        },
+                        [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "apexcharts-canvas apexcharts3a6zad0c apexcharts-theme-light",
+                              staticStyle: { width: "45px", height: "46px" },
+                              attrs: { id: "apexcharts3a6zad0c" },
+                            },
+                            [
+                              _c(
+                                "svg",
+                                {
+                                  staticClass: "apexcharts-svg",
+                                  staticStyle: { background: "transparent" },
+                                  attrs: {
+                                    id: "SvgjsSvg1048",
+                                    width: "45",
+                                    height: "46",
+                                    xmlns: "http://www.w3.org/2000/svg",
+                                    version: "1.1",
+                                    "xmlns:xlink":
+                                      "http://www.w3.org/1999/xlink",
+                                    "xmlns:svgjs": "http://svgjs.com/svgjs",
+                                    "xmlns:data": "ApexChartsNS",
+                                    transform: "translate(0, 0)",
                                   },
-                                  [
-                                    _c(
-                                      "defs",
-                                      { attrs: { id: "SvgjsDefs1049" } },
-                                      [
-                                        _c(
-                                          "clipPath",
-                                          {
-                                            attrs: {
-                                              id: "gridRectMask3a6zad0c",
-                                            },
-                                          },
-                                          [
-                                            _c("rect", {
-                                              attrs: {
-                                                id: "SvgjsRect1052",
-                                                width: "51",
-                                                height: "47",
-                                                x: "-3",
-                                                y: "-1",
-                                                rx: "0",
-                                                ry: "0",
-                                                opacity: "1",
-                                                "stroke-width": "0",
-                                                stroke: "none",
-                                                "stroke-dasharray": "0",
-                                                fill: "#fff",
-                                              },
-                                            }),
-                                          ]
-                                        ),
-                                        _c(
-                                          "clipPath",
-                                          {
-                                            attrs: {
-                                              id: "gridRectMarkerMask3a6zad0c",
-                                            },
-                                          },
-                                          [
-                                            _c("rect", {
-                                              attrs: {
-                                                id: "SvgjsRect1053",
-                                                width: "49",
-                                                height: "49",
-                                                x: "-2",
-                                                y: "-2",
-                                                rx: "0",
-                                                ry: "0",
-                                                opacity: "1",
-                                                "stroke-width": "0",
-                                                stroke: "none",
-                                                "stroke-dasharray": "0",
-                                                fill: "#fff",
-                                              },
-                                            }),
-                                          ]
-                                        ),
-                                      ]
-                                    ),
-                                    _c(
-                                      "g",
-                                      {
-                                        staticClass: "apexcharts-radialbar",
-                                        attrs: { id: "SvgjsG1054" },
-                                      },
-                                      [
-                                        _c(
-                                          "g",
-                                          { attrs: { id: "SvgjsG1055" } },
-                                          [
-                                            _c(
-                                              "g",
-                                              {
-                                                staticClass:
-                                                  "apexcharts-tracks",
-                                                attrs: { id: "SvgjsG1056" },
-                                              },
-                                              [
-                                                _c(
-                                                  "g",
-                                                  {
-                                                    staticClass:
-                                                      "apexcharts-radialbar-track apexcharts-track",
-                                                    attrs: {
-                                                      id: "SvgjsG1057",
-                                                      rel: "1",
-                                                    },
-                                                  },
-                                                  [
-                                                    _c("path", {
-                                                      staticClass:
-                                                        "apexcharts-radialbar-area",
-                                                      attrs: {
-                                                        id: "apexcharts-radialbarTrack-0",
-                                                        d: "M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 22.497318152626402 7.134146575498747",
-                                                        fill: "none",
-                                                        "fill-opacity": "1",
-                                                        stroke:
-                                                          "rgba(242,242,242,0.85)",
-                                                        "stroke-opacity": "1",
-                                                        "stroke-linecap":
-                                                          "butt",
-                                                        "stroke-width":
-                                                          "4.258536585365854",
-                                                        "stroke-dasharray": "0",
-                                                        "data:pathOrig":
-                                                          "M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 22.497318152626402 7.134146575498747",
-                                                      },
-                                                    }),
-                                                  ]
-                                                ),
-                                              ]
-                                            ),
-                                            _c(
-                                              "g",
-                                              { attrs: { id: "SvgjsG1059" } },
-                                              [
-                                                _c(
-                                                  "g",
-                                                  {
-                                                    staticClass:
-                                                      "apexcharts-series apexcharts-radial-series",
-                                                    attrs: {
-                                                      id: "SvgjsG1061",
-                                                      seriesName: "seriesx1",
-                                                      rel: "1",
-                                                      "data:realIndex": "0",
-                                                    },
-                                                  },
-                                                  [
-                                                    _c("path", {
-                                                      staticClass:
-                                                        "apexcharts-radialbar-area apexcharts-radialbar-slice-0",
-                                                      attrs: {
-                                                        id: "SvgjsPath1062",
-                                                        d: "M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 7.886204749611055 27.248309913566267",
-                                                        fill: "none",
-                                                        "fill-opacity": "0.85",
-                                                        stroke:
-                                                          "rgba(52,195,143,0.85)",
-                                                        "stroke-opacity": "1",
-                                                        "stroke-linecap":
-                                                          "butt",
-                                                        "stroke-width":
-                                                          "4.390243902439025",
-                                                        "stroke-dasharray": "0",
-                                                        "data:angle": "252",
-                                                        "data:value": "70",
-                                                        index: "0",
-                                                        j: "0",
-                                                        "data:pathOrig":
-                                                          "M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 7.886204749611055 27.248309913566267",
-                                                      },
-                                                    }),
-                                                  ]
-                                                ),
-                                                _c("circle", {
-                                                  staticClass:
-                                                    "apexcharts-radialbar-hollow",
-                                                  attrs: {
-                                                    id: "SvgjsCircle1060",
-                                                    r: "13.23658536585366",
-                                                    cx: "22.5",
-                                                    cy: "22.5",
-                                                    fill: "transparent",
-                                                  },
-                                                }),
-                                              ]
-                                            ),
-                                          ]
-                                        ),
-                                      ]
-                                    ),
-                                    _c("line", {
-                                      staticClass: "apexcharts-ycrosshairs",
-                                      attrs: {
-                                        id: "SvgjsLine1063",
-                                        x1: "0",
-                                        y1: "0",
-                                        x2: "45",
-                                        y2: "0",
-                                        stroke: "#b6b6b6",
-                                        "stroke-dasharray": "0",
-                                        "stroke-width": "1",
-                                      },
-                                    }),
-                                    _c("line", {
+                                },
+                                [
+                                  _c(
+                                    "g",
+                                    {
                                       staticClass:
-                                        "apexcharts-ycrosshairs-hidden",
+                                        "apexcharts-inner apexcharts-graphical",
                                       attrs: {
-                                        id: "SvgjsLine1064",
-                                        x1: "0",
-                                        y1: "0",
-                                        x2: "45",
-                                        y2: "0",
-                                        "stroke-dasharray": "0",
-                                        "stroke-width": "0",
+                                        id: "SvgjsG1050",
+                                        transform: "translate(0, 0)",
                                       },
-                                    }),
-                                  ]
-                                ),
-                                _c("g", {
-                                  staticClass: "apexcharts-annotations",
-                                  attrs: { id: "SvgjsG1051" },
-                                }),
-                              ]
-                            ),
-                            _c("div", { staticClass: "apexcharts-legend" }),
-                          ]
-                        ),
-                      ]
-                    ),
+                                    },
+                                    [
+                                      _c(
+                                        "defs",
+                                        { attrs: { id: "SvgjsDefs1049" } },
+                                        [
+                                          _c(
+                                            "clipPath",
+                                            {
+                                              attrs: {
+                                                id: "gridRectMask3a6zad0c",
+                                              },
+                                            },
+                                            [
+                                              _c("rect", {
+                                                attrs: {
+                                                  id: "SvgjsRect1052",
+                                                  width: "51",
+                                                  height: "47",
+                                                  x: "-3",
+                                                  y: "-1",
+                                                  rx: "0",
+                                                  ry: "0",
+                                                  opacity: "1",
+                                                  "stroke-width": "0",
+                                                  stroke: "none",
+                                                  "stroke-dasharray": "0",
+                                                  fill: "#fff",
+                                                },
+                                              }),
+                                            ]
+                                          ),
+                                          _c(
+                                            "clipPath",
+                                            {
+                                              attrs: {
+                                                id: "gridRectMarkerMask3a6zad0c",
+                                              },
+                                            },
+                                            [
+                                              _c("rect", {
+                                                attrs: {
+                                                  id: "SvgjsRect1053",
+                                                  width: "49",
+                                                  height: "49",
+                                                  x: "-2",
+                                                  y: "-2",
+                                                  rx: "0",
+                                                  ry: "0",
+                                                  opacity: "1",
+                                                  "stroke-width": "0",
+                                                  stroke: "none",
+                                                  "stroke-dasharray": "0",
+                                                  fill: "#fff",
+                                                },
+                                              }),
+                                            ]
+                                          ),
+                                        ]
+                                      ),
+                                      _c(
+                                        "g",
+                                        {
+                                          staticClass: "apexcharts-radialbar",
+                                          attrs: { id: "SvgjsG1054" },
+                                        },
+                                        [
+                                          _c(
+                                            "g",
+                                            { attrs: { id: "SvgjsG1055" } },
+                                            [
+                                              _c(
+                                                "g",
+                                                {
+                                                  staticClass:
+                                                    "apexcharts-tracks",
+                                                  attrs: { id: "SvgjsG1056" },
+                                                },
+                                                [
+                                                  _c(
+                                                    "g",
+                                                    {
+                                                      staticClass:
+                                                        "apexcharts-radialbar-track apexcharts-track",
+                                                      attrs: {
+                                                        id: "SvgjsG1057",
+                                                        rel: "1",
+                                                      },
+                                                    },
+                                                    [
+                                                      _c("path", {
+                                                        staticClass:
+                                                          "apexcharts-radialbar-area",
+                                                        attrs: {
+                                                          id: "apexcharts-radialbarTrack-0",
+                                                          d: "M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 22.497318152626402 7.134146575498747",
+                                                          fill: "none",
+                                                          "fill-opacity": "1",
+                                                          stroke:
+                                                            "rgba(242,242,242,0.85)",
+                                                          "stroke-opacity": "1",
+                                                          "stroke-linecap":
+                                                            "butt",
+                                                          "stroke-width":
+                                                            "4.258536585365854",
+                                                          "stroke-dasharray":
+                                                            "0",
+                                                          "data:pathOrig":
+                                                            "M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 22.497318152626402 7.134146575498747",
+                                                        },
+                                                      }),
+                                                    ]
+                                                  ),
+                                                ]
+                                              ),
+                                              _c(
+                                                "g",
+                                                { attrs: { id: "SvgjsG1059" } },
+                                                [
+                                                  _c(
+                                                    "g",
+                                                    {
+                                                      staticClass:
+                                                        "apexcharts-series apexcharts-radial-series",
+                                                      attrs: {
+                                                        id: "SvgjsG1061",
+                                                        seriesName: "seriesx1",
+                                                        rel: "1",
+                                                        "data:realIndex": "0",
+                                                      },
+                                                    },
+                                                    [
+                                                      _c("path", {
+                                                        staticClass:
+                                                          "apexcharts-radialbar-area apexcharts-radialbar-slice-0",
+                                                        attrs: {
+                                                          id: "SvgjsPath1062",
+                                                          d: "M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 7.886204749611055 27.248309913566267",
+                                                          fill: "none",
+                                                          "fill-opacity":
+                                                            "0.85",
+                                                          stroke:
+                                                            "rgba(52,195,143,0.85)",
+                                                          "stroke-opacity": "1",
+                                                          "stroke-linecap":
+                                                            "butt",
+                                                          "stroke-width":
+                                                            "4.390243902439025",
+                                                          "stroke-dasharray":
+                                                            "0",
+                                                          "data:angle": "252",
+                                                          "data:value": "70",
+                                                          index: "0",
+                                                          j: "0",
+                                                          "data:pathOrig":
+                                                            "M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 7.886204749611055 27.248309913566267",
+                                                        },
+                                                      }),
+                                                    ]
+                                                  ),
+                                                  _c("circle", {
+                                                    staticClass:
+                                                      "apexcharts-radialbar-hollow",
+                                                    attrs: {
+                                                      id: "SvgjsCircle1060",
+                                                      r: "13.23658536585366",
+                                                      cx: "22.5",
+                                                      cy: "22.5",
+                                                      fill: "transparent",
+                                                    },
+                                                  }),
+                                                ]
+                                              ),
+                                            ]
+                                          ),
+                                        ]
+                                      ),
+                                      _c("line", {
+                                        staticClass: "apexcharts-ycrosshairs",
+                                        attrs: {
+                                          id: "SvgjsLine1063",
+                                          x1: "0",
+                                          y1: "0",
+                                          x2: "45",
+                                          y2: "0",
+                                          stroke: "#b6b6b6",
+                                          "stroke-dasharray": "0",
+                                          "stroke-width": "1",
+                                        },
+                                      }),
+                                      _c("line", {
+                                        staticClass:
+                                          "apexcharts-ycrosshairs-hidden",
+                                        attrs: {
+                                          id: "SvgjsLine1064",
+                                          x1: "0",
+                                          y1: "0",
+                                          x2: "45",
+                                          y2: "0",
+                                          "stroke-dasharray": "0",
+                                          "stroke-width": "0",
+                                        },
+                                      }),
+                                    ]
+                                  ),
+                                  _c("g", {
+                                    staticClass: "apexcharts-annotations",
+                                    attrs: { id: "SvgjsG1051" },
+                                  }),
+                                ]
+                              ),
+                              _c("div", { staticClass: "apexcharts-legend" }),
+                            ]
+                          ),
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _vm._m(2),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("h4", { staticClass: "mb-1 mt-1" }, [
+                      _c("span", { attrs: { "data-plugin": "counterup" } }, [
+                        _vm._v(_vm._s(_vm.dashboard.jumlahjurnal)),
+                      ]),
+                    ]),
                     _vm._v(" "),
-                    _vm._m(4),
-                  ]
-                ),
-                _vm._v(" "),
-                _vm._m(5),
-                _vm._v(" "),
-                _vm._m(6),
+                    _c("p", { staticClass: "text-muted mb-0" }, [
+                      _vm._v("Total Jurnal"),
+                    ]),
+                  ]),
+                ]),
               ]),
             ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-6 col-xl-3" }, [
-            _c("div", { staticClass: "card" }, [
-              _c("div", { staticClass: "card-body" }, [
-                _c(
-                  "div",
-                  {
-                    staticClass: "float-end mt-2",
-                    staticStyle: { position: "relative" },
-                  },
-                  [
-                    _c(
-                      "div",
-                      {
-                        staticStyle: { "min-height": "46px" },
-                        attrs: { id: "orders-chart" },
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "apexcharts-canvas apexcharts3a6zad0c apexcharts-theme-light",
-                            staticStyle: { width: "45px", height: "46px" },
-                            attrs: { id: "apexcharts3a6zad0c" },
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
-                                staticClass: "apexcharts-svg",
-                                staticStyle: { background: "transparent" },
-                                attrs: {
-                                  id: "SvgjsSvg1048",
-                                  width: "45",
-                                  height: "46",
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  version: "1.1",
-                                  "xmlns:xlink": "http://www.w3.org/1999/xlink",
-                                  "xmlns:svgjs": "http://svgjs.com/svgjs",
-                                  "xmlns:data": "ApexChartsNS",
-                                  transform: "translate(0, 0)",
-                                },
-                              },
-                              [
-                                _c(
-                                  "g",
-                                  {
-                                    staticClass:
-                                      "apexcharts-inner apexcharts-graphical",
-                                    attrs: {
-                                      id: "SvgjsG1050",
-                                      transform: "translate(0, 0)",
-                                    },
-                                  },
-                                  [
-                                    _c(
-                                      "defs",
-                                      { attrs: { id: "SvgjsDefs1049" } },
-                                      [
-                                        _c(
-                                          "clipPath",
-                                          {
-                                            attrs: {
-                                              id: "gridRectMask3a6zad0c",
-                                            },
-                                          },
-                                          [
-                                            _c("rect", {
-                                              attrs: {
-                                                id: "SvgjsRect1052",
-                                                width: "51",
-                                                height: "47",
-                                                x: "-3",
-                                                y: "-1",
-                                                rx: "0",
-                                                ry: "0",
-                                                opacity: "1",
-                                                "stroke-width": "0",
-                                                stroke: "none",
-                                                "stroke-dasharray": "0",
-                                                fill: "#fff",
-                                              },
-                                            }),
-                                          ]
-                                        ),
-                                        _c(
-                                          "clipPath",
-                                          {
-                                            attrs: {
-                                              id: "gridRectMarkerMask3a6zad0c",
-                                            },
-                                          },
-                                          [
-                                            _c("rect", {
-                                              attrs: {
-                                                id: "SvgjsRect1053",
-                                                width: "49",
-                                                height: "49",
-                                                x: "-2",
-                                                y: "-2",
-                                                rx: "0",
-                                                ry: "0",
-                                                opacity: "1",
-                                                "stroke-width": "0",
-                                                stroke: "none",
-                                                "stroke-dasharray": "0",
-                                                fill: "#fff",
-                                              },
-                                            }),
-                                          ]
-                                        ),
-                                      ]
-                                    ),
-                                    _c(
-                                      "g",
-                                      {
-                                        staticClass: "apexcharts-radialbar",
-                                        attrs: { id: "SvgjsG1054" },
-                                      },
-                                      [
-                                        _c(
-                                          "g",
-                                          { attrs: { id: "SvgjsG1055" } },
-                                          [
-                                            _c(
-                                              "g",
-                                              {
-                                                staticClass:
-                                                  "apexcharts-tracks",
-                                                attrs: { id: "SvgjsG1056" },
-                                              },
-                                              [
-                                                _c(
-                                                  "g",
-                                                  {
-                                                    staticClass:
-                                                      "apexcharts-radialbar-track apexcharts-track",
-                                                    attrs: {
-                                                      id: "SvgjsG1057",
-                                                      rel: "1",
-                                                    },
-                                                  },
-                                                  [
-                                                    _c("path", {
-                                                      staticClass:
-                                                        "apexcharts-radialbar-area",
-                                                      attrs: {
-                                                        id: "apexcharts-radialbarTrack-0",
-                                                        d: "M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 22.497318152626402 7.134146575498747",
-                                                        fill: "none",
-                                                        "fill-opacity": "1",
-                                                        stroke:
-                                                          "rgba(242,242,242,0.85)",
-                                                        "stroke-opacity": "1",
-                                                        "stroke-linecap":
-                                                          "butt",
-                                                        "stroke-width":
-                                                          "4.258536585365854",
-                                                        "stroke-dasharray": "0",
-                                                        "data:pathOrig":
-                                                          "M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 22.497318152626402 7.134146575498747",
-                                                      },
-                                                    }),
-                                                  ]
-                                                ),
-                                              ]
-                                            ),
-                                            _c(
-                                              "g",
-                                              { attrs: { id: "SvgjsG1059" } },
-                                              [
-                                                _c(
-                                                  "g",
-                                                  {
-                                                    staticClass:
-                                                      "apexcharts-series apexcharts-radial-series",
-                                                    attrs: {
-                                                      id: "SvgjsG1061",
-                                                      seriesName: "seriesx1",
-                                                      rel: "1",
-                                                      "data:realIndex": "0",
-                                                    },
-                                                  },
-                                                  [
-                                                    _c("path", {
-                                                      staticClass:
-                                                        "apexcharts-radialbar-area apexcharts-radialbar-slice-0",
-                                                      attrs: {
-                                                        id: "SvgjsPath1062",
-                                                        d: "M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 7.886204749611055 27.248309913566267",
-                                                        fill: "none",
-                                                        "fill-opacity": "0.85",
-                                                        stroke:
-                                                          "rgba(52,195,143,0.85)",
-                                                        "stroke-opacity": "1",
-                                                        "stroke-linecap":
-                                                          "butt",
-                                                        "stroke-width":
-                                                          "4.390243902439025",
-                                                        "stroke-dasharray": "0",
-                                                        "data:angle": "252",
-                                                        "data:value": "70",
-                                                        index: "0",
-                                                        j: "0",
-                                                        "data:pathOrig":
-                                                          "M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 7.886204749611055 27.248309913566267",
-                                                      },
-                                                    }),
-                                                  ]
-                                                ),
-                                                _c("circle", {
-                                                  staticClass:
-                                                    "apexcharts-radialbar-hollow",
-                                                  attrs: {
-                                                    id: "SvgjsCircle1060",
-                                                    r: "13.23658536585366",
-                                                    cx: "22.5",
-                                                    cy: "22.5",
-                                                    fill: "transparent",
-                                                  },
-                                                }),
-                                              ]
-                                            ),
-                                          ]
-                                        ),
-                                      ]
-                                    ),
-                                    _c("line", {
-                                      staticClass: "apexcharts-ycrosshairs",
-                                      attrs: {
-                                        id: "SvgjsLine1063",
-                                        x1: "0",
-                                        y1: "0",
-                                        x2: "45",
-                                        y2: "0",
-                                        stroke: "#b6b6b6",
-                                        "stroke-dasharray": "0",
-                                        "stroke-width": "1",
-                                      },
-                                    }),
-                                    _c("line", {
-                                      staticClass:
-                                        "apexcharts-ycrosshairs-hidden",
-                                      attrs: {
-                                        id: "SvgjsLine1064",
-                                        x1: "0",
-                                        y1: "0",
-                                        x2: "45",
-                                        y2: "0",
-                                        "stroke-dasharray": "0",
-                                        "stroke-width": "0",
-                                      },
-                                    }),
-                                  ]
-                                ),
-                                _c("g", {
-                                  staticClass: "apexcharts-annotations",
-                                  attrs: { id: "SvgjsG1051" },
-                                }),
-                              ]
-                            ),
-                            _c("div", { staticClass: "apexcharts-legend" }),
-                          ]
-                        ),
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _vm._m(7),
-                  ]
-                ),
-                _vm._v(" "),
-                _vm._m(8),
-                _vm._v(" "),
-                _vm._m(9),
-              ]),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-6 col-xl-3" }, [
-            _c("div", { staticClass: "card" }, [
-              _c("div", { staticClass: "card-body" }, [
-                _c(
-                  "div",
-                  {
-                    staticClass: "float-end mt-2",
-                    staticStyle: { position: "relative" },
-                  },
-                  [
-                    _c(
-                      "div",
-                      {
-                        staticStyle: { "min-height": "46px" },
-                        attrs: { id: "orders-chart" },
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "apexcharts-canvas apexcharts3a6zad0c apexcharts-theme-light",
-                            staticStyle: { width: "45px", height: "46px" },
-                            attrs: { id: "apexcharts3a6zad0c" },
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
-                                staticClass: "apexcharts-svg",
-                                staticStyle: { background: "transparent" },
-                                attrs: {
-                                  id: "SvgjsSvg1048",
-                                  width: "45",
-                                  height: "46",
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  version: "1.1",
-                                  "xmlns:xlink": "http://www.w3.org/1999/xlink",
-                                  "xmlns:svgjs": "http://svgjs.com/svgjs",
-                                  "xmlns:data": "ApexChartsNS",
-                                  transform: "translate(0, 0)",
-                                },
-                              },
-                              [
-                                _c(
-                                  "g",
-                                  {
-                                    staticClass:
-                                      "apexcharts-inner apexcharts-graphical",
-                                    attrs: {
-                                      id: "SvgjsG1050",
-                                      transform: "translate(0, 0)",
-                                    },
-                                  },
-                                  [
-                                    _c(
-                                      "defs",
-                                      { attrs: { id: "SvgjsDefs1049" } },
-                                      [
-                                        _c(
-                                          "clipPath",
-                                          {
-                                            attrs: {
-                                              id: "gridRectMask3a6zad0c",
-                                            },
-                                          },
-                                          [
-                                            _c("rect", {
-                                              attrs: {
-                                                id: "SvgjsRect1052",
-                                                width: "51",
-                                                height: "47",
-                                                x: "-3",
-                                                y: "-1",
-                                                rx: "0",
-                                                ry: "0",
-                                                opacity: "1",
-                                                "stroke-width": "0",
-                                                stroke: "none",
-                                                "stroke-dasharray": "0",
-                                                fill: "#fff",
-                                              },
-                                            }),
-                                          ]
-                                        ),
-                                        _c(
-                                          "clipPath",
-                                          {
-                                            attrs: {
-                                              id: "gridRectMarkerMask3a6zad0c",
-                                            },
-                                          },
-                                          [
-                                            _c("rect", {
-                                              attrs: {
-                                                id: "SvgjsRect1053",
-                                                width: "49",
-                                                height: "49",
-                                                x: "-2",
-                                                y: "-2",
-                                                rx: "0",
-                                                ry: "0",
-                                                opacity: "1",
-                                                "stroke-width": "0",
-                                                stroke: "none",
-                                                "stroke-dasharray": "0",
-                                                fill: "#fff",
-                                              },
-                                            }),
-                                          ]
-                                        ),
-                                      ]
-                                    ),
-                                    _c(
-                                      "g",
-                                      {
-                                        staticClass: "apexcharts-radialbar",
-                                        attrs: { id: "SvgjsG1054" },
-                                      },
-                                      [
-                                        _c(
-                                          "g",
-                                          { attrs: { id: "SvgjsG1055" } },
-                                          [
-                                            _c(
-                                              "g",
-                                              {
-                                                staticClass:
-                                                  "apexcharts-tracks",
-                                                attrs: { id: "SvgjsG1056" },
-                                              },
-                                              [
-                                                _c(
-                                                  "g",
-                                                  {
-                                                    staticClass:
-                                                      "apexcharts-radialbar-track apexcharts-track",
-                                                    attrs: {
-                                                      id: "SvgjsG1057",
-                                                      rel: "1",
-                                                    },
-                                                  },
-                                                  [
-                                                    _c("path", {
-                                                      staticClass:
-                                                        "apexcharts-radialbar-area",
-                                                      attrs: {
-                                                        id: "apexcharts-radialbarTrack-0",
-                                                        d: "M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 22.497318152626402 7.134146575498747",
-                                                        fill: "none",
-                                                        "fill-opacity": "1",
-                                                        stroke:
-                                                          "rgba(242,242,242,0.85)",
-                                                        "stroke-opacity": "1",
-                                                        "stroke-linecap":
-                                                          "butt",
-                                                        "stroke-width":
-                                                          "4.258536585365854",
-                                                        "stroke-dasharray": "0",
-                                                        "data:pathOrig":
-                                                          "M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 22.497318152626402 7.134146575498747",
-                                                      },
-                                                    }),
-                                                  ]
-                                                ),
-                                              ]
-                                            ),
-                                            _c(
-                                              "g",
-                                              { attrs: { id: "SvgjsG1059" } },
-                                              [
-                                                _c(
-                                                  "g",
-                                                  {
-                                                    staticClass:
-                                                      "apexcharts-series apexcharts-radial-series",
-                                                    attrs: {
-                                                      id: "SvgjsG1061",
-                                                      seriesName: "seriesx1",
-                                                      rel: "1",
-                                                      "data:realIndex": "0",
-                                                    },
-                                                  },
-                                                  [
-                                                    _c("path", {
-                                                      staticClass:
-                                                        "apexcharts-radialbar-area apexcharts-radialbar-slice-0",
-                                                      attrs: {
-                                                        id: "SvgjsPath1062",
-                                                        d: "M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 7.886204749611055 27.248309913566267",
-                                                        fill: "none",
-                                                        "fill-opacity": "0.85",
-                                                        stroke:
-                                                          "rgba(52,195,143,0.85)",
-                                                        "stroke-opacity": "1",
-                                                        "stroke-linecap":
-                                                          "butt",
-                                                        "stroke-width":
-                                                          "4.390243902439025",
-                                                        "stroke-dasharray": "0",
-                                                        "data:angle": "252",
-                                                        "data:value": "70",
-                                                        index: "0",
-                                                        j: "0",
-                                                        "data:pathOrig":
-                                                          "M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 7.886204749611055 27.248309913566267",
-                                                      },
-                                                    }),
-                                                  ]
-                                                ),
-                                                _c("circle", {
-                                                  staticClass:
-                                                    "apexcharts-radialbar-hollow",
-                                                  attrs: {
-                                                    id: "SvgjsCircle1060",
-                                                    r: "13.23658536585366",
-                                                    cx: "22.5",
-                                                    cy: "22.5",
-                                                    fill: "transparent",
-                                                  },
-                                                }),
-                                              ]
-                                            ),
-                                          ]
-                                        ),
-                                      ]
-                                    ),
-                                    _c("line", {
-                                      staticClass: "apexcharts-ycrosshairs",
-                                      attrs: {
-                                        id: "SvgjsLine1063",
-                                        x1: "0",
-                                        y1: "0",
-                                        x2: "45",
-                                        y2: "0",
-                                        stroke: "#b6b6b6",
-                                        "stroke-dasharray": "0",
-                                        "stroke-width": "1",
-                                      },
-                                    }),
-                                    _c("line", {
-                                      staticClass:
-                                        "apexcharts-ycrosshairs-hidden",
-                                      attrs: {
-                                        id: "SvgjsLine1064",
-                                        x1: "0",
-                                        y1: "0",
-                                        x2: "45",
-                                        y2: "0",
-                                        "stroke-dasharray": "0",
-                                        "stroke-width": "0",
-                                      },
-                                    }),
-                                  ]
-                                ),
-                                _c("g", {
-                                  staticClass: "apexcharts-annotations",
-                                  attrs: { id: "SvgjsG1051" },
-                                }),
-                              ]
-                            ),
-                            _c("div", { staticClass: "apexcharts-legend" }),
-                          ]
-                        ),
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _vm._m(10),
-                  ]
-                ),
-                _vm._v(" "),
-                _vm._m(11),
-                _vm._v(" "),
-                _vm._m(12),
-              ]),
-            ]),
-          ]),
-        ]),
+            _vm._v(" "),
+            _vm._l(_vm.dashboard.bank, function (bank) {
+              return _c(
+                "div",
+                { key: bank.id, staticClass: "col-md-6 col-xl-3" },
+                [
+                  _c("div", { staticClass: "card" }, [
+                    _c("div", { staticClass: "card-body" }, [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "float-end mt-2",
+                          staticStyle: { position: "relative" },
+                        },
+                        [
+                          _c("h4", { staticClass: "mt-3 mb-0" }, [
+                            _vm._v(_vm._s(bank.name)),
+                          ]),
+                          _vm._v(" "),
+                          _vm._m(3, true),
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("div", [
+                        _c("h4", { staticClass: "mb-1 mt-1" }, [
+                          _c(
+                            "span",
+                            { attrs: { "data-plugin": "counterup" } },
+                            [_vm._v("Rp " + _vm._s(bank.balance))]
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "text-muted mb-0" }, [
+                          _vm._v("Balance"),
+                        ]),
+                      ]),
+                    ]),
+                  ]),
+                ]
+              )
+            }),
+          ],
+          2
+        ),
         _vm._v(" "),
         _c("div", { staticClass: "row", attrs: { id: "chart" } }, [
           _c("div", { staticClass: "col-md-6 col-xl-6" }, [
@@ -45040,16 +44069,6 @@ var render = function () {
             ]),
           ]),
         ]),
-        _vm._v(" "),
-         false
-          ? 0
-          : _vm._e(),
-        _vm._v(" "),
-         false
-          ? 0
-          : _vm._e(),
-        _vm._v(" "),
-         false ? 0 : _vm._e(),
       ]),
     ]),
     _vm._v(" "),
@@ -45103,32 +44122,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("h4", { staticClass: "mb-1 mt-1" }, [
-        _c("span", { attrs: { "data-plugin": "counterup" } }, [
-          _vm._v("5,643"),
-        ]),
-      ]),
-      _vm._v(" "),
-      _c("p", { staticClass: "text-muted mb-0" }, [_vm._v("Orders")]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "text-muted mt-3 mb-0" }, [
-      _c("span", { staticClass: "text-danger me-1" }, [
-        _c("i", { staticClass: "mdi mdi-arrow-down-bold me-1" }),
-        _vm._v("0.82%"),
-      ]),
-      _vm._v(" since last week\n                            "),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "resize-triggers" }, [
       _c("div", { staticClass: "expand-trigger" }, [
         _c("div", { staticStyle: { width: "46px", height: "47px" } }),
@@ -45140,1563 +44133,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("h4", { staticClass: "mb-1 mt-1" }, [
-        _c("span", { attrs: { "data-plugin": "counterup" } }, [
-          _vm._v("5,643"),
-        ]),
-      ]),
-      _vm._v(" "),
-      _c("p", { staticClass: "text-muted mb-0" }, [_vm._v("Orders")]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "text-muted mt-3 mb-0" }, [
-      _c("span", { staticClass: "text-danger me-1" }, [
-        _c("i", { staticClass: "mdi mdi-arrow-down-bold me-1" }),
-        _vm._v("0.82%"),
-      ]),
-      _vm._v(" since last week\n                            "),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "resize-triggers" }, [
       _c("div", { staticClass: "expand-trigger" }, [
         _c("div", { staticStyle: { width: "46px", height: "47px" } }),
       ]),
       _c("div", { staticClass: "contract-trigger" }),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("h4", { staticClass: "mb-1 mt-1" }, [
-        _c("span", { attrs: { "data-plugin": "counterup" } }, [
-          _vm._v("5,643"),
-        ]),
-      ]),
-      _vm._v(" "),
-      _c("p", { staticClass: "text-muted mb-0" }, [_vm._v("Orders")]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "text-muted mt-3 mb-0" }, [
-      _c("span", { staticClass: "text-danger me-1" }, [
-        _c("i", { staticClass: "mdi mdi-arrow-down-bold me-1" }),
-        _vm._v("0.82%"),
-      ]),
-      _vm._v(" since last week\n                            "),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "resize-triggers" }, [
-      _c("div", { staticClass: "expand-trigger" }, [
-        _c("div", { staticStyle: { width: "46px", height: "47px" } }),
-      ]),
-      _c("div", { staticClass: "contract-trigger" }),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("h4", { staticClass: "mb-1 mt-1" }, [
-        _c("span", { attrs: { "data-plugin": "counterup" } }, [
-          _vm._v("5,643"),
-        ]),
-      ]),
-      _vm._v(" "),
-      _c("p", { staticClass: "text-muted mb-0" }, [_vm._v("Orders")]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "text-muted mt-3 mb-0" }, [
-      _c("span", { staticClass: "text-danger me-1" }, [
-        _c("i", { staticClass: "mdi mdi-arrow-down-bold me-1" }),
-        _vm._v("0.82%"),
-      ]),
-      _vm._v(" since last week\n                            "),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-6 col-xl-3" }, [
-      _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-body" }, [
-          _c("div", { staticClass: "float-end mt-2" }, [
-            _c("div", { attrs: { id: "total-revenue-chart" } }),
-          ]),
-          _vm._v(" "),
-          _c("div", [
-            _c("h4", { staticClass: "mb-1 mt-1" }, [
-              _vm._v("$"),
-              _c("span", { attrs: { "data-plugin": "counterup" } }, [
-                _vm._v("34,152"),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "text-muted mb-0" }, [
-              _vm._v("Total Revenue"),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "text-muted mt-3 mb-0" }, [
-            _c("span", { staticClass: "text-success me-1" }, [
-              _c("i", { staticClass: "mdi mdi-arrow-up-bold me-1" }),
-              _vm._v("2.65%"),
-            ]),
-            _vm._v(" since last week\n                            "),
-          ]),
-        ]),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-6 col-xl-3" }, [
-      _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-body" }, [
-          _c("div", { staticClass: "float-end mt-2" }, [
-            _c("div", { attrs: { id: "orders-chart" } }),
-          ]),
-          _vm._v(" "),
-          _c("div", [
-            _c("h4", { staticClass: "mb-1 mt-1" }, [
-              _c("span", { attrs: { "data-plugin": "counterup" } }, [
-                _vm._v("5,643"),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "text-muted mb-0" }, [_vm._v("Orders")]),
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "text-muted mt-3 mb-0" }, [
-            _c("span", { staticClass: "text-danger me-1" }, [
-              _c("i", { staticClass: "mdi mdi-arrow-down-bold me-1" }),
-              _vm._v("0.82%"),
-            ]),
-            _vm._v(" since last week\n                            "),
-          ]),
-        ]),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-6 col-xl-3" }, [
-      _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-body" }, [
-          _c("div", { staticClass: "float-end mt-2" }, [
-            _c("div", { attrs: { id: "customers-chart" } }),
-          ]),
-          _vm._v(" "),
-          _c("div", [
-            _c("h4", { staticClass: "mb-1 mt-1" }, [
-              _c("span", { attrs: { "data-plugin": "counterup" } }, [
-                _vm._v("45,254"),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "text-muted mb-0" }, [_vm._v("Customers")]),
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "text-muted mt-3 mb-0" }, [
-            _c("span", { staticClass: "text-danger me-1" }, [
-              _c("i", { staticClass: "mdi mdi-arrow-down-bold me-1" }),
-              _vm._v("6.24%"),
-            ]),
-            _vm._v(" since last week\n                            "),
-          ]),
-        ]),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-6 col-xl-3" }, [
-      _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-body" }, [
-          _c("div", { staticClass: "float-end mt-2" }, [
-            _c("div", { attrs: { id: "growth-chart" } }),
-          ]),
-          _vm._v(" "),
-          _c("div", [
-            _c("h4", { staticClass: "mb-1 mt-1" }, [
-              _vm._v("+ "),
-              _c("span", { attrs: { "data-plugin": "counterup" } }, [
-                _vm._v("12.58"),
-              ]),
-              _vm._v("%"),
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "text-muted mb-0" }, [_vm._v("Growth")]),
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "text-muted mt-3 mb-0" }, [
-            _c("span", { staticClass: "text-success me-1" }, [
-              _c("i", { staticClass: "mdi mdi-arrow-up-bold me-1" }),
-              _vm._v("10.51%"),
-            ]),
-            _vm._v(" since last week\n                            "),
-          ]),
-        ]),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-xl-4" }, [
-      _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-body" }, [
-          _c("div", { staticClass: "float-end" }, [
-            _c("div", { staticClass: "dropdown" }, [
-              _c(
-                "a",
-                {
-                  staticClass: " dropdown-toggle",
-                  attrs: {
-                    href: "#",
-                    id: "dropdownMenuButton2",
-                    "data-bs-toggle": "dropdown",
-                    "aria-haspopup": "true",
-                    "aria-expanded": "false",
-                  },
-                },
-                [
-                  _c("span", { staticClass: "text-muted" }, [
-                    _vm._v("All Members"),
-                    _c("i", { staticClass: "mdi mdi-chevron-down ms-1" }),
-                  ]),
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "dropdown-menu dropdown-menu-end",
-                  attrs: { "aria-labelledby": "dropdownMenuButton2" },
-                },
-                [
-                  _c(
-                    "a",
-                    { staticClass: "dropdown-item", attrs: { href: "#" } },
-                    [_vm._v("Locations")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    { staticClass: "dropdown-item", attrs: { href: "#" } },
-                    [_vm._v("Revenue")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    { staticClass: "dropdown-item", attrs: { href: "#" } },
-                    [_vm._v("Join Date")]
-                  ),
-                ]
-              ),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("h4", { staticClass: "card-title mb-4" }, [_vm._v("Top Users")]),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticStyle: { "max-height": "336px" },
-              attrs: { "data-simplebar": "" },
-            },
-            [
-              _c("div", { staticClass: "table-responsive" }, [
-                _c(
-                  "table",
-                  {
-                    staticClass:
-                      "table table-borderless table-centered table-nowrap",
-                  },
-                  [
-                    _c("tbody", [
-                      _c("tr", [
-                        _c("td", { staticStyle: { width: "20px" } }, [
-                          _c("img", {
-                            staticClass: "avatar-xs rounded-circle ",
-                            attrs: {
-                              src: "/assets/images/users/avatar-4.jpg",
-                              alt: "...",
-                            },
-                          }),
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "h6",
-                            { staticClass: "font-size-15 mb-1 fw-normal" },
-                            [_vm._v("Glenn Holden")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "p",
-                            { staticClass: "text-muted font-size-13 mb-0" },
-                            [
-                              _c("i", { staticClass: "mdi mdi-map-marker" }),
-                              _vm._v(" Nevada"),
-                            ]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "span",
-                            {
-                              staticClass: "badge bg-soft-danger font-size-12",
-                            },
-                            [_vm._v("Cancel")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "td",
-                          { staticClass: "text-muted fw-semibold text-end" },
-                          [
-                            _c("i", {
-                              staticClass: "icon-xs icon me-2 text-success",
-                              attrs: { "data-feather": "trending-up" },
-                            }),
-                            _vm._v("$250.00"),
-                          ]
-                        ),
-                      ]),
-                      _vm._v(" "),
-                      _c("tr", [
-                        _c("td", [
-                          _c("img", {
-                            staticClass: "avatar-xs rounded-circle ",
-                            attrs: {
-                              src: "/assets/images/users/avatar-5.jpg",
-                              alt: "...",
-                            },
-                          }),
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "h6",
-                            { staticClass: "font-size-15 mb-1 fw-normal" },
-                            [_vm._v("Lolita Hamill")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "p",
-                            { staticClass: "text-muted font-size-13 mb-0" },
-                            [
-                              _c("i", { staticClass: "mdi mdi-map-marker" }),
-                              _vm._v(" Texas"),
-                            ]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "span",
-                            {
-                              staticClass: "badge bg-soft-success font-size-12",
-                            },
-                            [_vm._v("Success")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "td",
-                          { staticClass: "text-muted fw-semibold text-end" },
-                          [
-                            _c("i", {
-                              staticClass: "icon-xs icon me-2 text-danger",
-                              attrs: { "data-feather": "trending-down" },
-                            }),
-                            _vm._v("$110.00"),
-                          ]
-                        ),
-                      ]),
-                      _vm._v(" "),
-                      _c("tr", [
-                        _c("td", [
-                          _c("img", {
-                            staticClass: "avatar-xs rounded-circle ",
-                            attrs: {
-                              src: "/assets/images/users/avatar-6.jpg",
-                              alt: "...",
-                            },
-                          }),
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "h6",
-                            { staticClass: "font-size-15 mb-1 fw-normal" },
-                            [_vm._v("Robert Mercer")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "p",
-                            { staticClass: "text-muted font-size-13 mb-0" },
-                            [
-                              _c("i", { staticClass: "mdi mdi-map-marker" }),
-                              _vm._v(" California"),
-                            ]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "span",
-                            { staticClass: "badge bg-soft-info font-size-12" },
-                            [_vm._v("Active")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "td",
-                          { staticClass: "text-muted fw-semibold text-end" },
-                          [
-                            _c("i", {
-                              staticClass: "icon-xs icon me-2 text-success",
-                              attrs: { "data-feather": "trending-up" },
-                            }),
-                            _vm._v("$420.00"),
-                          ]
-                        ),
-                      ]),
-                      _vm._v(" "),
-                      _c("tr", [
-                        _c("td", [
-                          _c("img", {
-                            staticClass: "avatar-xs rounded-circle ",
-                            attrs: {
-                              src: "/assets/images/users/avatar-7.jpg",
-                              alt: "...",
-                            },
-                          }),
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "h6",
-                            { staticClass: "font-size-15 mb-1 fw-normal" },
-                            [_vm._v("Marie Kim")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "p",
-                            { staticClass: "text-muted font-size-13 mb-0" },
-                            [
-                              _c("i", { staticClass: "mdi mdi-map-marker" }),
-                              _vm._v(" Montana"),
-                            ]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "span",
-                            {
-                              staticClass: "badge bg-soft-warning font-size-12",
-                            },
-                            [_vm._v("Pending")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "td",
-                          { staticClass: "text-muted fw-semibold text-end" },
-                          [
-                            _c("i", {
-                              staticClass: "icon-xs icon me-2 text-danger",
-                              attrs: { "data-feather": "trending-down" },
-                            }),
-                            _vm._v("$120.00"),
-                          ]
-                        ),
-                      ]),
-                      _vm._v(" "),
-                      _c("tr", [
-                        _c("td", [
-                          _c("img", {
-                            staticClass: "avatar-xs rounded-circle ",
-                            attrs: {
-                              src: "/assets/images/users/avatar-8.jpg",
-                              alt: "...",
-                            },
-                          }),
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "h6",
-                            { staticClass: "font-size-15 mb-1 fw-normal" },
-                            [_vm._v("Sonya Henshaw")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "p",
-                            { staticClass: "text-muted font-size-13 mb-0" },
-                            [
-                              _c("i", { staticClass: "mdi mdi-map-marker" }),
-                              _vm._v(" Colorado"),
-                            ]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "span",
-                            { staticClass: "badge bg-soft-info font-size-12" },
-                            [_vm._v("Active")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "td",
-                          { staticClass: "text-muted fw-semibold text-end" },
-                          [
-                            _c("i", {
-                              staticClass: "icon-xs icon me-2 text-success",
-                              attrs: { "data-feather": "trending-up" },
-                            }),
-                            _vm._v("$112.00"),
-                          ]
-                        ),
-                      ]),
-                      _vm._v(" "),
-                      _c("tr", [
-                        _c("td", [
-                          _c("img", {
-                            staticClass: "avatar-xs rounded-circle ",
-                            attrs: {
-                              src: "/assets/images/users/avatar-2.jpg",
-                              alt: "...",
-                            },
-                          }),
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "h6",
-                            { staticClass: "font-size-15 mb-1 fw-normal" },
-                            [_vm._v("Marie Kim")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "p",
-                            { staticClass: "text-muted font-size-13 mb-0" },
-                            [
-                              _c("i", { staticClass: "mdi mdi-map-marker" }),
-                              _vm._v(" Australia"),
-                            ]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "span",
-                            {
-                              staticClass: "badge bg-soft-success font-size-12",
-                            },
-                            [_vm._v("Success")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "td",
-                          { staticClass: "text-muted fw-semibold text-end" },
-                          [
-                            _c("i", {
-                              staticClass: "icon-xs icon me-2 text-danger",
-                              attrs: { "data-feather": "trending-down" },
-                            }),
-                            _vm._v("$120.00"),
-                          ]
-                        ),
-                      ]),
-                      _vm._v(" "),
-                      _c("tr", [
-                        _c("td", [
-                          _c("img", {
-                            staticClass: "avatar-xs rounded-circle ",
-                            attrs: {
-                              src: "/assets/images/users/avatar-1.jpg",
-                              alt: "...",
-                            },
-                          }),
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "h6",
-                            { staticClass: "font-size-15 mb-1 fw-normal" },
-                            [_vm._v("Sonya Henshaw")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "p",
-                            { staticClass: "text-muted font-size-13 mb-0" },
-                            [
-                              _c("i", { staticClass: "mdi mdi-map-marker" }),
-                              _vm._v(" India"),
-                            ]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "span",
-                            {
-                              staticClass: "badge bg-soft-danger font-size-12",
-                            },
-                            [_vm._v("Cancel")]
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "td",
-                          { staticClass: "text-muted fw-semibold text-end" },
-                          [
-                            _c("i", {
-                              staticClass: "icon-xs icon me-2 text-success",
-                              attrs: { "data-feather": "trending-up" },
-                            }),
-                            _vm._v("$112.00"),
-                          ]
-                        ),
-                      ]),
-                    ]),
-                  ]
-                ),
-              ]),
-            ]
-          ),
-        ]),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-xl-4" }, [
-      _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-body" }, [
-          _c("div", { staticClass: "float-end" }, [
-            _c("div", { staticClass: "dropdown" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "dropdown-toggle",
-                  attrs: {
-                    href: "#",
-                    id: "dropdownMenuButton3",
-                    "data-bs-toggle": "dropdown",
-                    "aria-haspopup": "true",
-                    "aria-expanded": "false",
-                  },
-                },
-                [
-                  _c("span", { staticClass: "text-muted" }, [
-                    _vm._v("Recent"),
-                    _c("i", { staticClass: "mdi mdi-chevron-down ms-1" }),
-                  ]),
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "dropdown-menu dropdown-menu-end",
-                  attrs: { "aria-labelledby": "dropdownMenuButton3" },
-                },
-                [
-                  _c(
-                    "a",
-                    { staticClass: "dropdown-item", attrs: { href: "#" } },
-                    [_vm._v("Recent")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    { staticClass: "dropdown-item", attrs: { href: "#" } },
-                    [_vm._v("By Users")]
-                  ),
-                ]
-              ),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("h4", { staticClass: "card-title mb-4" }, [
-            _vm._v("Recent Activity"),
-          ]),
-          _vm._v(" "),
-          _c(
-            "ol",
-            {
-              staticClass: "activity-feed mb-0 ps-2",
-              staticStyle: { "max-height": "336px" },
-              attrs: { "data-simplebar": "" },
-            },
-            [
-              _c("li", { staticClass: "feed-item" }, [
-                _c("div", { staticClass: "feed-item-list" }, [
-                  _c("p", { staticClass: "text-muted mb-1 font-size-13" }, [
-                    _vm._v("Today"),
-                    _c("small", { staticClass: "d-inline-block ms-1" }, [
-                      _vm._v("12:20 pm"),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "mb-0" }, [
-                    _vm._v(
-                      "Andrei Coman magna sed porta finibus, risus\n                                            posted a new article: "
-                    ),
-                    _c("span", { staticClass: "text-primary" }, [
-                      _vm._v(
-                        "Forget UX\n                                                Rowland"
-                      ),
-                    ]),
-                  ]),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("li", { staticClass: "feed-item" }, [
-                _c("p", { staticClass: "text-muted mb-1 font-size-13" }, [
-                  _vm._v("22 Jul, 2020 "),
-                  _c("small", { staticClass: "d-inline-block ms-1" }, [
-                    _vm._v("12:36 pm"),
-                  ]),
-                ]),
-                _vm._v(" "),
-                _c("p", { staticClass: "mb-0" }, [
-                  _vm._v("Andrei Coman posted a new article: "),
-                  _c("span", { staticClass: "text-primary" }, [
-                    _vm._v("Designer Alex"),
-                  ]),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("li", { staticClass: "feed-item" }, [
-                _c("p", { staticClass: "text-muted mb-1 font-size-13" }, [
-                  _vm._v("18 Jul, 2020 "),
-                  _c("small", { staticClass: "d-inline-block ms-1" }, [
-                    _vm._v("07:56 am"),
-                  ]),
-                ]),
-                _vm._v(" "),
-                _c("p", { staticClass: "mb-0" }, [
-                  _vm._v(
-                    "Zack Wetass, sed porta finibus, risus Chris Wallace\n                                        Commented "
-                  ),
-                  _c("span", { staticClass: "text-primary" }, [
-                    _vm._v(" Developer Moreno"),
-                  ]),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("li", { staticClass: "feed-item" }, [
-                _c("p", { staticClass: "text-muted mb-1 font-size-13" }, [
-                  _vm._v("10 Jul, 2020 "),
-                  _c("small", { staticClass: "d-inline-block ms-1" }, [
-                    _vm._v("08:42 pm"),
-                  ]),
-                ]),
-                _vm._v(" "),
-                _c("p", { staticClass: "mb-0" }, [
-                  _vm._v("Zack Wetass, Chris combined Commented "),
-                  _c("span", { staticClass: "text-primary" }, [
-                    _vm._v("UX Murphy"),
-                  ]),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("li", { staticClass: "feed-item" }, [
-                _c("p", { staticClass: "text-muted mb-1 font-size-13" }, [
-                  _vm._v("23 Jun, 2020 "),
-                  _c("small", { staticClass: "d-inline-block ms-1" }, [
-                    _vm._v("12:22 am"),
-                  ]),
-                ]),
-                _vm._v(" "),
-                _c("p", { staticClass: "mb-0" }, [
-                  _vm._v(
-                    "Zack Wetass, sed porta finibus, risus Chris Wallace\n                                        Commented "
-                  ),
-                  _c("span", { staticClass: "text-primary" }, [
-                    _vm._v(" Developer Moreno"),
-                  ]),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("li", { staticClass: "feed-item pb-1" }, [
-                _c("p", { staticClass: "text-muted mb-1 font-size-13" }, [
-                  _vm._v("20 Jun, 2020 "),
-                  _c("small", { staticClass: "d-inline-block ms-1" }, [
-                    _vm._v("09:48 pm"),
-                  ]),
-                ]),
-                _vm._v(" "),
-                _c("p", { staticClass: "mb-0" }, [
-                  _vm._v("Zack Wetass, Chris combined Commented "),
-                  _c("span", { staticClass: "text-primary" }, [
-                    _vm._v("UX Murphy"),
-                  ]),
-                ]),
-              ]),
-            ]
-          ),
-        ]),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-xl-4" }, [
-      _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-body" }, [
-          _c("div", { staticClass: "float-end" }, [
-            _c("div", { staticClass: "dropdown" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "dropdown-toggle",
-                  attrs: {
-                    href: "#",
-                    id: "dropdownMenuButton4",
-                    "data-bs-toggle": "dropdown",
-                    "aria-haspopup": "true",
-                    "aria-expanded": "false",
-                  },
-                },
-                [
-                  _c("span", { staticClass: "text-muted" }, [
-                    _vm._v("Monthly"),
-                    _c("i", { staticClass: "mdi mdi-chevron-down ms-1" }),
-                  ]),
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "dropdown-menu dropdown-menu-end",
-                  attrs: { "aria-labelledby": "dropdownMenuButton4" },
-                },
-                [
-                  _c(
-                    "a",
-                    { staticClass: "dropdown-item", attrs: { href: "#" } },
-                    [_vm._v("Yearly")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    { staticClass: "dropdown-item", attrs: { href: "#" } },
-                    [_vm._v("Monthly")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    { staticClass: "dropdown-item", attrs: { href: "#" } },
-                    [_vm._v("Weekly")]
-                  ),
-                ]
-              ),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("h4", { staticClass: "card-title" }, [_vm._v("Social Source")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "text-center" }, [
-            _c("div", { staticClass: "avatar-sm mx-auto mb-4" }, [
-              _c(
-                "span",
-                {
-                  staticClass:
-                    "avatar-title rounded-circle bg-soft-primary font-size-24",
-                },
-                [_c("i", { staticClass: "mdi mdi-facebook text-primary" })]
-              ),
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "font-16 text-muted mb-2" }),
-            _vm._v(" "),
-            _c("h5", [
-              _c("a", { staticClass: "text-dark", attrs: { href: "#" } }, [
-                _vm._v("Facebook - "),
-                _c("span", { staticClass: "text-muted font-16" }, [
-                  _vm._v("125 sales"),
-                ]),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "text-muted" }, [
-              _vm._v(
-                "Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus tincidunt."
-              ),
-            ]),
-            _vm._v(" "),
-            _c(
-              "a",
-              { staticClass: "text-reset font-16", attrs: { href: "#" } },
-              [
-                _vm._v("Learn more "),
-                _c("i", { staticClass: "mdi mdi-chevron-right" }),
-              ]
-            ),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "row mt-4" }, [
-            _c("div", { staticClass: "col-4" }, [
-              _c("div", { staticClass: "social-source text-center mt-3" }, [
-                _c("div", { staticClass: "avatar-xs mx-auto mb-3" }, [
-                  _c(
-                    "span",
-                    {
-                      staticClass:
-                        "avatar-title rounded-circle bg-primary font-size-16",
-                    },
-                    [_c("i", { staticClass: "mdi mdi-facebook text-white" })]
-                  ),
-                ]),
-                _vm._v(" "),
-                _c("h5", { staticClass: "font-size-15" }, [_vm._v("Facebook")]),
-                _vm._v(" "),
-                _c("p", { staticClass: "text-muted mb-0" }, [
-                  _vm._v("125 sales"),
-                ]),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-4" }, [
-              _c("div", { staticClass: "social-source text-center mt-3" }, [
-                _c("div", { staticClass: "avatar-xs mx-auto mb-3" }, [
-                  _c(
-                    "span",
-                    {
-                      staticClass:
-                        "avatar-title rounded-circle bg-info font-size-16",
-                    },
-                    [_c("i", { staticClass: "mdi mdi-twitter text-white" })]
-                  ),
-                ]),
-                _vm._v(" "),
-                _c("h5", { staticClass: "font-size-15" }, [_vm._v("Twitter")]),
-                _vm._v(" "),
-                _c("p", { staticClass: "text-muted mb-0" }, [
-                  _vm._v("112 sales"),
-                ]),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-4" }, [
-              _c("div", { staticClass: "social-source text-center mt-3" }, [
-                _c("div", { staticClass: "avatar-xs mx-auto mb-3" }, [
-                  _c(
-                    "span",
-                    {
-                      staticClass:
-                        "avatar-title rounded-circle bg-pink font-size-16",
-                    },
-                    [_c("i", { staticClass: "mdi mdi-instagram text-white" })]
-                  ),
-                ]),
-                _vm._v(" "),
-                _c("h5", { staticClass: "font-size-15" }, [
-                  _vm._v("Instagram"),
-                ]),
-                _vm._v(" "),
-                _c("p", { staticClass: "text-muted mb-0" }, [
-                  _vm._v("104 sales"),
-                ]),
-              ]),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "mt-3 text-center" }, [
-            _c(
-              "a",
-              {
-                staticClass: "text-primary font-size-14 fw-medium",
-                attrs: { href: "#" },
-              },
-              [
-                _vm._v("View All Sources "),
-                _c("i", { staticClass: "mdi mdi-chevron-right" }),
-              ]
-            ),
-          ]),
-        ]),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-12" }, [
-      _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-body" }, [
-          _c("h4", { staticClass: "card-title mb-4" }, [
-            _vm._v("Latest Transaction"),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "table-responsive" }, [
-            _c(
-              "table",
-              { staticClass: "table table-centered table-nowrap mb-0" },
-              [
-                _c("thead", { staticClass: "table-light" }, [
-                  _c("tr", [
-                    _c("th", { staticStyle: { width: "20px" } }, [
-                      _c("div", { staticClass: "form-check font-size-16" }, [
-                        _c("input", {
-                          staticClass: "form-check-input",
-                          attrs: { type: "checkbox", id: "customCheck1" },
-                        }),
-                        _vm._v(" "),
-                        _c(
-                          "label",
-                          {
-                            staticClass: "form-check-label",
-                            attrs: { for: "customCheck1" },
-                          },
-                          [_vm._v(" ")]
-                        ),
-                      ]),
-                    ]),
-                    _vm._v(" "),
-                    _c("th", [_vm._v("Order ID")]),
-                    _vm._v(" "),
-                    _c("th", [_vm._v("Billing Name")]),
-                    _vm._v(" "),
-                    _c("th", [_vm._v("Date")]),
-                    _vm._v(" "),
-                    _c("th", [_vm._v("Total")]),
-                    _vm._v(" "),
-                    _c("th", [_vm._v("Payment Status")]),
-                    _vm._v(" "),
-                    _c("th", [_vm._v("Payment Method")]),
-                    _vm._v(" "),
-                    _c("th", [_vm._v("View Details")]),
-                  ]),
-                ]),
-                _vm._v(" "),
-                _c("tbody", [
-                  _c("tr", [
-                    _c("td", [
-                      _c("div", { staticClass: "form-check font-size-16" }, [
-                        _c("input", {
-                          staticClass: "form-check-input",
-                          attrs: { type: "checkbox", id: "customCheck2" },
-                        }),
-                        _vm._v(" "),
-                        _c(
-                          "label",
-                          {
-                            staticClass: "form-check-label",
-                            attrs: { for: "customCheck2" },
-                          },
-                          [_vm._v(" ")]
-                        ),
-                      ]),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "text-body fw-bold",
-                          attrs: { href: "javascript: void(0);" },
-                        },
-                        [_vm._v("#MB2540")]
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("Neal Matthews")]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(
-                        "\n                                                07 Oct, 2019\n                                            "
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(
-                        "\n                                                $400\n                                            "
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "span",
-                        {
-                          staticClass:
-                            "badge rounded-pill bg-soft-success font-size-12",
-                        },
-                        [_vm._v("Paid")]
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c("i", { staticClass: "fab fa-cc-mastercard me-1" }),
-                      _vm._v(
-                        " Mastercard\n                                            "
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "button",
-                        {
-                          staticClass:
-                            "btn btn-primary btn-sm btn-rounded waves-effect waves-light",
-                          attrs: { type: "button" },
-                        },
-                        [
-                          _vm._v(
-                            "\n                                                    View Details\n                                                "
-                          ),
-                        ]
-                      ),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("tr", [
-                    _c("td", [
-                      _c("div", { staticClass: "form-check font-size-16" }, [
-                        _c("input", {
-                          staticClass: "form-check-input",
-                          attrs: { type: "checkbox", id: "customCheck3" },
-                        }),
-                        _vm._v(" "),
-                        _c(
-                          "label",
-                          {
-                            staticClass: "form-check-label",
-                            attrs: { for: "customCheck3" },
-                          },
-                          [_vm._v(" ")]
-                        ),
-                      ]),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "text-body fw-bold",
-                          attrs: { href: "javascript: void(0);" },
-                        },
-                        [_vm._v("#MB2541")]
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("Jamal Burnett")]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(
-                        "\n                                                07 Oct, 2019\n                                            "
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(
-                        "\n                                                $380\n                                            "
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "span",
-                        {
-                          staticClass:
-                            "badge rounded-pill bg-soft-danger font-size-12",
-                        },
-                        [_vm._v("Chargeback")]
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c("i", { staticClass: "fab fa-cc-visa me-1" }),
-                      _vm._v(
-                        " Visa\n                                            "
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "button",
-                        {
-                          staticClass:
-                            "btn btn-primary btn-sm btn-rounded waves-effect waves-light",
-                          attrs: { type: "button" },
-                        },
-                        [
-                          _vm._v(
-                            "\n                                                    View Details\n                                                "
-                          ),
-                        ]
-                      ),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("tr", [
-                    _c("td", [
-                      _c("div", { staticClass: "form-check font-size-16" }, [
-                        _c("input", {
-                          staticClass: "form-check-input",
-                          attrs: { type: "checkbox", id: "customCheck4" },
-                        }),
-                        _vm._v(" "),
-                        _c(
-                          "label",
-                          {
-                            staticClass: "form-check-label",
-                            attrs: { for: "customCheck4" },
-                          },
-                          [_vm._v(" ")]
-                        ),
-                      ]),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "text-body fw-bold",
-                          attrs: { href: "javascript: void(0);" },
-                        },
-                        [_vm._v("#MB2542")]
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("Juan Mitchell")]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(
-                        "\n                                                06 Oct, 2019\n                                            "
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(
-                        "\n                                                $384\n                                            "
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "span",
-                        {
-                          staticClass:
-                            "badge rounded-pill bg-soft-success font-size-12",
-                        },
-                        [_vm._v("Paid")]
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c("i", { staticClass: "fab fa-cc-paypal me-1" }),
-                      _vm._v(
-                        " Paypal\n                                            "
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "button",
-                        {
-                          staticClass:
-                            "btn btn-primary btn-sm btn-rounded waves-effect waves-light",
-                          attrs: { type: "button" },
-                        },
-                        [
-                          _vm._v(
-                            "\n                                                    View Details\n                                                "
-                          ),
-                        ]
-                      ),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("tr", [
-                    _c("td", [
-                      _c("div", { staticClass: "form-check font-size-16" }, [
-                        _c("input", {
-                          staticClass: "form-check-input",
-                          attrs: { type: "checkbox", id: "customCheck5" },
-                        }),
-                        _vm._v(" "),
-                        _c(
-                          "label",
-                          {
-                            staticClass: "form-check-label",
-                            attrs: { for: "customCheck5" },
-                          },
-                          [_vm._v(" ")]
-                        ),
-                      ]),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "text-body fw-bold",
-                          attrs: { href: "javascript: void(0);" },
-                        },
-                        [_vm._v("#MB2543")]
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("Barry Dick")]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(
-                        "\n                                                05 Oct, 2019\n                                            "
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(
-                        "\n                                                $412\n                                            "
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "span",
-                        {
-                          staticClass:
-                            "badge rounded-pill bg-soft-success font-size-12",
-                        },
-                        [_vm._v("Paid")]
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c("i", { staticClass: "fab fa-cc-mastercard me-1" }),
-                      _vm._v(
-                        " Mastercard\n                                            "
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "button",
-                        {
-                          staticClass:
-                            "btn btn-primary btn-sm btn-rounded waves-effect waves-light",
-                          attrs: { type: "button" },
-                        },
-                        [
-                          _vm._v(
-                            "\n                                                    View Details\n                                                "
-                          ),
-                        ]
-                      ),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("tr", [
-                    _c("td", [
-                      _c("div", { staticClass: "form-check font-size-16" }, [
-                        _c("input", {
-                          staticClass: "form-check-input",
-                          attrs: { type: "checkbox", id: "customCheck6" },
-                        }),
-                        _vm._v(" "),
-                        _c(
-                          "label",
-                          {
-                            staticClass: "form-check-label",
-                            attrs: { for: "customCheck6" },
-                          },
-                          [_vm._v(" ")]
-                        ),
-                      ]),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "text-body fw-bold",
-                          attrs: { href: "javascript: void(0);" },
-                        },
-                        [_vm._v("#MB2544")]
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("Ronald Taylor")]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(
-                        "\n                                                04 Oct, 2019\n                                            "
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(
-                        "\n                                                $404\n                                            "
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "span",
-                        {
-                          staticClass:
-                            "badge rounded-pill bg-soft-warning font-size-12",
-                        },
-                        [_vm._v("Refund")]
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c("i", { staticClass: "fab fa-cc-visa me-1" }),
-                      _vm._v(
-                        " Visa\n                                            "
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "button",
-                        {
-                          staticClass:
-                            "btn btn-primary btn-sm btn-rounded waves-effect waves-light",
-                          attrs: { type: "button" },
-                        },
-                        [
-                          _vm._v(
-                            "\n                                                    View Details\n                                                "
-                          ),
-                        ]
-                      ),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("tr", [
-                    _c("td", [
-                      _c("div", { staticClass: "form-check font-size-16" }, [
-                        _c("input", {
-                          staticClass: "form-check-input",
-                          attrs: { type: "checkbox", id: "customCheck7" },
-                        }),
-                        _vm._v(" "),
-                        _c(
-                          "label",
-                          {
-                            staticClass: "form-check-label",
-                            attrs: { for: "customCheck7" },
-                          },
-                          [_vm._v(" ")]
-                        ),
-                      ]),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "text-body fw-bold",
-                          attrs: { href: "javascript: void(0);" },
-                        },
-                        [_vm._v("#MB2545")]
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("Jacob Hunter")]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(
-                        "\n                                                04 Oct, 2019\n                                            "
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(
-                        "\n                                                $392\n                                            "
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "span",
-                        {
-                          staticClass:
-                            "badge rounded-pill bg-soft-success font-size-12",
-                        },
-                        [_vm._v("Paid")]
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c("i", { staticClass: "fab fa-cc-paypal me-1" }),
-                      _vm._v(
-                        " Paypal\n                                            "
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "button",
-                        {
-                          staticClass:
-                            "btn btn-primary btn-sm btn-rounded waves-effect waves-light",
-                          attrs: { type: "button" },
-                        },
-                        [
-                          _vm._v(
-                            "\n                                                    View Details\n                                                "
-                          ),
-                        ]
-                      ),
-                    ]),
-                  ]),
-                ]),
-              ]
-            ),
-          ]),
-        ]),
-      ]),
     ])
   },
   function () {
@@ -54216,6 +51657,64 @@ var render = function () {
                     ]),
                   ]),
                   _vm._v(" "),
+                  _c("div", { staticClass: "mb-3 row" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-md-2 col-form-label",
+                        attrs: { for: "example-date-input" },
+                      },
+                      [_vm._v("Nominal Awal")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-10" }, [
+                      _c("div", { staticClass: "d-flex align-items-center" }, [
+                        _c(
+                          "p",
+                          {
+                            staticStyle: {
+                              margin: "0",
+                              "margin-right": "1rem",
+                            },
+                          },
+                          [_vm._v("IDR")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.bankCreate.balance,
+                              expression: "bankCreate.balance",
+                            },
+                          ],
+                          staticClass: "form-control flex-grow",
+                          attrs: { type: "number" },
+                          domProps: { value: _vm.bankCreate.balance },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.bankCreate,
+                                "balance",
+                                $event.target.value
+                              )
+                            },
+                          },
+                        }),
+                      ]),
+                      _vm._v(" "),
+                      _vm.theErrors.balance
+                        ? _c("div", { staticClass: "mt-1 text-danger" }, [
+                            _vm._v(_vm._s(_vm.theErrors.balance[0])),
+                          ])
+                        : _vm._e(),
+                    ]),
+                  ]),
+                  _vm._v(" "),
                   _vm._m(0),
                 ]
               ),
@@ -54676,10 +52175,20 @@ var render = function () {
                                         ),
                                       ]),
                                       _vm._v(" "),
+                                      _c(
+                                        "p",
+                                        { staticClass: "text-muted mb-0" },
+                                        [
+                                          _vm._v(
+                                            "No Rekening : " +
+                                              _vm._s(bank.account_number)
+                                          ),
+                                        ]
+                                      ),
+                                      _vm._v(" "),
                                       _c("p", { staticClass: "text-muted" }, [
                                         _vm._v(
-                                          "No Rekening : " +
-                                            _vm._s(bank.account_number)
+                                          "Balance : Rp " + _vm._s(bank.balance)
                                         ),
                                       ]),
                                       _vm._v(" "),

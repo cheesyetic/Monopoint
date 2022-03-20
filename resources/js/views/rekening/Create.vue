@@ -39,6 +39,16 @@
                                     <div v-if="theErrors.account_number" class="mt-1 text-danger">{{ theErrors.account_number[0] }}</div>
                                 </div>
                             </div>
+                            <div class="mb-3 row">
+                                <label for="example-date-input" class="col-md-2 col-form-label">Nominal Awal</label>
+                                <div class="col-md-10">
+                                    <div class="d-flex align-items-center">
+                                        <p style="margin:0;margin-right: 1rem">IDR</p>
+                                        <input class="form-control flex-grow" type="number" v-model="bankCreate.balance">
+                                    </div>
+                                    <div v-if="theErrors.balance" class="mt-1 text-danger">{{ theErrors.balance[0] }}</div>
+                                </div>
+                            </div>
                             <button class="btn btn-primary" type="submit"><i class="uil-plus"></i> Buat</button>
                         </form>
                     </div>
@@ -79,6 +89,7 @@ export default {
                 if (responseCreate.status == 201) {
                     this.bankCreate.name = ''
                     this.bankCreate.account_number = ''
+                    this.bankCreate.balance = ''
                     this.theErrors = []
 
                     this.$router.push({ name: 'rekening' })

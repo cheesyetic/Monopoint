@@ -115,50 +115,6 @@
                                         </transition>
                                 </table>
                                 <filter-journal @filterjournal="filtering" :auth="auth"></filter-journal>
-                                <!-- <div class="modal fade bs-example-modal-sm" tabindex="-1" aria-labelledby="mySmallModalLabel" aria-modal="true" role="dialog">
-                                    <div class="modal-dialog modal-sm">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Filter</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="mb-2">
-                                                    <label for="example-text-input" class="col col-form-label">Reimburse</label>
-                                                    <div class="">
-                                                        <input value="1" type="radio" name="reimburse" v-model="filter_reimburse" id="option-1">
-                                                        <label for="option-1" class="option option-1 m-0">
-                                                            <div class="dot"></div>
-                                                            <span>Ya</span>
-                                                        </label>
-                                                        <input value="0" type="radio" name="reimburse" v-model="filter_reimburse" id="option-2">
-                                                        <label for="option-2" class="option option-2 m-0 my-1">
-                                                            <div class="dot"></div>
-                                                            <span>Tidak</span>
-                                                        </label>
-                                                        <input value="" type="radio" name="reimburse" v-model="filter_reimburse" id="option-3" selected>
-                                                        <label for="option-3" class="option option-3 m-0">
-                                                            <div class="dot"></div>
-                                                            <span>Semua</span>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div class="mb-2">
-                                                    <label class="form-label">Bulan</label>
-                                                    <v-select :options="monthOptions" :reduce="month => month.code" label="month" v-model="filter_month"></v-select>
-                                                </div>
-                                                <div class="mb-2">
-                                                    <label class="form-label">Chart Account</label>
-                                                    <v-select :options="chartOptions" @input="selectId($event)" :disabled="chartLoading"></v-select>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary waves-effect" @click="getJurnal" data-bs-dismiss="modal">Terapkan</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
                             </div>
                             <!-- End table -->
                             <pagination :page="page" :last_page="last_page"></pagination>
