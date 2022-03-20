@@ -5492,14 +5492,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['auth'],
@@ -5515,23 +5507,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         name: "Low - 2013",
         data: [12, 11, 14, 18, 17, 13, 13]
       }],
-      chartOptions: {
+      journalSeries: [],
+      journalChartOptions: {
         chart: {
           height: 350,
-          type: 'line',
-          dropShadow: {
-            enabled: true,
-            color: '#000',
-            top: 18,
-            left: 7,
-            blur: 10,
-            opacity: 0.2
-          },
-          toolbar: {
-            show: false
-          }
+          type: 'line'
         },
-        colors: ['#77B6EA', '#545454'],
+        colors: ['#5B73E8', '#545454'],
         dataLabels: {
           enabled: true
         },
@@ -5539,7 +5521,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           curve: 'smooth'
         },
         title: {
-          text: 'Average High & Low Temperature',
+          text: 'Jumlah Jurnal Dibuat Per-bulan',
           align: 'left'
         },
         grid: {
@@ -5550,28 +5532,61 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             opacity: 0.5
           }
         },
-        markers: {
-          size: 1
-        },
         xaxis: {
-          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+          // categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
           title: {
             text: 'Month'
           }
         },
         yaxis: {
           title: {
-            text: 'Temperature'
-          },
-          min: 5,
-          max: 40
+            text: 'Jumlah'
+          }
         },
         legend: {
           position: 'top',
-          horizontalAlign: 'right',
-          floating: true,
-          offsetY: -25,
-          offsetX: -5
+          horizontalAlign: 'right'
+        }
+      },
+      balanceSeries: [],
+      balanceChartOptions: {
+        chart: {
+          height: 350,
+          type: 'line'
+        },
+        colors: ['#5B73E8', '#545454'],
+        dataLabels: {
+          enabled: true
+        },
+        stroke: {
+          curve: 'smooth'
+        },
+        title: {
+          text: 'Jumlah Balance Per-bulan',
+          align: 'left'
+        },
+        grid: {
+          borderColor: '#e7e7e7',
+          row: {
+            colors: ['#f3f3f3', 'transparent'],
+            // takes an array which will be repeated on columns
+            opacity: 0.5
+          }
+        },
+        xaxis: {
+          // categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+          title: {
+            text: 'Month'
+          }
+        },
+        yaxis: {
+          title: {
+            text: 'Jumlah (IDR)'
+          }
+        },
+        legend: {
+          position: 'top',
+          horizontalAlign: 'right'
         }
       },
       dashboard: {},
@@ -5581,6 +5596,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   mounted: function mounted() {
     this.getDashboard();
+    this.getJournalChart();
+    this.getBalanceChart();
   },
   methods: {
     getDashboard: function getDashboard() {
@@ -5604,18 +5621,106 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 if (response.status === 200) {
                   _this.dashboard = response.data;
-                }
+                } // console.log("this.dashboard")
+                // console.log(response.data)
 
-                console.log("this.dashboard");
-                console.log(response.data);
+
                 _this.loading = false;
 
-              case 7:
+              case 5:
               case "end":
                 return _context.stop();
             }
           }
         }, _callee);
+      }))();
+    },
+    getJournalChart: function getJournalChart() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var response, data, name;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios.get('/api/journalchart', {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this2.auth.token
+                  }
+                });
+
+              case 2:
+                response = _context2.sent;
+
+                if (response.status === 200) {
+                  _this2.journalChartOptions.xaxis.categories = Object.values(response.data.title);
+                  data = Object.values(response.data.total);
+                  name = "Journal";
+
+                  _this2.journalSeries.push({
+                    data: data,
+                    name: name
+                  });
+                }
+
+                _this2.loading = false;
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    getBalanceChart: function getBalanceChart() {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        var response, data, name;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return axios.get('/api/balancechart', {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this3.auth.token
+                  }
+                });
+
+              case 2:
+                response = _context3.sent;
+
+                if (response.status === 200) {
+                  _this3.balanceChartOptions.xaxis.categories = Object.values(response.data.title);
+                  data = Object.values(response.data.pemasukan);
+                  name = "Pemasukan";
+
+                  _this3.balanceSeries.push({
+                    data: data,
+                    name: name
+                  });
+
+                  data = Object.values(response.data.pengeluaran);
+                  name = "Pengeluaran";
+
+                  _this3.balanceSeries.push({
+                    data: data,
+                    name: name
+                  });
+                }
+
+                _this3.loading = false;
+
+              case 5:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
       }))();
     },
     format_date: function format_date(value) {
@@ -8614,6 +8719,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
 //
 //
 //
@@ -43407,277 +43513,7 @@ var render = function () {
             _c("div", { staticClass: "col-md-6 col-xl-3" }, [
               _c("div", { staticClass: "card" }, [
                 _c("div", { staticClass: "card-body" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "float-end mt-2",
-                      staticStyle: { position: "relative" },
-                    },
-                    [
-                      _c(
-                        "div",
-                        {
-                          staticStyle: { "min-height": "46px" },
-                          attrs: { id: "orders-chart" },
-                        },
-                        [
-                          _c(
-                            "div",
-                            {
-                              staticClass:
-                                "apexcharts-canvas apexcharts3a6zad0c apexcharts-theme-light",
-                              staticStyle: { width: "45px", height: "46px" },
-                              attrs: { id: "apexcharts3a6zad0c" },
-                            },
-                            [
-                              _c(
-                                "svg",
-                                {
-                                  staticClass: "apexcharts-svg",
-                                  staticStyle: { background: "transparent" },
-                                  attrs: {
-                                    id: "SvgjsSvg1048",
-                                    width: "45",
-                                    height: "46",
-                                    xmlns: "http://www.w3.org/2000/svg",
-                                    version: "1.1",
-                                    "xmlns:xlink":
-                                      "http://www.w3.org/1999/xlink",
-                                    "xmlns:svgjs": "http://svgjs.com/svgjs",
-                                    "xmlns:data": "ApexChartsNS",
-                                    transform: "translate(0, 0)",
-                                  },
-                                },
-                                [
-                                  _c(
-                                    "g",
-                                    {
-                                      staticClass:
-                                        "apexcharts-inner apexcharts-graphical",
-                                      attrs: {
-                                        id: "SvgjsG1050",
-                                        transform: "translate(0, 0)",
-                                      },
-                                    },
-                                    [
-                                      _c(
-                                        "defs",
-                                        { attrs: { id: "SvgjsDefs1049" } },
-                                        [
-                                          _c(
-                                            "clipPath",
-                                            {
-                                              attrs: {
-                                                id: "gridRectMask3a6zad0c",
-                                              },
-                                            },
-                                            [
-                                              _c("rect", {
-                                                attrs: {
-                                                  id: "SvgjsRect1052",
-                                                  width: "51",
-                                                  height: "47",
-                                                  x: "-3",
-                                                  y: "-1",
-                                                  rx: "0",
-                                                  ry: "0",
-                                                  opacity: "1",
-                                                  "stroke-width": "0",
-                                                  stroke: "none",
-                                                  "stroke-dasharray": "0",
-                                                  fill: "#fff",
-                                                },
-                                              }),
-                                            ]
-                                          ),
-                                          _c(
-                                            "clipPath",
-                                            {
-                                              attrs: {
-                                                id: "gridRectMarkerMask3a6zad0c",
-                                              },
-                                            },
-                                            [
-                                              _c("rect", {
-                                                attrs: {
-                                                  id: "SvgjsRect1053",
-                                                  width: "49",
-                                                  height: "49",
-                                                  x: "-2",
-                                                  y: "-2",
-                                                  rx: "0",
-                                                  ry: "0",
-                                                  opacity: "1",
-                                                  "stroke-width": "0",
-                                                  stroke: "none",
-                                                  "stroke-dasharray": "0",
-                                                  fill: "#fff",
-                                                },
-                                              }),
-                                            ]
-                                          ),
-                                        ]
-                                      ),
-                                      _c(
-                                        "g",
-                                        {
-                                          staticClass: "apexcharts-radialbar",
-                                          attrs: { id: "SvgjsG1054" },
-                                        },
-                                        [
-                                          _c(
-                                            "g",
-                                            { attrs: { id: "SvgjsG1055" } },
-                                            [
-                                              _c(
-                                                "g",
-                                                {
-                                                  staticClass:
-                                                    "apexcharts-tracks",
-                                                  attrs: { id: "SvgjsG1056" },
-                                                },
-                                                [
-                                                  _c(
-                                                    "g",
-                                                    {
-                                                      staticClass:
-                                                        "apexcharts-radialbar-track apexcharts-track",
-                                                      attrs: {
-                                                        id: "SvgjsG1057",
-                                                        rel: "1",
-                                                      },
-                                                    },
-                                                    [
-                                                      _c("path", {
-                                                        staticClass:
-                                                          "apexcharts-radialbar-area",
-                                                        attrs: {
-                                                          id: "apexcharts-radialbarTrack-0",
-                                                          d: "M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 22.497318152626402 7.134146575498747",
-                                                          fill: "none",
-                                                          "fill-opacity": "1",
-                                                          stroke:
-                                                            "rgba(242,242,242,0.85)",
-                                                          "stroke-opacity": "1",
-                                                          "stroke-linecap":
-                                                            "butt",
-                                                          "stroke-width":
-                                                            "4.258536585365854",
-                                                          "stroke-dasharray":
-                                                            "0",
-                                                          "data:pathOrig":
-                                                            "M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 22.497318152626402 7.134146575498747",
-                                                        },
-                                                      }),
-                                                    ]
-                                                  ),
-                                                ]
-                                              ),
-                                              _c(
-                                                "g",
-                                                { attrs: { id: "SvgjsG1059" } },
-                                                [
-                                                  _c(
-                                                    "g",
-                                                    {
-                                                      staticClass:
-                                                        "apexcharts-series apexcharts-radial-series",
-                                                      attrs: {
-                                                        id: "SvgjsG1061",
-                                                        seriesName: "seriesx1",
-                                                        rel: "1",
-                                                        "data:realIndex": "0",
-                                                      },
-                                                    },
-                                                    [
-                                                      _c("path", {
-                                                        staticClass:
-                                                          "apexcharts-radialbar-area apexcharts-radialbar-slice-0",
-                                                        attrs: {
-                                                          id: "SvgjsPath1062",
-                                                          d: "M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 7.886204749611055 27.248309913566267",
-                                                          fill: "none",
-                                                          "fill-opacity":
-                                                            "0.85",
-                                                          stroke:
-                                                            "rgba(52,195,143,0.85)",
-                                                          "stroke-opacity": "1",
-                                                          "stroke-linecap":
-                                                            "butt",
-                                                          "stroke-width":
-                                                            "4.390243902439025",
-                                                          "stroke-dasharray":
-                                                            "0",
-                                                          "data:angle": "252",
-                                                          "data:value": "70",
-                                                          index: "0",
-                                                          j: "0",
-                                                          "data:pathOrig":
-                                                            "M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 7.886204749611055 27.248309913566267",
-                                                        },
-                                                      }),
-                                                    ]
-                                                  ),
-                                                  _c("circle", {
-                                                    staticClass:
-                                                      "apexcharts-radialbar-hollow",
-                                                    attrs: {
-                                                      id: "SvgjsCircle1060",
-                                                      r: "13.23658536585366",
-                                                      cx: "22.5",
-                                                      cy: "22.5",
-                                                      fill: "transparent",
-                                                    },
-                                                  }),
-                                                ]
-                                              ),
-                                            ]
-                                          ),
-                                        ]
-                                      ),
-                                      _c("line", {
-                                        staticClass: "apexcharts-ycrosshairs",
-                                        attrs: {
-                                          id: "SvgjsLine1063",
-                                          x1: "0",
-                                          y1: "0",
-                                          x2: "45",
-                                          y2: "0",
-                                          stroke: "#b6b6b6",
-                                          "stroke-dasharray": "0",
-                                          "stroke-width": "1",
-                                        },
-                                      }),
-                                      _c("line", {
-                                        staticClass:
-                                          "apexcharts-ycrosshairs-hidden",
-                                        attrs: {
-                                          id: "SvgjsLine1064",
-                                          x1: "0",
-                                          y1: "0",
-                                          x2: "45",
-                                          y2: "0",
-                                          "stroke-dasharray": "0",
-                                          "stroke-width": "0",
-                                        },
-                                      }),
-                                    ]
-                                  ),
-                                  _c("g", {
-                                    staticClass: "apexcharts-annotations",
-                                    attrs: { id: "SvgjsG1051" },
-                                  }),
-                                ]
-                              ),
-                              _c("div", { staticClass: "apexcharts-legend" }),
-                            ]
-                          ),
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _vm._m(1),
-                    ]
-                  ),
+                  _vm._m(1),
                   _vm._v(" "),
                   _c("div", [
                     _c("h4", { staticClass: "mb-1 mt-1" }, [
@@ -43697,277 +43533,7 @@ var render = function () {
             _c("div", { staticClass: "col-md-6 col-xl-3" }, [
               _c("div", { staticClass: "card" }, [
                 _c("div", { staticClass: "card-body" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "float-end mt-2",
-                      staticStyle: { position: "relative" },
-                    },
-                    [
-                      _c(
-                        "div",
-                        {
-                          staticStyle: { "min-height": "46px" },
-                          attrs: { id: "orders-chart" },
-                        },
-                        [
-                          _c(
-                            "div",
-                            {
-                              staticClass:
-                                "apexcharts-canvas apexcharts3a6zad0c apexcharts-theme-light",
-                              staticStyle: { width: "45px", height: "46px" },
-                              attrs: { id: "apexcharts3a6zad0c" },
-                            },
-                            [
-                              _c(
-                                "svg",
-                                {
-                                  staticClass: "apexcharts-svg",
-                                  staticStyle: { background: "transparent" },
-                                  attrs: {
-                                    id: "SvgjsSvg1048",
-                                    width: "45",
-                                    height: "46",
-                                    xmlns: "http://www.w3.org/2000/svg",
-                                    version: "1.1",
-                                    "xmlns:xlink":
-                                      "http://www.w3.org/1999/xlink",
-                                    "xmlns:svgjs": "http://svgjs.com/svgjs",
-                                    "xmlns:data": "ApexChartsNS",
-                                    transform: "translate(0, 0)",
-                                  },
-                                },
-                                [
-                                  _c(
-                                    "g",
-                                    {
-                                      staticClass:
-                                        "apexcharts-inner apexcharts-graphical",
-                                      attrs: {
-                                        id: "SvgjsG1050",
-                                        transform: "translate(0, 0)",
-                                      },
-                                    },
-                                    [
-                                      _c(
-                                        "defs",
-                                        { attrs: { id: "SvgjsDefs1049" } },
-                                        [
-                                          _c(
-                                            "clipPath",
-                                            {
-                                              attrs: {
-                                                id: "gridRectMask3a6zad0c",
-                                              },
-                                            },
-                                            [
-                                              _c("rect", {
-                                                attrs: {
-                                                  id: "SvgjsRect1052",
-                                                  width: "51",
-                                                  height: "47",
-                                                  x: "-3",
-                                                  y: "-1",
-                                                  rx: "0",
-                                                  ry: "0",
-                                                  opacity: "1",
-                                                  "stroke-width": "0",
-                                                  stroke: "none",
-                                                  "stroke-dasharray": "0",
-                                                  fill: "#fff",
-                                                },
-                                              }),
-                                            ]
-                                          ),
-                                          _c(
-                                            "clipPath",
-                                            {
-                                              attrs: {
-                                                id: "gridRectMarkerMask3a6zad0c",
-                                              },
-                                            },
-                                            [
-                                              _c("rect", {
-                                                attrs: {
-                                                  id: "SvgjsRect1053",
-                                                  width: "49",
-                                                  height: "49",
-                                                  x: "-2",
-                                                  y: "-2",
-                                                  rx: "0",
-                                                  ry: "0",
-                                                  opacity: "1",
-                                                  "stroke-width": "0",
-                                                  stroke: "none",
-                                                  "stroke-dasharray": "0",
-                                                  fill: "#fff",
-                                                },
-                                              }),
-                                            ]
-                                          ),
-                                        ]
-                                      ),
-                                      _c(
-                                        "g",
-                                        {
-                                          staticClass: "apexcharts-radialbar",
-                                          attrs: { id: "SvgjsG1054" },
-                                        },
-                                        [
-                                          _c(
-                                            "g",
-                                            { attrs: { id: "SvgjsG1055" } },
-                                            [
-                                              _c(
-                                                "g",
-                                                {
-                                                  staticClass:
-                                                    "apexcharts-tracks",
-                                                  attrs: { id: "SvgjsG1056" },
-                                                },
-                                                [
-                                                  _c(
-                                                    "g",
-                                                    {
-                                                      staticClass:
-                                                        "apexcharts-radialbar-track apexcharts-track",
-                                                      attrs: {
-                                                        id: "SvgjsG1057",
-                                                        rel: "1",
-                                                      },
-                                                    },
-                                                    [
-                                                      _c("path", {
-                                                        staticClass:
-                                                          "apexcharts-radialbar-area",
-                                                        attrs: {
-                                                          id: "apexcharts-radialbarTrack-0",
-                                                          d: "M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 22.497318152626402 7.134146575498747",
-                                                          fill: "none",
-                                                          "fill-opacity": "1",
-                                                          stroke:
-                                                            "rgba(242,242,242,0.85)",
-                                                          "stroke-opacity": "1",
-                                                          "stroke-linecap":
-                                                            "butt",
-                                                          "stroke-width":
-                                                            "4.258536585365854",
-                                                          "stroke-dasharray":
-                                                            "0",
-                                                          "data:pathOrig":
-                                                            "M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 22.497318152626402 7.134146575498747",
-                                                        },
-                                                      }),
-                                                    ]
-                                                  ),
-                                                ]
-                                              ),
-                                              _c(
-                                                "g",
-                                                { attrs: { id: "SvgjsG1059" } },
-                                                [
-                                                  _c(
-                                                    "g",
-                                                    {
-                                                      staticClass:
-                                                        "apexcharts-series apexcharts-radial-series",
-                                                      attrs: {
-                                                        id: "SvgjsG1061",
-                                                        seriesName: "seriesx1",
-                                                        rel: "1",
-                                                        "data:realIndex": "0",
-                                                      },
-                                                    },
-                                                    [
-                                                      _c("path", {
-                                                        staticClass:
-                                                          "apexcharts-radialbar-area apexcharts-radialbar-slice-0",
-                                                        attrs: {
-                                                          id: "SvgjsPath1062",
-                                                          d: "M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 7.886204749611055 27.248309913566267",
-                                                          fill: "none",
-                                                          "fill-opacity":
-                                                            "0.85",
-                                                          stroke:
-                                                            "rgba(52,195,143,0.85)",
-                                                          "stroke-opacity": "1",
-                                                          "stroke-linecap":
-                                                            "butt",
-                                                          "stroke-width":
-                                                            "4.390243902439025",
-                                                          "stroke-dasharray":
-                                                            "0",
-                                                          "data:angle": "252",
-                                                          "data:value": "70",
-                                                          index: "0",
-                                                          j: "0",
-                                                          "data:pathOrig":
-                                                            "M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 7.886204749611055 27.248309913566267",
-                                                        },
-                                                      }),
-                                                    ]
-                                                  ),
-                                                  _c("circle", {
-                                                    staticClass:
-                                                      "apexcharts-radialbar-hollow",
-                                                    attrs: {
-                                                      id: "SvgjsCircle1060",
-                                                      r: "13.23658536585366",
-                                                      cx: "22.5",
-                                                      cy: "22.5",
-                                                      fill: "transparent",
-                                                    },
-                                                  }),
-                                                ]
-                                              ),
-                                            ]
-                                          ),
-                                        ]
-                                      ),
-                                      _c("line", {
-                                        staticClass: "apexcharts-ycrosshairs",
-                                        attrs: {
-                                          id: "SvgjsLine1063",
-                                          x1: "0",
-                                          y1: "0",
-                                          x2: "45",
-                                          y2: "0",
-                                          stroke: "#b6b6b6",
-                                          "stroke-dasharray": "0",
-                                          "stroke-width": "1",
-                                        },
-                                      }),
-                                      _c("line", {
-                                        staticClass:
-                                          "apexcharts-ycrosshairs-hidden",
-                                        attrs: {
-                                          id: "SvgjsLine1064",
-                                          x1: "0",
-                                          y1: "0",
-                                          x2: "45",
-                                          y2: "0",
-                                          "stroke-dasharray": "0",
-                                          "stroke-width": "0",
-                                        },
-                                      }),
-                                    ]
-                                  ),
-                                  _c("g", {
-                                    staticClass: "apexcharts-annotations",
-                                    attrs: { id: "SvgjsG1051" },
-                                  }),
-                                ]
-                              ),
-                              _c("div", { staticClass: "apexcharts-legend" }),
-                            ]
-                          ),
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _vm._m(2),
-                    ]
-                  ),
+                  _vm._m(2),
                   _vm._v(" "),
                   _c("div", [
                     _c("h4", { staticClass: "mb-1 mt-1" }, [
@@ -44039,8 +43605,8 @@ var render = function () {
                     attrs: {
                       type: "line",
                       height: "350",
-                      options: _vm.chartOptions,
-                      series: _vm.series,
+                      options: _vm.journalChartOptions,
+                      series: _vm.journalSeries,
                     },
                   }),
                 ],
@@ -44059,8 +43625,8 @@ var render = function () {
                     attrs: {
                       type: "line",
                       height: "350",
-                      options: _vm.chartOptions,
-                      series: _vm.series,
+                      options: _vm.balanceChartOptions,
+                      series: _vm.balanceSeries,
                     },
                   }),
                 ],
@@ -44111,23 +43677,39 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "resize-triggers" }, [
-      _c("div", { staticClass: "expand-trigger" }, [
-        _c("div", { staticStyle: { width: "46px", height: "47px" } }),
-      ]),
-      _c("div", { staticClass: "contract-trigger" }),
-    ])
+    return _c(
+      "div",
+      { staticClass: "float-end mt-2", staticStyle: { position: "relative" } },
+      [
+        _c("h3", { staticClass: "uil-wallet mt-3 mb-0" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "resize-triggers" }, [
+          _c("div", { staticClass: "expand-trigger" }, [
+            _c("div", { staticStyle: { width: "46px", height: "47px" } }),
+          ]),
+          _c("div", { staticClass: "contract-trigger" }),
+        ]),
+      ]
+    )
   },
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "resize-triggers" }, [
-      _c("div", { staticClass: "expand-trigger" }, [
-        _c("div", { staticStyle: { width: "46px", height: "47px" } }),
-      ]),
-      _c("div", { staticClass: "contract-trigger" }),
-    ])
+    return _c(
+      "div",
+      { staticClass: "float-end mt-2", staticStyle: { position: "relative" } },
+      [
+        _c("h3", { staticClass: "uil-file-landscape mt-3 mb-0" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "resize-triggers" }, [
+          _c("div", { staticClass: "expand-trigger" }, [
+            _c("div", { staticStyle: { width: "46px", height: "47px" } }),
+          ]),
+          _c("div", { staticClass: "contract-trigger" }),
+        ]),
+      ]
+    )
   },
   function () {
     var _vm = this
@@ -44147,23 +43729,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "container-fluid" }, [
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col-sm-6" }, [
-          _vm._v("\n                     © Minible.\n                "),
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-sm-6" }, [
-          _c("div", { staticClass: "text-sm-end d-none d-sm-block" }, [
-            _vm._v("\n                        Crafted with "),
-            _c("i", { staticClass: "mdi mdi-heart text-danger" }),
-            _vm._v(" by "),
-            _c(
-              "a",
-              {
-                staticClass: "text-reset",
-                attrs: { href: "https://themesbrand.com/", target: "_blank" },
-              },
-              [_vm._v("Themesbrand")]
-            ),
-          ]),
+          _vm._v("\n                     © Kodig.id.\n                "),
         ]),
       ]),
     ])
@@ -48422,7 +47988,7 @@ var render = function () {
                           _vm._v(" "),
                           _c(
                             "div",
-                            { staticClass: "col md-10 wrapper btn-group" },
+                            { staticClass: "col md-10 wrapper btn-group mb-3" },
                             [
                               _c(
                                 "button",
@@ -48456,8 +48022,10 @@ var render = function () {
                             ]
                           ),
                           _vm._v(" "),
+                          _c("br"),
+                          _vm._v(" "),
                           !_vm.verif
-                            ? _c("div", { staticClass: "my-3" }, [
+                            ? _c("div", { staticClass: "mb-3" }, [
                                 _c(
                                   "label",
                                   { attrs: { for: "example-date-input" } },
@@ -48505,7 +48073,7 @@ var render = function () {
                             : _vm._e(),
                           _vm._v(" "),
                           _vm.journal.is_reimburse == 1 && _vm.verif
-                            ? _c("div", { staticClass: "my-3" }, [
+                            ? _c("div", { staticClass: "mb-3" }, [
                                 _c(
                                   "label",
                                   { attrs: { for: "example-date-input" } },

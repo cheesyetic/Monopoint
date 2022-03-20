@@ -26,14 +26,12 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="float-end mt-2" style="position: relative;">
-                                <div id="orders-chart" style="min-height: 46px;"> <div id="apexcharts3a6zad0c" class="apexcharts-canvas apexcharts3a6zad0c apexcharts-theme-light" style="width: 45px; height: 46px;"><svg id="SvgjsSvg1048" width="45" height="46" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" class="apexcharts-svg" xmlns:data="ApexChartsNS" transform="translate(0, 0)" style="background: transparent;"><g id="SvgjsG1050" class="apexcharts-inner apexcharts-graphical" transform="translate(0, 0)"><defs id="SvgjsDefs1049"><clipPath id="gridRectMask3a6zad0c"><rect id="SvgjsRect1052" width="51" height="47" x="-3" y="-1" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fff"></rect></clipPath><clipPath id="gridRectMarkerMask3a6zad0c"><rect id="SvgjsRect1053" width="49" height="49" x="-2" y="-2" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fff"></rect></clipPath></defs><g id="SvgjsG1054" class="apexcharts-radialbar"><g id="SvgjsG1055"><g id="SvgjsG1056" class="apexcharts-tracks"><g id="SvgjsG1057" class="apexcharts-radialbar-track apexcharts-track" rel="1"><path id="apexcharts-radialbarTrack-0" d="M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 22.497318152626402 7.134146575498747" fill="none" fill-opacity="1" stroke="rgba(242,242,242,0.85)" stroke-opacity="1" stroke-linecap="butt" stroke-width="4.258536585365854" stroke-dasharray="0" class="apexcharts-radialbar-area" data:pathOrig="M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 22.497318152626402 7.134146575498747"></path></g></g><g id="SvgjsG1059"><g id="SvgjsG1061" class="apexcharts-series apexcharts-radial-series" seriesName="seriesx1" rel="1" data:realIndex="0"><path id="SvgjsPath1062" d="M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 7.886204749611055 27.248309913566267" fill="none" fill-opacity="0.85" stroke="rgba(52,195,143,0.85)" stroke-opacity="1" stroke-linecap="butt" stroke-width="4.390243902439025" stroke-dasharray="0" class="apexcharts-radialbar-area apexcharts-radialbar-slice-0" data:angle="252" data:value="70" index="0" j="0" data:pathOrig="M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 7.886204749611055 27.248309913566267"></path></g><circle id="SvgjsCircle1060" r="13.23658536585366" cx="22.5" cy="22.5" class="apexcharts-radialbar-hollow" fill="transparent"></circle></g></g></g><line id="SvgjsLine1063" x1="0" y1="0" x2="45" y2="0" stroke="#b6b6b6" stroke-dasharray="0" stroke-width="1" class="apexcharts-ycrosshairs"></line><line id="SvgjsLine1064" x1="0" y1="0" x2="45" y2="0" stroke-dasharray="0" stroke-width="0" class="apexcharts-ycrosshairs-hidden"></line></g><g id="SvgjsG1051" class="apexcharts-annotations"></g></svg><div class="apexcharts-legend"></div></div></div>
+                                <h3 class="uil-wallet mt-3 mb-0"></h3>
                             <div class="resize-triggers"><div class="expand-trigger"><div style="width: 46px; height: 47px;"></div></div><div class="contract-trigger"></div></div></div>
                             <div>
                                 <h4 class="mb-1 mt-1"><span data-plugin="counterup">Rp {{ dashboard.totaluang }}</span></h4>
                                 <p class="text-muted mb-0">Total Uang</p>
                             </div>
-                            <!-- <p class="text-muted mt-3 mb-0"><span class="text-danger me-1"><i class="mdi mdi-arrow-down-bold me-1"></i>0.82%</span> since last week
-                            </p> -->
                         </div>
                     </div>
                 </div>
@@ -41,7 +39,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="float-end mt-2" style="position: relative;">
-                                <div id="orders-chart" style="min-height: 46px;"> <div id="apexcharts3a6zad0c" class="apexcharts-canvas apexcharts3a6zad0c apexcharts-theme-light" style="width: 45px; height: 46px;"><svg id="SvgjsSvg1048" width="45" height="46" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" class="apexcharts-svg" xmlns:data="ApexChartsNS" transform="translate(0, 0)" style="background: transparent;"><g id="SvgjsG1050" class="apexcharts-inner apexcharts-graphical" transform="translate(0, 0)"><defs id="SvgjsDefs1049"><clipPath id="gridRectMask3a6zad0c"><rect id="SvgjsRect1052" width="51" height="47" x="-3" y="-1" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fff"></rect></clipPath><clipPath id="gridRectMarkerMask3a6zad0c"><rect id="SvgjsRect1053" width="49" height="49" x="-2" y="-2" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fff"></rect></clipPath></defs><g id="SvgjsG1054" class="apexcharts-radialbar"><g id="SvgjsG1055"><g id="SvgjsG1056" class="apexcharts-tracks"><g id="SvgjsG1057" class="apexcharts-radialbar-track apexcharts-track" rel="1"><path id="apexcharts-radialbarTrack-0" d="M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 22.497318152626402 7.134146575498747" fill="none" fill-opacity="1" stroke="rgba(242,242,242,0.85)" stroke-opacity="1" stroke-linecap="butt" stroke-width="4.258536585365854" stroke-dasharray="0" class="apexcharts-radialbar-area" data:pathOrig="M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 22.497318152626402 7.134146575498747"></path></g></g><g id="SvgjsG1059"><g id="SvgjsG1061" class="apexcharts-series apexcharts-radial-series" seriesName="seriesx1" rel="1" data:realIndex="0"><path id="SvgjsPath1062" d="M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 7.886204749611055 27.248309913566267" fill="none" fill-opacity="0.85" stroke="rgba(52,195,143,0.85)" stroke-opacity="1" stroke-linecap="butt" stroke-width="4.390243902439025" stroke-dasharray="0" class="apexcharts-radialbar-area apexcharts-radialbar-slice-0" data:angle="252" data:value="70" index="0" j="0" data:pathOrig="M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 7.886204749611055 27.248309913566267"></path></g><circle id="SvgjsCircle1060" r="13.23658536585366" cx="22.5" cy="22.5" class="apexcharts-radialbar-hollow" fill="transparent"></circle></g></g></g><line id="SvgjsLine1063" x1="0" y1="0" x2="45" y2="0" stroke="#b6b6b6" stroke-dasharray="0" stroke-width="1" class="apexcharts-ycrosshairs"></line><line id="SvgjsLine1064" x1="0" y1="0" x2="45" y2="0" stroke-dasharray="0" stroke-width="0" class="apexcharts-ycrosshairs-hidden"></line></g><g id="SvgjsG1051" class="apexcharts-annotations"></g></svg><div class="apexcharts-legend"></div></div></div>
+                                <h3 class="uil-file-landscape mt-3 mb-0"></h3>
                             <div class="resize-triggers"><div class="expand-trigger"><div style="width: 46px; height: 47px;"></div></div><div class="contract-trigger"></div></div></div>
                             <div>
                                 <h4 class="mb-1 mt-1"><span data-plugin="counterup">{{ dashboard.jumlahjurnal }}</span></h4>
@@ -56,7 +54,6 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="float-end mt-2" style="position: relative;">
-                                <!-- <div id="orders-chart" style="min-height: 46px;"> <div id="apexcharts3a6zad0c" class="apexcharts-canvas apexcharts3a6zad0c apexcharts-theme-light" style="width: 45px; height: 46px;"><svg id="SvgjsSvg1048" width="45" height="46" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" class="apexcharts-svg" xmlns:data="ApexChartsNS" transform="translate(0, 0)" style="background: transparent;"><g id="SvgjsG1050" class="apexcharts-inner apexcharts-graphical" transform="translate(0, 0)"><defs id="SvgjsDefs1049"><clipPath id="gridRectMask3a6zad0c"><rect id="SvgjsRect1052" width="51" height="47" x="-3" y="-1" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fff"></rect></clipPath><clipPath id="gridRectMarkerMask3a6zad0c"><rect id="SvgjsRect1053" width="49" height="49" x="-2" y="-2" rx="0" ry="0" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0" fill="#fff"></rect></clipPath></defs><g id="SvgjsG1054" class="apexcharts-radialbar"><g id="SvgjsG1055"><g id="SvgjsG1056" class="apexcharts-tracks"><g id="SvgjsG1057" class="apexcharts-radialbar-track apexcharts-track" rel="1"><path id="apexcharts-radialbarTrack-0" d="M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 22.497318152626402 7.134146575498747" fill="none" fill-opacity="1" stroke="rgba(242,242,242,0.85)" stroke-opacity="1" stroke-linecap="butt" stroke-width="4.258536585365854" stroke-dasharray="0" class="apexcharts-radialbar-area" data:pathOrig="M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 22.497318152626402 7.134146575498747"></path></g></g><g id="SvgjsG1059"><g id="SvgjsG1061" class="apexcharts-series apexcharts-radial-series" seriesName="seriesx1" rel="1" data:realIndex="0"><path id="SvgjsPath1062" d="M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 7.886204749611055 27.248309913566267" fill="none" fill-opacity="0.85" stroke="rgba(52,195,143,0.85)" stroke-opacity="1" stroke-linecap="butt" stroke-width="4.390243902439025" stroke-dasharray="0" class="apexcharts-radialbar-area apexcharts-radialbar-slice-0" data:angle="252" data:value="70" index="0" j="0" data:pathOrig="M 22.5 7.134146341463413 A 15.365853658536587 15.365853658536587 0 1 1 7.886204749611055 27.248309913566267"></path></g><circle id="SvgjsCircle1060" r="13.23658536585366" cx="22.5" cy="22.5" class="apexcharts-radialbar-hollow" fill="transparent"></circle></g></g></g><line id="SvgjsLine1063" x1="0" y1="0" x2="45" y2="0" stroke="#b6b6b6" stroke-dasharray="0" stroke-width="1" class="apexcharts-ycrosshairs"></line><line id="SvgjsLine1064" x1="0" y1="0" x2="45" y2="0" stroke-dasharray="0" stroke-width="0" class="apexcharts-ycrosshairs-hidden"></line></g><g id="SvgjsG1051" class="apexcharts-annotations"></g></svg><div class="apexcharts-legend"></div></div></div> -->
                                 <h4 class="mt-3 mb-0">{{ bank.name }}</h4>
                             <div class="resize-triggers"><div class="expand-trigger"><div style="width: 46px; height: 47px;"></div></div><div class="contract-trigger"></div></div></div>
                             <div>
@@ -71,14 +68,14 @@
                 <div class="col-md-6 col-xl-6">
                     <div class="card">
                         <div class="card-body">
-                            <apexchart type="line" height="350" :options="chartOptions" :series="series"></apexchart>
+                            <apexchart type="line" height="350" :options="journalChartOptions" :series="journalSeries"></apexchart>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-xl-6">
                     <div class="card">
                         <div class="card-body">
-                            <apexchart type="line" height="350" :options="chartOptions" :series="series"></apexchart>
+                            <apexchart type="line" height="350" :options="balanceChartOptions" :series="balanceSeries"></apexchart>
                         </div>
                     </div>
                 </div>
@@ -93,12 +90,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6">
-                     © Minible.
-                </div>
-                <div class="col-sm-6">
-                    <div class="text-sm-end d-none d-sm-block">
-                        Crafted with <i class="mdi mdi-heart text-danger"></i> by <a href="https://themesbrand.com/" target="_blank" class="text-reset">Themesbrand</a>
-                    </div>
+                     © Kodig.id.
                 </div>
             </div>
         </div>
@@ -126,62 +118,84 @@ export default {
                 data: [12, 11, 14, 18, 17, 13, 13]
                 }
             ],
-            chartOptions: {
+            journalSeries: [],
+            journalChartOptions: {
                 chart: {
-                height: 350,
-                type: 'line',
-                dropShadow: {
-                    enabled: true,
-                    color: '#000',
-                    top: 18,
-                    left: 7,
-                    blur: 10,
-                    opacity: 0.2
+                    height: 350,
+                    type: 'line',
                 },
-                toolbar: {
-                    show: false
-                }
-                },
-                colors: ['#77B6EA', '#545454'],
+                colors: ['#5B73E8', '#545454'],
                 dataLabels: {
-                enabled: true,
+                    enabled: true,
                 },
                 stroke: {
-                curve: 'smooth'
+                    curve: 'smooth'
                 },
                 title: {
-                text: 'Average High & Low Temperature',
-                align: 'left'
+                    text: 'Jumlah Jurnal Dibuat Per-bulan',
+                    align: 'left'
                 },
                 grid: {
-                borderColor: '#e7e7e7',
-                row: {
-                    colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-                    opacity: 0.5
-                },
-                },
-                markers: {
-                size: 1
+                    borderColor: '#e7e7e7',
+                    row: {
+                        colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                        opacity: 0.5
+                    },
                 },
                 xaxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-                title: {
-                    text: 'Month'
-                }
+                    // categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                    title: {
+                        text: 'Month'
+                    }
                 },
                 yaxis: {
-                title: {
-                    text: 'Temperature'
-                },
-                min: 5,
-                max: 40
+                    title: {
+                        text: 'Jumlah'
+                    },
                 },
                 legend: {
                 position: 'top',
                 horizontalAlign: 'right',
-                floating: true,
-                offsetY: -25,
-                offsetX: -5
+                }
+            },
+            balanceSeries: [],
+            balanceChartOptions: {
+                chart: {
+                    height: 350,
+                    type: 'line',
+                },
+                colors: ['#5B73E8', '#545454'],
+                dataLabels: {
+                    enabled: true,
+                },
+                stroke: {
+                    curve: 'smooth'
+                },
+                title: {
+                    text: 'Jumlah Balance Per-bulan',
+                    align: 'left'
+                },
+                grid: {
+                    borderColor: '#e7e7e7',
+                    row: {
+                        colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                        opacity: 0.5
+                    },
+                },
+                xaxis: {
+                    // categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                    title: {
+                        text: 'Month'
+                    }
+                },
+                yaxis: {
+                    title: {
+                        text: 'Jumlah (IDR)'
+                    },
+                },
+                legend: {
+                position: 'top',
+                horizontalAlign: 'right',
                 }
             },
             dashboard: {},
@@ -192,6 +206,8 @@ export default {
 
     mounted() {
         this.getDashboard()
+        this.getJournalChart()
+        this.getBalanceChart()
     },
 
     methods: {
@@ -204,8 +220,39 @@ export default {
             if (response.status === 200) {
                 this.dashboard = response.data
             }
-            console.log("this.dashboard")
-            console.log(response.data)
+            // console.log("this.dashboard")
+            // console.log(response.data)
+            this.loading = false
+        },
+        async getJournalChart() {
+            let response = await axios.get('/api/journalchart', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
+            if (response.status === 200) {
+                this.journalChartOptions.xaxis.categories = Object.values(response.data.title)
+                let data = Object.values(response.data.total)
+                let name = "Journal"
+                this.journalSeries.push({ data, name })
+            }
+            this.loading = false
+        },
+        async getBalanceChart() {
+            let response = await axios.get('/api/balancechart', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
+            if (response.status === 200) {
+                this.balanceChartOptions.xaxis.categories = Object.values(response.data.title)
+                let data = Object.values(response.data.pemasukan)
+                let name = "Pemasukan"
+                this.balanceSeries.push({ data, name })
+                data = Object.values(response.data.pengeluaran)
+                name = "Pengeluaran"
+                this.balanceSeries.push({ data, name })
+            }
             this.loading = false
         },
         format_date(value){
