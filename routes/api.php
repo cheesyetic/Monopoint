@@ -10,6 +10,7 @@ use App\Http\Controllers\JournalController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Api\LoginController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserAppointmentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -113,6 +114,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::resource('/adjustinghistory', AdjustingHistoryController::class)->except('index', 'update', 'create', 'edit');
     Route::get('/journalhistories/{id}', [AdjustingHistoryController::class, 'index']);
     Route::post('/adjustinghistory/{id}', [AdjustingHistoryController::class, 'update']);
+
+    //Graphic
+    Route::get('/balancechart', [DashboardController::class, 'balanceChart']);
+    Route::get('/journalchart', [DashboardController::class, 'journalChart']);
+    Route::get('/dashboard', [DashboardController::class, 'dashboard']);
 
     //-------------------------------------------------------------------------------------------------------
 

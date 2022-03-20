@@ -363,27 +363,52 @@ class JournalController extends Controller
             }
             $journal->buktireimburse = $input;
         }
-        $journal->save();
-        $journal->title = 'Verifikasi Jurnal';
-        $journal->remark = $user . ' menyetujui jurnal ini pada tanggal ' . $journal->updated_at;
-        $journal = $journal->toArray();
-        $journal['journal_id'] = $journal['id'];
-        AdjustingHistory::create($journal);
+        $ca = $journal->chartAccount;
+        $bankacc = $journal->bankAccount;
 
-        // balance in ca
-        $idchartacc = $journal['chart_account_id'];
-        $ca = ChartAccount::findOrFail($idchartacc);
-        $ca->balance = $ca->balance + $journal['balance'];
-        $ca->save();
-
+        if($ca->type == 2){
+            if($bankacc->balance >= $journal->balance){
+                $journal->save();
+                $journal->title = 'Verifikasi Jurnal';
+                $journal->remark = $user . ' menyetujui jurnal ini pada tanggal ' . $journal->updated_at;
+                $journal = $journal->toArray();
+                $journal['journal_id'] = $journal['id'];
+                AdjustingHistory::create($journal);
+                //balance in ca
+                $ca->balance = $ca->balance + $journal['balance'];
+                $ca->save();
+                //balance in bank
+                $bankacc->balance = $bankacc->balance - $journal['balance'];
+                $bankacc->save();
+            } else{
+                $response = [
+                    'success' => false,
+                    'message' => 'Maaf, saldo bank tidak cukup'
+                ];
+                return response()->json($response, Response::HTTP_BAD_REQUEST);
+            }
+        } else {
+            $journal->save();
+            $journal->title = 'Verifikasi Jurnal';
+            $journal->remark = $user . ' menyetujui jurnal ini pada tanggal ' . $journal->updated_at;
+            $journal = $journal->toArray();
+            $journal['journal_id'] = $journal['id'];
+            AdjustingHistory::create($journal);
+            //balance in ca
+            $ca->balance = $ca->balance + $journal['balance'];
+            $ca->save();
+            //balance in bank
+            $bankacc->balance = $bankacc->balance + $journal['balance'];
+            $bankacc->save();
+        }
+        
         $this->sendEmailVerifikasi($id);
-
         $response = [
             'message' => 'A journal has been verified',
             'data' => $journal
         ];
-
         return response()->json($response, Response::HTTP_OK);
+
     }
 
     public function declineStatus(Request $request, $token){
@@ -424,8 +449,8 @@ class JournalController extends Controller
         return Excel::download(new JournalsExport, 'journals.xlsx');
     }
 
-    public function import(){
-        Excel::import(new JournalsImport, request()->file('file'));
+    public function import($request){
+        Excel::import(new JournalsImport, $request->file('file'));
         $response = [
             'message' => 'Import Successful',
         ];
