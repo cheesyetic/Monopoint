@@ -22,7 +22,7 @@ import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
-
+import VueApexCharts from 'vue-apexcharts'
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -39,6 +39,7 @@ Vue.use(Toasted)
 Vue.use(VueRouter)
 Vue.use(moment)
 Vue.use(VueSweetalert2)
+Vue.use(VueApexCharts)
 
 window.moment = require('moment');
 window.moment.locale('id');
@@ -50,6 +51,7 @@ import routes from './router/index'
 Vue.component('navigation', require('./components/navigation.vue').default);
 Vue.component('sidebar', require('./components/RightSidebar.vue').default);
 Vue.component('v-select', vSelect)
+Vue.component('apexchart', VueApexCharts)
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -29,12 +29,12 @@
                     </div>
                 </div>
                 <div class="mb-2">
-                    <label class="form-label">Bulan</label>
+                    <label class="col-form-label">Bulan</label>
                     <v-select @input="updateFilter($event, 'month')" :options="monthOptions" :reduce="month => month.id" label="month" v-model="filter_month"></v-select>
                 </div>
                 <div class="mb-2">
-                    <label class="form-label">Chart Account</label>
-                    <v-select  :options="chartOptions" @input="updateFilter($event.id, 'chart')" :disabled="chartLoading"></v-select>
+                    <label class="col-form-label">Chart Account</label>
+                    <v-select v-model="chartSelected" :options="chartOptions" @input="updateFilter($event.id, 'chart')" :disabled="chartLoading"></v-select>
                 </div>
                 <div class="mb-2">
                     <label for="example-text-input" class="col col-form-label">Name Sorting</label>
@@ -54,12 +54,12 @@
                 <div class="mb-2">
                     <label for="example-text-input" class="col col-form-label">Date Sorting</label>
                     <div class="">
-                        <input @change="updateFilter(filter_date, 'sortdate')" value="ASC" type="radio" name="date" v-model="filter_date" id="date-option-1">
+                        <input @change="updateFilter(filter_date, 'sortdate')" value="ASC" type="radio" name="date" v-model="filter_date" id="date-option-1" selected>
                         <label for="date-option-1" class="option option-1 m-0 mb-1">
                             <div class="dot"></div>
                             <span>Jan-Des</span>
                         </label>
-                        <input @change="updateFilter(filter_date, 'sortdate')" value="DESC" type="radio" name="date" v-model="filter_date" id="date-option-3" selected>
+                        <input @change="updateFilter(filter_date, 'sortdate')" value="DESC" type="radio" name="date" v-model="filter_date" id="date-option-3">
                         <label for="date-option-3" class="option option-3 m-0">
                             <div class="dot"></div>
                             <span>Des-Jan</span>
@@ -88,6 +88,10 @@ export default {
             filter_date: '',
             filter_month: '',
             filter_chartaccount: '',
+            chartSelected: {
+                label: 'Semua',
+                id: '',
+            },
             monthOptions: [
                 {month: 'Semua', id: ''},
                 {month: 'Januari', id: '01'},
@@ -144,7 +148,7 @@ export default {
         //     this.filter_chartaccount = e.id
         // },
         updateFilter(event, target) {
-            console.log("ngupdate bosq")
+            // console.log("ngupdate bosq")
             // console.log(event)
             this.params[target] = event
             this.$emit('filterjournal', this.params)
