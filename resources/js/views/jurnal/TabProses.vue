@@ -102,10 +102,10 @@
                                                         <div class="btn-group">
                                                             <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu <i class="uil-angle-down"></i></button>
                                                             <div class="dropdown-menu" style="">
-                                                                <router-link :to="{ name: 'jurnal.detail', params: { token: journal.token }, query: { page: 'proses'} }" class="dropdown-item"><i class="uil-document-layout-left"></i> Detail</router-link>
-                                                                <router-link :to="{ name: 'jurnal.verif', params: { token: journal.token }, query: { page: 'proses'} }" v-if="auth.user.type != 2" class="dropdown-item"><i class="uil-file-check"></i> Verifikasi</router-link>
+                                                                <router-link :to="{ name: 'jurnal.detail', params: { token: journal.token }, query: { page_phase: 'proses'} }" class="dropdown-item"><i class="uil-document-layout-left"></i> Detail</router-link>
+                                                                <router-link :to="{ name: 'jurnal.verif', params: { token: journal.token }, query: { page_phase: 'proses'} }" v-if="auth.user.type != 2" class="dropdown-item"><i class="uil-file-check"></i> Verifikasi</router-link>
                                                                 <div class="dropdown-divider" v-if="auth.user.type != 2"></div>
-                                                                <router-link :to="{ name: 'jurnal.edit', params: { token: journal.token }, query: { page: 'proses'} }" v-if="auth.user.type != 2" class="dropdown-item"><i class="uil-edit-alt"></i> Edit</router-link>
+                                                                <router-link :to="{ name: 'jurnal.edit', params: { token: journal.token }, query: { page_phase: 'proses'} }" v-if="auth.user.type != 2" class="dropdown-item"><i class="uil-edit-alt"></i> Edit</router-link>
                                                                 <delete-journal :endpoint="journal.token" v-if="auth.user.type != 2" :auth="auth"/>
                                                             </div>
                                                         </div>
@@ -117,6 +117,7 @@
                                 <filter-journal @filterjournal="filtering" :auth="auth"></filter-journal>
                             </div>
                             <!-- Akhir Table -->
+                            <pagination :page="page" :last_page="last_page"></pagination>
                         </div>
                     </div>
                 </div>
@@ -130,12 +131,14 @@
 import DeleteJournal from './Delete'
 import FilterJournal from './Filter'
 import Loading from '../../components/loading'
+import Pagination from './Pagination'
 export default {
     props: ['auth'],
     components: {
         DeleteJournal,
         FilterJournal,
         Loading,
+        Pagination,
     },
     data() {
         return  {
@@ -144,26 +147,10 @@ export default {
             chartOptions: [],
             chartLoading: true,
             filter_keyword: '',
-            // filter_reimburse: '',
-            // filter_month: '',
-            // filter_chartaccount: '',
             params: '',
             loadingExcel: false,
-            // monthOptions: [
-            //     {month: 'Semua', code: ''},
-            //     {month: 'Januari', code: '01'},
-            //     {month: 'Februari', code: '02'},
-            //     {month: 'Maret', code: '03'},
-            //     {month: 'April', code: '04'},
-            //     {month: 'Mei', code: '05'},
-            //     {month: 'Juni', code: '06'},
-            //     {month: 'Juli', code: '07'},
-            //     {month: 'Agustus', code: '08'},
-            //     {month: 'September', code: '09'},
-            //     {month: 'Oktober', code: '10'},
-            //     {month: 'November', code: '11'},
-            //     {month: 'Desember', code: '12'}
-            // ],
+            page: '',
+            last_page: '',
         };
     },
 
@@ -174,9 +161,7 @@ export default {
 
     methods: {
         filtering(event) {
-            console.log("Filtering")
             this.params = event
-            console.log(this.params)
         },
         selectId(e) {
             this.filter_chartaccount = e.id
@@ -241,6 +226,7 @@ export default {
                         sortname: this.params.sortname,
                         sortdate: this.params.sortdate,
                         date: this.params.month,
+                        page: this.$route.query.page,
                     },
                     headers: {
                         'Authorization': 'Bearer ' + this.auth.token
@@ -248,8 +234,9 @@ export default {
                 })
             if (response.status === 200) {
                 this.journals = response.data.data
+                this.page = response.data.page
+                this.last_page = response.data.last_page
             }
-            console.log(this.journals)
             this.loading = false
         },
         format_date(value){
@@ -268,40 +255,6 @@ export default {
                     }
             })
         },
-        // async verifikasi(token) {
-        //     try {
-        //         this.loading = true
-        //         let formdata = new FormData()
-        //         let response = await axios.post(`/api/verifjournal/${token}`, formdata, {
-        //             headers: {
-        //                 'Authorization': 'Bearer ' + this.auth.token
-        //             }
-        //         })
-        //         if (response.status == 200) {
-        //             this.$toasted.show(response.data.message, {
-        //                 type: 'success',
-        //                 duration: 3000,
-        //                 position: 'top-center',
-        //             })
-        //             this.getJurnal()
-        //         }
-        //         else {
-        //             this.loading = false
-        //             this.$toasted.show("Error verifikasi jurnal", {
-        //                 type: 'error',
-        //                 duration: 3000,
-        //                 position: 'top-center',
-        //             })
-        //         }
-        //     } catch (e) {
-        //         // console.log(e)
-        //         this.$toasted.show("Something went wrong : " + e, {
-        //             type: 'error',
-        //             duration: 3000,
-        //             position: 'top-center',
-        //         })
-        //     }
-        // }
     }
 }
 </script>

@@ -115,52 +115,9 @@
                                         </transition>
                                 </table>
                                 <filter-journal @filterjournal="filtering" :auth="auth"></filter-journal>
-                                <!-- <div class="modal fade bs-example-modal-sm" tabindex="-1" aria-labelledby="mySmallModalLabel" aria-modal="true" role="dialog">
-                                    <div class="modal-dialog modal-sm">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Filter</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="mb-2">
-                                                    <label for="example-text-input" class="col col-form-label">Reimburse</label>
-                                                    <div class="">
-                                                        <input value="1" type="radio" name="reimburse" v-model="filter_reimburse" id="option-1">
-                                                        <label for="option-1" class="option option-1 m-0">
-                                                            <div class="dot"></div>
-                                                            <span>Ya</span>
-                                                        </label>
-                                                        <input value="0" type="radio" name="reimburse" v-model="filter_reimburse" id="option-2">
-                                                        <label for="option-2" class="option option-2 m-0 my-1">
-                                                            <div class="dot"></div>
-                                                            <span>Tidak</span>
-                                                        </label>
-                                                        <input value="" type="radio" name="reimburse" v-model="filter_reimburse" id="option-3" selected>
-                                                        <label for="option-3" class="option option-3 m-0">
-                                                            <div class="dot"></div>
-                                                            <span>Semua</span>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div class="mb-2">
-                                                    <label class="form-label">Bulan</label>
-                                                    <v-select :options="monthOptions" :reduce="month => month.code" label="month" v-model="filter_month"></v-select>
-                                                </div>
-                                                <div class="mb-2">
-                                                    <label class="form-label">Chart Account</label>
-                                                    <v-select :options="chartOptions" @input="selectId($event)" :disabled="chartLoading"></v-select>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary waves-effect" @click="getJurnal" data-bs-dismiss="modal">Terapkan</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
                             </div>
                             <!-- End table -->
+                            <pagination :page="page" :last_page="last_page"></pagination>
                         </div>
                     </div>
                 </div>
@@ -174,12 +131,14 @@
 import DeleteJournal from './Delete'
 import FilterJournal from './Filter'
 import Loading from '../../components/loading'
+import Pagination from './Pagination'
 export default {
     props: ['auth'],
     components: {
         DeleteJournal,
         FilterJournal,
         Loading,
+        Pagination,
     },
     data() {
         return  {
@@ -188,26 +147,10 @@ export default {
             chartOptions: [],
             chartLoading: true,
             filter_keyword: '',
-            // filter_reimburse: '',
-            // filter_month: '',
-            // filter_chartaccount: '',
             loadingExcel: false,
             params: '',
-            // monthOptions: [
-            //     {month: 'Semua', code: ''},
-            //     {month: 'Januari', code: '01'},
-            //     {month: 'Februari', code: '02'},
-            //     {month: 'Maret', code: '03'},
-            //     {month: 'April', code: '04'},
-            //     {month: 'Mei', code: '05'},
-            //     {month: 'Juni', code: '06'},
-            //     {month: 'Juli', code: '07'},
-            //     {month: 'Agustus', code: '08'},
-            //     {month: 'September', code: '09'},
-            //     {month: 'Oktober', code: '10'},
-            //     {month: 'November', code: '11'},
-            //     {month: 'Desember', code: '12'}
-            // ],
+            page: '',
+            last_page: '',
         };
     },
 
@@ -218,9 +161,7 @@ export default {
 
     methods: {
         filtering(event) {
-            console.log("Filtering")
             this.params = event
-            console.log(this.params)
         },
         selectId(e) {
             this.filter_chartaccount = e.id
@@ -284,6 +225,7 @@ export default {
                         sortname: this.params.sortname,
                         sortdate: this.params.sortdate,
                         date: this.params.month,
+                        page: this.$route.query.page,
                     },
                     headers: {
                         'Authorization': 'Bearer ' + this.auth.token
@@ -291,6 +233,8 @@ export default {
                 })
             if (response.status === 200) {
                 this.journals = response.data.data
+                this.page = response.data.page
+                this.last_page = response.data.last_page
             }
             this.loading = false
         },
@@ -336,7 +280,6 @@ export default {
                     })
                 }
             } catch (e) {
-                // console.log(e)
                 this.loading = false
                 this.$toasted.show("Something went wrong : " + e.message, {
                     type: 'error',

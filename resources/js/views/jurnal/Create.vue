@@ -103,7 +103,7 @@
                             <div class="mb-3 row">
                                 <label for="example-date-input" class="col-md-2 col-form-label">Periode</label>
                                 <div class="col-md-10">
-                                    <v-select :options="periodOptions" @input="selectId($event, 'accounting_period_id')" :disabled="periodLoading"></v-select>
+                                    <v-select v-model="periodSelected" :options="periodOptions" :disabled="periodLoading"></v-select>
                                     <div v-if="theErrors.accounting_period_id" class="mt-1 text-danger">{{ theErrors.accounting_period_id[0] }}</div>
                                 </div>
                             </div>
@@ -151,6 +151,7 @@ export default {
             projectLoading: true,
             periodOptions: [],
             periodLoading: true,
+            periodSelected: '',
             journalCreate: {
                 title: '',
                 date: '',
@@ -198,7 +199,7 @@ export default {
                 })
             if (response.status === 200) {
                 // this.periodOptions = response.data.data
-                console.log(response.data.data.length)
+                // console.log(response.data.data.length)
                 for (var i = 0; i < response.data.data.length; i++) {
                     let label = response.data.data[i].name + ' (' + response.data.data[i].code + ', ' + response.data.data[i].type + ')'
                     let id = String(response.data.data[i].id)
@@ -222,16 +223,17 @@ export default {
                 })
             if (response.status === 200) {
                 // this.periodOptions = response.data.data
-                console.log(response.data.data.length)
+                // console.log(response.data.data.length)
                 for (var i = 0; i < response.data.data.length; i++) {
                     let label = response.data.data[i].name + ' (' + response.data.data[i].start + ' - ' + response.data.data[i].end + ')'
                     let id = String(response.data.data[i].id)
                     this.periodOptions.push({ label, id })
                     if(response.data.data[i].status == 1) {
-                        this.journalCreate.accounting_period_id = id
+                        // this.journalCreate.accounting_period_id = id
+                        this.periodSelected = { label, id }
                     }
                 }
-                console.log(this.journalCreate.accounting_period_id + "periodeny broe")
+                // console.log(this.journalCreate.accounting_period_id + "periodeny broe")
                 this.periodLoading = false
             } else {
                 this.$toasted.show("Failed to load period", {
@@ -300,7 +302,7 @@ export default {
                 formdata.append('filebukti', this.journalCreate.filebukti)
                 formdata.append('is_reimburse', this.journalCreate.is_reimburse)
                 formdata.append('chart_account_id', this.journalCreate.chart_account_id)
-                formdata.append('accounting_period_id', this.journalCreate.accounting_period_id)
+                formdata.append('accounting_period_id', this.periodSelected.id)
                 formdata.append('balance', this.journalCreate.balance)
                 formdata.append('bank_account_id', this.journalCreate.bank_account_id)
                 formdata.append('project_id', this.journalCreate.project_id)
@@ -334,28 +336,13 @@ export default {
                         })
                     }
                 )
-                // .catch((e) => {
-                //     console.log("responseCreate gagal")
-                //     this.$toasted.show("Something went wrong : " + e, {
-                //         type: 'error',
-                //         duration: 3000,
-                //         position: 'top-center',
-                //     })
-                //     console.log(e)
-                //     console.log("responseCreate gagal")
-                //     console.log("ERRR:: ", e.response.data)
-                // })
-
             } catch (e) {
                 this.$toasted.show("Something went wrong : " + e, {
                         type: 'error',
                         duration: 3000,
                         position: 'top-center',
                     })
-                // console.log(e)
-                console.log("responseCreate gagal")
                 this.theErrors = e.response.data;
-                console.log(this.theErrors)
             }
         }
     }

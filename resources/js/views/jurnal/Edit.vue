@@ -360,9 +360,9 @@ export default {
                         this.journal.user_id = ''
                         this.theErrors = []
 
-                        if(this.$route.query.page == 'proses') {
+                        if(this.$route.query.page_phase == 'proses') {
                             this.$router.push({ name: 'jurnalproses' })
-                        } else if(this.$route.query.page == 'verif'){
+                        } else if(this.$route.query.page_phase == 'verif'){
                             this.$router.push({ name: 'jurnalverif' })
                         }
                         else {
@@ -376,15 +376,6 @@ export default {
                         })
                     }
                 )
-                // .catch((e) => {
-                //     this.$toasted.show("Something went wrong : " + e, {
-                //         type: 'error',
-                //         duration: 3000,
-                //         position: 'top-center',
-                //     })
-                //     console.log(e)
-                //     console.log("ERRR:: ", e.response.data)
-                // })
 
             } catch (e) {
                 this.loadingEdit = false

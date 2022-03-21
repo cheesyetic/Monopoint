@@ -41,18 +41,19 @@
                     <div class="card col-sm-4">
                         <form class="card-body" method="pos" @submit.prevent="store">
                             <h3>Verifikasi</h3>
-                            <div class="col md-10 wrapper btn-group">
+                            <div class="col md-10 wrapper btn-group mb-3">
                                 <button class="btn btn-outline-primary" :class="verif ? 'active' : ''" @click.prevent="verif = 1">Terima</button>
                                 <button class="btn btn-outline-primary" :class="!verif ? 'active' : ''" @click.prevent="verif = 0">Tolak</button>
                             </div>
-                            <div class="my-3" v-if="!verif">
+                            <br>
+                            <div class="mb-3" v-if="!verif">
                                 <label for="example-date-input" class="">Alasan Penolakan</label>
                                 <div class="col-md-10">
                                     <textarea class="form-control" type="text" v-model="note_decline"></textarea>
                                     <div v-if="theErrors.note_decline" class="mt-1 text-danger">{{ theErrors.note_decline[0] }}</div>
                                 </div>
                             </div>
-                            <div class="my-3" v-if="journal.is_reimburse == 1 && verif">
+                            <div class="mb-3" v-if="journal.is_reimburse == 1 && verif">
                                 <label for="example-date-input" class="">File Bukti Verifikasi</label>
                                 <div class="">
                                     <input type="file" class="form-control-file" v-on:change="pictureUpload" accept="image/*">
@@ -116,7 +117,6 @@ export default {
             this.journal[target] = e.id
         },
         pictureUpload: function() {
-            console.log("ganti gambar")
             // this.journal.filebukti = this.$refs.filebukti.files[0]
             this.filebukti = event.target.files[0]
         },
@@ -157,9 +157,9 @@ export default {
                             this.filebukti = ''
                             this.theErrors = []
 
-                            if(this.$route.query.page == 'proses') {
+                            if(this.$route.query.page_phase == 'proses') {
                                 this.$router.push({ name: 'jurnalproses' })
-                            } else if(this.$route.query.page == 'verif'){
+                            } else if(this.$route.query.page_phase == 'verif'){
                                 this.$router.push({ name: 'jurnalverif' })
                             }
                             else {
@@ -173,20 +173,11 @@ export default {
                             })
                         }
                     )
-                    // .catch((e) => {
-                    //     this.$toasted.show("Something went wrong : " + e, {
-                    //         type: 'error',
-                    //         duration: 3000,
-                    //         position: 'top-center',
-                    //     })
-                    //     console.log(e)
-                    //     console.log("Gagal verifikasi jurnal")
-                    //     console.log("ERRR:: ", e.response.data)
-                    // })
 
                 } catch (e) {
                     this.loadingAcc = false
-                    this.$toasted.show("Something went wrong : " + e, {
+                    console.log(e.response)
+                    this.$toasted.show("Something went wrong : " + e.response.data.message, {
                             type: 'error',
                             duration: 3000,
                             position: 'top-center',
@@ -209,9 +200,9 @@ export default {
                         response => {
                             this.theErrors = []
 
-                            if(this.$route.query.page == 'proses') {
+                            if(this.$route.query.page_phase == 'proses') {
                                 this.$router.push({ name: 'jurnalproses' })
-                            } else if(this.$route.query.page == 'verif'){
+                            } else if(this.$route.query.page_phase == 'verif'){
                                 this.$router.push({ name: 'jurnalverif' })
                             }
                             else {
@@ -225,17 +216,6 @@ export default {
                             })
                         }
                     )
-                    // .catch((error) => {
-                    //     this.$toasted.show("Something went wrong : " + e, {
-                    //         type: 'error',
-                    //         duration: 3000,
-                    //         position: 'top-center',
-                    //     })
-                    //     console.log(e)
-                    //     console.log("Gagal verifikasi jurnal")
-                    //     console.log("ERRR:: ", e.response.data)
-                    // })
-
                 } catch (e) {
                     this.loadingAcc = false
                     this.$toasted.show("Something went wrong : " + e, {
@@ -243,9 +223,6 @@ export default {
                             duration: 3000,
                             position: 'top-center',
                         })
-                        // console.log(e)
-                        // console.log("Gagal verifikasi jurnal")
-                        // console.log("ERRR:: ", e.response.data)
                     this.theErrors = e.response.data;
                 }
             }
