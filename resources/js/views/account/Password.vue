@@ -91,7 +91,7 @@ export default {
     methods: {
         async store() {
             try {
-                console.log("this.account")
+                // console.log("this.account")
                 let formdata = new FormData()
                 if (this.account.old_password != undefined) {
                     formdata.append('old_password', this.account.old_password)

@@ -88,7 +88,7 @@ export default {
     },
     methods: {
         async get() {
-            axios.get('http://localhost:8000/api/user', {headers: {'Authorization': 'Bearer '+this.auth.token}})
+            axios.get('/api/user', {headers: {'Authorization': 'Bearer '+this.auth.token}})
             .then(response => {
                 this.account = response.data
                 this.loading = false
