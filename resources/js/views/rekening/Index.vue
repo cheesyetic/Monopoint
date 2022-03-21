@@ -109,7 +109,7 @@ export default {
                 this.banks = response.data.data
             }
             this.loading = false
-            console.log(this.banks)
+            // console.log(this.banks)
         },
         format_date(value){
             if (value) {

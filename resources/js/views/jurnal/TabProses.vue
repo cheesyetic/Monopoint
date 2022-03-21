@@ -174,7 +174,7 @@ export default {
                 })
             if (response.status === 200) {
                 // this.periodOptions = response.data.data
-                console.log(response.data.data.length)
+                // console.log(response.data.data.length)
                 for (var i = 0; i < response.data.data.length; i++) {
                     let label = response.data.data[i].name
                     let id = String(response.data.data[i].id)

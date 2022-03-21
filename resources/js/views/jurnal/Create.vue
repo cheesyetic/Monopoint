@@ -186,7 +186,7 @@ export default {
             this.journalCreate[target] = e.id
         },
         pictureUpload: function() {
-            console.log("ganti gambar")
+            // console.log("ganti gambar")
             // this.journalCreate.filebukti = this.$refs.filebukti.files[0]
             this.journalCreate.filebukti = event.target.files[0]
         },
@@ -252,7 +252,7 @@ export default {
                 })
             if (response.status === 200) {
                 // this.periodOptions = response.data.data
-                console.log(response.data.data.length)
+                // console.log(response.data.data.length)
                 for (var i = 0; i < response.data.data.length; i++) {
                     let label = response.data.data[i].name
                     let id = String(response.data.data[i].id)
@@ -276,7 +276,7 @@ export default {
                 })
             if (response.status === 200) {
                 // this.periodOptions = response.data.data
-                console.log(response.data.data.length)
+                // console.log(response.data.data.length)
                 for (var i = 0; i < response.data.data.length; i++) {
                     let label = response.data.data[i].name
                     let id = String(response.data.data[i].id)

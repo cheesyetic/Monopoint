@@ -237,7 +237,7 @@ export default {
                 this.page = response.data.page
                 this.last_page = response.data.last_page
             }
-            console.log(this.journals)
+            // console.log(this.journals)
             this.loading = false
         },
         format_date(value){

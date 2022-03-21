@@ -176,7 +176,7 @@ export default {
 
                 } catch (e) {
                     this.loadingAcc = false
-                    console.log(e.response)
+                    // console.log(e.response)
                     this.$toasted.show("Something went wrong : " + e.response.data.message, {
                             type: 'error',
                             duration: 3000,

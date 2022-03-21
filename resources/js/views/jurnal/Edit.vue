@@ -196,7 +196,7 @@ export default {
             this.journal[target] = e.id
         },
         pictureUpload: function() {
-            console.log("ganti gambar")
+            // console.log("ganti gambar")
             // this.journal.filebukti = this.$refs.filebukti.files[0]
             this.journal.filebukti = event.target.files[0]
         },
@@ -323,7 +323,7 @@ export default {
         async store() {
             try {
                 let formdata = new FormData()
-                console.log(this.journal.filebukti)
+                // console.log(this.journal.filebukti)
                 formdata.append('title', this.journal.title)
                 formdata.append('date', this.journal.date)
                 formdata.append('remark', this.journal.remark)

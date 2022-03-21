@@ -22,7 +22,7 @@ export default {
     created() {
         axios.get('http://localhost:8000/api/user', {headers: {'Authorization': 'Bearer '+ this.token}})
         .then(response => {
-            console.log(response)
+            // console.log(response)
             this.user = response.data // assign response to state user
             this.$emit('user', this.user)
         })

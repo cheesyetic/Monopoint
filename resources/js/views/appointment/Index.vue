@@ -130,7 +130,7 @@ export default {
             if (response.status === 200) {
                 this.appointments = response.data.data
             }
-            console.log(response.data.data)
+            // console.log(response.data.data)
             this.loading = false
         },
         format_date(value){

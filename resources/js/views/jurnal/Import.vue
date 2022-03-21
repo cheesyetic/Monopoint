@@ -66,7 +66,7 @@ export default {
         // },
         async store() {
             try {
-                console.log(this.accountCreate)
+                // console.log(this.accountCreate)
                 let formdata = new FormData()
                 formdata.append('file', this.file)
 

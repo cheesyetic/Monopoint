@@ -120,8 +120,8 @@ export default {
                     this.partnerOptions.push({ label, id })
                 }
             }
-            console.log(response.data.data)
-            console.log("sukses get user")
+            // console.log(response.data.data)
+            // console.log("sukses get user")
             this.partnerLoading = false
         },
         async store() {
@@ -130,7 +130,7 @@ export default {
                 this.appointmentCreate.user_id[i] = this.appointmentCreate.user_id[i].id
             }
             try {
-                console.log(this.appointmentCreate)
+                // console.log(this.appointmentCreate)
                 let responseCreate = await axios.post('/api/appointment', this.appointmentCreate, {
                     headers: {
                         'Authorization': 'Bearer ' + this.auth.token

@@ -137,8 +137,8 @@ export default {
             if (response.status === 200) {
                 this.users = response.data.data
             }
-            console.log(response.data.data)
-            console.log("sukses get user")
+            // console.log(response.data.data)
+            // console.log("sukses get user")
             this.loading = false
         },
         format_date(value){

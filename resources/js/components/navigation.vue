@@ -161,7 +161,7 @@ export default {
                 .then(() => {
                     //remove localStorage
                     localStorage.removeItem("loggedIn")
-                    console.log("KELUAR")
+                    // console.log("KELUAR")
                     //redirect
                     return this.$router.push({ name: 'login' })
                 })
