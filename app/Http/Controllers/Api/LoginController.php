@@ -31,18 +31,15 @@ class LoginController extends Controller
             Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $user = User::where('email','=', $request->email)->first();
-        // dd($user);
-        $user->token = Crypt::encryptString($user->id);
-
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            $response = [
-                'success' => false,
-                'message' => 'These credentials do not match our records'
-            ];
-            return response()->json($response, Response::HTTP_BAD_REQUEST);
-        }
-
+        if($user = User::where('email','=', $request->email)->first()){
+            $user->token = Crypt::encryptString($user->id);
+            if (!$user || !Hash::check($request->password, $user->password)) {
+                $response = [
+                    'success' => false,
+                    'message' => 'Password yang anda masukkan salah, coba lagi'
+                ];
+                return response()->json($response, Response::HTTP_BAD_REQUEST);
+            }
             $token = $user->createToken('ApiToken')->plainTextToken;
 
             $response = [
@@ -53,6 +50,17 @@ class LoginController extends Controller
             ];
 
             return response()->json($response, Response::HTTP_OK);
+
+        }
+        else{
+            $response = [
+                'success' => false,
+                'message' => 'Email anda salah, coba lagi'
+            ];
+            return response()->json($response, Response::HTTP_BAD_REQUEST);
+        }
+
+        
     }
 
     public function token($request)
