@@ -18,7 +18,7 @@ class ChartAccountController extends Controller
      */
     public function index()
     {
-        $chartacc = ChartAccount::orderBy('id', 'desc')->get();
+        $chartacc = ChartAccount::orderBy('type', 'asc')->get();
         foreach ($chartacc as $key => $value) {
             $chartacc[$key]->token = Crypt::encryptString($chartacc[$key]->id);
         }

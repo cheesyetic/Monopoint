@@ -12,10 +12,12 @@ use App\Mail\JournalVerified;
 use App\Models\AccountingPeriod;
 use App\Models\AdjustingHistory;
 use App\Models\BankAccount;
+use App\Models\BankHistory;
 use App\Models\ChartAccount;
 use App\Models\Journal;
 use App\Models\Project;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -380,6 +382,9 @@ class JournalController extends Controller
                 //balance in bank
                 $bankacc->balance = $bankacc->balance - $journal['balance'];
                 $bankacc->save();
+                $journal['balance'] = $bankacc->balance;
+                $journal['date'] = Carbon::now()->toDateTimeString();
+                BankHistory::create($journal);
             } else{
                 $response = [
                     'success' => false,
@@ -400,6 +405,10 @@ class JournalController extends Controller
             //balance in bank
             $bankacc->balance = $bankacc->balance + $journal['balance'];
             $bankacc->save();
+            //bank histories
+            $journal['balance'] = $bankacc->balance;
+            $journal['date'] = Carbon::now()->toDateTimeString();
+            BankHistory::create($journal);
         }
         
         $this->sendEmailVerifikasi($id);
@@ -449,8 +458,8 @@ class JournalController extends Controller
         return Excel::download(new JournalsExport, 'journals.xlsx');
     }
 
-    public function import($request){
-        Excel::import(new JournalsImport, $request->file('file'));
+    public function import(){
+        Excel::import(new JournalsImport, request()->file('file'));
         $response = [
             'message' => 'Import Successful',
         ];
