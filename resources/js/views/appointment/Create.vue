@@ -22,7 +22,7 @@
             <!-- end page title -->
 
             <div class="row">
-                <div class="col-12">
+                <div class="col-12" style="margin-bottom:8rem">
                     <div class="card">
                         <form class="card-body" method="pos" @submit.prevent="store">
                             <div class="mb-3 row">

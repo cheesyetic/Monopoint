@@ -2467,22 +2467,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['auth'],
   data: function data() {
@@ -4460,6 +4444,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -5498,13 +5483,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      series: [{
-        name: "High - 2013",
-        data: [28, 29, 33, 36, 32, 32, 33]
-      }, {
-        name: "Low - 2013",
-        data: [12, 11, 14, 18, 17, 13, 13]
-      }],
       journalSeries: [],
       journalChartOptions: {
         chart: {
@@ -5532,6 +5510,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         },
         xaxis: {
           // categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+          convertedCatToNumeric: false,
           title: {
             text: 'Month'
           }
@@ -5573,6 +5552,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         },
         xaxis: {
           // categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+          convertedCatToNumeric: false,
           title: {
             text: 'Month'
           }
@@ -5654,6 +5634,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 if (response.status === 200) {
                   _this2.journalChartOptions.xaxis.categories = Object.values(response.data.title);
+                  _this2.journalChartOptions.xaxis.convertedCatToNumeric = false;
                   data = Object.values(response.data.total);
                   name = "Journal";
 
@@ -5964,7 +5945,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   // this.periodOptions = response.data.data
                   // console.log(response.data.data.length)
                   for (i = 0; i < response.data.data.length; i++) {
-                    label = response.data.data[i].name + ' (' + response.data.data[i].code + ', ' + response.data.data[i].type + ')';
+                    label = (response.data.data[i].type == 1 ? 'Pemasukan - ' : 'Pengeluaran - ') + response.data.data[i].name + ' (' + response.data.data[i].code + ')';
                     id = String(response.data.data[i].id);
 
                     _this.chartOptions.push({
@@ -6440,6 +6421,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['auth'],
@@ -6785,7 +6770,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 if (response.status === 200) {
                   for (i = 0; i < response.data.data.length; i++) {
-                    label = response.data.data[i].name + ' (' + response.data.data[i].code + ')';
+                    label = (response.data.data[i].type == 1 ? 'Pemasukan - ' : 'Pengeluaran - ') + response.data.data[i].name + ' (' + response.data.data[i].code + ')';
                     id = String(response.data.data[i].id);
 
                     _this.chartOptions.push({
@@ -7381,6 +7366,95 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -39299,8 +39373,6 @@ var render = function () {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "d-flex" }, [
-        _vm._m(1),
-        _vm._v(" "),
         _c("div", { staticClass: "dropdown d-inline-block" }, [
           _c(
             "button",
@@ -39502,6 +39574,25 @@ var render = function () {
                     ),
                   ]),
                   _vm._v(" "),
+                  _c(
+                    "li",
+                    { staticClass: "nav-item" },
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "nav-link",
+                          attrs: { to: { name: "asset" } },
+                        },
+                        [
+                          _c("i", { staticClass: "uil-file-alt me-2" }),
+                          _vm._v(" Asset\n                            "),
+                        ]
+                      ),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
                   _vm.auth.user.type == 0
                     ? _c("li", { staticClass: "nav-item dropdown" }, [
                         _c(
@@ -39579,15 +39670,6 @@ var render = function () {
                               "router-link",
                               {
                                 staticClass: "dropdown-item",
-                                attrs: { to: { name: "asset" } },
-                              },
-                              [_vm._v("Asset")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "router-link",
-                              {
-                                staticClass: "dropdown-item",
                                 attrs: { to: { name: "chart" } },
                               },
                               [_vm._v("Chart Account")]
@@ -39623,66 +39705,6 @@ var staticRenderFns = [
         },
       },
       [_c("i", { staticClass: "fa fa-fw fa-bars" })]
-    )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "dropdown d-inline-block d-lg-none ms-2" },
-      [
-        _c(
-          "button",
-          {
-            staticClass: "btn header-item noti-icon waves-effect",
-            attrs: {
-              type: "button",
-              id: "page-header-search-dropdown",
-              "data-bs-toggle": "dropdown",
-              "aria-haspopup": "true",
-              "aria-expanded": "false",
-            },
-          },
-          [_c("i", { staticClass: "uil-search" })]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "dropdown-menu dropdown-menu-lg dropdown-menu-end p-0",
-            attrs: { "aria-labelledby": "page-header-search-dropdown" },
-          },
-          [
-            _c("form", { staticClass: "p-3" }, [
-              _c("div", { staticClass: "m-0" }, [
-                _c("div", { staticClass: "input-group" }, [
-                  _c("input", {
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      placeholder: "Search ...",
-                      "aria-label": "Recipient's username",
-                    },
-                  }),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "input-group-append" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary",
-                        attrs: { type: "submit" },
-                      },
-                      [_c("i", { staticClass: "mdi mdi-magnify" })]
-                    ),
-                  ]),
-                ]),
-              ]),
-            ]),
-          ]
-        ),
-      ]
     )
   },
 ]
@@ -40427,215 +40449,219 @@ var render = function () {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-12" }, [
-            _c("div", { staticClass: "card" }, [
-              _c(
-                "form",
-                {
-                  staticClass: "card-body",
-                  attrs: { method: "pos" },
-                  on: {
-                    submit: function ($event) {
-                      $event.preventDefault()
-                      return _vm.store.apply(null, arguments)
+          _c(
+            "div",
+            { staticClass: "col-12", staticStyle: { "margin-bottom": "8rem" } },
+            [
+              _c("div", { staticClass: "card" }, [
+                _c(
+                  "form",
+                  {
+                    staticClass: "card-body",
+                    attrs: { method: "pos" },
+                    on: {
+                      submit: function ($event) {
+                        $event.preventDefault()
+                        return _vm.store.apply(null, arguments)
+                      },
                     },
                   },
-                },
-                [
-                  _c("div", { staticClass: "mb-3 row" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "col-md-2 col-form-label",
-                        attrs: { for: "example-text-input" },
-                      },
-                      [_vm._v("Nama")]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-10" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.appointmentCreate.name,
-                            expression: "appointmentCreate.name",
-                          },
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "text" },
-                        domProps: { value: _vm.appointmentCreate.name },
-                        on: {
-                          input: function ($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.appointmentCreate,
-                              "name",
-                              $event.target.value
-                            )
-                          },
+                  [
+                    _c("div", { staticClass: "mb-3 row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-2 col-form-label",
+                          attrs: { for: "example-text-input" },
                         },
-                      }),
+                        [_vm._v("Nama")]
+                      ),
                       _vm._v(" "),
-                      _vm.theErrors.name
-                        ? _c("div", { staticClass: "mt-1 text-danger" }, [
-                            _vm._v(_vm._s(_vm.theErrors.name[0])),
-                          ])
-                        : _vm._e(),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "mb-3 row" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "col-md-2 col-form-label",
-                        attrs: { for: "example-date-input" },
-                      },
-                      [_vm._v("Tanggal")]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-10" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.appointmentCreate.date,
-                            expression: "appointmentCreate.date",
-                          },
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "datetime-local" },
-                        domProps: { value: _vm.appointmentCreate.date },
-                        on: {
-                          input: function ($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.appointmentCreate,
-                              "date",
-                              $event.target.value
-                            )
-                          },
-                        },
-                      }),
-                      _vm._v(" "),
-                      _vm.theErrors.date
-                        ? _c("div", { staticClass: "mt-1 text-danger" }, [
-                            _vm._v(_vm._s(_vm.theErrors.date[0])),
-                          ])
-                        : _vm._e(),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "mb-3 row" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "col-md-2 col-form-label",
-                        attrs: { for: "example-date-input" },
-                      },
-                      [_vm._v("Remark")]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-10" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.appointmentCreate.remark,
-                            expression: "appointmentCreate.remark",
-                          },
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "text" },
-                        domProps: { value: _vm.appointmentCreate.remark },
-                        on: {
-                          input: function ($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.appointmentCreate,
-                              "remark",
-                              $event.target.value
-                            )
-                          },
-                        },
-                      }),
-                      _vm._v(" "),
-                      _vm.theErrors.remark
-                        ? _c("div", { staticClass: "mt-1 text-danger" }, [
-                            _vm._v(_vm._s(_vm.theErrors.remark[0])),
-                          ])
-                        : _vm._e(),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "mb-3 row" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "col-md-2 col-form-label",
-                        attrs: { for: "example-date-input" },
-                      },
-                      [_vm._v("Partner")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "col-md-10" },
-                      [
-                        _c("v-select", {
-                          attrs: {
-                            options: _vm.partnerOptions,
-                            multiple: "",
-                            disabled: _vm.partnerLoading,
-                          },
+                      _c("div", { staticClass: "col-md-10" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.appointmentCreate.name,
+                              expression: "appointmentCreate.name",
+                            },
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text" },
+                          domProps: { value: _vm.appointmentCreate.name },
                           on: {
                             input: function ($event) {
-                              return _vm.selectId($event, "user_id")
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.appointmentCreate,
+                                "name",
+                                $event.target.value
+                              )
                             },
-                          },
-                          model: {
-                            value: _vm.appointmentCreate.user_id,
-                            callback: function ($$v) {
-                              _vm.$set(_vm.appointmentCreate, "user_id", $$v)
-                            },
-                            expression: "appointmentCreate.user_id",
                           },
                         }),
                         _vm._v(" "),
-                        _vm.theErrors.user_id
+                        _vm.theErrors.name
                           ? _c("div", { staticClass: "mt-1 text-danger" }, [
-                              _vm._v(_vm._s(_vm.theErrors.user_id[0])),
+                              _vm._v(_vm._s(_vm.theErrors.name[0])),
                             ])
                           : _vm._e(),
-                      ],
-                      1
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "mb-3 row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-2 col-form-label",
+                          attrs: { for: "example-date-input" },
+                        },
+                        [_vm._v("Tanggal")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-10" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.appointmentCreate.date,
+                              expression: "appointmentCreate.date",
+                            },
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "datetime-local" },
+                          domProps: { value: _vm.appointmentCreate.date },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.appointmentCreate,
+                                "date",
+                                $event.target.value
+                              )
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        _vm.theErrors.date
+                          ? _c("div", { staticClass: "mt-1 text-danger" }, [
+                              _vm._v(_vm._s(_vm.theErrors.date[0])),
+                            ])
+                          : _vm._e(),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "mb-3 row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-2 col-form-label",
+                          attrs: { for: "example-date-input" },
+                        },
+                        [_vm._v("Remark")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-10" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.appointmentCreate.remark,
+                              expression: "appointmentCreate.remark",
+                            },
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text" },
+                          domProps: { value: _vm.appointmentCreate.remark },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.appointmentCreate,
+                                "remark",
+                                $event.target.value
+                              )
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        _vm.theErrors.remark
+                          ? _c("div", { staticClass: "mt-1 text-danger" }, [
+                              _vm._v(_vm._s(_vm.theErrors.remark[0])),
+                            ])
+                          : _vm._e(),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "mb-3 row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-2 col-form-label",
+                          attrs: { for: "example-date-input" },
+                        },
+                        [_vm._v("Partner")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-md-10" },
+                        [
+                          _c("v-select", {
+                            attrs: {
+                              options: _vm.partnerOptions,
+                              multiple: "",
+                              disabled: _vm.partnerLoading,
+                            },
+                            on: {
+                              input: function ($event) {
+                                return _vm.selectId($event, "user_id")
+                              },
+                            },
+                            model: {
+                              value: _vm.appointmentCreate.user_id,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.appointmentCreate, "user_id", $$v)
+                              },
+                              expression: "appointmentCreate.user_id",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _vm.theErrors.user_id
+                            ? _c("div", { staticClass: "mt-1 text-danger" }, [
+                                _vm._v(_vm._s(_vm.theErrors.user_id[0])),
+                              ])
+                            : _vm._e(),
+                        ],
+                        1
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "submit", disabled: _vm.requestLoading },
+                      },
+                      [_c("i", { staticClass: "uil-plus" }), _vm._v(" Buat")]
                     ),
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: { type: "submit", disabled: _vm.requestLoading },
-                    },
-                    [_c("i", { staticClass: "uil-plus" }), _vm._v(" Buat")]
-                  ),
-                  _vm._v(" "),
-                  _vm.requestLoading ? _c("loading") : _vm._e(),
-                ],
-                1
-              ),
-            ]),
-          ]),
+                    _vm._v(" "),
+                    _vm.requestLoading ? _c("loading") : _vm._e(),
+                  ],
+                  1
+                ),
+              ]),
+            ]
+          ),
         ]),
       ]),
     ]),
@@ -40793,224 +40819,235 @@ var render = function () {
                   },
                 },
                 [
-                  _c("div", { staticClass: "col-12" }, [
-                    _c("div", { staticClass: "card" }, [
-                      _c(
-                        "form",
-                        {
-                          staticClass: "card-body",
-                          attrs: { method: "post" },
-                          on: {
-                            submit: function ($event) {
-                              $event.preventDefault()
-                              return _vm.store.apply(null, arguments)
+                  _c(
+                    "div",
+                    {
+                      staticClass: "col-12",
+                      staticStyle: { "margin-bottom": "8rem" },
+                    },
+                    [
+                      _c("div", { staticClass: "card" }, [
+                        _c(
+                          "form",
+                          {
+                            staticClass: "card-body",
+                            attrs: { method: "post" },
+                            on: {
+                              submit: function ($event) {
+                                $event.preventDefault()
+                                return _vm.store.apply(null, arguments)
+                              },
                             },
                           },
-                        },
-                        [
-                          _c("div", { staticClass: "mb-3 row" }, [
-                            _c(
-                              "label",
-                              {
-                                staticClass: "col-md-2 col-form-label",
-                                attrs: { for: "example-text-input" },
-                              },
-                              [_vm._v("Nama")]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "col-md-10" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.appointment.name,
-                                    expression: "appointment.name",
-                                  },
-                                ],
-                                staticClass: "form-control",
-                                attrs: { type: "text" },
-                                domProps: { value: _vm.appointment.name },
-                                on: {
-                                  input: function ($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.$set(
-                                      _vm.appointment,
-                                      "name",
-                                      $event.target.value
-                                    )
-                                  },
+                          [
+                            _c("div", { staticClass: "mb-3 row" }, [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "col-md-2 col-form-label",
+                                  attrs: { for: "example-text-input" },
                                 },
-                              }),
+                                [_vm._v("Nama")]
+                              ),
                               _vm._v(" "),
-                              _vm.theErrors.name
-                                ? _c(
-                                    "div",
-                                    { staticClass: "mt-1 text-danger" },
-                                    [_vm._v(_vm._s(_vm.theErrors.name[0]))]
-                                  )
-                                : _vm._e(),
-                            ]),
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "mb-3 row" }, [
-                            _c(
-                              "label",
-                              {
-                                staticClass: "col-md-2 col-form-label",
-                                attrs: { for: "example-text-input" },
-                              },
-                              [_vm._v("Tanggal")]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "col-md-10" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.appointment.date,
-                                    expression: "appointment.date",
-                                  },
-                                ],
-                                staticClass: "form-control",
-                                attrs: { type: "datetime-local" },
-                                domProps: { value: _vm.appointment.date },
-                                on: {
-                                  input: function ($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.$set(
-                                      _vm.appointment,
-                                      "date",
-                                      $event.target.value
-                                    )
-                                  },
-                                },
-                              }),
-                              _vm._v(" "),
-                              _vm.theErrors.date
-                                ? _c(
-                                    "div",
-                                    { staticClass: "mt-1 text-danger" },
-                                    [_vm._v(_vm._s(_vm.theErrors.date[0]))]
-                                  )
-                                : _vm._e(),
-                            ]),
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "mb-3 row" }, [
-                            _c(
-                              "label",
-                              {
-                                staticClass: "col-md-2 col-form-label",
-                                attrs: { for: "example-text-input" },
-                              },
-                              [_vm._v("Remark")]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "col-md-10" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.appointment.remark,
-                                    expression: "appointment.remark",
-                                  },
-                                ],
-                                staticClass: "form-control",
-                                attrs: { type: "text" },
-                                domProps: { value: _vm.appointment.remark },
-                                on: {
-                                  input: function ($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.$set(
-                                      _vm.appointment,
-                                      "remark",
-                                      $event.target.value
-                                    )
-                                  },
-                                },
-                              }),
-                              _vm._v(" "),
-                              _vm.theErrors.remark
-                                ? _c(
-                                    "div",
-                                    { staticClass: "mt-1 text-danger" },
-                                    [_vm._v(_vm._s(_vm.theErrors.remark[0]))]
-                                  )
-                                : _vm._e(),
-                            ]),
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "mb-3 row" }, [
-                            _c(
-                              "label",
-                              {
-                                staticClass: "col-md-2 col-form-label",
-                                attrs: { for: "example-date-input" },
-                              },
-                              [_vm._v("Partner")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "col-md-10" },
-                              [
-                                _c("v-select", {
-                                  attrs: {
-                                    options: _vm.partnerOptions,
-                                    multiple: "",
-                                    disabled: _vm.partnerLoading,
-                                  },
-                                  model: {
-                                    value: _vm.partnerSelected,
-                                    callback: function ($$v) {
-                                      _vm.partnerSelected = $$v
+                              _c("div", { staticClass: "col-md-10" }, [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.appointment.name,
+                                      expression: "appointment.name",
                                     },
-                                    expression: "partnerSelected",
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: { type: "text" },
+                                  domProps: { value: _vm.appointment.name },
+                                  on: {
+                                    input: function ($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.appointment,
+                                        "name",
+                                        $event.target.value
+                                      )
+                                    },
                                   },
                                 }),
                                 _vm._v(" "),
-                                _vm.theErrors.user_id
+                                _vm.theErrors.name
                                   ? _c(
                                       "div",
                                       { staticClass: "mt-1 text-danger" },
-                                      [_vm._v(_vm._s(_vm.theErrors.user_id[0]))]
+                                      [_vm._v(_vm._s(_vm.theErrors.name[0]))]
                                     )
                                   : _vm._e(),
-                              ],
-                              1
-                            ),
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-primary",
-                              attrs: {
-                                type: "submit",
-                                disabled: _vm.loadingCRUD,
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "mb-3 row" }, [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "col-md-2 col-form-label",
+                                  attrs: { for: "example-text-input" },
+                                },
+                                [_vm._v("Tanggal")]
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-md-10" }, [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.appointment.date,
+                                      expression: "appointment.date",
+                                    },
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: { type: "datetime-local" },
+                                  domProps: { value: _vm.appointment.date },
+                                  on: {
+                                    input: function ($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.appointment,
+                                        "date",
+                                        $event.target.value
+                                      )
+                                    },
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _vm.theErrors.date
+                                  ? _c(
+                                      "div",
+                                      { staticClass: "mt-1 text-danger" },
+                                      [_vm._v(_vm._s(_vm.theErrors.date[0]))]
+                                    )
+                                  : _vm._e(),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "mb-3 row" }, [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "col-md-2 col-form-label",
+                                  attrs: { for: "example-text-input" },
+                                },
+                                [_vm._v("Remark")]
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-md-10" }, [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.appointment.remark,
+                                      expression: "appointment.remark",
+                                    },
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: { type: "text" },
+                                  domProps: { value: _vm.appointment.remark },
+                                  on: {
+                                    input: function ($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.appointment,
+                                        "remark",
+                                        $event.target.value
+                                      )
+                                    },
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _vm.theErrors.remark
+                                  ? _c(
+                                      "div",
+                                      { staticClass: "mt-1 text-danger" },
+                                      [_vm._v(_vm._s(_vm.theErrors.remark[0]))]
+                                    )
+                                  : _vm._e(),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "mb-3 row" }, [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "col-md-2 col-form-label",
+                                  attrs: { for: "example-date-input" },
+                                },
+                                [_vm._v("Partner")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "col-md-10" },
+                                [
+                                  _c("v-select", {
+                                    attrs: {
+                                      options: _vm.partnerOptions,
+                                      multiple: "",
+                                      disabled: _vm.partnerLoading,
+                                    },
+                                    model: {
+                                      value: _vm.partnerSelected,
+                                      callback: function ($$v) {
+                                        _vm.partnerSelected = $$v
+                                      },
+                                      expression: "partnerSelected",
+                                    },
+                                  }),
+                                  _vm._v(" "),
+                                  _vm.theErrors.user_id
+                                    ? _c(
+                                        "div",
+                                        { staticClass: "mt-1 text-danger" },
+                                        [
+                                          _vm._v(
+                                            _vm._s(_vm.theErrors.user_id[0])
+                                          ),
+                                        ]
+                                      )
+                                    : _vm._e(),
+                                ],
+                                1
+                              ),
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-primary",
+                                attrs: {
+                                  type: "submit",
+                                  disabled: _vm.loadingCRUD,
+                                },
                               },
-                            },
-                            [
-                              _c("i", { staticClass: "bx bx-save" }),
-                              _vm._v(" Save"),
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _vm.loadingCRUD ? _c("loading") : _vm._e(),
-                        ],
-                        1
-                      ),
-                    ]),
-                  ]),
+                              [
+                                _c("i", { staticClass: "bx bx-save" }),
+                                _vm._v(" Save"),
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _vm.loadingCRUD ? _c("loading") : _vm._e(),
+                          ],
+                          1
+                        ),
+                      ]),
+                    ]
+                  ),
                 ]
               ),
         ],
@@ -42165,8 +42202,29 @@ var render = function () {
                                               { staticClass: "card-text my-0" },
                                               [
                                                 _vm._v(
-                                                  "Total : Rp " +
-                                                    _vm._s(asset.total)
+                                                  "Harga : IDR " +
+                                                    _vm._s(
+                                                      new Intl.NumberFormat([
+                                                        "ban",
+                                                        "id",
+                                                      ]).format(asset.price)
+                                                    )
+                                                ),
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "p",
+                                              { staticClass: "card-text my-0" },
+                                              [
+                                                _vm._v(
+                                                  "Total : IDR " +
+                                                    _vm._s(
+                                                      new Intl.NumberFormat([
+                                                        "ban",
+                                                        "id",
+                                                      ]).format(asset.total)
+                                                    )
                                                 ),
                                               ]
                                             ),
@@ -43509,7 +43567,14 @@ var render = function () {
                   _c("div", [
                     _c("h4", { staticClass: "mb-1 mt-1" }, [
                       _c("span", { attrs: { "data-plugin": "counterup" } }, [
-                        _vm._v("Rp " + _vm._s(_vm.dashboard.totaluang)),
+                        _vm._v(
+                          "IDR " +
+                            _vm._s(
+                              new Intl.NumberFormat(["ban", "id"]).format(
+                                _vm.dashboard.totaluang
+                              )
+                            )
+                        ),
                       ]),
                     ]),
                     _vm._v(" "),
@@ -43568,7 +43633,16 @@ var render = function () {
                           _c(
                             "span",
                             { attrs: { "data-plugin": "counterup" } },
-                            [_vm._v("Rp " + _vm._s(bank.balance))]
+                            [
+                              _vm._v(
+                                "IDR " +
+                                  _vm._s(
+                                    new Intl.NumberFormat(["ban", "id"]).format(
+                                      bank.balance
+                                    )
+                                  )
+                              ),
+                            ]
                           ),
                         ]),
                         _vm._v(" "),
@@ -43720,7 +43794,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "container-fluid" }, [
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col-sm-6" }, [
-          _vm._v("\r\n                     © Kodig.id.\r\n                "),
+          _vm._v("\n                     © Kodig.id.\n                "),
         ]),
       ]),
     ])
@@ -43801,379 +43875,47 @@ var render = function () {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-12" }, [
-            _c("div", { staticClass: "card" }, [
-              _c(
-                "form",
-                {
-                  staticClass: "card-body",
-                  attrs: { method: "pos" },
-                  on: {
-                    submit: function ($event) {
-                      $event.preventDefault()
-                      return _vm.store.apply(null, arguments)
+          _c(
+            "div",
+            { staticClass: "col-12", staticStyle: { "margin-bottom": "8rem" } },
+            [
+              _c("div", { staticClass: "card" }, [
+                _c(
+                  "form",
+                  {
+                    staticClass: "card-body",
+                    attrs: { method: "pos" },
+                    on: {
+                      submit: function ($event) {
+                        $event.preventDefault()
+                        return _vm.store.apply(null, arguments)
+                      },
                     },
                   },
-                },
-                [
-                  _c("div", { staticClass: "mb-3 row" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "col-md-2 col-form-label",
-                        attrs: { for: "example-text-input" },
-                      },
-                      [_vm._v("Title")]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-10" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.journalCreate.title,
-                            expression: "journalCreate.title",
-                          },
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "text" },
-                        domProps: { value: _vm.journalCreate.title },
-                        on: {
-                          input: function ($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.journalCreate,
-                              "title",
-                              $event.target.value
-                            )
-                          },
+                  [
+                    _c("div", { staticClass: "mb-3 row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-2 col-form-label",
+                          attrs: { for: "example-text-input" },
                         },
-                      }),
+                        [_vm._v("Title")]
+                      ),
                       _vm._v(" "),
-                      _vm.theErrors.title
-                        ? _c("div", { staticClass: "mt-1 text-danger" }, [
-                            _vm._v(_vm._s(_vm.theErrors.title[0])),
-                          ])
-                        : _vm._e(),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "mb-3 row" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "col-md-2 col-form-label",
-                        attrs: { for: "example-date-input" },
-                      },
-                      [_vm._v("Date")]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-10" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.journalCreate.date,
-                            expression: "journalCreate.date",
-                          },
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "datetime-local" },
-                        domProps: { value: _vm.journalCreate.date },
-                        on: {
-                          input: function ($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.journalCreate,
-                              "date",
-                              $event.target.value
-                            )
-                          },
-                        },
-                      }),
-                      _vm._v(" "),
-                      _vm.theErrors.date
-                        ? _c("div", { staticClass: "mt-1 text-danger" }, [
-                            _vm._v(_vm._s(_vm.theErrors.date[0])),
-                          ])
-                        : _vm._e(),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "mb-3 row" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "col-md-2 col-form-label",
-                        attrs: { for: "remark" },
-                      },
-                      [_vm._v("Remark")]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-10" }, [
-                      _c("textarea", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.journalCreate.remark,
-                            expression: "journalCreate.remark",
-                          },
-                        ],
-                        staticClass: "form-control",
-                        domProps: { value: _vm.journalCreate.remark },
-                        on: {
-                          input: function ($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.journalCreate,
-                              "remark",
-                              $event.target.value
-                            )
-                          },
-                        },
-                      }),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "mb-3 row" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "col-md-2 col-form-label",
-                        attrs: { for: "example-date-input" },
-                      },
-                      [_vm._v("Ref")]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-10" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.journalCreate.ref,
-                            expression: "journalCreate.ref",
-                          },
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "text", value: "2019-08-19" },
-                        domProps: { value: _vm.journalCreate.ref },
-                        on: {
-                          input: function ($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.journalCreate,
-                              "ref",
-                              $event.target.value
-                            )
-                          },
-                        },
-                      }),
-                      _vm._v(" "),
-                      _vm.theErrors.ref
-                        ? _c("div", { staticClass: "mt-1 text-danger" }, [
-                            _vm._v(_vm._s(_vm.theErrors.ref[0])),
-                          ])
-                        : _vm._e(),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "mb-3 row" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "col-md-2 col-form-label",
-                        attrs: { for: "example-text-input" },
-                      },
-                      [_vm._v("Reimburse")]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col md-10" }, [
-                      _c("div", { staticClass: "col wrapper" }, [
+                      _c("div", { staticClass: "col-md-10" }, [
                         _c("input", {
                           directives: [
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.journalCreate.is_reimburse,
-                              expression: "journalCreate.is_reimburse",
+                              value: _vm.journalCreate.title,
+                              expression: "journalCreate.title",
                             },
                           ],
-                          attrs: {
-                            value: "1",
-                            type: "radio",
-                            name: "select",
-                            id: "option-1",
-                          },
-                          domProps: {
-                            checked: _vm._q(
-                              _vm.journalCreate.is_reimburse,
-                              "1"
-                            ),
-                          },
-                          on: {
-                            change: function ($event) {
-                              return _vm.$set(
-                                _vm.journalCreate,
-                                "is_reimburse",
-                                "1"
-                              )
-                            },
-                          },
-                        }),
-                        _vm._v(" "),
-                        _vm._m(1),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.journalCreate.is_reimburse,
-                              expression: "journalCreate.is_reimburse",
-                            },
-                          ],
-                          attrs: {
-                            value: "0",
-                            type: "radio",
-                            name: "select",
-                            id: "option-3",
-                          },
-                          domProps: {
-                            checked: _vm._q(
-                              _vm.journalCreate.is_reimburse,
-                              "0"
-                            ),
-                          },
-                          on: {
-                            change: function ($event) {
-                              return _vm.$set(
-                                _vm.journalCreate,
-                                "is_reimburse",
-                                "0"
-                              )
-                            },
-                          },
-                        }),
-                        _vm._v(" "),
-                        _vm._m(2),
-                      ]),
-                      _vm._v(" "),
-                      _vm.theErrors.is_reimburse
-                        ? _c("div", { staticClass: "mt-1 text-danger" }, [
-                            _vm._v(_vm._s(_vm.theErrors.is_reimburse[0])),
-                          ])
-                        : _vm._e(),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "mb-3 row" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "col-md-2 col-form-label",
-                        attrs: { for: "example-date-input" },
-                      },
-                      [_vm._v("File Bukti")]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-10" }, [
-                      _c("input", {
-                        staticClass: "form-control-file",
-                        attrs: { type: "file", accept: "image/*" },
-                        on: { change: _vm.pictureUpload },
-                      }),
-                      _vm._v(" "),
-                      _vm.theErrors.filebukti
-                        ? _c("div", { staticClass: "mt-1 text-danger" }, [
-                            _vm._v(_vm._s(_vm.theErrors.filebukti[0])),
-                          ])
-                        : _vm._e(),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "mb-3 row" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "col-md-2 col-form-label",
-                        attrs: { for: "example-date-input" },
-                      },
-                      [_vm._v("Chart Account")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "col-md-10" },
-                      [
-                        _c("v-select", {
-                          attrs: {
-                            options: _vm.chartOptions,
-                            disabled: _vm.chartLoading,
-                          },
-                          on: {
-                            input: function ($event) {
-                              return _vm.selectId($event, "chart_account_id")
-                            },
-                          },
-                        }),
-                        _vm._v(" "),
-                        _vm.theErrors.chart_account_id
-                          ? _c("div", { staticClass: "mt-1 text-danger" }, [
-                              _vm._v(_vm._s(_vm.theErrors.chart_account_id[0])),
-                            ])
-                          : _vm._e(),
-                      ],
-                      1
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "mb-3 row" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "col-md-2 col-form-label",
-                        attrs: { for: "example-date-input" },
-                      },
-                      [_vm._v("Balance")]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-10" }, [
-                      _c("div", { staticClass: "d-flex align-items-center" }, [
-                        _c(
-                          "p",
-                          {
-                            staticStyle: {
-                              margin: "0",
-                              "margin-right": "1rem",
-                            },
-                          },
-                          [_vm._v("IDR")]
-                        ),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.journalCreate.balance,
-                              expression: "journalCreate.balance",
-                            },
-                          ],
-                          staticClass: "form-control flex-grow",
-                          attrs: { type: "number" },
-                          domProps: { value: _vm.journalCreate.balance },
+                          staticClass: "form-control",
+                          attrs: { type: "text" },
+                          domProps: { value: _vm.journalCreate.title },
                           on: {
                             input: function ($event) {
                               if ($event.target.composing) {
@@ -44181,146 +43923,490 @@ var render = function () {
                               }
                               _vm.$set(
                                 _vm.journalCreate,
-                                "balance",
+                                "title",
+                                $event.target.value
+                              )
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        _vm.theErrors.title
+                          ? _c("div", { staticClass: "mt-1 text-danger" }, [
+                              _vm._v(_vm._s(_vm.theErrors.title[0])),
+                            ])
+                          : _vm._e(),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "mb-3 row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-2 col-form-label",
+                          attrs: { for: "example-date-input" },
+                        },
+                        [_vm._v("Date")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-10" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.journalCreate.date,
+                              expression: "journalCreate.date",
+                            },
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "datetime-local" },
+                          domProps: { value: _vm.journalCreate.date },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.journalCreate,
+                                "date",
+                                $event.target.value
+                              )
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        _vm.theErrors.date
+                          ? _c("div", { staticClass: "mt-1 text-danger" }, [
+                              _vm._v(_vm._s(_vm.theErrors.date[0])),
+                            ])
+                          : _vm._e(),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "mb-3 row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-2 col-form-label",
+                          attrs: { for: "remark" },
+                        },
+                        [_vm._v("Remark")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-10" }, [
+                        _c("textarea", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.journalCreate.remark,
+                              expression: "journalCreate.remark",
+                            },
+                          ],
+                          staticClass: "form-control",
+                          domProps: { value: _vm.journalCreate.remark },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.journalCreate,
+                                "remark",
                                 $event.target.value
                               )
                             },
                           },
                         }),
                       ]),
-                      _vm._v(" "),
-                      _vm.theErrors.balance
-                        ? _c("div", { staticClass: "mt-1 text-danger" }, [
-                            _vm._v(_vm._s(_vm.theErrors.balance[0])),
-                          ])
-                        : _vm._e(),
                     ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "mb-3 row" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "col-md-2 col-form-label",
-                        attrs: { for: "example-date-input" },
-                      },
-                      [_vm._v("Periode")]
-                    ),
                     _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "col-md-10" },
-                      [
-                        _c("v-select", {
-                          attrs: {
-                            options: _vm.periodOptions,
-                            disabled: _vm.periodLoading,
-                          },
-                          model: {
-                            value: _vm.periodSelected,
-                            callback: function ($$v) {
-                              _vm.periodSelected = $$v
+                    _c("div", { staticClass: "mb-3 row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-2 col-form-label",
+                          attrs: { for: "example-date-input" },
+                        },
+                        [_vm._v("Ref")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-10" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.journalCreate.ref,
+                              expression: "journalCreate.ref",
                             },
-                            expression: "periodSelected",
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text", value: "2019-08-19" },
+                          domProps: { value: _vm.journalCreate.ref },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.journalCreate,
+                                "ref",
+                                $event.target.value
+                              )
+                            },
                           },
                         }),
                         _vm._v(" "),
-                        _vm.theErrors.accounting_period_id
+                        _vm.theErrors.ref
                           ? _c("div", { staticClass: "mt-1 text-danger" }, [
-                              _vm._v(
-                                _vm._s(_vm.theErrors.accounting_period_id[0])
+                              _vm._v(_vm._s(_vm.theErrors.ref[0])),
+                            ])
+                          : _vm._e(),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "mb-3 row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-2 col-form-label",
+                          attrs: { for: "example-text-input" },
+                        },
+                        [_vm._v("Reimburse")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col md-10" }, [
+                        _c("div", { staticClass: "col wrapper" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.journalCreate.is_reimburse,
+                                expression: "journalCreate.is_reimburse",
+                              },
+                            ],
+                            attrs: {
+                              value: "1",
+                              type: "radio",
+                              name: "select",
+                              id: "option-1",
+                            },
+                            domProps: {
+                              checked: _vm._q(
+                                _vm.journalCreate.is_reimburse,
+                                "1"
                               ),
+                            },
+                            on: {
+                              change: function ($event) {
+                                return _vm.$set(
+                                  _vm.journalCreate,
+                                  "is_reimburse",
+                                  "1"
+                                )
+                              },
+                            },
+                          }),
+                          _vm._v(" "),
+                          _vm._m(1),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.journalCreate.is_reimburse,
+                                expression: "journalCreate.is_reimburse",
+                              },
+                            ],
+                            attrs: {
+                              value: "0",
+                              type: "radio",
+                              name: "select",
+                              id: "option-3",
+                            },
+                            domProps: {
+                              checked: _vm._q(
+                                _vm.journalCreate.is_reimburse,
+                                "0"
+                              ),
+                            },
+                            on: {
+                              change: function ($event) {
+                                return _vm.$set(
+                                  _vm.journalCreate,
+                                  "is_reimburse",
+                                  "0"
+                                )
+                              },
+                            },
+                          }),
+                          _vm._v(" "),
+                          _vm._m(2),
+                        ]),
+                        _vm._v(" "),
+                        _vm.theErrors.is_reimburse
+                          ? _c("div", { staticClass: "mt-1 text-danger" }, [
+                              _vm._v(_vm._s(_vm.theErrors.is_reimburse[0])),
                             ])
                           : _vm._e(),
-                      ],
-                      1
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "mb-3 row" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "col-md-2 col-form-label",
-                        attrs: { for: "example-date-input" },
-                      },
-                      [_vm._v("Akun Bank")]
-                    ),
+                      ]),
+                    ]),
                     _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "col-md-10" },
-                      [
-                        _c("v-select", {
-                          attrs: {
-                            options: _vm.bankOptions,
-                            disabled: _vm.bankLoading,
-                          },
-                          on: {
-                            input: function ($event) {
-                              return _vm.selectId($event, "bank_account_id")
-                            },
-                          },
+                    _c("div", { staticClass: "mb-3 row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-2 col-form-label",
+                          attrs: { for: "example-date-input" },
+                        },
+                        [_vm._v("File Bukti")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-10" }, [
+                        _c("input", {
+                          staticClass: "form-control-file",
+                          attrs: { type: "file", accept: "image/*" },
+                          on: { change: _vm.pictureUpload },
                         }),
                         _vm._v(" "),
-                        _vm.theErrors.bank_account_id
+                        _vm.theErrors.filebukti
                           ? _c("div", { staticClass: "mt-1 text-danger" }, [
-                              _vm._v(_vm._s(_vm.theErrors.bank_account_id[0])),
+                              _vm._v(_vm._s(_vm.theErrors.filebukti[0])),
                             ])
                           : _vm._e(),
-                      ],
-                      1
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "mb-3 row" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "col-md-2 col-form-label",
-                        attrs: { for: "example-date-input" },
-                      },
-                      [_vm._v("Project")]
-                    ),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "mb-3 row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-2 col-form-label",
+                          attrs: { for: "example-date-input" },
+                        },
+                        [_vm._v("Chart Account")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-md-10" },
+                        [
+                          _c("v-select", {
+                            attrs: {
+                              options: _vm.chartOptions,
+                              disabled: _vm.chartLoading,
+                            },
+                            on: {
+                              input: function ($event) {
+                                return _vm.selectId($event, "chart_account_id")
+                              },
+                            },
+                          }),
+                          _vm._v(" "),
+                          _vm.theErrors.chart_account_id
+                            ? _c("div", { staticClass: "mt-1 text-danger" }, [
+                                _vm._v(
+                                  _vm._s(_vm.theErrors.chart_account_id[0])
+                                ),
+                              ])
+                            : _vm._e(),
+                        ],
+                        1
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "mb-3 row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-2 col-form-label",
+                          attrs: { for: "example-date-input" },
+                        },
+                        [_vm._v("Balance")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-10" }, [
+                        _c(
+                          "div",
+                          { staticClass: "d-flex align-items-center" },
+                          [
+                            _c(
+                              "p",
+                              {
+                                staticStyle: {
+                                  margin: "0",
+                                  "margin-right": "1rem",
+                                },
+                              },
+                              [_vm._v("IDR")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.journalCreate.balance,
+                                  expression: "journalCreate.balance",
+                                },
+                              ],
+                              staticClass: "form-control flex-grow",
+                              attrs: { type: "number" },
+                              domProps: { value: _vm.journalCreate.balance },
+                              on: {
+                                input: function ($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.journalCreate,
+                                    "balance",
+                                    $event.target.value
+                                  )
+                                },
+                              },
+                            }),
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _vm.theErrors.balance
+                          ? _c("div", { staticClass: "mt-1 text-danger" }, [
+                              _vm._v(_vm._s(_vm.theErrors.balance[0])),
+                            ])
+                          : _vm._e(),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "mb-3 row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-2 col-form-label",
+                          attrs: { for: "example-date-input" },
+                        },
+                        [_vm._v("Periode")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-md-10" },
+                        [
+                          _c("v-select", {
+                            attrs: {
+                              options: _vm.periodOptions,
+                              disabled: _vm.periodLoading,
+                            },
+                            model: {
+                              value: _vm.periodSelected,
+                              callback: function ($$v) {
+                                _vm.periodSelected = $$v
+                              },
+                              expression: "periodSelected",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _vm.theErrors.accounting_period_id
+                            ? _c("div", { staticClass: "mt-1 text-danger" }, [
+                                _vm._v(
+                                  _vm._s(_vm.theErrors.accounting_period_id[0])
+                                ),
+                              ])
+                            : _vm._e(),
+                        ],
+                        1
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "mb-3 row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-2 col-form-label",
+                          attrs: { for: "example-date-input" },
+                        },
+                        [_vm._v("Akun Bank")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-md-10" },
+                        [
+                          _c("v-select", {
+                            attrs: {
+                              options: _vm.bankOptions,
+                              disabled: _vm.bankLoading,
+                            },
+                            on: {
+                              input: function ($event) {
+                                return _vm.selectId($event, "bank_account_id")
+                              },
+                            },
+                          }),
+                          _vm._v(" "),
+                          _vm.theErrors.bank_account_id
+                            ? _c("div", { staticClass: "mt-1 text-danger" }, [
+                                _vm._v(
+                                  _vm._s(_vm.theErrors.bank_account_id[0])
+                                ),
+                              ])
+                            : _vm._e(),
+                        ],
+                        1
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "mb-3 row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-2 col-form-label",
+                          attrs: { for: "example-date-input" },
+                        },
+                        [_vm._v("Project")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-md-10" },
+                        [
+                          _c("v-select", {
+                            attrs: {
+                              options: _vm.projectOptions,
+                              disabled: _vm.projectLoading,
+                            },
+                            on: {
+                              input: function ($event) {
+                                return _vm.selectId($event, "project_id")
+                              },
+                            },
+                          }),
+                          _vm._v(" "),
+                          _vm.theErrors.project_id
+                            ? _c("div", { staticClass: "mt-1 text-danger" }, [
+                                _vm._v(_vm._s(_vm.theErrors.project_id[0])),
+                              ])
+                            : _vm._e(),
+                        ],
+                        1
+                      ),
+                    ]),
                     _vm._v(" "),
                     _c(
-                      "div",
-                      { staticClass: "col-md-10" },
-                      [
-                        _c("v-select", {
-                          attrs: {
-                            options: _vm.projectOptions,
-                            disabled: _vm.projectLoading,
-                          },
-                          on: {
-                            input: function ($event) {
-                              return _vm.selectId($event, "project_id")
-                            },
-                          },
-                        }),
-                        _vm._v(" "),
-                        _vm.theErrors.project_id
-                          ? _c("div", { staticClass: "mt-1 text-danger" }, [
-                              _vm._v(_vm._s(_vm.theErrors.project_id[0])),
-                            ])
-                          : _vm._e(),
-                      ],
-                      1
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "submit" },
+                      },
+                      [_vm._v("Create")]
                     ),
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: { type: "submit" },
-                    },
-                    [_vm._v("Create")]
-                  ),
-                ]
-              ),
-            ]),
-          ]),
+                  ]
+                ),
+              ]),
+            ]
+          ),
         ]),
       ]),
     ]),
@@ -44590,9 +44676,31 @@ var render = function () {
                               _vm.journalHistories,
                               function (journalHistory) {
                                 return _c("tr", { key: journalHistory.id }, [
-                                  _c("td", [
-                                    _vm._v(_vm._s(journalHistory.title)),
-                                  ]),
+                                  _c(
+                                    "td",
+                                    {
+                                      class:
+                                        journalHistory.title ==
+                                        "Pembuatan Jurnal"
+                                          ? "uil-plus bg-soft-success"
+                                          : journalHistory.title ==
+                                            "Pengajuan Jurnal"
+                                          ? "uil-message bg-soft-primary"
+                                          : journalHistory.title ==
+                                            "Verifikasi Jurnal"
+                                          ? "uil-check bg-soft-info"
+                                          : journalHistory.title ==
+                                            "Perubahan Jurnal"
+                                          ? "uil-edit-alt"
+                                          : "uil-book bg-soft-warning",
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                        " +
+                                          _vm._s(journalHistory.title)
+                                      ),
+                                    ]
+                                  ),
                                   _vm._v(" "),
                                   _c("td", [
                                     _vm._v(_vm._s(journalHistory.remark)),
@@ -44610,8 +44718,13 @@ var render = function () {
                                   _vm._v(" "),
                                   _c("td", [
                                     _vm._v(
-                                      "Rp " +
-                                        _vm._s(journalHistory.balance) +
+                                      "IDR " +
+                                        _vm._s(
+                                          new Intl.NumberFormat([
+                                            "ban",
+                                            "id",
+                                          ]).format(journalHistory.balance)
+                                        ) +
                                         " "
                                     ),
                                   ]),
@@ -44820,415 +44933,262 @@ var render = function () {
                   },
                 },
                 [
-                  _c("div", { staticClass: "col-12" }, [
-                    _c("div", { staticClass: "card" }, [
-                      _c(
-                        "form",
-                        {
-                          staticClass: "card-body",
-                          attrs: { method: "pos" },
-                          on: {
-                            submit: function ($event) {
-                              $event.preventDefault()
-                              return _vm.store.apply(null, arguments)
+                  _c(
+                    "div",
+                    {
+                      staticClass: "col-12",
+                      staticStyle: { "margin-bottom": "8rem" },
+                    },
+                    [
+                      _c("div", { staticClass: "card" }, [
+                        _c(
+                          "form",
+                          {
+                            staticClass: "card-body",
+                            attrs: { method: "pos" },
+                            on: {
+                              submit: function ($event) {
+                                $event.preventDefault()
+                                return _vm.store.apply(null, arguments)
+                              },
                             },
                           },
-                        },
-                        [
-                          _c("div", { staticClass: "mb-3 row" }, [
-                            _c(
-                              "label",
-                              {
-                                staticClass: "col-md-2 col-form-label",
-                                attrs: { for: "example-text-input" },
-                              },
-                              [_vm._v("Title")]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "col-md-10" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.journal.title,
-                                    expression: "journal.title",
-                                  },
-                                ],
-                                staticClass: "form-control",
-                                attrs: { type: "text" },
-                                domProps: { value: _vm.journal.title },
-                                on: {
-                                  input: function ($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.$set(
-                                      _vm.journal,
-                                      "title",
-                                      $event.target.value
-                                    )
-                                  },
+                          [
+                            _c("div", { staticClass: "mb-3 row" }, [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "col-md-2 col-form-label",
+                                  attrs: { for: "example-text-input" },
                                 },
-                              }),
+                                [_vm._v("Title")]
+                              ),
                               _vm._v(" "),
-                              _vm.theErrors.title
-                                ? _c(
-                                    "div",
-                                    { staticClass: "mt-1 text-danger" },
-                                    [_vm._v(_vm._s(_vm.theErrors.title[0]))]
-                                  )
-                                : _vm._e(),
-                            ]),
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "mb-3 row" }, [
-                            _c(
-                              "label",
-                              {
-                                staticClass: "col-md-2 col-form-label",
-                                attrs: { for: "example-date-input" },
-                              },
-                              [_vm._v("Date")]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "col-md-10" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.journal.date,
-                                    expression: "journal.date",
-                                  },
-                                ],
-                                staticClass: "form-control",
-                                attrs: { type: "datetime-local" },
-                                domProps: { value: _vm.journal.date },
-                                on: {
-                                  input: function ($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.$set(
-                                      _vm.journal,
-                                      "date",
-                                      $event.target.value
-                                    )
-                                  },
-                                },
-                              }),
-                              _vm._v(" "),
-                              _vm.theErrors.date
-                                ? _c(
-                                    "div",
-                                    { staticClass: "mt-1 text-danger" },
-                                    [_vm._v(_vm._s(_vm.theErrors.date[0]))]
-                                  )
-                                : _vm._e(),
-                            ]),
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "mb-3 row" }, [
-                            _c(
-                              "label",
-                              {
-                                staticClass: "col-md-2 col-form-label",
-                                attrs: { for: "remark" },
-                              },
-                              [_vm._v("Remark")]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "col-md-10" }, [
-                              _c("textarea", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.journal.remark,
-                                    expression: "journal.remark",
-                                  },
-                                ],
-                                staticClass: "form-control",
-                                domProps: { value: _vm.journal.remark },
-                                on: {
-                                  input: function ($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.$set(
-                                      _vm.journal,
-                                      "remark",
-                                      $event.target.value
-                                    )
-                                  },
-                                },
-                              }),
-                            ]),
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "mb-3 row" }, [
-                            _c(
-                              "label",
-                              {
-                                staticClass: "col-md-2 col-form-label",
-                                attrs: { for: "example-date-input" },
-                              },
-                              [_vm._v("Ref")]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "col-md-10" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.journal.ref,
-                                    expression: "journal.ref",
-                                  },
-                                ],
-                                staticClass: "form-control",
-                                attrs: { type: "text", value: "2019-08-19" },
-                                domProps: { value: _vm.journal.ref },
-                                on: {
-                                  input: function ($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.$set(
-                                      _vm.journal,
-                                      "ref",
-                                      $event.target.value
-                                    )
-                                  },
-                                },
-                              }),
-                              _vm._v(" "),
-                              _vm.theErrors.ref
-                                ? _c(
-                                    "div",
-                                    { staticClass: "mt-1 text-danger" },
-                                    [_vm._v(_vm._s(_vm.theErrors.ref[0]))]
-                                  )
-                                : _vm._e(),
-                            ]),
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "mb-3 row" }, [
-                            _c(
-                              "label",
-                              {
-                                staticClass: "col-md-2 col-form-label",
-                                attrs: { for: "example-text-input" },
-                              },
-                              [_vm._v("Reimburse")]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "col md-10" }, [
-                              _c("div", { staticClass: "col wrapper" }, [
+                              _c("div", { staticClass: "col-md-10" }, [
                                 _c("input", {
                                   directives: [
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value: _vm.journal.is_reimburse,
-                                      expression: "journal.is_reimburse",
+                                      value: _vm.journal.title,
+                                      expression: "journal.title",
                                     },
                                   ],
-                                  attrs: {
-                                    value: "1",
-                                    type: "radio",
-                                    name: "select",
-                                    id: "option-1",
-                                  },
-                                  domProps: {
-                                    checked: _vm._q(
-                                      _vm.journal.is_reimburse,
-                                      "1"
-                                    ),
-                                  },
+                                  staticClass: "form-control",
+                                  attrs: { type: "text" },
+                                  domProps: { value: _vm.journal.title },
                                   on: {
-                                    change: function ($event) {
-                                      return _vm.$set(
+                                    input: function ($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
                                         _vm.journal,
-                                        "is_reimburse",
-                                        "1"
+                                        "title",
+                                        $event.target.value
                                       )
                                     },
                                   },
                                 }),
                                 _vm._v(" "),
-                                _c(
-                                  "label",
-                                  {
-                                    staticClass: "option option-1",
-                                    staticStyle: { "margin-left": "0" },
-                                    attrs: { for: "option-1" },
-                                  },
-                                  [
-                                    _c("div", { staticClass: "dot" }),
-                                    _vm._v(" "),
-                                    _c("span", [_vm._v("Ya")]),
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.journal.is_reimburse,
-                                      expression: "journal.is_reimburse",
-                                    },
-                                  ],
-                                  attrs: {
-                                    value: "0",
-                                    type: "radio",
-                                    name: "select",
-                                    id: "option-3",
-                                  },
-                                  domProps: {
-                                    checked: _vm._q(
-                                      _vm.journal.is_reimburse,
-                                      "0"
-                                    ),
-                                  },
-                                  on: {
-                                    change: function ($event) {
-                                      return _vm.$set(
-                                        _vm.journal,
-                                        "is_reimburse",
-                                        "0"
-                                      )
-                                    },
-                                  },
-                                }),
-                                _vm._v(" "),
-                                _c(
-                                  "label",
-                                  {
-                                    staticClass: "option option-3",
-                                    attrs: { for: "option-3" },
-                                  },
-                                  [
-                                    _c("div", { staticClass: "dot" }),
-                                    _vm._v(" "),
-                                    _c("span", [_vm._v("Tidak")]),
-                                  ]
-                                ),
-                              ]),
-                              _vm._v(" "),
-                              _vm.theErrors.is_reimburse
-                                ? _c(
-                                    "div",
-                                    { staticClass: "mt-1 text-danger" },
-                                    [
-                                      _vm._v(
-                                        _vm._s(_vm.theErrors.is_reimburse[0])
-                                      ),
-                                    ]
-                                  )
-                                : _vm._e(),
-                            ]),
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "mb-3 row" }, [
-                            _c(
-                              "label",
-                              {
-                                staticClass: "col-md-2 col-form-label",
-                                attrs: { for: "example-date-input" },
-                              },
-                              [_vm._v("File Bukti")]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "col-md-10" }, [
-                              _c("input", {
-                                staticClass: "form-control-file",
-                                attrs: { type: "file", accept: "image/*" },
-                                on: { change: _vm.pictureUpload },
-                              }),
-                              _vm._v(" "),
-                              _vm.theErrors.ref
-                                ? _c(
-                                    "div",
-                                    { staticClass: "mt-1 text-danger" },
-                                    [_vm._v(_vm._s(_vm.theErrors.ref[0]))]
-                                  )
-                                : _vm._e(),
-                            ]),
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "mb-3 row" }, [
-                            _c(
-                              "label",
-                              {
-                                staticClass: "col-md-2 col-form-label",
-                                attrs: { for: "example-date-input" },
-                              },
-                              [_vm._v("Chart Account")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "col-md-10" },
-                              [
-                                _c("v-select", {
-                                  attrs: {
-                                    options: _vm.chartOptions,
-                                    disabled: _vm.chartLoading,
-                                  },
-                                  model: {
-                                    value: _vm.chartSelected,
-                                    callback: function ($$v) {
-                                      _vm.chartSelected = $$v
-                                    },
-                                    expression: "chartSelected",
-                                  },
-                                }),
-                                _vm._v(" "),
-                                _vm.theErrors.chart_account_id
+                                _vm.theErrors.title
                                   ? _c(
                                       "div",
                                       { staticClass: "mt-1 text-danger" },
-                                      [
-                                        _vm._v(
-                                          _vm._s(
-                                            _vm.theErrors.chart_account_id[0]
-                                          )
-                                        ),
-                                      ]
+                                      [_vm._v(_vm._s(_vm.theErrors.title[0]))]
                                     )
                                   : _vm._e(),
-                              ],
-                              1
-                            ),
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "mb-3 row" }, [
-                            _c(
-                              "label",
-                              {
-                                staticClass: "col-md-2 col-form-label",
-                                attrs: { for: "example-date-input" },
-                              },
-                              [_vm._v("Balance")]
-                            ),
+                              ]),
+                            ]),
                             _vm._v(" "),
-                            _c("div", { staticClass: "col-md-10" }, [
+                            _c("div", { staticClass: "mb-3 row" }, [
                               _c(
-                                "div",
-                                { staticClass: "d-flex align-items-center" },
-                                [
-                                  _c(
-                                    "p",
+                                "label",
+                                {
+                                  staticClass: "col-md-2 col-form-label",
+                                  attrs: { for: "example-date-input" },
+                                },
+                                [_vm._v("Date")]
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-md-10" }, [
+                                _c("input", {
+                                  directives: [
                                     {
-                                      staticStyle: {
-                                        margin: "0",
-                                        "margin-right": "1rem",
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.journal.date,
+                                      expression: "journal.date",
+                                    },
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: { type: "datetime-local" },
+                                  domProps: { value: _vm.journal.date },
+                                  on: {
+                                    input: function ($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.journal,
+                                        "date",
+                                        $event.target.value
+                                      )
+                                    },
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _vm.theErrors.date
+                                  ? _c(
+                                      "div",
+                                      { staticClass: "mt-1 text-danger" },
+                                      [_vm._v(_vm._s(_vm.theErrors.date[0]))]
+                                    )
+                                  : _vm._e(),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "mb-3 row" }, [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "col-md-2 col-form-label",
+                                  attrs: { for: "remark" },
+                                },
+                                [_vm._v("Remark")]
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-md-10" }, [
+                                _c("textarea", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.journal.remark,
+                                      expression: "journal.remark",
+                                    },
+                                  ],
+                                  staticClass: "form-control",
+                                  domProps: { value: _vm.journal.remark },
+                                  on: {
+                                    input: function ($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.journal,
+                                        "remark",
+                                        $event.target.value
+                                      )
+                                    },
+                                  },
+                                }),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "mb-3 row" }, [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "col-md-2 col-form-label",
+                                  attrs: { for: "example-date-input" },
+                                },
+                                [_vm._v("Ref")]
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-md-10" }, [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.journal.ref,
+                                      expression: "journal.ref",
+                                    },
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: { type: "text", value: "2019-08-19" },
+                                  domProps: { value: _vm.journal.ref },
+                                  on: {
+                                    input: function ($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.journal,
+                                        "ref",
+                                        $event.target.value
+                                      )
+                                    },
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _vm.theErrors.ref
+                                  ? _c(
+                                      "div",
+                                      { staticClass: "mt-1 text-danger" },
+                                      [_vm._v(_vm._s(_vm.theErrors.ref[0]))]
+                                    )
+                                  : _vm._e(),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "mb-3 row" }, [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "col-md-2 col-form-label",
+                                  attrs: { for: "example-text-input" },
+                                },
+                                [_vm._v("Reimburse")]
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col md-10" }, [
+                                _c("div", { staticClass: "col wrapper" }, [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.journal.is_reimburse,
+                                        expression: "journal.is_reimburse",
+                                      },
+                                    ],
+                                    attrs: {
+                                      value: "1",
+                                      type: "radio",
+                                      name: "select",
+                                      id: "option-1",
+                                    },
+                                    domProps: {
+                                      checked: _vm._q(
+                                        _vm.journal.is_reimburse,
+                                        "1"
+                                      ),
+                                    },
+                                    on: {
+                                      change: function ($event) {
+                                        return _vm.$set(
+                                          _vm.journal,
+                                          "is_reimburse",
+                                          "1"
+                                        )
                                       },
                                     },
-                                    [_vm._v("IDR")]
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "label",
+                                    {
+                                      staticClass: "option option-1",
+                                      staticStyle: { "margin-left": "0" },
+                                      attrs: { for: "option-1" },
+                                    },
+                                    [
+                                      _c("div", { staticClass: "dot" }),
+                                      _vm._v(" "),
+                                      _c("span", [_vm._v("Ya")]),
+                                    ]
                                   ),
                                   _vm._v(" "),
                                   _c("input", {
@@ -45236,197 +45196,357 @@ var render = function () {
                                       {
                                         name: "model",
                                         rawName: "v-model",
-                                        value: _vm.journal.balance,
-                                        expression: "journal.balance",
+                                        value: _vm.journal.is_reimburse,
+                                        expression: "journal.is_reimburse",
                                       },
                                     ],
-                                    staticClass: "form-control flex-grow",
-                                    attrs: { type: "number" },
-                                    domProps: { value: _vm.journal.balance },
+                                    attrs: {
+                                      value: "0",
+                                      type: "radio",
+                                      name: "select",
+                                      id: "option-3",
+                                    },
+                                    domProps: {
+                                      checked: _vm._q(
+                                        _vm.journal.is_reimburse,
+                                        "0"
+                                      ),
+                                    },
                                     on: {
-                                      input: function ($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.$set(
+                                      change: function ($event) {
+                                        return _vm.$set(
                                           _vm.journal,
-                                          "balance",
-                                          $event.target.value
+                                          "is_reimburse",
+                                          "0"
                                         )
                                       },
                                     },
                                   }),
-                                ]
+                                  _vm._v(" "),
+                                  _c(
+                                    "label",
+                                    {
+                                      staticClass: "option option-3",
+                                      attrs: { for: "option-3" },
+                                    },
+                                    [
+                                      _c("div", { staticClass: "dot" }),
+                                      _vm._v(" "),
+                                      _c("span", [_vm._v("Tidak")]),
+                                    ]
+                                  ),
+                                ]),
+                                _vm._v(" "),
+                                _vm.theErrors.is_reimburse
+                                  ? _c(
+                                      "div",
+                                      { staticClass: "mt-1 text-danger" },
+                                      [
+                                        _vm._v(
+                                          _vm._s(_vm.theErrors.is_reimburse[0])
+                                        ),
+                                      ]
+                                    )
+                                  : _vm._e(),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "mb-3 row" }, [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "col-md-2 col-form-label",
+                                  attrs: { for: "example-date-input" },
+                                },
+                                [_vm._v("File Bukti")]
                               ),
                               _vm._v(" "),
-                              _vm.theErrors.balance
-                                ? _c(
-                                    "div",
-                                    { staticClass: "mt-1 text-danger" },
-                                    [_vm._v(_vm._s(_vm.theErrors.balance[0]))]
-                                  )
-                                : _vm._e(),
+                              _c("div", { staticClass: "col-md-10" }, [
+                                _c("input", {
+                                  staticClass: "form-control-file",
+                                  attrs: { type: "file", accept: "image/*" },
+                                  on: { change: _vm.pictureUpload },
+                                }),
+                                _vm._v(" "),
+                                _vm.theErrors.ref
+                                  ? _c(
+                                      "div",
+                                      { staticClass: "mt-1 text-danger" },
+                                      [_vm._v(_vm._s(_vm.theErrors.ref[0]))]
+                                    )
+                                  : _vm._e(),
+                              ]),
                             ]),
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "mb-3 row" }, [
-                            _c(
-                              "label",
-                              {
-                                staticClass: "col-md-2 col-form-label",
-                                attrs: { for: "example-date-input" },
-                              },
-                              [_vm._v("Periode")]
-                            ),
                             _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "col-md-10" },
-                              [
-                                _c("v-select", {
-                                  attrs: {
-                                    options: _vm.periodOptions,
-                                    disabled: _vm.periodLoading,
-                                  },
-                                  model: {
-                                    value: _vm.periodSelected,
-                                    callback: function ($$v) {
-                                      _vm.periodSelected = $$v
+                            _c("div", { staticClass: "mb-3 row" }, [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "col-md-2 col-form-label",
+                                  attrs: { for: "example-date-input" },
+                                },
+                                [_vm._v("Chart Account")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "col-md-10" },
+                                [
+                                  _c("v-select", {
+                                    attrs: {
+                                      options: _vm.chartOptions,
+                                      disabled: _vm.chartLoading,
                                     },
-                                    expression: "periodSelected",
-                                  },
-                                }),
-                                _vm._v(" "),
-                                _vm.theErrors.accounting_period_id
-                                  ? _c(
-                                      "div",
-                                      { staticClass: "mt-1 text-danger" },
-                                      [
-                                        _vm._v(
-                                          _vm._s(
-                                            _vm.theErrors
-                                              .accounting_period_id[0]
+                                    model: {
+                                      value: _vm.chartSelected,
+                                      callback: function ($$v) {
+                                        _vm.chartSelected = $$v
+                                      },
+                                      expression: "chartSelected",
+                                    },
+                                  }),
+                                  _vm._v(" "),
+                                  _vm.theErrors.chart_account_id
+                                    ? _c(
+                                        "div",
+                                        { staticClass: "mt-1 text-danger" },
+                                        [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm.theErrors.chart_account_id[0]
+                                            )
+                                          ),
+                                        ]
+                                      )
+                                    : _vm._e(),
+                                ],
+                                1
+                              ),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "mb-3 row" }, [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "col-md-2 col-form-label",
+                                  attrs: { for: "example-date-input" },
+                                },
+                                [_vm._v("Balance")]
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-md-10" }, [
+                                _c(
+                                  "div",
+                                  { staticClass: "d-flex align-items-center" },
+                                  [
+                                    _c(
+                                      "p",
+                                      {
+                                        staticStyle: {
+                                          margin: "0",
+                                          "margin-right": "1rem",
+                                        },
+                                      },
+                                      [_vm._v("IDR")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.journal.balance,
+                                          expression: "journal.balance",
+                                        },
+                                      ],
+                                      staticClass: "form-control flex-grow",
+                                      attrs: { type: "number" },
+                                      domProps: { value: _vm.journal.balance },
+                                      on: {
+                                        input: function ($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.$set(
+                                            _vm.journal,
+                                            "balance",
+                                            $event.target.value
                                           )
-                                        ),
-                                      ]
-                                    )
-                                  : _vm._e(),
-                              ],
-                              1
-                            ),
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "mb-3 row" }, [
-                            _c(
-                              "label",
-                              {
-                                staticClass: "col-md-2 col-form-label",
-                                attrs: { for: "example-date-input" },
-                              },
-                              [_vm._v("Akun Bank")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "col-md-10" },
-                              [
-                                _c("v-select", {
-                                  attrs: {
-                                    options: _vm.bankOptions,
-                                    disabled: _vm.bankLoading,
-                                  },
-                                  model: {
-                                    value: _vm.bankSelected,
-                                    callback: function ($$v) {
-                                      _vm.bankSelected = $$v
-                                    },
-                                    expression: "bankSelected",
-                                  },
-                                }),
+                                        },
+                                      },
+                                    }),
+                                  ]
+                                ),
                                 _vm._v(" "),
-                                _vm.theErrors.bank_account_id
+                                _vm.theErrors.balance
                                   ? _c(
                                       "div",
                                       { staticClass: "mt-1 text-danger" },
-                                      [
-                                        _vm._v(
-                                          _vm._s(
-                                            _vm.theErrors.bank_account_id[0]
-                                          )
-                                        ),
-                                      ]
+                                      [_vm._v(_vm._s(_vm.theErrors.balance[0]))]
                                     )
                                   : _vm._e(),
-                              ],
-                              1
-                            ),
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "mb-3 row" }, [
-                            _c(
-                              "label",
-                              {
-                                staticClass: "col-md-2 col-form-label",
-                                attrs: { for: "example-date-input" },
-                              },
-                              [_vm._v("Project")]
-                            ),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "mb-3 row" }, [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "col-md-2 col-form-label",
+                                  attrs: { for: "example-date-input" },
+                                },
+                                [_vm._v("Periode")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "col-md-10" },
+                                [
+                                  _c("v-select", {
+                                    attrs: {
+                                      options: _vm.periodOptions,
+                                      disabled: _vm.periodLoading,
+                                    },
+                                    model: {
+                                      value: _vm.periodSelected,
+                                      callback: function ($$v) {
+                                        _vm.periodSelected = $$v
+                                      },
+                                      expression: "periodSelected",
+                                    },
+                                  }),
+                                  _vm._v(" "),
+                                  _vm.theErrors.accounting_period_id
+                                    ? _c(
+                                        "div",
+                                        { staticClass: "mt-1 text-danger" },
+                                        [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm.theErrors
+                                                .accounting_period_id[0]
+                                            )
+                                          ),
+                                        ]
+                                      )
+                                    : _vm._e(),
+                                ],
+                                1
+                              ),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "mb-3 row" }, [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "col-md-2 col-form-label",
+                                  attrs: { for: "example-date-input" },
+                                },
+                                [_vm._v("Akun Bank")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "col-md-10" },
+                                [
+                                  _c("v-select", {
+                                    attrs: {
+                                      options: _vm.bankOptions,
+                                      disabled: _vm.bankLoading,
+                                    },
+                                    model: {
+                                      value: _vm.bankSelected,
+                                      callback: function ($$v) {
+                                        _vm.bankSelected = $$v
+                                      },
+                                      expression: "bankSelected",
+                                    },
+                                  }),
+                                  _vm._v(" "),
+                                  _vm.theErrors.bank_account_id
+                                    ? _c(
+                                        "div",
+                                        { staticClass: "mt-1 text-danger" },
+                                        [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm.theErrors.bank_account_id[0]
+                                            )
+                                          ),
+                                        ]
+                                      )
+                                    : _vm._e(),
+                                ],
+                                1
+                              ),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "mb-3 row" }, [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "col-md-2 col-form-label",
+                                  attrs: { for: "example-date-input" },
+                                },
+                                [_vm._v("Project")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "col-md-10" },
+                                [
+                                  _c("v-select", {
+                                    attrs: {
+                                      options: _vm.projectOptions,
+                                      disabled: _vm.projectLoading,
+                                    },
+                                    model: {
+                                      value: _vm.projectSelected,
+                                      callback: function ($$v) {
+                                        _vm.projectSelected = $$v
+                                      },
+                                      expression: "projectSelected",
+                                    },
+                                  }),
+                                  _vm._v(" "),
+                                  _vm.theErrors.project_id
+                                    ? _c(
+                                        "div",
+                                        { staticClass: "mt-1 text-danger" },
+                                        [
+                                          _vm._v(
+                                            _vm._s(_vm.theErrors.project_id[0])
+                                          ),
+                                        ]
+                                      )
+                                    : _vm._e(),
+                                ],
+                                1
+                              ),
+                            ]),
                             _vm._v(" "),
                             _c(
-                              "div",
-                              { staticClass: "col-md-10" },
-                              [
-                                _c("v-select", {
-                                  attrs: {
-                                    options: _vm.projectOptions,
-                                    disabled: _vm.projectLoading,
-                                  },
-                                  model: {
-                                    value: _vm.projectSelected,
-                                    callback: function ($$v) {
-                                      _vm.projectSelected = $$v
-                                    },
-                                    expression: "projectSelected",
-                                  },
-                                }),
-                                _vm._v(" "),
-                                _vm.theErrors.project_id
-                                  ? _c(
-                                      "div",
-                                      { staticClass: "mt-1 text-danger" },
-                                      [
-                                        _vm._v(
-                                          _vm._s(_vm.theErrors.project_id[0])
-                                        ),
-                                      ]
-                                    )
-                                  : _vm._e(),
-                              ],
-                              1
-                            ),
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-primary",
-                              attrs: {
-                                type: "submit",
-                                disabled: _vm.loadingEdit,
+                              "button",
+                              {
+                                staticClass: "btn btn-primary",
+                                attrs: {
+                                  type: "submit",
+                                  disabled: _vm.loadingEdit,
+                                },
                               },
-                            },
-                            [
-                              _c("i", { staticClass: "bx bx-save" }),
-                              _vm._v(" Save"),
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _vm.loadingEdit ? _c("loading") : _vm._e(),
-                        ],
-                        1
-                      ),
-                    ]),
-                  ]),
+                              [
+                                _c("i", { staticClass: "bx bx-save" }),
+                                _vm._v(" Save"),
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _vm.loadingEdit ? _c("loading") : _vm._e(),
+                          ],
+                          1
+                        ),
+                      ]),
+                    ]
+                  ),
                 ]
               ),
         ],
@@ -46006,16 +46126,18 @@ var render = function () {
                       [
                         _c(
                           "router-link",
-                          { attrs: { to: { name: "karyawan" } } },
-                          [_vm._v("Karyawan")]
+                          { attrs: { to: { name: "jurnal" } } },
+                          [_vm._v("Jurnal")]
                         ),
                       ],
                       1
                     ),
                     _vm._v(" "),
                     _c("li", { staticClass: "breadcrumb-item m-auto active" }, [
-                      _vm._v("Create"),
+                      _vm._v("Import Excel"),
                     ]),
+                    _vm._v(" "),
+                    _vm._m(1),
                   ]),
                 ]),
               ]
@@ -46068,12 +46190,14 @@ var render = function () {
                     ]),
                   ]),
                   _vm._v(" "),
-                  _vm._m(1),
+                  _vm._m(2),
                 ]
               ),
             ]),
           ]),
         ]),
+        _vm._v(" "),
+        _vm._m(3),
       ]),
     ]),
   ])
@@ -46085,8 +46209,26 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("h4", { staticClass: "mb-0" }, [
       _c("i", { staticClass: "uil-users-alt" }),
-      _vm._v(" Tambah Karyawan Baru"),
+      _vm._v(" Import Excel"),
     ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "btn btn-primary mx-2",
+        attrs: {
+          href: "/storage/files/JournalSample.xlsx",
+          download: "JournalSample.xlsx",
+          target: "__blank",
+          type: "submit",
+        },
+      },
+      [_c("i", { staticClass: "bx bx-import" }), _vm._v(" Unduh file contoh")]
+    )
   },
   function () {
     var _vm = this
@@ -46097,6 +46239,130 @@ var staticRenderFns = [
       { staticClass: "btn btn-primary", attrs: { type: "submit" } },
       [_c("i", { staticClass: "bx bx-import" }), _vm._v(" Import")]
     )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-12" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header" }, [
+            _c("h5", [_vm._v("Format Excel untuk di-import")]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body table-responsive" }, [
+            _c("table", { staticClass: "table table-centered mb-0" }, [
+              _c("thead", {}, [
+                _c("tr", [
+                  _c("th", [_vm._v(" Title* ")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v("Nama Jurnal")]),
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("th", [_vm._v(" Date & Time* ")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v("Tanggal dan waktu jurnal")]),
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("th", [_vm._v(" Remark ")]),
+                  _vm._v(" "),
+                  _c("td"),
+                ]),
+                _vm._v(" "),
+                _c("tr", [_c("th", [_vm._v(" Ref ")]), _vm._v(" "), _c("td")]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("th", [_vm._v(" Catatan Penolakan ")]),
+                  _vm._v(" "),
+                  _c("td"),
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("th", [_vm._v(" Balance* ")]),
+                  _vm._v(" "),
+                  _c("td"),
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("th", [_vm._v(" Reimburse* ")]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _vm._v("Berisi 1 jika diterima dan 2 jika ditolak"),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("th", [_vm._v(" Filebukti ")]),
+                  _vm._v(" "),
+                  _c("td"),
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("th", [_vm._v(" Status* ")]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _vm._v(
+                      "Berisi 1 jika draft; 2 jika proses; 3 jika diterima; 4 jika ditolak"
+                    ),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("th", [_vm._v(" Bukti Reimburse ")]),
+                  _vm._v(" "),
+                  _c("td"),
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("th", [_vm._v(" Created at ")]),
+                  _vm._v(" "),
+                  _c("td"),
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("th", [_vm._v(" Updated at ")]),
+                  _vm._v(" "),
+                  _c("td"),
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("th", [_vm._v(" Chart Account ID* ")]),
+                  _vm._v(" "),
+                  _c("td"),
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("th", [_vm._v(" Accounting Period ID* ")]),
+                  _vm._v(" "),
+                  _c("td"),
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("th", [_vm._v(" Bank Account ID* ")]),
+                  _vm._v(" "),
+                  _c("td"),
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("th", [_vm._v(" Project ID* ")]),
+                  _vm._v(" "),
+                  _c("td"),
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("th", [_vm._v(" User ID* ")]),
+                  _vm._v(" "),
+                  _c("td"),
+                ]),
+              ]),
+            ]),
+          ]),
+        ]),
+      ]),
+    ])
   },
 ]
 render._withStripped = true
@@ -46285,64 +46551,70 @@ var render = function () {
                         [_vm._v("Jurnal Draft")]
                       ),
                       _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "btn-group",
-                          staticStyle: { "margin-left": "8px" },
-                        },
-                        [
-                          _vm._m(1),
-                          _vm._v(" "),
-                          _c(
+                      _vm.auth.user.type != 2
+                        ? _c(
                             "div",
-                            { staticClass: "dropdown-menu" },
+                            {
+                              staticClass: "btn-group",
+                              staticStyle: { "margin-left": "8px" },
+                            },
                             [
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "dropdown-item",
-                                  attrs: { href: "/api/journal/export" },
-                                  on: {
-                                    click: function ($event) {
-                                      $event.preventDefault()
-                                      return _vm.exportExcel.apply(
-                                        null,
-                                        arguments
-                                      )
-                                    },
-                                  },
-                                },
-                                [
-                                  _c("i", { staticClass: "bx bx-export" }),
-                                  _vm._v(" Export Excel "),
-                                  _vm.loadingExcel
-                                    ? _c("loading", { attrs: { size: "18" } })
-                                    : _vm._e(),
-                                ],
-                                1
-                              ),
+                              _vm._m(1),
                               _vm._v(" "),
                               _c(
-                                "router-link",
-                                {
-                                  staticClass: "dropdown-item",
-                                  attrs: { to: { name: "jurnal.import" } },
-                                },
+                                "div",
+                                { staticClass: "dropdown-menu" },
                                 [
-                                  _c("i", { staticClass: "bx bx-import" }),
-                                  _vm._v(" Import Excel "),
-                                  _vm.loadingExcel
-                                    ? _c("loading", { attrs: { size: "18" } })
-                                    : _vm._e(),
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass: "dropdown-item",
+                                      attrs: { href: "/api/journal/export" },
+                                      on: {
+                                        click: function ($event) {
+                                          $event.preventDefault()
+                                          return _vm.exportExcel.apply(
+                                            null,
+                                            arguments
+                                          )
+                                        },
+                                      },
+                                    },
+                                    [
+                                      _c("i", { staticClass: "bx bx-export" }),
+                                      _vm._v(" Export Excel "),
+                                      _vm.loadingExcel
+                                        ? _c("loading", {
+                                            attrs: { size: "18" },
+                                          })
+                                        : _vm._e(),
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "router-link",
+                                    {
+                                      staticClass: "dropdown-item",
+                                      attrs: { to: { name: "jurnal.import" } },
+                                    },
+                                    [
+                                      _c("i", { staticClass: "bx bx-import" }),
+                                      _vm._v(" Import Excel "),
+                                      _vm.loadingExcel
+                                        ? _c("loading", {
+                                            attrs: { size: "18" },
+                                          })
+                                        : _vm._e(),
+                                    ],
+                                    1
+                                  ),
                                 ],
                                 1
                               ),
-                            ],
-                            1
-                          ),
-                        ]
-                      ),
+                            ]
+                          )
+                        : _vm._e(),
                       _vm._v(" "),
                       _c(
                         "router-link",
@@ -46834,55 +47106,61 @@ var render = function () {
                         [_vm._v("Jurnal Proses")]
                       ),
                       _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "btn-group",
-                          staticStyle: { "margin-left": "8px" },
-                        },
-                        [
-                          _vm._m(1),
-                          _vm._v(" "),
-                          _c(
+                      _vm.auth.user.type != 2
+                        ? _c(
                             "div",
-                            { staticClass: "dropdown-menu" },
+                            {
+                              staticClass: "btn-group",
+                              staticStyle: { "margin-left": "8px" },
+                            },
                             [
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "dropdown-item",
-                                  attrs: { href: "/api/journal/export" },
-                                },
-                                [
-                                  _c("i", { staticClass: "bx bx-export" }),
-                                  _vm._v(" Export Excel "),
-                                  _vm.loadingExcel
-                                    ? _c("loading", { attrs: { size: "18" } })
-                                    : _vm._e(),
-                                ],
-                                1
-                              ),
+                              _vm._m(1),
                               _vm._v(" "),
                               _c(
-                                "router-link",
-                                {
-                                  staticClass: "dropdown-item",
-                                  attrs: { to: { name: "jurnal.import" } },
-                                },
+                                "div",
+                                { staticClass: "dropdown-menu" },
                                 [
-                                  _c("i", { staticClass: "bx bx-import" }),
-                                  _vm._v(" Import Excel "),
-                                  _vm.loadingExcel
-                                    ? _c("loading", { attrs: { size: "18" } })
-                                    : _vm._e(),
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass: "dropdown-item",
+                                      attrs: { href: "/api/journal/export" },
+                                    },
+                                    [
+                                      _c("i", { staticClass: "bx bx-export" }),
+                                      _vm._v(" Export Excel "),
+                                      _vm.loadingExcel
+                                        ? _c("loading", {
+                                            attrs: { size: "18" },
+                                          })
+                                        : _vm._e(),
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "router-link",
+                                    {
+                                      staticClass: "dropdown-item",
+                                      attrs: { to: { name: "jurnal.import" } },
+                                    },
+                                    [
+                                      _c("i", { staticClass: "bx bx-import" }),
+                                      _vm._v(" Import Excel "),
+                                      _vm.loadingExcel
+                                        ? _c("loading", {
+                                            attrs: { size: "18" },
+                                          })
+                                        : _vm._e(),
+                                    ],
+                                    1
+                                  ),
                                 ],
                                 1
                               ),
-                            ],
-                            1
-                          ),
-                        ]
-                      ),
+                            ]
+                          )
+                        : _vm._e(),
                       _vm._v(" "),
                       _c(
                         "router-link",
@@ -47404,55 +47682,61 @@ var render = function () {
                         [_vm._v("Jurnal Verif")]
                       ),
                       _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "btn-group",
-                          staticStyle: { "margin-left": "8px" },
-                        },
-                        [
-                          _vm._m(1),
-                          _vm._v(" "),
-                          _c(
+                      _vm.auth.user.type != 2
+                        ? _c(
                             "div",
-                            { staticClass: "dropdown-menu" },
+                            {
+                              staticClass: "btn-group",
+                              staticStyle: { "margin-left": "8px" },
+                            },
                             [
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "dropdown-item",
-                                  attrs: { href: "/api/journal/export" },
-                                },
-                                [
-                                  _c("i", { staticClass: "bx bx-export" }),
-                                  _vm._v(" Export Excel "),
-                                  _vm.loadingExcel
-                                    ? _c("loading", { attrs: { size: "18" } })
-                                    : _vm._e(),
-                                ],
-                                1
-                              ),
+                              _vm._m(1),
                               _vm._v(" "),
                               _c(
-                                "router-link",
-                                {
-                                  staticClass: "dropdown-item",
-                                  attrs: { to: { name: "jurnal.import" } },
-                                },
+                                "div",
+                                { staticClass: "dropdown-menu" },
                                 [
-                                  _c("i", { staticClass: "bx bx-import" }),
-                                  _vm._v(" Import Excel "),
-                                  _vm.loadingExcel
-                                    ? _c("loading", { attrs: { size: "18" } })
-                                    : _vm._e(),
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass: "dropdown-item",
+                                      attrs: { href: "/api/journal/export" },
+                                    },
+                                    [
+                                      _c("i", { staticClass: "bx bx-export" }),
+                                      _vm._v(" Export Excel "),
+                                      _vm.loadingExcel
+                                        ? _c("loading", {
+                                            attrs: { size: "18" },
+                                          })
+                                        : _vm._e(),
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "router-link",
+                                    {
+                                      staticClass: "dropdown-item",
+                                      attrs: { to: { name: "jurnal.import" } },
+                                    },
+                                    [
+                                      _c("i", { staticClass: "bx bx-import" }),
+                                      _vm._v(" Import Excel "),
+                                      _vm.loadingExcel
+                                        ? _c("loading", {
+                                            attrs: { size: "18" },
+                                          })
+                                        : _vm._e(),
+                                    ],
+                                    1
+                                  ),
                                 ],
                                 1
                               ),
-                            ],
-                            1
-                          ),
-                        ]
-                      ),
+                            ]
+                          )
+                        : _vm._e(),
                       _vm._v(" "),
                       _c(
                         "router-link",
@@ -51747,7 +52031,13 @@ var render = function () {
                                       _vm._v(" "),
                                       _c("p", { staticClass: "text-muted" }, [
                                         _vm._v(
-                                          "Balance : Rp " + _vm._s(bank.balance)
+                                          "Balance : IDR " +
+                                            _vm._s(
+                                              new Intl.NumberFormat([
+                                                "ban",
+                                                "id",
+                                              ]).format(bank.balance)
+                                            )
                                         ),
                                       ]),
                                       _vm._v(" "),
