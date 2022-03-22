@@ -61,7 +61,8 @@
                                             <div class="col-9">
                                                 <h5 class="card-title">{{ asset.name }}</h5>
                                                 <p class="card-text mb-0">Jumlah : {{ asset.quantity }}</p>
-                                                <p class="card-text my-0">Total : Rp {{ asset.total }}</p>
+                                                <p class="card-text my-0">Harga : IDR {{ new Intl.NumberFormat(['ban', 'id']).format(asset.price) }}</p>
+                                                <p class="card-text my-0">Total : IDR {{ new Intl.NumberFormat(['ban', 'id']).format(asset.total) }}</p>
                                                 <p class="card-text">Tgl Pembelian : {{ format_date(asset.buy_time) }}</p>
                                             </div>
                                             <div class="col-3 row">

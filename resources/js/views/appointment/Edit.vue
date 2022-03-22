@@ -37,7 +37,7 @@
                 enter-active-class="animate__animated animate__fadeIn"
                 leave-active-class="animate__animated animate__fadeOut"
                 >
-                <div class="col-12">
+                <div class="col-12" style="margin-bottom:8rem">
                     <div class="card">
                         <form class="card-body" method="post" @submit.prevent="store">
                             <div class="mb-3 row">

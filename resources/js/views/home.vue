@@ -29,7 +29,7 @@
                                 <h3 class="uil-wallet mt-3 mb-0"></h3>
                             <div class="resize-triggers"><div class="expand-trigger"><div style="width: 46px; height: 47px;"></div></div><div class="contract-trigger"></div></div></div>
                             <div>
-                                <h4 class="mb-1 mt-1"><span data-plugin="counterup">Rp {{ dashboard.totaluang }}</span></h4>
+                                <h4 class="mb-1 mt-1"><span data-plugin="counterup">IDR {{ new Intl.NumberFormat(['ban', 'id']).format(dashboard.totaluang) }}</span></h4>
                                 <p class="text-muted mb-0">Total Uang</p>
                             </div>
                         </div>
@@ -57,7 +57,7 @@
                                 <h4 class="mt-3 mb-0">{{ bank.name }}</h4>
                             <div class="resize-triggers"><div class="expand-trigger"><div style="width: 46px; height: 47px;"></div></div><div class="contract-trigger"></div></div></div>
                             <div>
-                                <h4 class="mb-1 mt-1"><span data-plugin="counterup">Rp {{ bank.balance }}</span></h4>
+                                <h4 class="mb-1 mt-1"><span data-plugin="counterup">IDR {{ new Intl.NumberFormat(['ban', 'id']).format(bank.balance) }}</span></h4>
                                 <p class="text-muted mb-0">Balance</p>
                             </div>
                         </div>
@@ -108,16 +108,6 @@ export default {
     },
     data() {
         return {
-            series: [
-                {
-                name: "High - 2013",
-                data: [28, 29, 33, 36, 32, 32, 33]
-                },
-                {
-                name: "Low - 2013",
-                data: [12, 11, 14, 18, 17, 13, 13]
-                }
-            ],
             journalSeries: [],
             journalChartOptions: {
                 chart: {
@@ -144,6 +134,7 @@ export default {
                 },
                 xaxis: {
                     // categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                    convertedCatToNumeric: false,
                     title: {
                         text: 'Month'
                     }
@@ -184,6 +175,7 @@ export default {
                 },
                 xaxis: {
                     // categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                    convertedCatToNumeric: false,
                     title: {
                         text: 'Month'
                     }
@@ -194,8 +186,8 @@ export default {
                     },
                 },
                 legend: {
-                position: 'top',
-                horizontalAlign: 'right',
+                    position: 'top',
+                    horizontalAlign: 'right',
                 }
             },
             dashboard: {},
@@ -232,6 +224,7 @@ export default {
                 })
             if (response.status === 200) {
                 this.journalChartOptions.xaxis.categories = Object.values(response.data.title)
+                this.journalChartOptions.xaxis.convertedCatToNumeric = false
                 let data = Object.values(response.data.total)
                 let name = "Journal"
                 this.journalSeries.push({ data, name })
