@@ -65,10 +65,10 @@ export default {
             }
         },
         token() {
-            console.log("request acc token")
+            // console.log("request acc token")
             axios.get('/api/token/' + this.auth.user.id )
             .then(response => {
-                console.log(response)
+                // console.log(response)
                 this.auth.user_token = response.data.data
             })
         },

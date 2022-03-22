@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\BankAccount;
+use App\Models\BankHistory;
+use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -50,6 +52,10 @@ class BankAccountController extends Controller
 
         try {
             $bankacc = BankAccount::create($request->all());
+            $input['date'] = Carbon::now();
+            $input['balance'] = $request->balance;
+            $input['bank_account_id'] = $bankacc->id;
+            BankHistory::create($input);
             $response = [
                 'message' => 'A new bank account row created',
                 'data' => $bankacc

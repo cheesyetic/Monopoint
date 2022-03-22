@@ -80,7 +80,7 @@ export default {
     methods: {
         async store() {
             try {
-                console.log(this.bankCreate)
+                // console.log(this.bankCreate)
                 let responseCreate = await axios.post('/api/bankaccount', this.bankCreate, {
                     headers: {
                         'Authorization': 'Bearer ' + this.auth.token

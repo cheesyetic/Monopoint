@@ -74,11 +74,15 @@
                                         v-for="journalHistory in journalHistories"
                                         :key="journalHistory.id"
                                         >
-                                        <td>{{ journalHistory.title }}</td>
+                                        <td :class="journalHistory.title == 'Pembuatan Jurnal' ? 'uil-plus bg-soft-success' :
+                                                    journalHistory.title == 'Pengajuan Jurnal' ? 'uil-message bg-soft-primary' :
+                                                    journalHistory.title == 'Verifikasi Jurnal' ? 'uil-check bg-soft-info' :
+                                                    journalHistory.title == 'Perubahan Jurnal' ? 'uil-edit-alt' : 'uil-book bg-soft-warning'">
+                                            {{ journalHistory.title }}</td>
                                         <td>{{ journalHistory.remark }}</td>
                                         <td>{{ journalHistory.project_name }}</td>
                                         <td>{{ journalHistory.chart_account_name }}</td>
-                                        <td>Rp {{ journalHistory.balance }} </td>
+                                        <td>IDR {{ new Intl.NumberFormat(['ban', 'id']).format(journalHistory.balance) }} </td>
                                         <td><span :class=" journalHistory.is_reimburse ? 'bg-soft-success' : 'bg-soft-danger'" class="badge rounded-pill font-size-12" >
                                             {{ journalHistory.is_reimburse ? 'Ya' : 'Tidak'}}</span>
                                         </td>

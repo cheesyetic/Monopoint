@@ -58,7 +58,7 @@
                                 <div>
                                     <h4 class="mb-1 mt-1"><span data-plugin="counterup">{{ bank.name }}</span></h4>
                                     <p class="text-muted mb-0">No Rekening : {{ bank.account_number }}</p>
-                                    <p class="text-muted">Balance : Rp {{ bank.balance }}</p>
+                                    <p class="text-muted">Balance : IDR {{ new Intl.NumberFormat(['ban', 'id']).format(bank.balance) }}</p>
                                     <router-link :to="{ name: 'rekening.edit', params: { token: bank.token }}" class="btn btn-primary"><i class="uil-edit-alt"></i> Edit</router-link>
                                     <delete-rekening :endpoint="bank.token" :auth="auth"/>
                                 </div>
@@ -109,7 +109,7 @@ export default {
                 this.banks = response.data.data
             }
             this.loading = false
-            console.log(this.banks)
+            // console.log(this.banks)
         },
         format_date(value){
             if (value) {

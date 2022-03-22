@@ -22,7 +22,7 @@
             <!-- end page title -->
 
             <div class="row">
-                <div class="col-12">
+                <div class="col-12" style="margin-bottom:8rem">
                     <div class="card">
                         <form class="card-body" method="pos" @submit.prevent="store">
                             <div class="mb-3 row">
@@ -186,7 +186,7 @@ export default {
             this.journalCreate[target] = e.id
         },
         pictureUpload: function() {
-            console.log("ganti gambar")
+            // console.log("ganti gambar")
             // this.journalCreate.filebukti = this.$refs.filebukti.files[0]
             this.journalCreate.filebukti = event.target.files[0]
         },
@@ -201,7 +201,7 @@ export default {
                 // this.periodOptions = response.data.data
                 // console.log(response.data.data.length)
                 for (var i = 0; i < response.data.data.length; i++) {
-                    let label = response.data.data[i].name + ' (' + response.data.data[i].code + ', ' + response.data.data[i].type + ')'
+                    let label = (response.data.data[i].type == 1 ? 'Pemasukan - ' : 'Pengeluaran - ') + response.data.data[i].name + ' (' + response.data.data[i].code + ')'
                     let id = String(response.data.data[i].id)
                     this.chartOptions.push({ label, id })
                 }
@@ -252,7 +252,7 @@ export default {
                 })
             if (response.status === 200) {
                 // this.periodOptions = response.data.data
-                console.log(response.data.data.length)
+                // console.log(response.data.data.length)
                 for (var i = 0; i < response.data.data.length; i++) {
                     let label = response.data.data[i].name
                     let id = String(response.data.data[i].id)
@@ -276,7 +276,7 @@ export default {
                 })
             if (response.status === 200) {
                 // this.periodOptions = response.data.data
-                console.log(response.data.data.length)
+                // console.log(response.data.data.length)
                 for (var i = 0; i < response.data.data.length; i++) {
                     let label = response.data.data[i].name
                     let id = String(response.data.data[i].id)

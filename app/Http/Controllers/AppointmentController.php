@@ -216,6 +216,6 @@ class AppointmentController extends Controller
         $response = [
             'message' => 'Email sent successfully'
         ];
-        return response()->json($response, Response::HTTP_OK);
+        print_r($response);
     }
 }

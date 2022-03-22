@@ -37,7 +37,7 @@
                 enter-active-class="animate__animated animate__fadeIn"
                 leave-active-class="animate__animated animate__fadeOut"
                 >
-                <div class="col-12">
+                <div class="col-12" style="margin-bottom:8rem">
                     <div class="card">
                         <form class="card-body" method="pos" @submit.prevent="store">
                             <div class="mb-3 row">
@@ -196,7 +196,7 @@ export default {
             this.journal[target] = e.id
         },
         pictureUpload: function() {
-            console.log("ganti gambar")
+            // console.log("ganti gambar")
             // this.journal.filebukti = this.$refs.filebukti.files[0]
             this.journal.filebukti = event.target.files[0]
         },
@@ -209,7 +209,7 @@ export default {
                 })
             if (response.status === 200) {
                 for (var i = 0; i < response.data.data.length; i++) {
-                    let label = response.data.data[i].name + ' (' + response.data.data[i].code + ')'
+                    let label = (response.data.data[i].type == 1 ? 'Pemasukan - ' : 'Pengeluaran - ') + response.data.data[i].name + ' (' + response.data.data[i].code + ')'
                     let id = String(response.data.data[i].id)
                     this.chartOptions.push({ label, id })
                     if(id == this.journal.chart_account_id) {
@@ -323,7 +323,7 @@ export default {
         async store() {
             try {
                 let formdata = new FormData()
-                console.log(this.journal.filebukti)
+                // console.log(this.journal.filebukti)
                 formdata.append('title', this.journal.title)
                 formdata.append('date', this.journal.date)
                 formdata.append('remark', this.journal.remark)

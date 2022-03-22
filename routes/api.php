@@ -10,7 +10,9 @@ use App\Http\Controllers\JournalController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Api\LoginController;
+use App\Http\Controllers\BankHistoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\UserAppointmentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -59,9 +61,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::delete('/project/{id}', [ProjectController::class, 'destroy']);
         Route::post('/project/{id}', [ProjectController::class, 'update']);
 
-        //Asset
-        Route::resource('/asset', AssetController::class)->except('update', 'create', 'edit');
-        Route::post('/asset/{id}', [AssetController::class, 'update']);
     });
 
     //-------------------------------------------------------------------------------------------------------
@@ -100,6 +99,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //User Appointment
     Route::get('/userappointment/{id}', [UserAppointmentController::class, 'index']);
 
+    //Asset
+    Route::resource('/asset', AssetController::class)->except('update', 'create', 'edit');
+    Route::post('/asset/{id}', [AssetController::class, 'update']);
+
     //Appointment
     Route::resource('/appointment', AppointmentController::class)->except('update', 'create', 'edit');
     Route::get('/appointmentmail', [AppointmentController::class, 'mailJob']);
@@ -120,10 +123,14 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/journalchart', [DashboardController::class, 'journalChart']);
     Route::get('/dashboard', [DashboardController::class, 'dashboard']);
 
+    //Report
+    
+
     //-------------------------------------------------------------------------------------------------------
 
 });
-
+Route::get('/laporan', [LaporanController::class, 'index']);
+Route::get('/bankhistory', [BankHistoryController::class, 'index']);
 //AUTH
 Route::post('/login', [LoginController::class, 'index']);
 Route::get('/token/{id}', [LoginController::class, 'token']);

@@ -31,27 +31,6 @@
 
         <div class="d-flex">
 
-            <div class="dropdown d-inline-block d-lg-none ms-2">
-                <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-search-dropdown"
-                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="uil-search"></i>
-                </button>
-                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
-                    aria-labelledby="page-header-search-dropdown">
-
-                    <form class="p-3">
-                        <div class="m-0">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search ..." aria-label="Recipient's username">
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -101,6 +80,12 @@
                             </div>
                         </li>
 
+                        <li class="nav-item">
+                            <router-link :to="{name: 'asset'}" class="nav-link">
+                                <i class="uil-file-alt me-2"></i> Asset
+                            </router-link>
+                        </li>
+
                         <li class="nav-item dropdown" v-if="auth.user.type == 0">
                             <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-admin" role="button" @click.prevent="topnav.admin = !topnav.admin">
                                 <i class="uil-apps me-2"></i>Master Data <div :class=" topnav.admin ? 'bx bxs-pin' : 'arrow-down'"></div>
@@ -111,7 +96,6 @@
                                 <router-link :to="{name: 'periode'}" class="dropdown-item">Periode</router-link>
                                 <router-link :to="{name: 'rekening'}" class="dropdown-item">Rekening</router-link>
                                 <router-link :to="{name: 'project'}" class="dropdown-item">Project</router-link>
-                                <router-link :to="{name: 'asset'}" class="dropdown-item">Asset</router-link>
                                 <router-link :to="{name: 'chart'}" class="dropdown-item">Chart Account</router-link>
 
                             </div>
@@ -161,7 +145,7 @@ export default {
                 .then(() => {
                     //remove localStorage
                     localStorage.removeItem("loggedIn")
-                    console.log("KELUAR")
+                    // console.log("KELUAR")
                     //redirect
                     return this.$router.push({ name: 'login' })
                 })

@@ -84,7 +84,7 @@ export default {
     methods: {
         async store() {
             try {
-                console.log(this.assetCreate)
+                // console.log(this.assetCreate)
                 let responseCreate = await axios.post('/api/asset', this.assetCreate, {
                     headers: {
                         'Authorization': 'Bearer ' + this.auth.token
