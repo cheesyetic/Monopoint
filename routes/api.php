@@ -76,6 +76,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::post('/journal/import/', [JournalController::class, 'import']);
         Route::get('/downloadjournal', [JournalController::class, 'getDownload']);
 
+        //Laporan
+        Route::get('/laporan', [LaporanController::class, 'index']);
+        Route::get('/bankhistory', [BankHistoryController::class, 'index']);
+
     });
 
 
@@ -124,14 +128,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/journalchart', [DashboardController::class, 'journalChart']);
     Route::get('/dashboard', [DashboardController::class, 'dashboard']);
 
-    //Report
-    
-
     //-------------------------------------------------------------------------------------------------------
 
 });
-Route::get('/laporan', [LaporanController::class, 'index']);
-Route::get('/bankhistory', [BankHistoryController::class, 'index']);
 //AUTH
 Route::post('/login', [LoginController::class, 'index']);
 Route::get('/token/{id}', [LoginController::class, 'token']);

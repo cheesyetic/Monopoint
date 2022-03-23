@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
         $user = new User;
         $user->name = "Admin Monopoint";
         $user->email = "admin@mail.com";
-        $user->phone_number = "admin@mail.com";
+        $user->phone_number = "81234567";
         $user->password = bcrypt('password');
         $user->type = 0;
         $user->save();
