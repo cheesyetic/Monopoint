@@ -21,12 +21,15 @@ class LaporanController extends Controller
             $query->where('title','ILIKE','%'.$request->keyword.'%');
         }
         if($request->sortbank){
-            $query->whereHas('bankAccount', function($query) use($request){
-                $query->orderBy('bank_account_id', $request->bank);
-            });
+                $query->orderBy('bank_account_id', $request->sortbank);
         }
         if($request->sortdate){
             $query->orderBy('date', $request->sortdate);
+        }
+        if($request->date){
+            $query->whereHas('accountingPeriod', function($query) use($request){
+                $query->where('accounting_period_id', $request->date);
+            });
         }
         if($request->start_date){
             $query->where('date', '>=', $request->start_date);
@@ -42,7 +45,9 @@ class LaporanController extends Controller
                     $bankhistory = BankHistory::where('bank_account_id', '!=', $id)
                     ->whereDate('date', '<=', $request->start_date)
                     ->orderBy('date', 'desc')->first();
-                    $total_start_date = $total_start_date + $bankhistory->balance;
+                    if($bankhistory != null){
+                        $total_start_date = $bankhistory->balance;
+                    }
                     $id = $bankhistory->bankAccount->id;
                 }
             }
@@ -61,7 +66,9 @@ class LaporanController extends Controller
                 foreach($bankacc as $b){
                     $bankhistory = BankHistory::where('bank_account_id', '!=', $id)->
                     whereDate('date', '<=', $request->end_date)->orderBy('date', 'desc')->first();
-                    $total_end_date = $total_end_date + $bankhistory->balance;
+                    if($bankhistory!=null){
+                        $total_end_date = $bankhistory->balance;
+                    }
                     $id = $bankhistory->bankAccount->id;
                 }
             }
@@ -102,7 +109,6 @@ class LaporanController extends Controller
             'pengeluaran' => $pengeluaran,
             'total_start_date' => $total_start_date,
             'total_end_date' => $total_end_date,
-            'total_page' => $total,
             'page' => $page,
             'last_page' => ceil($total / $perPage),
         ];

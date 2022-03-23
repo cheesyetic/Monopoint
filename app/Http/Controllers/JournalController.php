@@ -101,7 +101,6 @@ class JournalController extends Controller
         $response =[
             'message' => 'List Journal',
             'data' => $journal,
-            'total' => $total,
             'page' => $page,
             'last_page' => ceil($total / $perPage),
         ];
