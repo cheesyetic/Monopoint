@@ -28,47 +28,60 @@
                                 <h3 class="bx bx-wallet mt-3 mb-0"></h3>
                             </div>
                             <div>
-                                <h4 class="mb-1 mt-1"><span data-plugin="counterup">IDR {{ new Intl.NumberFormat(['ban', 'id']).format(debit) }}</span></h4>
+                                <h4 class="mb-1 mt-1"><span data-plugin="counterup">IDR {{ new Intl.NumberFormat(['ban', 'id']).format(laporan_detail.total_balance) }}</span></h4>
                                 <p class="text-muted mb-0">Total Balance</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-xl-3">
+                <div class="col-md-6 col-xl-2">
                     <div class="card">
                         <div class="card-body">
-                            <div class="float-end mt-2" style="position: relative;">
+                            <!-- <div class="float-end mt-2" style="position: relative;">
                                 <h3 class="bx bx-log-out-circle mt-3 mb-0"></h3>
-                            </div>
+                            </div> -->
                             <div>
-                                <h4 class="mb-1 mt-1"><span data-plugin="counterup">IDR {{ new Intl.NumberFormat(['ban', 'id']).format(debit) }}</span></h4>
+                                <h4 class="mb-1 mt-1"><span data-plugin="counterup">IDR {{ new Intl.NumberFormat(['ban', 'id']).format(laporan_detail.pengeluaran) }}</span></h4>
                                 <p class="text-muted mb-0">Total Debit</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-xl-3">
+                <div class="col-md-6 col-xl-2">
                     <div class="card">
                         <div class="card-body">
-                            <div class="float-end mt-2" style="position: relative;">
+                            <!-- <div class="float-end mt-2" style="position: relative;">
                                 <h3 class="bx bx-log-in-circle mt-3 mb-0"></h3>
-                            </div>
+                            </div> -->
                             <div>
-                                <h4 class="mb-1 mt-1"><span data-plugin="counterup">IDR {{ new Intl.NumberFormat(['ban', 'id']).format(kredit) }}</span></h4>
+                                <h4 class="mb-1 mt-1"><span data-plugin="counterup">IDR {{ new Intl.NumberFormat(['ban', 'id']).format(laporan_detail.pemasukan) }}</span></h4>
                                 <p class="text-muted mb-0">Total Kredit</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-xl-3">
+                <div class="col-md-6 col-xl-2" v-if="params.start_date">
                     <div class="card">
                         <div class="card-body">
                             <div class="float-end mt-2" style="position: relative;">
                                 <h3 class="bx bx-date mt-3 mb-0"></h3>
                             </div>
                             <div>
-                                <h4 class="mb-1 mt-1"><span data-plugin="counterup">start date - end date</span></h4>
-                                <p class="text-muted mb-0">Coming soon</p>
+                                <h5 class="mb-2 mt-1"><span data-plugin="counterup">On : {{ format_date(params.start_date) }}</span></h5>
+                                <p class="text-muted mb-0">IDR {{ new Intl.NumberFormat(['ban', 'id']).format(laporan_detail.total_start_date) }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-2" v-if="params.end_date">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="float-end mt-2" style="position: relative;">
+                                <h3 class="bx bx-date mt-3 mb-0"></h3>
+                            </div>
+                            <div>
+                                <h5 class="mb-2 mt-1"><span data-plugin="counterup">On : {{ format_date(params.end_date) }}</span></h5>
+                                <p class="text-muted mb-0">IDR {{ new Intl.NumberFormat(['ban', 'id']).format(laporan_detail.total_end_date) }}</p>
                             </div>
                         </div>
                     </div>
@@ -93,8 +106,8 @@
                                             <th>Tgl</th>
                                             <th>Bank</th>
                                             <th>Transaksi</th>
-                                            <th>Debit</th>
-                                            <th>Kredit</th>
+                                            <th>Debit (IDR)</th>
+                                            <th>Kredit (IDR)</th>
                                         </tr>
                                     </thead>
                                         <transition
@@ -125,11 +138,20 @@
                                                     v-for="laporan in laporans"
                                                     :key="laporan.id"
                                                     >
-                                                    <td>{{ format_date(laporan.date) }}</td>
-                                                    <td>{{ laporan.bank }}</td>
+                                                    <td>{{ format_time(laporan.date) }}</td>
+                                                    <td
+                                                    >
+                                                    <span class="badge rounded-pill font-size-14"
+                                                    :class=" laporan.bank_account_id == 1 ? 'bg-soft-primary' :
+                                                    laporan.bank_account_id == 2 ? 'bg-soft-info' :
+                                                    laporan.bank_account_id == 3 ? 'bg-soft-light' : 'bg-soft-dark' "
+                                                    >
+                                                    {{ laporan.bank }}
+                                                      </span>
+                                                    </td>
                                                     <td>{{ laporan.title }}</td>
-                                                    <td>{{ laporan.chart_account.type == 2 ? laporan.balance : '-' }}</td>
-                                                    <td>{{ laporan.chart_account.type == 1 ? laporan.balance : '-' }}</td>
+                                                    <td class="text-danger">{{ laporan.chart_account.type == 2 ? new Intl.NumberFormat(['ban', 'id']).format(laporan.balance) : '-' }}</td>
+                                                    <td class="text-success">{{ laporan.chart_account.type == 1 ? new Intl.NumberFormat(['ban', 'id']).format(laporan.balance) : '-' }}</td>
 
                                                 </tr>
                                             </transition-group>
@@ -165,6 +187,7 @@ export default {
             loading: true,
             filter_keyword: '',
             params: '',
+            laporan_detail: '',
             debit: '',
             kredit: '',
             page: '',
@@ -189,6 +212,7 @@ export default {
                         reimburse: this.params.reimburse,
                         sortbank: this.params.sortbank,
                         sortdate: this.params.sortdate,
+                        date: this.params.date,
                         start_date: this.params.start_date,
                         end_date: this.params.end_date,
                         page: this.$route.query.page,
@@ -201,6 +225,7 @@ export default {
                 // console.log("response.data")
                 // console.log(response.data)
                 this.laporans = response.data.data
+                this.laporan_detail = response.data
                 this.debit = response.data.pemasukan
                 this.kredit = response.data.pengeluaran
                 this.page = response.data.page
@@ -208,9 +233,14 @@ export default {
             }
             this.loading = false
         },
-        format_date(value){
+        format_time(value){
             if (value) {
                 return moment(String(value)).format('hh:mm - Do MMM YYYY')
+            }
+        },
+        format_date(value){
+            if (value) {
+                return moment(String(value)).format('Do MMM YYYY')
             }
         },
     }

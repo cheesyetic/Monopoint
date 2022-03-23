@@ -13,6 +13,10 @@
                     <v-select v-model="bankSelected" :options="bankOptions" @input="updateFilter($event.id, 'bank')" :disabled="bankLoading"></v-select>
                 </div>
                 <div class="mb-2">
+                    <label class="col-form-label">Periode</label>
+                    <v-select v-model="periodSelected" :options="periodOptions" @input="updateFilter($event.id, 'date')" :disabled="periodLoading"></v-select>
+                </div>
+                <div class="mb-2">
                     <label class="col-form-label">Date Range (Start - End)</label>
                     <div class="input-daterange input-group">
                         <input @change="updateFilter(filter_start_date, 'start_date')" type="date" class="form-control" name="start" v-model="filter_start_date" placeholder="Start Date">
@@ -69,8 +73,12 @@ export default {
             filter_end_date: '',
             filter_date: '',
             filter_month: '',
-            filter_chartaccount: '',
+            filter_date: '',
             bankSelected: {
+                label: 'Semua',
+                id: '',
+            },
+            periodSelected: {
                 label: 'Semua',
                 id: '',
             },
@@ -78,19 +86,48 @@ export default {
                 label: 'Semua',
                 id: '',
             }],
+            periodOptions: [{
+                label: 'Semua',
+                id: '',
+            }],
             bankLoading: true,
+            periodLoading: true,
             params: {
-                keyword: this.filter_keyword,
-                chart: this.filter_chartaccount,
-                reimburse: this.filter_reimburse,
-                date: this.filter_month,
-            }
+                bank: '',
+                start_date: '',
+                end_date: '',
+                sortbank: '',
+                sortdate: '',
+                date: '',
+            },
         }
     },
     mounted() {
+        this.getPeriod();
         this.getBank();
     },
     methods: {
+        async getPeriod() {
+            let response = await axios.get('/api/accountingperiod', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
+            if (response.status === 200) {
+                for (var i = 0; i < response.data.data.length; i++) {
+                    let label = response.data.data[i].name
+                    let id = String(response.data.data[i].id)
+                    this.periodOptions.push({ label, id })
+                }
+                this.periodLoading = false
+            } else {
+                this.$toasted.show("Failed to load Period", {
+                        type: 'error',
+                        duration: 3000,
+                        position: 'top-center',
+                    })
+            }
+        },
         async getBank() {
             let response = await axios.get('/api/bankaccount', {
                     headers: {

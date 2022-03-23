@@ -5493,15 +5493,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       journalSeries: [],
       journalChartOptions: {
         chart: {
-          height: 350,
-          type: 'line'
+          height: 400,
+          type: 'bar'
         },
         colors: ['#5B73E8', '#545454'],
         dataLabels: {
           enabled: true
         },
-        stroke: {
-          curve: 'smooth'
+        plotOptions: {
+          bar: {
+            borderRadius: 4,
+            dataLabels: {
+              position: 'bottom' // top, center, bottom
+
+            }
+          }
         },
         title: {
           text: 'Jumlah Jurnal Dibuat Per-bulan',
@@ -5516,10 +5522,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         },
         xaxis: {
-          // categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-          convertedCatToNumeric: false,
+          // categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+          labels: {
+            show: true
+          },
+          // convertedCatToNumeric: false,
           title: {
             text: 'Month'
+          },
+          axisBorder: {
+            show: false
+          },
+          axisTicks: {
+            show: false
           }
         },
         yaxis: {
@@ -5535,7 +5550,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       balanceSeries: [],
       balanceChartOptions: {
         chart: {
-          height: 350,
+          height: 400,
           type: 'line'
         },
         colors: ['#5B73E8', '#545454'],
@@ -9891,6 +9906,12 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
 //
 //
 //
@@ -9954,36 +9975,42 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['auth'],
   data: function data() {
-    return {
+    var _ref;
+
+    return _ref = {
       filter_keyword: '',
       filter_bank: '',
       filter_start_date: '',
       filter_end_date: '',
       filter_date: '',
-      filter_month: '',
-      filter_chartaccount: '',
-      bankSelected: {
-        label: 'Semua',
-        id: ''
-      },
-      bankOptions: [{
-        label: 'Semua',
-        id: ''
-      }],
-      bankLoading: true,
-      params: {
-        keyword: this.filter_keyword,
-        chart: this.filter_chartaccount,
-        reimburse: this.filter_reimburse,
-        date: this.filter_month
-      }
-    };
+      filter_month: ''
+    }, _defineProperty(_ref, "filter_date", ''), _defineProperty(_ref, "bankSelected", {
+      label: 'Semua',
+      id: ''
+    }), _defineProperty(_ref, "periodSelected", {
+      label: 'Semua',
+      id: ''
+    }), _defineProperty(_ref, "bankOptions", [{
+      label: 'Semua',
+      id: ''
+    }]), _defineProperty(_ref, "periodOptions", [{
+      label: 'Semua',
+      id: ''
+    }]), _defineProperty(_ref, "bankLoading", true), _defineProperty(_ref, "periodLoading", true), _defineProperty(_ref, "params", {
+      bank: '',
+      start_date: '',
+      end_date: '',
+      sortbank: '',
+      sortdate: '',
+      date: ''
+    }), _ref;
   },
   mounted: function mounted() {
+    this.getPeriod();
     this.getBank();
   },
   methods: {
-    getBank: function getBank() {
+    getPeriod: function getPeriod() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
@@ -9993,7 +10020,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get('/api/bankaccount', {
+                return axios.get('/api/accountingperiod', {
                   headers: {
                     'Authorization': 'Bearer ' + _this.auth.token
                   }
@@ -10007,15 +10034,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     label = response.data.data[i].name;
                     id = String(response.data.data[i].id);
 
-                    _this.bankOptions.push({
+                    _this.periodOptions.push({
                       label: label,
                       id: id
                     });
                   }
 
-                  _this.bankLoading = false;
+                  _this.periodLoading = false;
                 } else {
-                  _this.$toasted.show("Failed to load Bank", {
+                  _this.$toasted.show("Failed to load Period", {
                     type: 'error',
                     duration: 3000,
                     position: 'top-center'
@@ -10028,6 +10055,53 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee);
+      }))();
+    },
+    getBank: function getBank() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var response, i, label, id;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios.get('/api/bankaccount', {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this2.auth.token
+                  }
+                });
+
+              case 2:
+                response = _context2.sent;
+
+                if (response.status === 200) {
+                  for (i = 0; i < response.data.data.length; i++) {
+                    label = response.data.data[i].name;
+                    id = String(response.data.data[i].id);
+
+                    _this2.bankOptions.push({
+                      label: label,
+                      id: id
+                    });
+                  }
+
+                  _this2.bankLoading = false;
+                } else {
+                  _this2.$toasted.show("Failed to load Bank", {
+                    type: 'error',
+                    duration: 3000,
+                    position: 'top-center'
+                  });
+                }
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
       }))();
     },
     updateFilter: function updateFilter(event, target) {
@@ -10213,6 +10287,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -10229,6 +10325,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       loading: true,
       filter_keyword: '',
       params: '',
+      laporan_detail: '',
       debit: '',
       kredit: '',
       page: '',
@@ -10259,6 +10356,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     reimburse: _this.params.reimburse,
                     sortbank: _this.params.sortbank,
                     sortdate: _this.params.sortdate,
+                    date: _this.params.date,
                     start_date: _this.params.start_date,
                     end_date: _this.params.end_date,
                     page: _this.$route.query.page
@@ -10275,6 +10373,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   // console.log("response.data")
                   // console.log(response.data)
                   _this.laporans = response.data.data;
+                  _this.laporan_detail = response.data;
                   _this.debit = response.data.pemasukan;
                   _this.kredit = response.data.pengeluaran;
                   _this.page = response.data.page;
@@ -10291,9 +10390,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    format_date: function format_date(value) {
+    format_time: function format_time(value) {
       if (value) {
         return moment(String(value)).format('hh:mm - Do MMM YYYY');
+      }
+    },
+    format_date: function format_date(value) {
+      if (value) {
+        return moment(String(value)).format('Do MMM YYYY');
       }
     }
   }
@@ -40334,24 +40438,26 @@ var render = function () {
                     ),
                   ]),
                   _vm._v(" "),
-                  _c(
-                    "li",
-                    { staticClass: "nav-item" },
-                    [
-                      _c(
-                        "router-link",
-                        {
-                          staticClass: "nav-link",
-                          attrs: { to: { name: "asset" } },
-                        },
+                  _vm.auth.user.type == 0 || _vm.auth.user.type == 1
+                    ? _c(
+                        "li",
+                        { staticClass: "nav-item" },
                         [
-                          _c("i", { staticClass: "uil-file-alt me-2" }),
-                          _vm._v(" Asset\n                            "),
-                        ]
-                      ),
-                    ],
-                    1
-                  ),
+                          _c(
+                            "router-link",
+                            {
+                              staticClass: "nav-link",
+                              attrs: { to: { name: "asset" } },
+                            },
+                            [
+                              _c("i", { staticClass: "uil-file-alt me-2" }),
+                              _vm._v(" Asset\n                            "),
+                            ]
+                          ),
+                        ],
+                        1
+                      )
+                    : _vm._e(),
                   _vm._v(" "),
                   _vm.auth.user.type == 0
                     ? _c("li", { staticClass: "nav-item dropdown" }, [
@@ -40440,24 +40546,26 @@ var render = function () {
                       ])
                     : _vm._e(),
                   _vm._v(" "),
-                  _c(
-                    "li",
-                    { staticClass: "nav-item" },
-                    [
-                      _c(
-                        "router-link",
-                        {
-                          staticClass: "nav-link",
-                          attrs: { to: { name: "laporan" } },
-                        },
+                  _vm.auth.user.type == 0 || _vm.auth.user.type == 1
+                    ? _c(
+                        "li",
+                        { staticClass: "nav-item" },
                         [
-                          _c("i", { staticClass: "uil-book me-2" }),
-                          _vm._v(" Laporan\n                            "),
-                        ]
-                      ),
-                    ],
-                    1
-                  ),
+                          _c(
+                            "router-link",
+                            {
+                              staticClass: "nav-link",
+                              attrs: { to: { name: "laporan" } },
+                            },
+                            [
+                              _c("i", { staticClass: "uil-book me-2" }),
+                              _vm._v(" Laporan\n                            "),
+                            ]
+                          ),
+                        ],
+                        1
+                      )
+                    : _vm._e(),
                 ]),
               ]
             ),
@@ -44445,14 +44553,16 @@ var render = function () {
                 "div",
                 { staticClass: "card-body" },
                 [
-                  _c("apexchart", {
-                    attrs: {
-                      type: "line",
-                      height: "350",
-                      options: _vm.journalChartOptions,
-                      series: _vm.journalSeries,
-                    },
-                  }),
+                  _vm.journalSeries.length != 0
+                    ? _c("apexchart", {
+                        attrs: {
+                          type: "bar",
+                          height: "400",
+                          options: _vm.journalChartOptions,
+                          series: _vm.journalSeries,
+                        },
+                      })
+                    : _vm._e(),
                 ],
                 1
               ),
@@ -44465,14 +44575,16 @@ var render = function () {
                 "div",
                 { staticClass: "card-body" },
                 [
-                  _c("apexchart", {
-                    attrs: {
-                      type: "line",
-                      height: "350",
-                      options: _vm.balanceChartOptions,
-                      series: _vm.balanceSeries,
-                    },
-                  }),
+                  _vm.balanceSeries.length != 0
+                    ? _c("apexchart", {
+                        attrs: {
+                          type: "line",
+                          height: "400",
+                          options: _vm.balanceChartOptions,
+                          series: _vm.balanceSeries,
+                        },
+                      })
+                    : _vm._e(),
                 ],
                 1
               ),
@@ -44573,7 +44685,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "container-fluid" }, [
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col-sm-6" }, [
-          _vm._v("\r\n                     © Kodig.id.\r\n                "),
+          _vm._v("\n                     © Kodig.id.\n                "),
         ]),
       ]),
     ])
@@ -50393,6 +50505,36 @@ var render = function () {
               1
             ),
             _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "mb-2" },
+              [
+                _c("label", { staticClass: "col-form-label" }, [
+                  _vm._v("Periode"),
+                ]),
+                _vm._v(" "),
+                _c("v-select", {
+                  attrs: {
+                    options: _vm.periodOptions,
+                    disabled: _vm.periodLoading,
+                  },
+                  on: {
+                    input: function ($event) {
+                      return _vm.updateFilter($event.id, "date")
+                    },
+                  },
+                  model: {
+                    value: _vm.periodSelected,
+                    callback: function ($$v) {
+                      _vm.periodSelected = $$v
+                    },
+                    expression: "periodSelected",
+                  },
+                }),
+              ],
+              1
+            ),
+            _vm._v(" "),
             _c("div", { staticClass: "mb-2" }, [
               _c("label", { staticClass: "col-form-label" }, [
                 _vm._v("Date Range (Start - End)"),
@@ -50778,7 +50920,7 @@ var render = function () {
                         "IDR " +
                           _vm._s(
                             new Intl.NumberFormat(["ban", "id"]).format(
-                              _vm.debit
+                              _vm.laporan_detail.total_balance
                             )
                           )
                       ),
@@ -50793,11 +50935,9 @@ var render = function () {
             ]),
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-md-6 col-xl-3" }, [
+          _c("div", { staticClass: "col-md-6 col-xl-2" }, [
             _c("div", { staticClass: "card" }, [
               _c("div", { staticClass: "card-body" }, [
-                _vm._m(2),
-                _vm._v(" "),
                 _c("div", [
                   _c("h4", { staticClass: "mb-1 mt-1" }, [
                     _c("span", { attrs: { "data-plugin": "counterup" } }, [
@@ -50805,7 +50945,7 @@ var render = function () {
                         "IDR " +
                           _vm._s(
                             new Intl.NumberFormat(["ban", "id"]).format(
-                              _vm.debit
+                              _vm.laporan_detail.pengeluaran
                             )
                           )
                       ),
@@ -50820,11 +50960,9 @@ var render = function () {
             ]),
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-md-6 col-xl-3" }, [
+          _c("div", { staticClass: "col-md-6 col-xl-2" }, [
             _c("div", { staticClass: "card" }, [
               _c("div", { staticClass: "card-body" }, [
-                _vm._m(3),
-                _vm._v(" "),
                 _c("div", [
                   _c("h4", { staticClass: "mb-1 mt-1" }, [
                     _c("span", { attrs: { "data-plugin": "counterup" } }, [
@@ -50832,7 +50970,7 @@ var render = function () {
                         "IDR " +
                           _vm._s(
                             new Intl.NumberFormat(["ban", "id"]).format(
-                              _vm.kredit
+                              _vm.laporan_detail.pemasukan
                             )
                           )
                       ),
@@ -50847,7 +50985,69 @@ var render = function () {
             ]),
           ]),
           _vm._v(" "),
-          _vm._m(4),
+          _vm.params.start_date
+            ? _c("div", { staticClass: "col-md-6 col-xl-2" }, [
+                _c("div", { staticClass: "card" }, [
+                  _c("div", { staticClass: "card-body" }, [
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c("h5", { staticClass: "mb-2 mt-1" }, [
+                        _c("span", { attrs: { "data-plugin": "counterup" } }, [
+                          _vm._v(
+                            "On : " +
+                              _vm._s(_vm.format_date(_vm.params.start_date))
+                          ),
+                        ]),
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "text-muted mb-0" }, [
+                        _vm._v(
+                          "IDR " +
+                            _vm._s(
+                              new Intl.NumberFormat(["ban", "id"]).format(
+                                _vm.laporan_detail.total_start_date
+                              )
+                            )
+                        ),
+                      ]),
+                    ]),
+                  ]),
+                ]),
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.params.end_date
+            ? _c("div", { staticClass: "col-md-6 col-xl-2" }, [
+                _c("div", { staticClass: "card" }, [
+                  _c("div", { staticClass: "card-body" }, [
+                    _vm._m(3),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c("h5", { staticClass: "mb-2 mt-1" }, [
+                        _c("span", { attrs: { "data-plugin": "counterup" } }, [
+                          _vm._v(
+                            "On : " +
+                              _vm._s(_vm.format_date(_vm.params.end_date))
+                          ),
+                        ]),
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "text-muted mb-0" }, [
+                        _vm._v(
+                          "IDR " +
+                            _vm._s(
+                              new Intl.NumberFormat(["ban", "id"]).format(
+                                _vm.laporan_detail.total_end_date
+                              )
+                            )
+                        ),
+                      ]),
+                    ]),
+                  ]),
+                ]),
+              ])
+            : _vm._e(),
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "row" }, [
@@ -50862,7 +51062,7 @@ var render = function () {
                     { staticClass: "table-responsive-sm" },
                     [
                       _c("div", { staticClass: "input-group mb-2" }, [
-                        _vm._m(5),
+                        _vm._m(4),
                         _vm._v(" "),
                         _c("input", {
                           directives: [
@@ -50887,14 +51087,14 @@ var render = function () {
                           },
                         }),
                         _vm._v(" "),
-                        _vm._m(6),
+                        _vm._m(5),
                       ]),
                       _vm._v(" "),
                       _c(
                         "table",
                         { staticClass: "table table-centered mb-0" },
                         [
-                          _vm._m(7),
+                          _vm._m(6),
                           _vm._v(" "),
                           _vm.loading
                             ? _c(
@@ -50945,7 +51145,7 @@ var render = function () {
                                                 _c("td", [
                                                   _vm._v(
                                                     _vm._s(
-                                                      _vm.format_date(
+                                                      _vm.format_time(
                                                         laporan.date
                                                       )
                                                     )
@@ -50953,34 +51153,78 @@ var render = function () {
                                                 ]),
                                                 _vm._v(" "),
                                                 _c("td", [
-                                                  _vm._v(_vm._s(laporan.bank)),
+                                                  _c(
+                                                    "span",
+                                                    {
+                                                      staticClass:
+                                                        "badge rounded-pill font-size-14",
+                                                      class:
+                                                        laporan.bank_account_id ==
+                                                        1
+                                                          ? "bg-soft-primary"
+                                                          : laporan.bank_account_id ==
+                                                            2
+                                                          ? "bg-soft-info"
+                                                          : laporan.bank_account_id ==
+                                                            3
+                                                          ? "bg-soft-light"
+                                                          : "bg-soft-dark",
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                                                  " +
+                                                          _vm._s(laporan.bank) +
+                                                          "\n                                                    "
+                                                      ),
+                                                    ]
+                                                  ),
                                                 ]),
                                                 _vm._v(" "),
                                                 _c("td", [
                                                   _vm._v(_vm._s(laporan.title)),
                                                 ]),
                                                 _vm._v(" "),
-                                                _c("td", [
-                                                  _vm._v(
-                                                    _vm._s(
-                                                      laporan.chart_account
-                                                        .type == 2
-                                                        ? laporan.balance
-                                                        : "-"
-                                                    )
-                                                  ),
-                                                ]),
+                                                _c(
+                                                  "td",
+                                                  {
+                                                    staticClass: "text-danger",
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        laporan.chart_account
+                                                          .type == 2
+                                                          ? new Intl.NumberFormat(
+                                                              ["ban", "id"]
+                                                            ).format(
+                                                              laporan.balance
+                                                            )
+                                                          : "-"
+                                                      )
+                                                    ),
+                                                  ]
+                                                ),
                                                 _vm._v(" "),
-                                                _c("td", [
-                                                  _vm._v(
-                                                    _vm._s(
-                                                      laporan.chart_account
-                                                        .type == 1
-                                                        ? laporan.balance
-                                                        : "-"
-                                                    )
-                                                  ),
-                                                ]),
+                                                _c(
+                                                  "td",
+                                                  {
+                                                    staticClass: "text-success",
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        laporan.chart_account
+                                                          .type == 1
+                                                          ? new Intl.NumberFormat(
+                                                              ["ban", "id"]
+                                                            ).format(
+                                                              laporan.balance
+                                                            )
+                                                          : "-"
+                                                      )
+                                                    ),
+                                                  ]
+                                                ),
                                               ]
                                             )
                                           }
@@ -51042,7 +51286,7 @@ var staticRenderFns = [
     return _c(
       "div",
       { staticClass: "float-end mt-2", staticStyle: { position: "relative" } },
-      [_c("h3", { staticClass: "bx bx-log-out-circle mt-3 mb-0" })]
+      [_c("h3", { staticClass: "bx bx-date mt-3 mb-0" })]
     )
   },
   function () {
@@ -51052,39 +51296,8 @@ var staticRenderFns = [
     return _c(
       "div",
       { staticClass: "float-end mt-2", staticStyle: { position: "relative" } },
-      [_c("h3", { staticClass: "bx bx-log-in-circle mt-3 mb-0" })]
+      [_c("h3", { staticClass: "bx bx-date mt-3 mb-0" })]
     )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-6 col-xl-3" }, [
-      _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-body" }, [
-          _c(
-            "div",
-            {
-              staticClass: "float-end mt-2",
-              staticStyle: { position: "relative" },
-            },
-            [_c("h3", { staticClass: "bx bx-date mt-3 mb-0" })]
-          ),
-          _vm._v(" "),
-          _c("div", [
-            _c("h4", { staticClass: "mb-1 mt-1" }, [
-              _c("span", { attrs: { "data-plugin": "counterup" } }, [
-                _vm._v("start date - end date"),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "text-muted mb-0" }, [
-              _vm._v("Coming soon"),
-            ]),
-          ]),
-        ]),
-      ]),
-    ])
   },
   function () {
     var _vm = this
@@ -51125,9 +51338,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Transaksi")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Debit")]),
+        _c("th", [_vm._v("Debit (IDR)")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Kredit")]),
+        _c("th", [_vm._v("Kredit (IDR)")]),
       ]),
     ])
   },

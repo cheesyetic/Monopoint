@@ -80,7 +80,7 @@
                             </div>
                         </li>
 
-                        <li class="nav-item">
+                        <li class="nav-item" v-if="auth.user.type == 0 || auth.user.type == 1">
                             <router-link :to="{name: 'asset'}" class="nav-link">
                                 <i class="uil-file-alt me-2"></i> Asset
                             </router-link>
@@ -101,7 +101,7 @@
                             </div>
                         </li>
 
-                        <li class="nav-item">
+                        <li class="nav-item" v-if="auth.user.type == 0 || auth.user.type == 1">
                             <router-link :to="{name: 'laporan'}" class="nav-link">
                                 <i class="uil-book me-2"></i> Laporan
                             </router-link>
