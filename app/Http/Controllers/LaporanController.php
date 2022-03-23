@@ -26,6 +26,11 @@ class LaporanController extends Controller
         if($request->sortdate){
             $query->orderBy('date', $request->sortdate);
         }
+        if($request->date){
+            $query->whereHas('accountingPeriod', function($query) use($request){
+                $query->where('accounting_period_id', $request->date);
+            });
+        }
         if($request->start_date){
             $query->where('date', '>=', $request->start_date);
             if($request->bank){
@@ -104,7 +109,6 @@ class LaporanController extends Controller
             'pengeluaran' => $pengeluaran,
             'total_start_date' => $total_start_date,
             'total_end_date' => $total_end_date,
-            'total_page' => $total,
             'page' => $page,
             'last_page' => ceil($total / $perPage),
         ];
