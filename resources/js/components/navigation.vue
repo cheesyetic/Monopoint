@@ -100,6 +100,13 @@
 
                             </div>
                         </li>
+
+                        <li class="nav-item">
+                            <router-link :to="{name: 'laporan'}" class="nav-link">
+                                <i class="uil-book me-2"></i> Laporan
+                            </router-link>
+                        </li>
+
                     </ul>
                 </div>
             </nav>

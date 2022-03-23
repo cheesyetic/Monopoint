@@ -114,8 +114,8 @@
                                         duration: 3000,
                                         position: 'top-center',
                                     })
-                                    // console.log(e)
-                                this.theErrors = e.response.data.errors;
+                                console.log(e.response.data)
+                                this.theErrors = e.response.data;
                                 this.loading = false
                                 // console.log(this.theErrors)
                             })
