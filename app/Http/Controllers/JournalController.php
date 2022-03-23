@@ -552,4 +552,8 @@ class JournalController extends Controller
         Mail::to($email)->send(new JournalDeclined($details));
     }
 
+    public function getDownload(){
+        return response()->download(storage_path('app/public/downloads/journal.xlsx'), 'journal.xlsx');
+    }
+
 }

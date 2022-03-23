@@ -74,6 +74,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::post('/declinejournal/{id}', [JournalController::class, 'declineStatus']);
         Route::get('/journal/export/', [JournalController::class, 'export']);
         Route::post('/journal/import/', [JournalController::class, 'import']);
+        Route::get('/downloadjournal', [JournalController::class, 'getDownload']);
 
     });
 
