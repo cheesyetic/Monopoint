@@ -60,6 +60,19 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-6 col-xl-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="float-end mt-2" style="position: relative;">
+                                <h3 class="bx bx-date mt-3 mb-0"></h3>
+                            </div>
+                            <div>
+                                <h4 class="mb-1 mt-1"><span data-plugin="counterup">start date - end date</span></h4>
+                                <p class="text-muted mb-0">Coming soon</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-lg-12">

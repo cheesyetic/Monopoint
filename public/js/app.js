@@ -7503,9 +7503,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['auth'],
@@ -7526,67 +7523,124 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     // selectId(e, target) {
     //     this.accountCreate[target] = e.id
     // },
-    store: function store() {
+    downloadExcel: function downloadExcel() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var formdata, responseCreate;
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.prev = 0;
+                _this.loadingExcel = true;
+                _context.next = 4;
+                return axios({
+                  url: '/api/downloadjournal',
+                  //your url
+                  method: 'GET',
+                  responseType: 'blob',
+                  // important
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                }).then(function (response) {
+                  var url = window.URL.createObjectURL(new Blob([response.data]));
+                  var link = document.createElement('a');
+                  link.href = url;
+                  link.setAttribute('download', 'Journal.xlsx'); //or any other extension
+
+                  //or any other extension
+                  document.body.appendChild(link);
+                  link.click();
+                });
+
+              case 4:
+                response = _context.sent;
+                _this.loadingExcel = false;
+                _context.next = 12;
+                break;
+
+              case 8:
+                _context.prev = 8;
+                _context.t0 = _context["catch"](0);
+                _this.loadingExcel = false;
+
+                _this.$toasted.show("Failed to download excel", {
+                  type: 'error',
+                  duration: 3000,
+                  position: 'top-center'
+                });
+
+              case 12:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[0, 8]]);
+      }))();
+    },
+    store: function store() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var formdata, responseCreate;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
                 // console.log(this.accountCreate)
                 formdata = new FormData();
-                formdata.append('file', _this.file);
-                _context.next = 5;
+                formdata.append('file', _this2.file);
+                _context2.next = 5;
                 return axios.post('/api/journal/import', formdata, {
                   headers: {
                     'Content-Type': 'multipart/form-data',
-                    'Authorization': 'Bearer ' + _this.auth.token
+                    'Authorization': 'Bearer ' + _this2.auth.token
                   }
                 });
 
               case 5:
-                responseCreate = _context.sent;
+                responseCreate = _context2.sent;
 
                 if (responseCreate.status == 200) {
-                  _this.file = '';
-                  _this.theErrors = [];
+                  _this2.file = '';
+                  _this2.theErrors = [];
 
-                  _this.$router.push({
+                  _this2.$router.push({
                     name: 'jurnal'
                   });
 
-                  _this.$toasted.show(responseCreate.data.message, {
+                  _this2.$toasted.show(responseCreate.data.message, {
                     type: 'success',
                     duration: 3000,
                     position: 'top-center'
                   });
                 }
 
-                _context.next = 13;
+                _context2.next = 13;
                 break;
 
               case 9:
-                _context.prev = 9;
-                _context.t0 = _context["catch"](0);
+                _context2.prev = 9;
+                _context2.t0 = _context2["catch"](0);
 
-                _this.$toasted.show("Something went wrong : " + _context.t0, {
+                _this2.$toasted.show("Something went wrong : " + _context2.t0, {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
                 }); // console.log(e)
 
 
-                _this.theErrors = _context.t0.response.data;
+                _this2.theErrors = _context2.t0.response.data;
 
               case 13:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee, null, [[0, 9]]);
+        }, _callee2, null, [[0, 9]]);
       }))();
     }
   }
@@ -10009,6 +10063,19 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -46849,7 +46916,27 @@ var render = function () {
                       _vm._v("Import Excel"),
                     ]),
                     _vm._v(" "),
-                    _vm._m(1),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "btn btn-primary mx-2",
+                        attrs: { href: "/api/journal/export" },
+                        on: {
+                          click: function ($event) {
+                            $event.preventDefault()
+                            return _vm.downloadExcel.apply(null, arguments)
+                          },
+                        },
+                      },
+                      [
+                        _c("i", { staticClass: "bx bx-import" }),
+                        _vm._v(" Unduh File Contoh "),
+                        _vm.loadingExcel
+                          ? _c("loading", { attrs: { size: "18" } })
+                          : _vm._e(),
+                      ],
+                      1
+                    ),
                   ]),
                 ]),
               ]
@@ -46902,14 +46989,14 @@ var render = function () {
                     ]),
                   ]),
                   _vm._v(" "),
-                  _vm._m(2),
+                  _vm._m(1),
                 ]
               ),
             ]),
           ]),
         ]),
         _vm._v(" "),
-        _vm._m(3),
+        _vm._m(2),
       ]),
     ]),
   ])
@@ -46923,24 +47010,6 @@ var staticRenderFns = [
       _c("i", { staticClass: "uil-users-alt" }),
       _vm._v(" Import Excel"),
     ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "btn btn-primary mx-2",
-        attrs: {
-          href: "/storage/files/JournalSample.xlsx",
-          download: "JournalSample.xlsx",
-          target: "__blank",
-          type: "submit",
-        },
-      },
-      [_c("i", { staticClass: "bx bx-import" }), _vm._v(" Unduh file contoh")]
-    )
   },
   function () {
     var _vm = this
@@ -50777,6 +50846,8 @@ var render = function () {
               ]),
             ]),
           ]),
+          _vm._v(" "),
+          _vm._m(4),
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "row" }, [
@@ -50791,7 +50862,7 @@ var render = function () {
                     { staticClass: "table-responsive-sm" },
                     [
                       _c("div", { staticClass: "input-group mb-2" }, [
-                        _vm._m(4),
+                        _vm._m(5),
                         _vm._v(" "),
                         _c("input", {
                           directives: [
@@ -50816,14 +50887,14 @@ var render = function () {
                           },
                         }),
                         _vm._v(" "),
-                        _vm._m(5),
+                        _vm._m(6),
                       ]),
                       _vm._v(" "),
                       _c(
                         "table",
                         { staticClass: "table table-centered mb-0" },
                         [
-                          _vm._m(6),
+                          _vm._m(7),
                           _vm._v(" "),
                           _vm.loading
                             ? _c(
@@ -50983,6 +51054,37 @@ var staticRenderFns = [
       { staticClass: "float-end mt-2", staticStyle: { position: "relative" } },
       [_c("h3", { staticClass: "bx bx-log-in-circle mt-3 mb-0" })]
     )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-6 col-xl-3" }, [
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-body" }, [
+          _c(
+            "div",
+            {
+              staticClass: "float-end mt-2",
+              staticStyle: { position: "relative" },
+            },
+            [_c("h3", { staticClass: "bx bx-date mt-3 mb-0" })]
+          ),
+          _vm._v(" "),
+          _c("div", [
+            _c("h4", { staticClass: "mb-1 mt-1" }, [
+              _c("span", { attrs: { "data-plugin": "counterup" } }, [
+                _vm._v("start date - end date"),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "text-muted mb-0" }, [
+              _vm._v("Coming soon"),
+            ]),
+          ]),
+        ]),
+      ]),
+    ])
   },
   function () {
     var _vm = this
