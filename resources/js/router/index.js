@@ -19,6 +19,8 @@ import TabDraft from '../views/jurnal/TabDraft'
 import TabProses from '../views/jurnal/TabProses'
 import TabVerif from '../views/jurnal/TabVerif'
 
+import Laporan from '../views/laporan/Index'
+
 import Karyawan from '../views/karyawan/Index'
 import KaryawanEdit from '../views/karyawan/Edit'
 import KaryawanCreate from '../views/karyawan/Create'
@@ -100,6 +102,13 @@ export default {
                     path: '/appointment/create',
                     name: 'appointment.create',
                     component: AppointmentCreate
+                },
+
+                // LAPORAN
+                {
+                    path: '/laporan',
+                    name: 'laporan',
+                    component: Laporan,
                 },
 
                 // JURNAL

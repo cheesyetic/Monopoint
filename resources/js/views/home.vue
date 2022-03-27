@@ -68,14 +68,14 @@
                 <div class="col-md-6 col-xl-6">
                     <div class="card">
                         <div class="card-body">
-                            <apexchart type="line" height="350" :options="journalChartOptions" :series="journalSeries"></apexchart>
+                            <apexchart v-if="journalSeries.length != 0" type="bar" height="400" :options="journalChartOptions" :series="journalSeries"></apexchart>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-xl-6">
                     <div class="card">
                         <div class="card-body">
-                            <apexchart type="line" height="350" :options="balanceChartOptions" :series="balanceSeries"></apexchart>
+                            <apexchart v-if="balanceSeries.length != 0" type="line" height="400" :options="balanceChartOptions" :series="balanceSeries"></apexchart>
                         </div>
                     </div>
                 </div>
@@ -111,15 +111,20 @@ export default {
             journalSeries: [],
             journalChartOptions: {
                 chart: {
-                    height: 350,
-                    type: 'line',
+                    height: 400,
+                    type: 'bar',
                 },
                 colors: ['#5B73E8', '#545454'],
                 dataLabels: {
                     enabled: true,
                 },
-                stroke: {
-                    curve: 'smooth'
+                plotOptions: {
+                    bar: {
+                    borderRadius: 4,
+                    dataLabels: {
+                        position: 'bottom', // top, center, bottom
+                    },
+                    }
                 },
                 title: {
                     text: 'Jumlah Jurnal Dibuat Per-bulan',
@@ -133,11 +138,20 @@ export default {
                     },
                 },
                 xaxis: {
-                    // categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-                    convertedCatToNumeric: false,
+                    // categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    labels: {
+                        show: true,
+                    },
+                    // convertedCatToNumeric: false,
                     title: {
                         text: 'Month'
-                    }
+                    },
+                    axisBorder: {
+                        show: false
+                    },
+                    axisTicks: {
+                        show: false
+                    },
                 },
                 yaxis: {
                     title: {
@@ -152,7 +166,7 @@ export default {
             balanceSeries: [],
             balanceChartOptions: {
                 chart: {
-                    height: 350,
+                    height: 400,
                     type: 'line',
                 },
                 colors: ['#5B73E8', '#545454'],

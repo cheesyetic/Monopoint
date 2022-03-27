@@ -13,11 +13,8 @@
                                 <li class="breadcrumb-item m-auto"><router-link :to="{ name: 'dashboard' }">Dashboard</router-link></li>
                                 <li class="breadcrumb-item m-auto"><router-link :to="{ name: 'jurnal' }">Jurnal</router-link></li>
                                 <li class="breadcrumb-item m-auto active">Import Excel</li>
-                                <!-- <form method="get" action="/storage/files/JournalSample.xlsx">
-                                    <button type="submit" class="btn btn-primary mx-2"><i class="bx bx-import"></i> Unduh file contoh</button>
-                                </form>
-                                <button type="submit" onclick="window.open('/storage/files/JournalSample.xlsx')">Download!</button> -->
-                                <a href="/storage/files/JournalSample.xlsx" download="JournalSample.xlsx" target="__blank" class="btn btn-primary mx-2" type="submit"><i class="bx bx-import"></i> Unduh file contoh</a>
+                                <a href="/api/journal/export" @click.prevent="downloadExcel" class="btn btn-primary mx-2"><i class="bx bx-import"></i> Unduh File Contoh <loading v-if="loadingExcel" size="18"/></a>
+                                <!-- <a href="/storage/files/JournalSample.xlsx" download="JournalSample.xlsx" target="__blank" class="btn btn-primary mx-2" type="submit"><i class="bx bx-import"></i> Unduh file contoh</a> -->
                             </ol>
                         </div>
 
@@ -153,6 +150,33 @@ export default {
         // selectId(e, target) {
         //     this.accountCreate[target] = e.id
         // },
+        async downloadExcel() {
+            try {
+                this.loadingExcel = true
+
+                let response = await axios({
+                    url: '/api/downloadjournal', //your url
+                    method: 'GET',
+                    responseType: 'blob', // important
+                    headers: {'Authorization': 'Bearer '+ this.auth.token}
+                }).then((response) => {
+                    const url = window.URL.createObjectURL(new Blob([response.data]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', 'Journal.xlsx'); //or any other extension
+                    document.body.appendChild(link);
+                    link.click();
+                });
+                this.loadingExcel = false
+            } catch (e) {
+                this.loadingExcel = false
+                this.$toasted.show("Failed to download excel", {
+                        type: 'error',
+                        duration: 3000,
+                        position: 'top-center',
+                    })
+            }
+        },
         async store() {
             try {
                 // console.log(this.accountCreate)

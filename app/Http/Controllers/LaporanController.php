@@ -46,9 +46,9 @@ class LaporanController extends Controller
                     ->whereDate('date', '<=', $request->start_date)
                     ->orderBy('date', 'desc')->first();
                     if($bankhistory != null){
-                        $total_start_date = $bankhistory->balance;
+                        $total_start_date = $total_start_date + $bankhistory->balance;
+                        $id = $bankhistory->bankAccount->id;
                     }
-                    $id = $bankhistory->bankAccount->id;
                 }
             }
         }
@@ -67,9 +67,9 @@ class LaporanController extends Controller
                     $bankhistory = BankHistory::where('bank_account_id', '!=', $id)->
                     whereDate('date', '<=', $request->end_date)->orderBy('date', 'desc')->first();
                     if($bankhistory!=null){
-                        $total_end_date = $bankhistory->balance;
+                        $total_end_date = $total_end_date + $bankhistory->balance;
+                        $id = $bankhistory->bankAccount->id;
                     }
-                    $id = $bankhistory->bankAccount->id;
                 }
             }
         }
@@ -100,7 +100,7 @@ class LaporanController extends Controller
             }
         }
         $total_balance = $pemasukan - $pengeluaran;
-        
+
         $response = [
             'message' => 'Laporan berhasil ditampilkan',
             'total_balance' => $total_balance,
