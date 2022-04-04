@@ -14,6 +14,10 @@ class LaporanController extends Controller
         $query = Journal::with(['user', 'chartAccount', 'accountingPeriod', 'project', 'asset', 'bankAccount']);
         $query->where('status', '3' );
         $bankacc = BankAccount::get();
+        $total_in_bank = 0;
+        foreach($bankacc as $ba){
+            $total_in_bank = $total_in_bank + $ba->balance;
+        }
         $total_start_date = 0;
         $total_end_date = 0;
 
@@ -78,6 +82,10 @@ class LaporanController extends Controller
             $query->whereHas('bankAccount', function($query) use($request){
                 $query->where('bank_account_id', $request->bank);
             });
+            $bank = BankAccount::where('id', $request->bank)->get();
+            foreach($bank as $b){
+                $total_in_bank = $b->balance;
+            }
         }
 
         $perPage = 20;
@@ -104,6 +112,7 @@ class LaporanController extends Controller
         $response = [
             'message' => 'Laporan berhasil ditampilkan',
             'total_balance' => $total_balance,
+            'total_in_bank' => $total_in_bank,
             'data' => $journal,
             'pemasukan' => $pemasukan,
             'pengeluaran' => $pengeluaran,

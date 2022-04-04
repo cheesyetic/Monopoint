@@ -24,7 +24,12 @@ class AppointmentController extends Controller
      */
     public function index()
     {
+        $user = auth()->user();
         $appointment = Appointment::orderBy('id', 'desc')->get();
+        // if($user->type == 2){
+        //     $user_appointment = UserAppointment::where('user_id', $user->id)->get();
+        //     $appointment = Appointment::where('user_id', $user->id)->orderBy('id', 'desc')->get();
+        // }
         foreach ($appointment as $key => $value) {
             $appointment[$key]->token = Crypt::encryptString($appointment[$key]->id);
         }
@@ -142,7 +147,7 @@ class AppointmentController extends Controller
             $appointment->update($request->all());
 
             $input['appointment_id'] = $appointment->id;
-            // dd($input);
+            
             foreach($input['user_id'] as $value){
                 $input['user_id'] = $value;
                 UserAppointment::create($input);

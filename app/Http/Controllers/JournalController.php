@@ -115,7 +115,6 @@ class JournalController extends Controller
      */
     public function store(Request $request)
     {
-        // return response()->json($request, Response::HTTP_CREATED);
 
         $input = $request->all();
 
@@ -150,12 +149,6 @@ class JournalController extends Controller
             $input['title'] = 'Pembuatan Jurnal';
             $input['remark'] = $user . ' melakukan pembuatan jurnal pada ' . $journal->created_at;
             adjustingHistory::create($input);
-
-            // balance in ca
-            // $idchartacc = $input['chart_account_id'];
-            // $ca = ChartAccount::findOrFail($idchartacc);
-            // $ca->balance = $ca->balance + $input['balance'];
-            // $ca->save();
 
             $response = [
                 'message' => 'A new journal row created',
@@ -250,22 +243,6 @@ class JournalController extends Controller
         else{
             $input['filebukti'] = "$journal->filebukti";
         }
-
-        // if($input['balance'] > $journal->balance){
-        //     $res = $input['balance'] - $journal->balance;
-        //     $idchartacc = $input['chart_account_id'];
-        //     $ca = ChartAccount::findOrFail($idchartacc);
-        //     $ca->balance = $ca->balance + $res;
-        //     $ca->save();
-        // }
-
-        // elseif ($input['balance'] < $journal->balance) {
-        //     $res = $journal->balance - $input['balance'] ;
-        //     $idchartacc = $input['chart_account_id'];
-        //     $ca = ChartAccount::findOrFail($idchartacc);
-        //     $ca->balance = $ca->balance - $res;
-        //     $ca->save();
-        // }
 
         $journal->update($input);
         $this->sendEmailUpdate($id);
