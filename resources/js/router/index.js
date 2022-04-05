@@ -49,11 +49,6 @@ export default {
     linkActiveClass : 'active',
 
     routes: [
-        // {
-        //     path: '/',
-        //     name: 'dashboard',
-        //     component: Home
-        // },
         {
             path: '/login',
             name: 'login',

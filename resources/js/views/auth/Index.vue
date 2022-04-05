@@ -41,28 +41,21 @@
                                             </div>
                                         </div>
 
-                                        <!-- <button type="submit" class="btn btn-primary">LOGIN</button> -->
-                                         <div class="mt-3 text-end">
+                                        <div class="mt-3 text-end">
                                             <loading v-if="loading"/>
                                             <button class="btn btn-primary w-sm waves-effect waves-light" type="submit">Log In</button>
                                         </div>
                                     </form>
                                 </div>
-
                             </div>
                         </div>
-
                         <div class="mt-5 text-center">
                             <p>© Kodig.id</p>
                         </div>
-
                     </div>
                 </div>
-                <!-- end row -->
             </div>
-            <!-- end container -->
         </div>
-
     </div>
 </template>
 
@@ -88,51 +81,33 @@
             }
         },
         methods: {
-
             login() {
-                // if (this.user.email && this.user.password) {
-                    this.loading = true
-                    axios.get('/sanctum/csrf-cookie')
-                        .then(response => {
-                            //debug cookie
-                            let formdata = new FormData();
-                            formdata.append('email', this.user.email)
-                            formdata.append('password', this.user.password)
-                            axios.post('/api/login', formdata).then(res => {
-                                //debug user login
-                                // console.log(res)
-                                if (res.data.success) {
-                                    localStorage.setItem("loggedIn", "true")
-                                    localStorage.setItem("token", res.data.token)
-                                    this.loggedIn = true
-                                    this.loading = false
-                                    return this.$router.push({ name: 'dashboard' })
-                                }
-                            }).catch(e => {
-                                this.$toasted.show("Something went wrong : " + e.response.data.message, {
-                                        type: 'error',
-                                        duration: 3000,
-                                        position: 'top-center',
-                                    })
-                                console.log(e.response.data)
-                                this.theErrors = e.response.data;
+                this.loading = true
+                axios.get('/sanctum/csrf-cookie')
+                    .then(response => {
+                        //debug cookie
+                        let formdata = new FormData();
+                        formdata.append('email', this.user.email)
+                        formdata.append('password', this.user.password)
+                        axios.post('/api/login', formdata).then(res => {
+                            if (res.data.success) {
+                                localStorage.setItem("loggedIn", "true")
+                                localStorage.setItem("token", res.data.token)
+                                this.loggedIn = true
                                 this.loading = false
-                                // console.log(this.theErrors)
-                            })
+                                return this.$router.push({ name: 'dashboard' })
+                            }
+                        }).catch(e => {
+                            this.$toasted.show("Something went wrong : " + e.response.data.message, {
+                                    type: 'error',
+                                    duration: 3000,
+                                    position: 'top-center',
+                                })
+                            this.theErrors = e.response.data;
                             this.loading = false
                         })
-                // }
-                // this.loading = false
-                // this.theErrors = []
-
-                // if (!this.user.email) {
-                //     this.theErrors.email = true
-                // }
-
-                // if (!this.user.password) {
-                //     this.theErrors.password = true
-                // }
-
+                        this.loading = false
+                    })
             }
         },
 

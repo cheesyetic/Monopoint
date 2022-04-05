@@ -1,9 +1,7 @@
 <template>
 <div>
    <div id="layout-wrapper">
-
         <navigation :auth="auth"></navigation>
-        <!-- Start right Content here -->
         <transition
             mode="out-in"
             enter-active-class="animate__animated animate__fadeIn animate__faster"
@@ -12,14 +10,6 @@
             <router-view :auth="auth"></router-view>
         </transition>
     </div>
-    <!-- END layout-wrapper -->
-
-    <!-- Right Sidebar -->
-    <sidebar></sidebar>
-    <!-- /Right-bar -->
-
-    <!-- Right bar overlay-->
-    <div class="rightbar-overlay"></div>
 </div>
 </template>
 
@@ -28,12 +18,9 @@ export default {
     data() {
         return {
             auth: {
-                //state loggedIn with localStorage
                 loggedIn: localStorage.getItem('loggedIn'),
-                //state token
                 token: localStorage.getItem('token'),
                 user_token: '',
-                //state user logged In
                 user: []
             }
         }
@@ -52,14 +39,11 @@ export default {
                         }
                     })
                 .then(response => {
-                    // console.log("response")
-                    // console.log(response.message)
                     this.auth.user = response.data // assign response to state user
                     this.token()
                 })
             }
             catch (e) {
-                // console.log("logout")
                 localStorage.removeItem("loggedIn")
                 this.$router.push({ name: 'login' })
             }

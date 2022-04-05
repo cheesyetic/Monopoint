@@ -2124,26 +2124,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       auth: {
-        //state loggedIn with localStorage
         loggedIn: localStorage.getItem('loggedIn'),
-        //state token
         token: localStorage.getItem('token'),
         user_token: '',
-        //state user logged In
         user: []
       }
     };
@@ -2168,8 +2155,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     'Authorization': 'Bearer ' + _this.auth.token
                   }
                 }).then(function (response) {
-                  // console.log("response")
-                  // console.log(response.message)
                   _this.auth.user = response.data; // assign response to state user
 
                   // assign response to state user
@@ -2184,7 +2169,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 6:
                 _context.prev = 6;
                 _context.t0 = _context["catch"](0);
-                // console.log("logout")
                 localStorage.removeItem("loggedIn");
 
                 _this.$router.push({
@@ -2325,6 +2309,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
 //
 //
 //
@@ -2483,21 +2471,9 @@ __webpack_require__.r(__webpack_exports__);
         jurnal: false,
         admin: false
       }
-    }; //     loggedIn: localStorage.getItem('loggedIn'),
-    //     token: localStorage.getItem('token'),
-    //     user: []
+    };
   },
-  // created() {
-  //     axios.get('http://localhost:8000/api/user', {headers: {'Authorization': 'Bearer '+this.token}})
-  //     .then(response => {
-  //         console.log(response)
-  //         this.user = response.data // assign response to state user
-  //     })
-  // },
   methods: {
-    //   getLoggedIn() {
-    //     this.loggedIn = localStorage.getItem("loggedIn")
-    //   },
     logout: function logout() {
       var _this = this;
 
@@ -2506,24 +2482,13 @@ __webpack_require__.r(__webpack_exports__);
           'Authorization': 'Bearer ' + this.auth.token
         }
       }).then(function () {
-        //remove localStorage
-        localStorage.removeItem("loggedIn"); // console.log("KELUAR")
-        //redirect
-
+        localStorage.removeItem("loggedIn");
         return _this.$router.push({
           name: 'login'
         });
       });
     }
-  } // watch: {
-  //   $route: {
-  //     immediate: true,
-  //     handler() {
-  //       this.getLoggedIn()
-  //     }
-  //   }
-  // },
-
+  }
 });
 
 /***/ }),
@@ -3084,6 +3049,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['auth'],
@@ -3311,7 +3281,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.prev = 9;
                 _context.t0 = _context["catch"](0);
 
-                // console.log(e)
                 _this.$toasted.show("Something went wrong : " + _context.t0, {
                   type: 'error',
                   duration: 3000,
@@ -3351,6 +3320,9 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
 //
 //
 //
@@ -3537,11 +3509,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
 
                 _this2.appointment = response.data.data;
-                _this2.appointment.date = moment(String(_this2.appointment.date)).format('yyyy-MM-DD') + 'T' + moment(String(_this2.appointment.date)).format('hh:mm:ss'); // console.log(">> Panjang Appointment user id")
-                // console.log(this.appointment.user_id.length)
-                // console.log(">> Panjang partnerOptions")
-                // console.log(this.partnerOptions.length)
-
+                _this2.appointment.date = moment(String(_this2.appointment.date)).format('yyyy-MM-DD') + 'T' + moment(String(_this2.appointment.date)).format('hh:mm:ss');
                 i = 0;
 
               case 7:
@@ -3584,8 +3552,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 break;
 
               case 21:
-                // console.log(">> Selected Partner")
-                // console.log(this.partnerSelected)
                 _this2.loading = false;
                 _context2.next = 25;
                 break;
@@ -3784,13 +3750,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -3840,8 +3799,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 if (response.status === 200) {
                   _this.appointments = response.data.data;
-                } // console.log(response.data.data)
-
+                }
 
                 _this.loading = false;
 
@@ -4450,8 +4408,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -4590,13 +4546,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -4619,7 +4568,6 @@ __webpack_require__.r(__webpack_exports__);
     login: function login() {
       var _this = this;
 
-      // if (this.user.email && this.user.password) {
       this.loading = true;
       axios__WEBPACK_IMPORTED_MODULE_1___default().get('/sanctum/csrf-cookie').then(function (response) {
         //debug cookie
@@ -4627,8 +4575,6 @@ __webpack_require__.r(__webpack_exports__);
         formdata.append('email', _this.user.email);
         formdata.append('password', _this.user.password);
         axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/login', formdata).then(function (res) {
-          //debug user login
-          // console.log(res)
           if (res.data.success) {
             localStorage.setItem("loggedIn", "true");
             localStorage.setItem("token", res.data.token);
@@ -4645,20 +4591,11 @@ __webpack_require__.r(__webpack_exports__);
             position: 'top-center'
           });
 
-          console.log(e.response.data);
           _this.theErrors = e.response.data;
-          _this.loading = false; // console.log(this.theErrors)
+          _this.loading = false;
         });
         _this.loading = false;
-      }); // }
-      // this.loading = false
-      // this.theErrors = []
-      // if (!this.user.email) {
-      //     this.theErrors.email = true
-      // }
-      // if (!this.user.password) {
-      //     this.theErrors.password = true
-      // }
+      });
     }
   },
   //check user already logged in
@@ -5381,6 +5318,30 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -12484,8 +12445,6 @@ window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js
  *
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 vue__WEBPACK_IMPORTED_MODULE_8__["default"].use((vue_toasted__WEBPACK_IMPORTED_MODULE_0___default()));
 vue__WEBPACK_IMPORTED_MODULE_8__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_9__["default"]);
@@ -12494,8 +12453,6 @@ vue__WEBPACK_IMPORTED_MODULE_8__["default"].use((vue_sweetalert2__WEBPACK_IMPORT
 vue__WEBPACK_IMPORTED_MODULE_8__["default"].use((vue_apexcharts__WEBPACK_IMPORTED_MODULE_7___default()));
 window.moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 window.moment.locale('id');
- // import router from './router'
-// import store from './store'
 
 vue__WEBPACK_IMPORTED_MODULE_8__["default"].component('navigation', (__webpack_require__(/*! ./components/navigation.vue */ "./resources/js/components/navigation.vue")["default"]));
 vue__WEBPACK_IMPORTED_MODULE_8__["default"].component('sidebar', (__webpack_require__(/*! ./components/RightSidebar.vue */ "./resources/js/components/RightSidebar.vue")["default"]));
@@ -12600,12 +12557,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mode: 'history',
   linkActiveClass: 'active',
-  routes: [// {
-  //     path: '/',
-  //     name: 'dashboard',
-  //     component: Home
-  // },
-  {
+  routes: [{
     path: '/login',
     name: 'login',
     component: _views_auth_Index__WEBPACK_IMPORTED_MODULE_2__["default"]
@@ -12850,7 +12802,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.wrapper{\r\n  display: inline-flex;\r\n  align-items: center;\r\n  justify-content: space-evenly;\r\n  border-radius: 5px;\n}\n.option{\r\n    min-height: 39px;\r\n    min-width: 100px;\r\n    padding: .2rem 1rem;\r\n    background: #fff;\r\n    height: 100%;\r\n    width: auto;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    gap: .5rem;\r\n    margin: 0 8px;\r\n    border-radius: 5px;\r\n    cursor: pointer;\r\n    border: 2px solid lightgrey;\r\n    transition: all 0.3s ease;\n}\n.option:first-child {\r\n  margin-left: 0;\n}\n.option:last-child {\r\n  margin-right: 0;\n}\n.option .dot{\r\n  height: 16px;\r\n  width: 16px;\r\n  background: #d9d9d9;\r\n  border-radius: 50%;\r\n  position: relative;\n}\n.option .dot::before{\r\n  position: absolute;\r\n  content: \"\";\r\n  top: 4px;\r\n  left: 4px;\r\n  width: 8px;\r\n  height: 8px;\r\n  background: #5B73E8;\r\n  border-radius: 50%;\r\n  opacity: 0;\r\n  transform: scale(1.5);\r\n  transition: all 0.3s ease;\n}\ninput[type=\"radio\"]{\r\n  display: none;\n}\n#option-1:checked:checked ~ .option-1,\r\n#option-2:checked:checked ~ .option-2,\r\n#option-3:checked:checked ~ .option-3{\r\n  border-color: #5B73E8;\r\n  background: #5B73E8;\n}\n#option-1:checked:checked ~ .option-1 .dot,\r\n#option-2:checked:checked ~ .option-2 .dot,\r\n#option-3:checked:checked ~ .option-3 .dot{\r\n  background: #fff;\n}\n#option-1:checked:checked ~ .option-1 .dot::before,\r\n#option-2:checked:checked ~ .option-2 .dot::before,\r\n#option-3:checked:checked ~ .option-3 .dot::before{\r\n  opacity: 1;\r\n  transform: scale(1);\n}\n.option span{\r\n  font-size: 16px;\r\n  color: #808080;\n}\n#option-1:checked:checked ~ .option-1 span,\r\n#option-2:checked:checked ~ .option-2 span,\r\n#option-3:checked:checked ~ .option-3 span{\r\n  color: #fff;\n}\n#name-option-1:checked:checked ~ .option-1,\r\n#name-option-2:checked:checked ~ .option-2,\r\n#name-option-3:checked:checked ~ .option-3{\r\n  border-color: #5B73E8;\r\n  background: #5B73E8;\n}\n#name-option-1:checked:checked ~ .option-1 .dot,\r\n#name-option-2:checked:checked ~ .option-2 .dot,\r\n#name-option-3:checked:checked ~ .option-3 .dot{\r\n  background: #fff;\n}\n#name-option-1:checked:checked ~ .option-1 .dot::before,\r\n#name-option-2:checked:checked ~ .option-2 .dot::before,\r\n#name-option-3:checked:checked ~ .option-3 .dot::before{\r\n  opacity: 1;\r\n  transform: scale(1);\n}\n.option span{\r\n  font-size: 16px;\r\n  color: #808080;\n}\n#name-option-1:checked:checked ~ .option-1 span,\r\n#name-option-2:checked:checked ~ .option-2 span,\r\n#name-option-3:checked:checked ~ .option-3 span{\r\n  color: #fff;\n}\n#date-option-1:checked:checked ~ .option-1,\r\n#date-option-2:checked:checked ~ .option-2,\r\n#date-option-3:checked:checked ~ .option-3{\r\n  border-color: #5B73E8;\r\n  background: #5B73E8;\n}\n#date-option-1:checked:checked ~ .option-1 .dot,\r\n#date-option-2:checked:checked ~ .option-2 .dot,\r\n#date-option-3:checked:checked ~ .option-3 .dot{\r\n  background: #fff;\n}\n#date-option-1:checked:checked ~ .option-1 .dot::before,\r\n#date-option-2:checked:checked ~ .option-2 .dot::before,\r\n#date-option-3:checked:checked ~ .option-3 .dot::before{\r\n  opacity: 1;\r\n  transform: scale(1);\n}\n.option span{\r\n  font-size: 16px;\r\n  color: #808080;\n}\n#date-option-1:checked:checked ~ .option-1 span,\r\n#date-option-2:checked:checked ~ .option-2 span,\r\n#date-option-3:checked:checked ~ .option-3 span{\r\n  color: #fff;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.wrapper{\n  display: inline-flex;\n  align-items: center;\n  justify-content: space-evenly;\n  border-radius: 5px;\n}\n.option{\n    min-height: 39px;\n    min-width: 100px;\n    padding: .2rem 1rem;\n    background: #fff;\n    height: 100%;\n    width: auto;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    gap: .5rem;\n    margin: 0 8px;\n    border-radius: 5px;\n    cursor: pointer;\n    border: 2px solid lightgrey;\n    transition: all 0.3s ease;\n}\n.option:first-child {\n  margin-left: 0;\n}\n.option:last-child {\n  margin-right: 0;\n}\n.option .dot{\n  height: 16px;\n  width: 16px;\n  background: #d9d9d9;\n  border-radius: 50%;\n  position: relative;\n}\n.option .dot::before{\n  position: absolute;\n  content: \"\";\n  top: 4px;\n  left: 4px;\n  width: 8px;\n  height: 8px;\n  background: #5B73E8;\n  border-radius: 50%;\n  opacity: 0;\n  transform: scale(1.5);\n  transition: all 0.3s ease;\n}\ninput[type=\"radio\"]{\n  display: none;\n}\n#option-1:checked:checked ~ .option-1,\n#option-2:checked:checked ~ .option-2,\n#option-3:checked:checked ~ .option-3{\n  border-color: #5B73E8;\n  background: #5B73E8;\n}\n#option-1:checked:checked ~ .option-1 .dot,\n#option-2:checked:checked ~ .option-2 .dot,\n#option-3:checked:checked ~ .option-3 .dot{\n  background: #fff;\n}\n#option-1:checked:checked ~ .option-1 .dot::before,\n#option-2:checked:checked ~ .option-2 .dot::before,\n#option-3:checked:checked ~ .option-3 .dot::before{\n  opacity: 1;\n  transform: scale(1);\n}\n.option span{\n  font-size: 16px;\n  color: #808080;\n}\n#option-1:checked:checked ~ .option-1 span,\n#option-2:checked:checked ~ .option-2 span,\n#option-3:checked:checked ~ .option-3 span{\n  color: #fff;\n}\n#name-option-1:checked:checked ~ .option-1,\n#name-option-2:checked:checked ~ .option-2,\n#name-option-3:checked:checked ~ .option-3{\n  border-color: #5B73E8;\n  background: #5B73E8;\n}\n#name-option-1:checked:checked ~ .option-1 .dot,\n#name-option-2:checked:checked ~ .option-2 .dot,\n#name-option-3:checked:checked ~ .option-3 .dot{\n  background: #fff;\n}\n#name-option-1:checked:checked ~ .option-1 .dot::before,\n#name-option-2:checked:checked ~ .option-2 .dot::before,\n#name-option-3:checked:checked ~ .option-3 .dot::before{\n  opacity: 1;\n  transform: scale(1);\n}\n.option span{\n  font-size: 16px;\n  color: #808080;\n}\n#name-option-1:checked:checked ~ .option-1 span,\n#name-option-2:checked:checked ~ .option-2 span,\n#name-option-3:checked:checked ~ .option-3 span{\n  color: #fff;\n}\n#date-option-1:checked:checked ~ .option-1,\n#date-option-2:checked:checked ~ .option-2,\n#date-option-3:checked:checked ~ .option-3{\n  border-color: #5B73E8;\n  background: #5B73E8;\n}\n#date-option-1:checked:checked ~ .option-1 .dot,\n#date-option-2:checked:checked ~ .option-2 .dot,\n#date-option-3:checked:checked ~ .option-3 .dot{\n  background: #fff;\n}\n#date-option-1:checked:checked ~ .option-1 .dot::before,\n#date-option-2:checked:checked ~ .option-2 .dot::before,\n#date-option-3:checked:checked ~ .option-3 .dot::before{\n  opacity: 1;\n  transform: scale(1);\n}\n.option span{\n  font-size: 16px;\n  color: #808080;\n}\n#date-option-1:checked:checked ~ .option-1 span,\n#date-option-2:checked:checked ~ .option-2 span,\n#date-option-3:checked:checked ~ .option-3 span{\n  color: #fff;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -39853,39 +39805,31 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c(
-        "div",
-        { attrs: { id: "layout-wrapper" } },
-        [
-          _c("navigation", { attrs: { auth: _vm.auth } }),
-          _vm._v(" "),
-          _c(
-            "transition",
-            {
-              attrs: {
-                mode: "out-in",
-                "enter-active-class":
-                  "animate__animated animate__fadeIn animate__faster",
-                "leave-active-class":
-                  "animate__animated animate__fadeOut animate__faster",
-              },
+  return _c("div", [
+    _c(
+      "div",
+      { attrs: { id: "layout-wrapper" } },
+      [
+        _c("navigation", { attrs: { auth: _vm.auth } }),
+        _vm._v(" "),
+        _c(
+          "transition",
+          {
+            attrs: {
+              mode: "out-in",
+              "enter-active-class":
+                "animate__animated animate__fadeIn animate__faster",
+              "leave-active-class":
+                "animate__animated animate__fadeOut animate__faster",
             },
-            [_c("router-view", { attrs: { auth: _vm.auth } })],
-            1
-          ),
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c("sidebar"),
-      _vm._v(" "),
-      _c("div", { staticClass: "rightbar-overlay" }),
-    ],
-    1
-  )
+          },
+          [_c("router-view", { attrs: { auth: _vm.auth } })],
+          1
+        ),
+      ],
+      1
+    ),
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -41393,7 +41337,10 @@ var render = function () {
                         _vm._v(" "),
                         _vm.theErrors.name
                           ? _c("div", { staticClass: "mt-1 text-danger" }, [
-                              _vm._v(_vm._s(_vm.theErrors.name[0])),
+                              _vm._v(
+                                _vm._s(_vm.theErrors.name[0]) +
+                                  "\n                                    "
+                              ),
                             ])
                           : _vm._e(),
                       ]),
@@ -41438,7 +41385,10 @@ var render = function () {
                         _vm._v(" "),
                         _vm.theErrors.date
                           ? _c("div", { staticClass: "mt-1 text-danger" }, [
-                              _vm._v(_vm._s(_vm.theErrors.date[0])),
+                              _vm._v(
+                                _vm._s(_vm.theErrors.date[0]) +
+                                  "\n                                    "
+                              ),
                             ])
                           : _vm._e(),
                       ]),
@@ -41483,7 +41433,10 @@ var render = function () {
                         _vm._v(" "),
                         _vm.theErrors.remark
                           ? _c("div", { staticClass: "mt-1 text-danger" }, [
-                              _vm._v(_vm._s(_vm.theErrors.remark[0])),
+                              _vm._v(
+                                _vm._s(_vm.theErrors.remark[0]) +
+                                  "\n                                    "
+                              ),
                             ])
                           : _vm._e(),
                       ]),
@@ -41525,7 +41478,10 @@ var render = function () {
                           _vm._v(" "),
                           _vm.theErrors.user_id
                             ? _c("div", { staticClass: "mt-1 text-danger" }, [
-                                _vm._v(_vm._s(_vm.theErrors.user_id[0])),
+                                _vm._v(
+                                  "\n                                        " +
+                                    _vm._s(_vm.theErrors.user_id[0])
+                                ),
                               ])
                             : _vm._e(),
                         ],
@@ -41768,7 +41724,12 @@ var render = function () {
                                   ? _c(
                                       "div",
                                       { staticClass: "mt-1 text-danger" },
-                                      [_vm._v(_vm._s(_vm.theErrors.name[0]))]
+                                      [
+                                        _vm._v(
+                                          _vm._s(_vm.theErrors.name[0]) +
+                                            "\n                                    "
+                                        ),
+                                      ]
                                     )
                                   : _vm._e(),
                               ]),
@@ -41815,7 +41776,12 @@ var render = function () {
                                   ? _c(
                                       "div",
                                       { staticClass: "mt-1 text-danger" },
-                                      [_vm._v(_vm._s(_vm.theErrors.date[0]))]
+                                      [
+                                        _vm._v(
+                                          _vm._s(_vm.theErrors.date[0]) +
+                                            "\n                                    "
+                                        ),
+                                      ]
                                     )
                                   : _vm._e(),
                               ]),
@@ -41862,7 +41828,12 @@ var render = function () {
                                   ? _c(
                                       "div",
                                       { staticClass: "mt-1 text-danger" },
-                                      [_vm._v(_vm._s(_vm.theErrors.remark[0]))]
+                                      [
+                                        _vm._v(
+                                          _vm._s(_vm.theErrors.remark[0]) +
+                                            "\n                                    "
+                                        ),
+                                      ]
                                     )
                                   : _vm._e(),
                               ]),
@@ -41903,7 +41874,8 @@ var render = function () {
                                         { staticClass: "mt-1 text-danger" },
                                         [
                                           _vm._v(
-                                            _vm._s(_vm.theErrors.user_id[0])
+                                            "\n                                        " +
+                                              _vm._s(_vm.theErrors.user_id[0])
                                           ),
                                         ]
                                       )
@@ -42119,9 +42091,9 @@ var render = function () {
                                             _vm._v(" "),
                                             _c("td", [
                                               _vm._v(
-                                                "\n                                                      " +
+                                                "\n                                                    " +
                                                   _vm._s(appointment.remark) +
-                                                  "\n                                                  "
+                                                  "\n                                                "
                                               ),
                                             ]),
                                             _vm._v(" "),
@@ -42148,7 +42120,9 @@ var render = function () {
                                                       staticClass:
                                                         "uil-edit-alt",
                                                     }),
-                                                    _vm._v(" Edit"),
+                                                    _vm._v(
+                                                      " Edit\n                                                    "
+                                                    ),
                                                   ]
                                                 ),
                                                 _vm._v(" "),
@@ -43089,13 +43063,14 @@ var render = function () {
                                               { staticClass: "card-text my-0" },
                                               [
                                                 _vm._v(
-                                                  "Harga : IDR " +
+                                                  "Harga : IDR\n                                                    " +
                                                     _vm._s(
                                                       new Intl.NumberFormat([
                                                         "ban",
                                                         "id",
                                                       ]).format(asset.price)
-                                                    )
+                                                    ) +
+                                                    "\n                                                "
                                                 ),
                                               ]
                                             ),
@@ -43105,13 +43080,14 @@ var render = function () {
                                               { staticClass: "card-text my-0" },
                                               [
                                                 _vm._v(
-                                                  "Total : IDR " +
+                                                  "Total : IDR\n                                                    " +
                                                     _vm._s(
                                                       new Intl.NumberFormat([
                                                         "ban",
                                                         "id",
                                                       ]).format(asset.total)
-                                                    )
+                                                    ) +
+                                                    "\n                                                "
                                                 ),
                                               ]
                                             ),
@@ -43121,7 +43097,7 @@ var render = function () {
                                               { staticClass: "card-text" },
                                               [
                                                 _vm._v(
-                                                  "Tgl Pembelian : " +
+                                                  "Tgl Pembelian :\n                                                    " +
                                                     _vm._s(
                                                       _vm.format_date(
                                                         asset.buy_time
@@ -44455,7 +44431,7 @@ var render = function () {
                     _c("h4", { staticClass: "mb-1 mt-1" }, [
                       _c("span", { attrs: { "data-plugin": "counterup" } }, [
                         _vm._v(
-                          "IDR " +
+                          "IDR\n                                        " +
                             _vm._s(
                               new Intl.NumberFormat(["ban", "id"]).format(
                                 _vm.dashboard.totaluang
@@ -44522,7 +44498,7 @@ var render = function () {
                             { attrs: { "data-plugin": "counterup" } },
                             [
                               _vm._v(
-                                "IDR " +
+                                "IDR\n                                        " +
                                   _vm._s(
                                     new Intl.NumberFormat(["ban", "id"]).format(
                                       bank.balance
@@ -44643,6 +44619,7 @@ var staticRenderFns = [
           _c("div", { staticClass: "expand-trigger" }, [
             _c("div", { staticStyle: { width: "46px", height: "47px" } }),
           ]),
+          _vm._v(" "),
           _c("div", { staticClass: "contract-trigger" }),
         ]),
       ]
@@ -44662,6 +44639,7 @@ var staticRenderFns = [
           _c("div", { staticClass: "expand-trigger" }, [
             _c("div", { staticStyle: { width: "46px", height: "47px" } }),
           ]),
+          _vm._v(" "),
           _c("div", { staticClass: "contract-trigger" }),
         ]),
       ]
@@ -44675,6 +44653,7 @@ var staticRenderFns = [
       _c("div", { staticClass: "expand-trigger" }, [
         _c("div", { staticStyle: { width: "46px", height: "47px" } }),
       ]),
+      _vm._v(" "),
       _c("div", { staticClass: "contract-trigger" }),
     ])
   },
@@ -44685,7 +44664,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "container-fluid" }, [
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col-sm-6" }, [
-          _vm._v("\n                     © Kodig.id.\n                "),
+          _vm._v("\n                    © Kodig.id.\n                "),
         ]),
       ]),
     ])
@@ -47119,7 +47098,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("h4", { staticClass: "mb-0" }, [
-      _c("i", { staticClass: "uil-users-alt" }),
+      _c("i", { staticClass: "uil-table" }),
       _vm._v(" Import Excel"),
     ])
   },
@@ -48018,6 +47997,15 @@ var render = function () {
                                     {
                                       staticClass: "dropdown-item",
                                       attrs: { href: "/api/journal/export" },
+                                      on: {
+                                        click: function ($event) {
+                                          $event.preventDefault()
+                                          return _vm.exportExcel.apply(
+                                            null,
+                                            arguments
+                                          )
+                                        },
+                                      },
                                     },
                                     [
                                       _c("i", { staticClass: "bx bx-export" }),
@@ -48594,6 +48582,15 @@ var render = function () {
                                     {
                                       staticClass: "dropdown-item",
                                       attrs: { href: "/api/journal/export" },
+                                      on: {
+                                        click: function ($event) {
+                                          $event.preventDefault()
+                                          return _vm.exportExcel.apply(
+                                            null,
+                                            arguments
+                                          )
+                                        },
+                                      },
                                     },
                                     [
                                       _c("i", { staticClass: "bx bx-export" }),
