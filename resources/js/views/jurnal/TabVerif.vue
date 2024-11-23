@@ -105,12 +105,12 @@
                                                     </td>
                                                     <td>{{ journal.project_id }}</td>
                                                     <td>
-                                                        <div class="btn-group">
-                                                            <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu <i class="uil-angle-down"></i></button>
-                                                            <div class="dropdown-menu" style="">
-                                                                <router-link :to="{ name: 'jurnal.detail', params: { token: journal.token }, query: { page_phase: 'verif'} }" class="dropdown-item"><i class="uil-document-layout-left"></i> Detail</router-link>
-                                                            </div>
-                                                        </div>
+                                                        <!-- <div class="btn-group">
+                                                            <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu <i class="uil-angle-down"></i></button> -->
+                                                            <!-- <div class="dropdown-menu" style=""> -->
+                                                                <router-link :to="{ name: 'jurnal.detail', params: { token: journal.token }, query: { page_phase: 'verif'} }" class="dropdown-item border border-primary"><i class="uil-document-layout-left"></i> Detail</router-link>
+                                                            <!-- </div> -->
+                                                        <!-- </div> -->
                                                     </td>
                                                 </tr>
                                             </transition-group>

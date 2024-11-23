@@ -45,6 +45,7 @@
                                 <table class="table table-centered mb-0">
                                     <thead class="table-light">
                                         <tr>
+                                            <th></th>
                                             <th>Title</th>
                                             <th>Waktu</th>
                                             <th>Reimburse</th>
@@ -83,6 +84,7 @@
                                                     v-for="journal in journals"
                                                     :key="journal.token"
                                                     >
+                                                    <td><input type="checkbox" class="massive-check" :token="journal.token"></td>
                                                     <td>{{ journal.title }}</td>
                                                     <td>{{ format_date(journal.date) }}</td>
                                                     <td><span :class=" journal.is_reimburse ? 'bg-soft-success' : 'bg-soft-danger'" class="badge rounded-pill font-size-12" >
@@ -99,16 +101,16 @@
                                                         {{ journal.chart_account.name }}
                                                     </td>
                                                     <td>
-                                                        <div class="btn-group">
-                                                            <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu <i class="uil-angle-down"></i></button>
-                                                            <div class="dropdown-menu" style="">
-                                                                <router-link :to="{ name: 'jurnal.detail', params: { token: journal.token }}" class="dropdown-item"><i class="uil-document-layout-left"></i> Detail</router-link>
-                                                                <button @click="ajukanDialog(journal.token)" class="dropdown-item"><i class="uil-message"></i> Ajukan</button>
-                                                                <div class="dropdown-divider"></div>
-                                                                <router-link :to="{ name: 'jurnal.edit', params: { token: journal.token }}" class="dropdown-item"><i class="uil-edit-alt"></i> Edit</router-link>
-                                                                <delete-journal :endpoint="journal.token" :auth="auth" />
+                                                        <!-- <div class="btn-group">
+                                                            <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu <i class="uil-angle-down"></i></button> -->
+                                                            <div class="row" style="">
+                                                                <router-link :to="{ name: 'jurnal.detail', params: { token: journal.token }}" class="dropdown-item border border-primary" style="width: 50%; max-width: 100px;"><i class="uil-document-layout-left"></i> Detail</router-link>
+                                                                <button @click="ajukanDialog(journal.token)" class="dropdown-item border border-primary" style="width: 50%; max-width: 100px;"><i class="uil-message"></i> Ajukan</button>
+                                                                <!-- <div class="dropdown-divider"></div> -->
+                                                                <router-link :to="{ name: 'jurnal.edit', params: { token: journal.token }}" class="dropdown-item border border-primary" style="width: 50%; max-width: 100px;"><i class="uil-edit-alt"></i> Edit</router-link>
+                                                                <delete-journal :endpoint="journal.token" :auth="auth"/>
                                                             </div>
-                                                        </div>
+                                                        <!-- </div> -->
                                                     </td>
                                                 </tr>
                                             </transition-group>
@@ -117,6 +119,7 @@
                                 <filter-journal @filterjournal="filtering" :auth="auth"></filter-journal>
                             </div>
                             <!-- End table -->
+                            <a @click.prevent="massiveassign" class="btn  border border-primary"><i class="uil-message"></i> Ajukan Terpilih</a>
                             <pagination :page="page" :last_page="last_page"></pagination>
                         </div>
                     </div>
@@ -160,6 +163,56 @@ export default {
     },
 
     methods: {
+        async massiveassign() {
+            var checkbox = document.getElementsByClassName("massive-check");
+            var checked = []
+            let formdata = new FormData()
+            for (var i = 0; i < checkbox.length; i++) {
+                // console.log(checkbox.item(i).checked)
+                if (checkbox.item(i).checked) {
+                    // checked.push(checkbox.item(i).token)
+                    // console.log(checkbox.item(i).getAttribute('token'))
+                    formdata.append('id[]', checkbox.item(i).getAttribute('token'));
+                }
+            }
+            // console.log(checked)
+            try {
+                // let formdata = new FormData()
+                // formdata.append('id', checked)
+                // console.log(formdata)
+                console.log(formdata.getAll('id[]'));
+                let response = await axios.post('/api/validjournal/', formdata, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
+                if (response.status == 200) {
+                    this.$toasted.show(response.data.message, {
+                        type: 'success',
+                        duration: 3000,
+                        position: 'top-center',
+                    })
+                    this.getJurnal()
+                }
+                else {
+                    this.loading = false
+                    this.$toasted.show("Error mengajukan jurnal secara sekaligus", {
+                        type: 'error',
+                        duration: 3000,
+                        position: 'top-center',
+                    })
+                }
+
+            } catch(e) {
+                this.$toasted.show("Something went wrong : " + e, {
+                    type: 'error',
+                    duration: 3000,
+                    position: 'top-center',
+                })
+                this.theErrors = e.response.data;
+            }
+
+        },
         filtering(event) {
             this.params = event
         },
@@ -233,6 +286,7 @@ export default {
                 })
             if (response.status === 200) {
                 this.journals = response.data.data
+                // console.log(this.journals)
                 this.page = response.data.page
                 this.last_page = response.data.last_page
             }

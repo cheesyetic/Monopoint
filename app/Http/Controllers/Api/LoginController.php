@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -40,6 +41,7 @@ class LoginController extends Controller
                 ];
                 return response()->json($response, Response::HTTP_BAD_REQUEST);
             }
+            Auth::guard('user')->login($user);
             $token = $user->createToken('ApiToken')->plainTextToken;
 
             $response = [
@@ -84,6 +86,7 @@ class LoginController extends Controller
      */
     public function logout()
     {
+        Auth::guard('user')->logout();
         auth()->user()->tokens()->delete();
         $response = [
             'success'   => true,

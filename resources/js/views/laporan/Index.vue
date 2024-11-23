@@ -103,7 +103,7 @@
                                 <table class="table table-centered mb-0">
                                     <thead class="table-light">
                                         <tr>
-                                            <th>Tgl</th>
+                                            <th>Waktu</th>
                                             <th>Bank</th>
                                             <th>Transaksi</th>
                                             <th>Debit (IDR)</th>
@@ -209,6 +209,8 @@ export default {
                     params: {
                         keyword: this.filter_keyword,
                         bank: this.params.bank,
+                        project: this.params.project,
+                        chart: this.params.chart,
                         reimburse: this.params.reimburse,
                         sortbank: this.params.sortbank,
                         sortdate: this.params.sortdate,
@@ -235,7 +237,7 @@ export default {
         },
         format_time(value){
             if (value) {
-                return moment(String(value)).format('hh:mm - Do MMM YYYY')
+                return moment(String(value)).format('Do MMM YYYY - HH:mm')
             }
         },
         format_date(value){

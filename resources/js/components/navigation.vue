@@ -73,9 +73,9 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="topnav-jurnal" :class=" topnav.jurnal ? 'show' : '' ">
 
-                                <router-link :to="{name: 'jurnal'}" class="dropdown-item">Draft</router-link>
-                                <router-link :to="{name: 'jurnalproses'}" class="dropdown-item">Proses</router-link>
-                                <router-link :to="{name: 'jurnalverif'}" class="dropdown-item">Verif</router-link>
+                                <router-link :to="{name: 'jurnal'}" class="dropdown-item">Draft ({{ dashboard.jurnaldraft }})</router-link>
+                                <router-link :to="{name: 'jurnalproses'}" class="dropdown-item">Proses ({{ dashboard.jurnalprocess }})</router-link>
+                                <router-link :to="{name: 'jurnalverif'}" class="dropdown-item">Verif ({{ dashboard.jurnaldone }})</router-link>
 
                             </div>
                         </li>
@@ -107,6 +107,12 @@
                             </router-link>
                         </li>
 
+                        <li class="nav-item" v-if="auth.user.type == 0 || auth.user.type == 1">
+                            <router-link :to="{name: 'remuneration'}" class="nav-link">
+                                <i class="uil-book me-2"></i> Remuneration
+                            </router-link>
+                        </li>
+
                     </ul>
                 </div>
             </nav>
@@ -120,6 +126,7 @@ export default {
     props: ['auth'],
     data() {
         return {
+            dashboard: {},
             topnav_admin: true ,
             topnav: {
                 jurnal: false,
@@ -128,7 +135,24 @@ export default {
         }
     },
 
+    mounted() {
+        this.getDashboard()
+    },
+
     methods: {
+        async getDashboard() {
+                let response = await axios.get('/api/dashboard', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
+                if (response.status === 200) {
+                    this.dashboard = response.data
+                }
+                // console.log("this.dashboard")
+                // console.log(response.data)
+                this.loading = false
+            },
         logout() {
                 axios.get('/api/logout', {
                     headers: {

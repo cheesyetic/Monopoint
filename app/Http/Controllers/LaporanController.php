@@ -21,6 +21,16 @@ class LaporanController extends Controller
         $total_start_date = 0;
         $total_end_date = 0;
 
+        if($request->project){
+            $query->where('project_id','=',$request->project);
+        }
+
+        if($request->chart){
+            $query->whereHas('chartAccount', function($query) use($request){
+                $query->where('chart_account_id', $request->chart);
+            });
+        }
+
         if($request->keyword){
             $query->where('title','ILIKE','%'.$request->keyword.'%');
         }

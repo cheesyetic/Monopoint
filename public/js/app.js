@@ -2345,6 +2345,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2466,6 +2480,7 @@ __webpack_require__.r(__webpack_exports__);
   props: ['auth'],
   data: function data() {
     return {
+      dashboard: {},
       topnav_admin: true,
       topnav: {
         jurnal: false,
@@ -2473,9 +2488,47 @@ __webpack_require__.r(__webpack_exports__);
       }
     };
   },
+  mounted: function mounted() {
+    this.getDashboard();
+  },
   methods: {
-    logout: function logout() {
+    getDashboard: function getDashboard() {
       var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return axios.get('/api/dashboard', {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
+
+              case 2:
+                response = _context.sent;
+
+                if (response.status === 200) {
+                  _this.dashboard = response.data;
+                } // console.log("this.dashboard")
+                // console.log(response.data)
+
+
+                _this.loading = false;
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    logout: function logout() {
+      var _this2 = this;
 
       axios.get('/api/logout', {
         headers: {
@@ -2483,7 +2536,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function () {
         localStorage.removeItem("loggedIn");
-        return _this.$router.push({
+        return _this2.$router.push({
           name: 'login'
         });
       });
@@ -5443,6 +5496,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['auth'],
@@ -5850,6 +5927,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['auth'],
@@ -5865,6 +5943,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       projectOptions: [],
       projectLoading: true,
       periodOptions: [],
+      periodTimes: [],
       periodLoading: true,
       periodSelected: '',
       journalCreate: {
@@ -5882,7 +5961,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         user_id: ''
       },
       // successMessage: [],
-      theErrors: []
+      theErrors: [],
+      loadingCreate: false
     };
   },
   mounted: function mounted() {
@@ -5901,9 +5981,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.journalCreate[target] = e.id;
     },
     pictureUpload: function pictureUpload() {
-      // console.log("ganti gambar")
-      // this.journalCreate.filebukti = this.$refs.filebukti.files[0]
       this.journalCreate.filebukti = event.target.files[0];
+    },
+    updateDate: function updateDate() {
+      var selected = new Date(this.journalCreate.date);
+
+      for (var i = 0; i < this.periodTimes.length; i++) {
+        if (this.periodTimes[i].start <= selected && this.periodTimes[i].end >= selected) {
+          var label = this.periodOptions[i].label;
+          var id = this.periodOptions[i].id;
+          this.periodSelected = {
+            label: label,
+            id: id
+          };
+        }
+      }
     },
     getChart: function getChart() {
       var _this = this;
@@ -5958,7 +6050,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var response, i, label, id;
+        var response, i, label, id, start, end;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -5983,6 +6075,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     _this2.periodOptions.push({
                       label: label,
                       id: id
+                    });
+
+                    start = new Date(response.data.data[i].start);
+                    end = new Date(response.data.data[i].end);
+
+                    _this2.periodTimes.push({
+                      start: start,
+                      end: end
                     });
 
                     if (response.data.data[i].status == 1) {
@@ -6133,7 +6233,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 formdata.append('bank_account_id', _this5.journalCreate.bank_account_id);
                 formdata.append('project_id', _this5.journalCreate.project_id);
                 formdata.append('user_id', _this5.auth.user.id);
-                _context5.next = 16;
+                _this5.loadingCreate = true;
+                _context5.next = 17;
                 return axios.post('/api/journal', formdata, {
                   headers: {
                     'Content-Type': 'multipart/form-data',
@@ -6164,13 +6265,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   });
                 });
 
-              case 16:
-                _context5.next = 22;
+              case 17:
+                _context5.next = 24;
                 break;
 
-              case 18:
-                _context5.prev = 18;
+              case 19:
+                _context5.prev = 19;
                 _context5.t0 = _context5["catch"](0);
+                _this5.loadingCreate = false;
 
                 _this5.$toasted.show("Something went wrong : " + _context5.t0, {
                   type: 'error',
@@ -6180,12 +6282,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _this5.theErrors = _context5.t0.response.data;
 
-              case 22:
+              case 24:
               case "end":
                 return _context5.stop();
             }
           }
-        }, _callee5, null, [[0, 18]]);
+        }, _callee5, null, [[0, 19]]);
       }))();
     }
   }
@@ -6708,6 +6810,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       projectLoading: true,
       periodOptions: [],
       periodSelected: '',
+      periodTimes: [],
       periodLoading: true,
       journal: {},
       // successMessage: [],
@@ -6731,6 +6834,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       // console.log("ganti gambar")
       // this.journal.filebukti = this.$refs.filebukti.files[0]
       this.journal.filebukti = event.target.files[0];
+    },
+    updateDate: function updateDate() {
+      var selected = new Date(this.journal.date);
+
+      for (var i = 0; i < this.periodTimes.length; i++) {
+        if (this.periodTimes[i].start <= selected && this.periodTimes[i].end >= selected) {
+          var label = this.periodOptions[i].label;
+          var id = this.periodOptions[i].id;
+          this.periodSelected = {
+            label: label,
+            id: id
+          };
+        }
+      }
     },
     getChart: function getChart() {
       var _this = this;
@@ -6790,7 +6907,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var response, i, label, id;
+        var response, i, label, id, start, end;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -6813,6 +6930,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     _this2.periodOptions.push({
                       label: label,
                       id: id
+                    });
+
+                    start = new Date(response.data.data[i].start);
+                    end = new Date(response.data.data[i].end);
+
+                    _this2.periodTimes.push({
+                      start: start,
+                      end: end
                     });
 
                     if (id == _this2.journal.accounting_period_id) {
@@ -7823,6 +7948,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 
 
 
@@ -7853,6 +7981,85 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     this.getChart();
   },
   methods: {
+    massiveassign: function massiveassign() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var checkbox, checked, formdata, i, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                checkbox = document.getElementsByClassName("massive-check");
+                checked = [];
+                formdata = new FormData();
+
+                for (i = 0; i < checkbox.length; i++) {
+                  // console.log(checkbox.item(i).checked)
+                  if (checkbox.item(i).checked) {
+                    // checked.push(checkbox.item(i).token)
+                    // console.log(checkbox.item(i).getAttribute('token'))
+                    formdata.append('id[]', checkbox.item(i).getAttribute('token'));
+                  }
+                } // console.log(checked)
+
+
+                _context.prev = 4;
+                // let formdata = new FormData()
+                // formdata.append('id', checked)
+                // console.log(formdata)
+                console.log(formdata.getAll('id[]'));
+                _context.next = 8;
+                return axios.post('/api/validjournal/', formdata, {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
+
+              case 8:
+                response = _context.sent;
+
+                if (response.status == 200) {
+                  _this.$toasted.show(response.data.message, {
+                    type: 'success',
+                    duration: 3000,
+                    position: 'top-center'
+                  });
+
+                  _this.getJurnal();
+                } else {
+                  _this.loading = false;
+
+                  _this.$toasted.show("Error mengajukan jurnal secara sekaligus", {
+                    type: 'error',
+                    duration: 3000,
+                    position: 'top-center'
+                  });
+                }
+
+                _context.next = 16;
+                break;
+
+              case 12:
+                _context.prev = 12;
+                _context.t0 = _context["catch"](4);
+
+                _this.$toasted.show("Something went wrong : " + _context.t0, {
+                  type: 'error',
+                  duration: 3000,
+                  position: 'top-center'
+                });
+
+                _this.theErrors = _context.t0.response.data;
+
+              case 16:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[4, 12]]);
+      }))();
+    },
     filtering: function filtering(event) {
       this.params = event;
     },
@@ -7860,38 +8067,38 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.filter_chartaccount = e.id;
     },
     getChart: function getChart() {
-      var _this = this;
+      var _this2 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
         var response, i, label, id;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
-                _context.next = 2;
+                _context2.next = 2;
                 return axios.get('/api/chartaccount', {
                   headers: {
-                    'Authorization': 'Bearer ' + _this.auth.token
+                    'Authorization': 'Bearer ' + _this2.auth.token
                   }
                 });
 
               case 2:
-                response = _context.sent;
+                response = _context2.sent;
 
                 if (response.status === 200) {
                   for (i = 0; i < response.data.data.length; i++) {
                     label = response.data.data[i].name;
                     id = String(response.data.data[i].id);
 
-                    _this.chartOptions.push({
+                    _this2.chartOptions.push({
                       label: label,
                       id: id
                     });
                   }
 
-                  _this.chartLoading = false;
+                  _this2.chartLoading = false;
                 } else {
-                  _this.$toasted.show("Failed to load Chart Account", {
+                  _this2.$toasted.show("Failed to load Chart Account", {
                     type: 'error',
                     duration: 3000,
                     position: 'top-center'
@@ -7900,24 +8107,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 4:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee);
+        }, _callee2);
       }))();
     },
     exportExcel: function exportExcel() {
-      var _this2 = this;
+      var _this3 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
-                _context2.prev = 0;
-                _this2.loadingExcel = true;
-                _context2.next = 4;
+                _context3.prev = 0;
+                _this3.loadingExcel = true;
+                _context3.next = 4;
                 return axios({
                   url: '/api/journal/export',
                   //your url
@@ -7925,7 +8132,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   responseType: 'blob',
                   // important
                   headers: {
-                    'Authorization': 'Bearer ' + _this2.auth.token
+                    'Authorization': 'Bearer ' + _this3.auth.token
                   }
                 }).then(function (response) {
                   var url = window.URL.createObjectURL(new Blob([response.data]));
@@ -7939,17 +8146,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 4:
-                response = _context2.sent;
-                _this2.loadingExcel = false;
-                _context2.next = 12;
+                response = _context3.sent;
+                _this3.loadingExcel = false;
+                _context3.next = 12;
                 break;
 
               case 8:
-                _context2.prev = 8;
-                _context2.t0 = _context2["catch"](0);
-                _this2.loadingExcel = false;
+                _context3.prev = 8;
+                _context3.t0 = _context3["catch"](0);
+                _this3.loadingExcel = false;
 
-                _this2.$toasted.show("Failed to export excel", {
+                _this3.$toasted.show("Failed to export excel", {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
@@ -7957,55 +8164,56 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 12:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, null, [[0, 8]]);
+        }, _callee3, null, [[0, 8]]);
       }))();
     },
     getJurnal: function getJurnal() {
-      var _this3 = this;
+      var _this4 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                _context3.next = 2;
+                _context4.next = 2;
                 return axios.get('/api/journal', {
                   params: {
                     category: 1,
-                    keyword: _this3.filter_keyword,
-                    chart: _this3.params.chart,
-                    reimburse: _this3.params.reimburse,
-                    sortname: _this3.params.sortname,
-                    sortdate: _this3.params.sortdate,
-                    date: _this3.params.month,
-                    page: _this3.$route.query.page
+                    keyword: _this4.filter_keyword,
+                    chart: _this4.params.chart,
+                    reimburse: _this4.params.reimburse,
+                    sortname: _this4.params.sortname,
+                    sortdate: _this4.params.sortdate,
+                    date: _this4.params.month,
+                    page: _this4.$route.query.page
                   },
                   headers: {
-                    'Authorization': 'Bearer ' + _this3.auth.token
+                    'Authorization': 'Bearer ' + _this4.auth.token
                   }
                 });
 
               case 2:
-                response = _context3.sent;
+                response = _context4.sent;
 
                 if (response.status === 200) {
-                  _this3.journals = response.data.data;
-                  _this3.page = response.data.page;
-                  _this3.last_page = response.data.last_page;
+                  _this4.journals = response.data.data; // console.log(this.journals)
+
+                  _this4.page = response.data.page;
+                  _this4.last_page = response.data.last_page;
                 }
 
-                _this3.loading = false;
+                _this4.loading = false;
 
               case 5:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3);
+        }, _callee4);
       }))();
     },
     format_date: function format_date(value) {
@@ -8014,7 +8222,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
     },
     ajukanDialog: function ajukanDialog(token) {
-      var _this4 = this;
+      var _this5 = this;
 
       this.$swal.fire({
         title: 'Yakin ingin mengajukan jurnal?',
@@ -8022,59 +8230,59 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         confirmButtonText: 'Ya'
       }).then(function (result) {
         if (result.isConfirmed) {
-          _this4.ajukan(token);
+          _this5.ajukan(token);
         }
       });
     },
     ajukan: function ajukan(token) {
-      var _this5 = this;
+      var _this6 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
         var formdata, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
-                _context4.prev = 0;
-                _this5.loading = true;
+                _context5.prev = 0;
+                _this6.loading = true;
                 formdata = new FormData();
-                _context4.next = 5;
+                _context5.next = 5;
                 return axios.post('/api/validjournal/' + token, formdata, {
                   headers: {
-                    'Authorization': 'Bearer ' + _this5.auth.token
+                    'Authorization': 'Bearer ' + _this6.auth.token
                   }
                 });
 
               case 5:
-                response = _context4.sent;
+                response = _context5.sent;
 
                 if (response.status == 200) {
-                  _this5.$toasted.show(response.data.message, {
+                  _this6.$toasted.show(response.data.message, {
                     type: 'success',
                     duration: 3000,
                     position: 'top-center'
                   });
 
-                  _this5.getJurnal();
+                  _this6.getJurnal();
                 } else {
-                  _this5.loading = false;
+                  _this6.loading = false;
 
-                  _this5.$toasted.show("Error mengajukan jurnal", {
+                  _this6.$toasted.show("Error mengajukan jurnal", {
                     type: 'error',
                     duration: 3000,
                     position: 'top-center'
                   });
                 }
 
-                _context4.next = 13;
+                _context5.next = 13;
                 break;
 
               case 9:
-                _context4.prev = 9;
-                _context4.t0 = _context4["catch"](0);
-                _this5.loading = false;
+                _context5.prev = 9;
+                _context5.t0 = _context5["catch"](0);
+                _this6.loading = false;
 
-                _this5.$toasted.show("Something went wrong : " + _context4.t0.message, {
+                _this6.$toasted.show("Something went wrong : " + _context5.t0.message, {
                   type: 'error',
                   duration: 3000,
                   position: 'top-center'
@@ -8082,10 +8290,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 13:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
           }
-        }, _callee4, null, [[0, 9]]);
+        }, _callee5, null, [[0, 9]]);
       }))();
     }
   }
@@ -8116,7 +8324,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-//
 //
 //
 //
@@ -8915,6 +9122,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['auth'],
@@ -8964,7 +9185,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context.sent;
 
                 if (response.status === 200) {
-                  _this.journal = response.data.data;
+                  _this.journal = response.data.data; // console.log(this.journal)
+
                   _this.loading = false;
                 } else {
                   _this.$toasted.show("Something went wrong, please try again later", {
@@ -9933,6 +10155,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['auth'],
   data: function data() {
@@ -9951,13 +10181,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }), _defineProperty(_ref, "periodSelected", {
       label: 'Semua',
       id: ''
+    }), _defineProperty(_ref, "projectSelected", {
+      label: 'Semua',
+      id: ''
+    }), _defineProperty(_ref, "akunSelected", {
+      label: 'Semua',
+      id: ''
     }), _defineProperty(_ref, "bankOptions", [{
       label: 'Semua',
       id: ''
     }]), _defineProperty(_ref, "periodOptions", [{
       label: 'Semua',
       id: ''
-    }]), _defineProperty(_ref, "bankLoading", true), _defineProperty(_ref, "periodLoading", true), _defineProperty(_ref, "params", {
+    }]), _defineProperty(_ref, "projectOptions", [{
+      label: 'Semua',
+      id: ''
+    }]), _defineProperty(_ref, "akunOptions", [{
+      label: 'Semua',
+      id: ''
+    }]), _defineProperty(_ref, "bankLoading", true), _defineProperty(_ref, "periodLoading", true), _defineProperty(_ref, "projectLoading", true), _defineProperty(_ref, "akunLoading", true), _defineProperty(_ref, "params", {
       bank: '',
       start_date: '',
       end_date: '',
@@ -9969,6 +10211,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
     this.getPeriod();
     this.getBank();
+    this.getProject();
+    this.getAkun();
   },
   methods: {
     getPeriod: function getPeriod() {
@@ -10063,6 +10307,100 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             }
           }
         }, _callee2);
+      }))();
+    },
+    getProject: function getProject() {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        var response, i, label, id;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return axios.get('/api/project', {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this3.auth.token
+                  }
+                });
+
+              case 2:
+                response = _context3.sent;
+
+                if (response.status === 200) {
+                  for (i = 0; i < response.data.data.length; i++) {
+                    label = response.data.data[i].name;
+                    id = String(response.data.data[i].id);
+
+                    _this3.projectOptions.push({
+                      label: label,
+                      id: id
+                    });
+                  }
+
+                  _this3.projectLoading = false;
+                } else {
+                  _this3.$toasted.show("Failed to load project", {
+                    type: 'error',
+                    duration: 3000,
+                    position: 'top-center'
+                  });
+                }
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    },
+    getAkun: function getAkun() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+        var response, i, label, id;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return axios.get('/api/chartaccount', {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this4.auth.token
+                  }
+                });
+
+              case 2:
+                response = _context4.sent;
+
+                if (response.status === 200) {
+                  for (i = 0; i < response.data.data.length; i++) {
+                    label = response.data.data[i].name;
+                    id = String(response.data.data[i].id);
+
+                    _this4.akunOptions.push({
+                      label: label,
+                      id: id
+                    });
+                  }
+
+                  _this4.akunLoading = false;
+                } else {
+                  _this4.$toasted.show("Failed to load akun", {
+                    type: 'error',
+                    duration: 3000,
+                    position: 'top-center'
+                  });
+                }
+
+              case 4:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
       }))();
     },
     updateFilter: function updateFilter(event, target) {
@@ -10314,6 +10652,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   params: {
                     keyword: _this.filter_keyword,
                     bank: _this.params.bank,
+                    project: _this.params.project,
+                    chart: _this.params.chart,
                     reimburse: _this.params.reimburse,
                     sortbank: _this.params.sortbank,
                     sortdate: _this.params.sortdate,
@@ -10353,7 +10693,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     format_time: function format_time(value) {
       if (value) {
-        return moment(String(value)).format('hh:mm - Do MMM YYYY');
+        return moment(String(value)).format('Do MMM YYYY - HH:mm');
       }
     },
     format_date: function format_date(value) {
@@ -12394,6 +12734,717 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/remuneration/Index.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/remuneration/Index.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_loading__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/loading */ "./resources/js/components/loading.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['auth'],
+  components: {
+    Loading: _components_loading__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data: function data() {
+    return {
+      projects: {},
+      loading: true,
+      key: 0
+    };
+  },
+  mounted: function mounted() {
+    if (!this.auth.loggedIn) {
+      return this.$router.push({
+        name: 'login'
+      });
+    }
+
+    this.getProject();
+  },
+  created: function created() {
+    this.getProject();
+  },
+  methods: {
+    getProject: function getProject() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return axios.get('/api/project', {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
+
+              case 2:
+                response = _context.sent;
+
+                if (response.status === 200) {
+                  _this.projects = response.data.data;
+                } // console.log(response.data.data)
+                // console.log("sukses get user")
+
+
+                _this.loading = false;
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    format_date: function format_date(value) {
+      if (value) {
+        return moment(String(value)).format('hh:mm, Do MMMM YYYY');
+      }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/remuneration/Show.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/remuneration/Show.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_loading__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/loading */ "./resources/js/components/loading.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['auth'],
+  components: {
+    Loading: _components_loading__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data: function data() {
+    return {
+      remuneration: {},
+      operationalRemuneration: 0,
+      ownerRemuneration: 0,
+      users: [],
+      selectedUser: [],
+      loading: true,
+      userLoading: true,
+      key: 0
+    };
+  },
+  computed: {
+    kasRemuneration: {
+      get: function get() {
+        return parseFloat(this.ownerRemuneration) + parseFloat(this.operationalRemuneration);
+      },
+      set: function set(newValue) {
+        this.ownerRemuneration = newValue;
+        this.operationalRemuneration = newValue;
+      }
+    },
+    cleanRemuneration: {
+      get: function get() {
+        return this.remuneration.nilai_bersih - this.calcRemuneration(this.kasRemuneration) + this.remuneration.hpp;
+      }
+    }
+  },
+  mounted: function mounted() {
+    if (!this.auth.loggedIn) {
+      return this.$router.push({
+        name: 'login'
+      });
+    }
+
+    this.getProject();
+    this.getUser();
+  },
+  methods: {
+    getProject: function getProject() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return axios.get('/api/pembagian/' + _this.$route.params.token, {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.auth.token
+                  }
+                });
+
+              case 2:
+                response = _context.sent;
+
+                if (response.status === 200) {
+                  _this.remuneration = response.data;
+                  _this.operationalRemuneration = _this.remuneration.kas;
+                  _this.ownerRemuneration = _this.remuneration.pemilik;
+                } // console.log(response.data.data)
+                // console.log("sukses get user")
+
+
+                _this.loading = false;
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    getUser: function getUser() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var response, type, i, label, id, value, j, _label, _id, _value;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios.get('/api/account', {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this2.auth.token
+                  }
+                });
+
+              case 2:
+                response = _context2.sent;
+                type = "";
+
+                if (!(response.status === 200)) {
+                  _context2.next = 25;
+                  break;
+                }
+
+                // this.users = response.data.data
+                for (i = 0; i < response.data.data.length; i++) {
+                  label = response.data.data[i].name;
+                  id = String(response.data.data[i].id);
+                  value = '';
+
+                  _this2.users.push({
+                    label: label,
+                    id: id,
+                    value: value
+                  });
+                }
+
+                _this2.selectedUser = [];
+                i = 0;
+
+              case 8:
+                if (!(i < _this2.remuneration.arrayusers.length)) {
+                  _context2.next = 23;
+                  break;
+                }
+
+                j = 0;
+
+              case 10:
+                if (!(j < _this2.users.length)) {
+                  _context2.next = 20;
+                  break;
+                }
+
+                if (!(_this2.users[j].id == _this2.remuneration.arrayusers[i])) {
+                  _context2.next = 17;
+                  break;
+                }
+
+                _label = _this2.users[i].label;
+                _id = _this2.users[i].id;
+                _value = _this2.remuneration.percents[i];
+
+                _this2.selectedUser.push({
+                  label: _label,
+                  id: _id,
+                  value: _value
+                });
+
+                return _context2.abrupt("break", 20);
+
+              case 17:
+                j++;
+                _context2.next = 10;
+                break;
+
+              case 20:
+                i++;
+                _context2.next = 8;
+                break;
+
+              case 23:
+                console.log("this.selectedUser");
+                console.log(_this2.selectedUser);
+
+              case 25:
+                // console.log(response.data.data)
+                // console.log("sukses get user")
+                _this2.userLoading = false;
+
+              case 26:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    calcRemuneration: function calcRemuneration(value) {
+      return value / 100 * this.remuneration.nilai_asli;
+    },
+    store: function store() {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        var formdata, i;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.prev = 0;
+                // console.log(this.projectCreate)
+                formdata = new FormData();
+                formdata.append('project_id', _this3.$route.params.token);
+                formdata.append('kas', _this3.operationalRemuneration);
+                formdata.append('pemilik', _this3.ownerRemuneration);
+
+                for (i = 0; i < _this3.selectedUser.length; i++) {
+                  formdata.append('user_id[]', _this3.selectedUser[i].id);
+                  formdata.append('percent[]', _this3.selectedUser[i].value);
+                }
+
+                console.log(formdata);
+                _context3.next = 9;
+                return axios.post('/api/pembagian', formdata, {
+                  headers: {
+                    'Authorization': 'Bearer ' + _this3.auth.token
+                  }
+                }).then(function (response) {
+                  _this3.theErrors = []; // this.$router.go()
+
+                  // this.$router.go()
+                  _this3.$toasted.show("Sukses menyimpan", {
+                    type: 'success',
+                    duration: 3000,
+                    position: 'top-center'
+                  });
+                });
+
+              case 9:
+                _context3.next = 15;
+                break;
+
+              case 11:
+                _context3.prev = 11;
+                _context3.t0 = _context3["catch"](0);
+
+                _this3.$toasted.show("Something went wrong : " + _context3.t0, {
+                  type: 'error',
+                  duration: 3000,
+                  position: 'top-center'
+                }); // console.log(e)
+
+
+                _this3.theErrors = _context3.t0.response.data;
+
+              case 15:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, null, [[0, 11]]);
+      }))();
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -12502,23 +13553,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _views_jurnal_TabProses__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../views/jurnal/TabProses */ "./resources/js/views/jurnal/TabProses.vue");
 /* harmony import */ var _views_jurnal_TabVerif__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../views/jurnal/TabVerif */ "./resources/js/views/jurnal/TabVerif.vue");
 /* harmony import */ var _views_laporan_Index__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../views/laporan/Index */ "./resources/js/views/laporan/Index.vue");
-/* harmony import */ var _views_karyawan_Index__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../views/karyawan/Index */ "./resources/js/views/karyawan/Index.vue");
-/* harmony import */ var _views_karyawan_Edit__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../views/karyawan/Edit */ "./resources/js/views/karyawan/Edit.vue");
-/* harmony import */ var _views_karyawan_Create__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../views/karyawan/Create */ "./resources/js/views/karyawan/Create.vue");
-/* harmony import */ var _views_rekening_Index__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../views/rekening/Index */ "./resources/js/views/rekening/Index.vue");
-/* harmony import */ var _views_rekening_Edit__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../views/rekening/Edit */ "./resources/js/views/rekening/Edit.vue");
-/* harmony import */ var _views_rekening_Create__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../views/rekening/Create */ "./resources/js/views/rekening/Create.vue");
-/* harmony import */ var _views_periode_Index__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../views/periode/Index */ "./resources/js/views/periode/Index.vue");
-/* harmony import */ var _views_periode_Edit__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../views/periode/Edit */ "./resources/js/views/periode/Edit.vue");
-/* harmony import */ var _views_project_Index__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../views/project/Index */ "./resources/js/views/project/Index.vue");
-/* harmony import */ var _views_project_Edit__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../views/project/Edit */ "./resources/js/views/project/Edit.vue");
-/* harmony import */ var _views_project_Create__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../views/project/Create */ "./resources/js/views/project/Create.vue");
-/* harmony import */ var _views_asset_Index__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../views/asset/Index */ "./resources/js/views/asset/Index.vue");
-/* harmony import */ var _views_asset_Edit__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../views/asset/Edit */ "./resources/js/views/asset/Edit.vue");
-/* harmony import */ var _views_asset_Create__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ../views/asset/Create */ "./resources/js/views/asset/Create.vue");
-/* harmony import */ var _views_chart_Index__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ../views/chart/Index */ "./resources/js/views/chart/Index.vue");
-/* harmony import */ var _views_chart_Edit__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ../views/chart/Edit */ "./resources/js/views/chart/Edit.vue");
-/* harmony import */ var _views_chart_Create__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ../views/chart/Create */ "./resources/js/views/chart/Create.vue");
+/* harmony import */ var _views_remuneration_Index__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../views/remuneration/Index */ "./resources/js/views/remuneration/Index.vue");
+/* harmony import */ var _views_remuneration_Show__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../views/remuneration/Show */ "./resources/js/views/remuneration/Show.vue");
+/* harmony import */ var _views_karyawan_Index__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../views/karyawan/Index */ "./resources/js/views/karyawan/Index.vue");
+/* harmony import */ var _views_karyawan_Edit__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../views/karyawan/Edit */ "./resources/js/views/karyawan/Edit.vue");
+/* harmony import */ var _views_karyawan_Create__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../views/karyawan/Create */ "./resources/js/views/karyawan/Create.vue");
+/* harmony import */ var _views_rekening_Index__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../views/rekening/Index */ "./resources/js/views/rekening/Index.vue");
+/* harmony import */ var _views_rekening_Edit__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../views/rekening/Edit */ "./resources/js/views/rekening/Edit.vue");
+/* harmony import */ var _views_rekening_Create__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../views/rekening/Create */ "./resources/js/views/rekening/Create.vue");
+/* harmony import */ var _views_periode_Index__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../views/periode/Index */ "./resources/js/views/periode/Index.vue");
+/* harmony import */ var _views_periode_Edit__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../views/periode/Edit */ "./resources/js/views/periode/Edit.vue");
+/* harmony import */ var _views_project_Index__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../views/project/Index */ "./resources/js/views/project/Index.vue");
+/* harmony import */ var _views_project_Edit__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ../views/project/Edit */ "./resources/js/views/project/Edit.vue");
+/* harmony import */ var _views_project_Create__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ../views/project/Create */ "./resources/js/views/project/Create.vue");
+/* harmony import */ var _views_asset_Index__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ../views/asset/Index */ "./resources/js/views/asset/Index.vue");
+/* harmony import */ var _views_asset_Edit__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ../views/asset/Edit */ "./resources/js/views/asset/Edit.vue");
+/* harmony import */ var _views_asset_Create__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ../views/asset/Create */ "./resources/js/views/asset/Create.vue");
+/* harmony import */ var _views_chart_Index__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ../views/chart/Index */ "./resources/js/views/chart/Index.vue");
+/* harmony import */ var _views_chart_Edit__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ../views/chart/Edit */ "./resources/js/views/chart/Edit.vue");
+/* harmony import */ var _views_chart_Create__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ../views/chart/Create */ "./resources/js/views/chart/Create.vue");
+
+
 
 
 
@@ -12601,6 +13656,15 @@ __webpack_require__.r(__webpack_exports__);
       path: '/laporan',
       name: 'laporan',
       component: _views_laporan_Index__WEBPACK_IMPORTED_MODULE_17__["default"]
+    }, // REMUNERASI
+    {
+      path: '/remuneration',
+      name: 'remuneration',
+      component: _views_remuneration_Index__WEBPACK_IMPORTED_MODULE_18__["default"]
+    }, {
+      path: '/remuneration/:token',
+      name: 'remuneration.show',
+      component: _views_remuneration_Show__WEBPACK_IMPORTED_MODULE_19__["default"]
     }, // JURNAL
     {
       path: '/jurnal-draft',
@@ -12637,76 +13701,76 @@ __webpack_require__.r(__webpack_exports__);
     }, {
       path: '/admin/karyawan',
       name: 'karyawan',
-      component: _views_karyawan_Index__WEBPACK_IMPORTED_MODULE_18__["default"]
+      component: _views_karyawan_Index__WEBPACK_IMPORTED_MODULE_20__["default"]
     }, {
       path: '/admin/karyawan/edit/:token',
       name: 'karyawan.edit',
-      component: _views_karyawan_Edit__WEBPACK_IMPORTED_MODULE_19__["default"]
+      component: _views_karyawan_Edit__WEBPACK_IMPORTED_MODULE_21__["default"]
     }, {
       path: '/admin/karyawan/create',
       name: 'karyawan.create',
-      component: _views_karyawan_Create__WEBPACK_IMPORTED_MODULE_20__["default"]
+      component: _views_karyawan_Create__WEBPACK_IMPORTED_MODULE_22__["default"]
     }, // REKENING BANK
     {
       path: '/admin/rekening',
       name: 'rekening',
-      component: _views_rekening_Index__WEBPACK_IMPORTED_MODULE_21__["default"]
+      component: _views_rekening_Index__WEBPACK_IMPORTED_MODULE_23__["default"]
     }, {
       path: '/admin/rekening/edit/:token',
       name: 'rekening.edit',
-      component: _views_rekening_Edit__WEBPACK_IMPORTED_MODULE_22__["default"]
+      component: _views_rekening_Edit__WEBPACK_IMPORTED_MODULE_24__["default"]
     }, {
       path: '/admin/rekening/create',
       name: 'rekening.create',
-      component: _views_rekening_Create__WEBPACK_IMPORTED_MODULE_23__["default"]
+      component: _views_rekening_Create__WEBPACK_IMPORTED_MODULE_25__["default"]
     }, // PERIODE
     {
       path: '/admin/periode',
       name: 'periode',
-      component: _views_periode_Index__WEBPACK_IMPORTED_MODULE_24__["default"]
+      component: _views_periode_Index__WEBPACK_IMPORTED_MODULE_26__["default"]
     }, {
       path: '/admin/periode/:token',
       name: 'periode.edit',
-      component: _views_periode_Edit__WEBPACK_IMPORTED_MODULE_25__["default"]
+      component: _views_periode_Edit__WEBPACK_IMPORTED_MODULE_27__["default"]
     }, // PROJECT
     {
       path: '/admin/project',
       name: 'project',
-      component: _views_project_Index__WEBPACK_IMPORTED_MODULE_26__["default"]
+      component: _views_project_Index__WEBPACK_IMPORTED_MODULE_28__["default"]
     }, {
       path: '/admin/project/edit/:token',
       name: 'project.edit',
-      component: _views_project_Edit__WEBPACK_IMPORTED_MODULE_27__["default"]
+      component: _views_project_Edit__WEBPACK_IMPORTED_MODULE_29__["default"]
     }, {
       path: '/admin/project/create',
       name: 'project.create',
-      component: _views_project_Create__WEBPACK_IMPORTED_MODULE_28__["default"]
+      component: _views_project_Create__WEBPACK_IMPORTED_MODULE_30__["default"]
     }, // ASSET
     {
       path: '/admin/asset',
       name: 'asset',
-      component: _views_asset_Index__WEBPACK_IMPORTED_MODULE_29__["default"]
+      component: _views_asset_Index__WEBPACK_IMPORTED_MODULE_31__["default"]
     }, {
       path: '/admin/asset/edit/:token',
       name: 'asset.edit',
-      component: _views_asset_Edit__WEBPACK_IMPORTED_MODULE_30__["default"]
+      component: _views_asset_Edit__WEBPACK_IMPORTED_MODULE_32__["default"]
     }, {
       path: '/admin/asset/create',
       name: 'asset.create',
-      component: _views_asset_Create__WEBPACK_IMPORTED_MODULE_31__["default"]
+      component: _views_asset_Create__WEBPACK_IMPORTED_MODULE_33__["default"]
     }, // CHART ACCOUNT
     {
       path: '/admin/chart',
       name: 'chart',
-      component: _views_chart_Index__WEBPACK_IMPORTED_MODULE_32__["default"]
+      component: _views_chart_Index__WEBPACK_IMPORTED_MODULE_34__["default"]
     }, {
       path: '/admin/chart/edit/:token',
       name: 'chart.edit',
-      component: _views_chart_Edit__WEBPACK_IMPORTED_MODULE_33__["default"]
+      component: _views_chart_Edit__WEBPACK_IMPORTED_MODULE_35__["default"]
     }, {
       path: '/admin/chart/create',
       name: 'chart.create',
-      component: _views_chart_Create__WEBPACK_IMPORTED_MODULE_34__["default"]
+      component: _views_chart_Create__WEBPACK_IMPORTED_MODULE_36__["default"]
     }]
   }]
 });
@@ -12802,7 +13866,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.wrapper{\n  display: inline-flex;\n  align-items: center;\n  justify-content: space-evenly;\n  border-radius: 5px;\n}\n.option{\n    min-height: 39px;\n    min-width: 100px;\n    padding: .2rem 1rem;\n    background: #fff;\n    height: 100%;\n    width: auto;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    gap: .5rem;\n    margin: 0 8px;\n    border-radius: 5px;\n    cursor: pointer;\n    border: 2px solid lightgrey;\n    transition: all 0.3s ease;\n}\n.option:first-child {\n  margin-left: 0;\n}\n.option:last-child {\n  margin-right: 0;\n}\n.option .dot{\n  height: 16px;\n  width: 16px;\n  background: #d9d9d9;\n  border-radius: 50%;\n  position: relative;\n}\n.option .dot::before{\n  position: absolute;\n  content: \"\";\n  top: 4px;\n  left: 4px;\n  width: 8px;\n  height: 8px;\n  background: #5B73E8;\n  border-radius: 50%;\n  opacity: 0;\n  transform: scale(1.5);\n  transition: all 0.3s ease;\n}\ninput[type=\"radio\"]{\n  display: none;\n}\n#option-1:checked:checked ~ .option-1,\n#option-2:checked:checked ~ .option-2,\n#option-3:checked:checked ~ .option-3{\n  border-color: #5B73E8;\n  background: #5B73E8;\n}\n#option-1:checked:checked ~ .option-1 .dot,\n#option-2:checked:checked ~ .option-2 .dot,\n#option-3:checked:checked ~ .option-3 .dot{\n  background: #fff;\n}\n#option-1:checked:checked ~ .option-1 .dot::before,\n#option-2:checked:checked ~ .option-2 .dot::before,\n#option-3:checked:checked ~ .option-3 .dot::before{\n  opacity: 1;\n  transform: scale(1);\n}\n.option span{\n  font-size: 16px;\n  color: #808080;\n}\n#option-1:checked:checked ~ .option-1 span,\n#option-2:checked:checked ~ .option-2 span,\n#option-3:checked:checked ~ .option-3 span{\n  color: #fff;\n}\n#name-option-1:checked:checked ~ .option-1,\n#name-option-2:checked:checked ~ .option-2,\n#name-option-3:checked:checked ~ .option-3{\n  border-color: #5B73E8;\n  background: #5B73E8;\n}\n#name-option-1:checked:checked ~ .option-1 .dot,\n#name-option-2:checked:checked ~ .option-2 .dot,\n#name-option-3:checked:checked ~ .option-3 .dot{\n  background: #fff;\n}\n#name-option-1:checked:checked ~ .option-1 .dot::before,\n#name-option-2:checked:checked ~ .option-2 .dot::before,\n#name-option-3:checked:checked ~ .option-3 .dot::before{\n  opacity: 1;\n  transform: scale(1);\n}\n.option span{\n  font-size: 16px;\n  color: #808080;\n}\n#name-option-1:checked:checked ~ .option-1 span,\n#name-option-2:checked:checked ~ .option-2 span,\n#name-option-3:checked:checked ~ .option-3 span{\n  color: #fff;\n}\n#date-option-1:checked:checked ~ .option-1,\n#date-option-2:checked:checked ~ .option-2,\n#date-option-3:checked:checked ~ .option-3{\n  border-color: #5B73E8;\n  background: #5B73E8;\n}\n#date-option-1:checked:checked ~ .option-1 .dot,\n#date-option-2:checked:checked ~ .option-2 .dot,\n#date-option-3:checked:checked ~ .option-3 .dot{\n  background: #fff;\n}\n#date-option-1:checked:checked ~ .option-1 .dot::before,\n#date-option-2:checked:checked ~ .option-2 .dot::before,\n#date-option-3:checked:checked ~ .option-3 .dot::before{\n  opacity: 1;\n  transform: scale(1);\n}\n.option span{\n  font-size: 16px;\n  color: #808080;\n}\n#date-option-1:checked:checked ~ .option-1 span,\n#date-option-2:checked:checked ~ .option-2 span,\n#date-option-3:checked:checked ~ .option-3 span{\n  color: #fff;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.wrapper{\r\n  display: inline-flex;\r\n  align-items: center;\r\n  justify-content: space-evenly;\r\n  border-radius: 5px;\n}\n.option{\r\n    min-height: 39px;\r\n    min-width: 100px;\r\n    padding: .2rem 1rem;\r\n    background: #fff;\r\n    height: 100%;\r\n    width: auto;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    gap: .5rem;\r\n    margin: 0 8px;\r\n    border-radius: 5px;\r\n    cursor: pointer;\r\n    border: 2px solid lightgrey;\r\n    transition: all 0.3s ease;\n}\n.option:first-child {\r\n  margin-left: 0;\n}\n.option:last-child {\r\n  margin-right: 0;\n}\n.option .dot{\r\n  height: 16px;\r\n  width: 16px;\r\n  background: #d9d9d9;\r\n  border-radius: 50%;\r\n  position: relative;\n}\n.option .dot::before{\r\n  position: absolute;\r\n  content: \"\";\r\n  top: 4px;\r\n  left: 4px;\r\n  width: 8px;\r\n  height: 8px;\r\n  background: #5B73E8;\r\n  border-radius: 50%;\r\n  opacity: 0;\r\n  transform: scale(1.5);\r\n  transition: all 0.3s ease;\n}\ninput[type=\"radio\"]{\r\n  display: none;\n}\n#option-1:checked:checked ~ .option-1,\r\n#option-2:checked:checked ~ .option-2,\r\n#option-3:checked:checked ~ .option-3{\r\n  border-color: #5B73E8;\r\n  background: #5B73E8;\n}\n#option-1:checked:checked ~ .option-1 .dot,\r\n#option-2:checked:checked ~ .option-2 .dot,\r\n#option-3:checked:checked ~ .option-3 .dot{\r\n  background: #fff;\n}\n#option-1:checked:checked ~ .option-1 .dot::before,\r\n#option-2:checked:checked ~ .option-2 .dot::before,\r\n#option-3:checked:checked ~ .option-3 .dot::before{\r\n  opacity: 1;\r\n  transform: scale(1);\n}\n.option span{\r\n  font-size: 16px;\r\n  color: #808080;\n}\n#option-1:checked:checked ~ .option-1 span,\r\n#option-2:checked:checked ~ .option-2 span,\r\n#option-3:checked:checked ~ .option-3 span{\r\n  color: #fff;\n}\n#name-option-1:checked:checked ~ .option-1,\r\n#name-option-2:checked:checked ~ .option-2,\r\n#name-option-3:checked:checked ~ .option-3{\r\n  border-color: #5B73E8;\r\n  background: #5B73E8;\n}\n#name-option-1:checked:checked ~ .option-1 .dot,\r\n#name-option-2:checked:checked ~ .option-2 .dot,\r\n#name-option-3:checked:checked ~ .option-3 .dot{\r\n  background: #fff;\n}\n#name-option-1:checked:checked ~ .option-1 .dot::before,\r\n#name-option-2:checked:checked ~ .option-2 .dot::before,\r\n#name-option-3:checked:checked ~ .option-3 .dot::before{\r\n  opacity: 1;\r\n  transform: scale(1);\n}\n.option span{\r\n  font-size: 16px;\r\n  color: #808080;\n}\n#name-option-1:checked:checked ~ .option-1 span,\r\n#name-option-2:checked:checked ~ .option-2 span,\r\n#name-option-3:checked:checked ~ .option-3 span{\r\n  color: #fff;\n}\n#date-option-1:checked:checked ~ .option-1,\r\n#date-option-2:checked:checked ~ .option-2,\r\n#date-option-3:checked:checked ~ .option-3{\r\n  border-color: #5B73E8;\r\n  background: #5B73E8;\n}\n#date-option-1:checked:checked ~ .option-1 .dot,\r\n#date-option-2:checked:checked ~ .option-2 .dot,\r\n#date-option-3:checked:checked ~ .option-3 .dot{\r\n  background: #fff;\n}\n#date-option-1:checked:checked ~ .option-1 .dot::before,\r\n#date-option-2:checked:checked ~ .option-2 .dot::before,\r\n#date-option-3:checked:checked ~ .option-3 .dot::before{\r\n  opacity: 1;\r\n  transform: scale(1);\n}\n.option span{\r\n  font-size: 16px;\r\n  color: #808080;\n}\n#date-option-1:checked:checked ~ .option-1 span,\r\n#date-option-2:checked:checked ~ .option-2 span,\r\n#date-option-3:checked:checked ~ .option-3 span{\r\n  color: #fff;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12826,7 +13890,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n:root {\r\n  /* --animate-duration: 800ms; */\r\n  transition-delay: 0.9s;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n:root {\n  /* --animate-duration: 800ms; */\n  transition-delay: 0.9s;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -38047,6 +39111,84 @@ component.options.__file = "resources/js/views/rekening/Index.vue"
 
 /***/ }),
 
+/***/ "./resources/js/views/remuneration/Index.vue":
+/*!***************************************************!*\
+  !*** ./resources/js/views/remuneration/Index.vue ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Index_vue_vue_type_template_id_7af41892___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Index.vue?vue&type=template&id=7af41892& */ "./resources/js/views/remuneration/Index.vue?vue&type=template&id=7af41892&");
+/* harmony import */ var _Index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Index.vue?vue&type=script&lang=js& */ "./resources/js/views/remuneration/Index.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Index_vue_vue_type_template_id_7af41892___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Index_vue_vue_type_template_id_7af41892___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/views/remuneration/Index.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/views/remuneration/Show.vue":
+/*!**************************************************!*\
+  !*** ./resources/js/views/remuneration/Show.vue ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Show_vue_vue_type_template_id_672e1828___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Show.vue?vue&type=template&id=672e1828& */ "./resources/js/views/remuneration/Show.vue?vue&type=template&id=672e1828&");
+/* harmony import */ var _Show_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Show.vue?vue&type=script&lang=js& */ "./resources/js/views/remuneration/Show.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Show_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Show_vue_vue_type_template_id_672e1828___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Show_vue_vue_type_template_id_672e1828___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/views/remuneration/Show.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/Dashboard.vue?vue&type=script&lang=js&":
 /*!************************************************************************!*\
   !*** ./resources/js/components/Dashboard.vue?vue&type=script&lang=js& ***!
@@ -38876,6 +40018,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Index.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/rekening/Index.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/views/remuneration/Index.vue?vue&type=script&lang=js&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/views/remuneration/Index.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Index.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/remuneration/Index.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/views/remuneration/Show.vue?vue&type=script&lang=js&":
+/*!***************************************************************************!*\
+  !*** ./resources/js/views/remuneration/Show.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Show_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Show.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/remuneration/Show.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Show_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -39789,6 +40963,40 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/views/remuneration/Index.vue?vue&type=template&id=7af41892&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/views/remuneration/Index.vue?vue&type=template&id=7af41892& ***!
+  \**********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_template_id_7af41892___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_template_id_7af41892___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_template_id_7af41892___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Index.vue?vue&type=template&id=7af41892& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/remuneration/Index.vue?vue&type=template&id=7af41892&");
+
+
+/***/ }),
+
+/***/ "./resources/js/views/remuneration/Show.vue?vue&type=template&id=672e1828&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/views/remuneration/Show.vue?vue&type=template&id=672e1828& ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Show_vue_vue_type_template_id_672e1828___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Show_vue_vue_type_template_id_672e1828___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Show_vue_vue_type_template_id_672e1828___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Show.vue?vue&type=template&id=672e1828& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/remuneration/Show.vue?vue&type=template&id=672e1828&");
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Dashboard.vue?vue&type=template&id=040e2ab9&":
 /*!*********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Dashboard.vue?vue&type=template&id=040e2ab9& ***!
@@ -40357,7 +41565,13 @@ var render = function () {
                             staticClass: "dropdown-item",
                             attrs: { to: { name: "jurnal" } },
                           },
-                          [_vm._v("Draft")]
+                          [
+                            _vm._v(
+                              "Draft (" +
+                                _vm._s(_vm.dashboard.jurnaldraft) +
+                                ")"
+                            ),
+                          ]
                         ),
                         _vm._v(" "),
                         _c(
@@ -40366,7 +41580,13 @@ var render = function () {
                             staticClass: "dropdown-item",
                             attrs: { to: { name: "jurnalproses" } },
                           },
-                          [_vm._v("Proses")]
+                          [
+                            _vm._v(
+                              "Proses (" +
+                                _vm._s(_vm.dashboard.jurnalprocess) +
+                                ")"
+                            ),
+                          ]
                         ),
                         _vm._v(" "),
                         _c(
@@ -40375,7 +41595,11 @@ var render = function () {
                             staticClass: "dropdown-item",
                             attrs: { to: { name: "jurnalverif" } },
                           },
-                          [_vm._v("Verif")]
+                          [
+                            _vm._v(
+                              "Verif (" + _vm._s(_vm.dashboard.jurnaldone) + ")"
+                            ),
+                          ]
                         ),
                       ],
                       1
@@ -40504,6 +41728,29 @@ var render = function () {
                             [
                               _c("i", { staticClass: "uil-book me-2" }),
                               _vm._v(" Laporan\n                            "),
+                            ]
+                          ),
+                        ],
+                        1
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.auth.user.type == 0 || _vm.auth.user.type == 1
+                    ? _c(
+                        "li",
+                        { staticClass: "nav-item" },
+                        [
+                          _c(
+                            "router-link",
+                            {
+                              staticClass: "nav-link",
+                              attrs: { to: { name: "remuneration" } },
+                            },
+                            [
+                              _c("i", { staticClass: "uil-book me-2" }),
+                              _vm._v(
+                                " Remuneration\n                            "
+                              ),
                             ]
                           ),
                         ],
@@ -43273,9 +44520,9 @@ var render = function () {
                                   { staticClass: "mt-2 alert alert-danger" },
                                   [
                                     _vm._v(
-                                      "\n                                                " +
+                                      "\r\n                                                " +
                                         _vm._s(_vm.theErrors.email[0]) +
-                                        "\n                                            "
+                                        "\r\n                                            "
                                     ),
                                   ]
                                 )
@@ -43322,9 +44569,9 @@ var render = function () {
                                   { staticClass: "mt-2 alert alert-danger" },
                                   [
                                     _vm._v(
-                                      "\n                                                " +
+                                      "\r\n                                                " +
                                         _vm._s(_vm.theErrors.password[0]) +
-                                        "\n                                            "
+                                        "\r\n                                            "
                                     ),
                                   ]
                                 )
@@ -43645,17 +44892,17 @@ var render = function () {
                             },
                           ],
                           attrs: {
-                            value: "0",
+                            value: "2",
                             type: "radio",
                             name: "select",
                             id: "option-2",
                           },
                           domProps: {
-                            checked: _vm._q(_vm.chartCreate.type, "0"),
+                            checked: _vm._q(_vm.chartCreate.type, "2"),
                           },
                           on: {
                             change: function ($event) {
-                              return _vm.$set(_vm.chartCreate, "type", "0")
+                              return _vm.$set(_vm.chartCreate, "type", "2")
                             },
                           },
                         }),
@@ -44422,6 +45669,36 @@ var render = function () {
           "div",
           { staticClass: "row" },
           [
+            _c("div", { staticClass: "col-4" }, [
+              _c("div", { staticClass: "card" }, [
+                _c("div", { staticClass: "card-body" }, [
+                  _c("h4", [_vm._v(_vm._s(_vm.dashboard.jurnaldraft))]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "m-0" }, [_vm._v("Jurnal Draft")]),
+                ]),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-4" }, [
+              _c("div", { staticClass: "card" }, [
+                _c("div", { staticClass: "card-body" }, [
+                  _c("h4", [_vm._v(_vm._s(_vm.dashboard.jurnalprocess))]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "m-0" }, [_vm._v("Jurnal Process")]),
+                ]),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-4" }, [
+              _c("div", { staticClass: "card" }, [
+                _c("div", { staticClass: "card-body" }, [
+                  _c("h4", [_vm._v(_vm._s(_vm.dashboard.jurnaldone))]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "m-0" }, [_vm._v("Jurnal Done")]),
+                ]),
+              ]),
+            ]),
+            _vm._v(" "),
             _c("div", { staticClass: "col-md-6 col-xl-3" }, [
               _c("div", { staticClass: "card" }, [
                 _c("div", { staticClass: "card-body" }, [
@@ -44832,6 +46109,7 @@ var render = function () {
                           attrs: { type: "datetime-local" },
                           domProps: { value: _vm.journalCreate.date },
                           on: {
+                            change: _vm.updateDate,
                             input: function ($event) {
                               if ($event.target.composing) {
                                 return
@@ -45268,11 +46546,14 @@ var render = function () {
                       "button",
                       {
                         staticClass: "btn btn-primary",
-                        attrs: { type: "submit" },
+                        attrs: { type: "submit", disabled: _vm.loadingCreate },
                       },
                       [_vm._v("Create")]
                     ),
-                  ]
+                    _vm._v(" "),
+                    _vm.loadingCreate ? _c("loading") : _vm._e(),
+                  ],
+                  1
                 ),
               ]),
             ]
@@ -45351,7 +46632,8 @@ var render = function () {
     "button",
     {
       ref: "deleteJournal",
-      staticClass: "dropdown-item",
+      staticClass: "dropdown-item border border-primary",
+      staticStyle: { width: "50%", "max-width": "100px" },
       on: { click: _vm.destroyJournal },
     },
     [_c("i", { staticClass: "uil-trash" }), _vm._v(" Delete")]
@@ -45895,6 +47177,7 @@ var render = function () {
                                   attrs: { type: "datetime-local" },
                                   domProps: { value: _vm.journal.date },
                                   on: {
+                                    change: _vm.updateDate,
                                     input: function ($event) {
                                       if ($event.target.composing) {
                                         return
@@ -47601,6 +48884,17 @@ var render = function () {
                                               { key: journal.token },
                                               [
                                                 _c("td", [
+                                                  _c("input", {
+                                                    staticClass:
+                                                      "massive-check",
+                                                    attrs: {
+                                                      type: "checkbox",
+                                                      token: journal.token,
+                                                    },
+                                                  }),
+                                                ]),
+                                                _vm._v(" "),
+                                                _c("td", [
                                                   _vm._v(_vm._s(journal.title)),
                                                 ]),
                                                 _vm._v(" "),
@@ -47674,130 +48968,104 @@ var render = function () {
                                                 _c("td", [
                                                   _c(
                                                     "div",
-                                                    {
-                                                      staticClass: "btn-group",
-                                                    },
+                                                    { staticClass: "row" },
                                                     [
                                                       _c(
-                                                        "button",
+                                                        "router-link",
                                                         {
                                                           staticClass:
-                                                            "btn btn-primary dropdown-toggle waves-effect waves-light",
+                                                            "dropdown-item border border-primary",
+                                                          staticStyle: {
+                                                            width: "50%",
+                                                            "max-width":
+                                                              "100px",
+                                                          },
                                                           attrs: {
-                                                            type: "button",
-                                                            "data-bs-toggle":
-                                                              "dropdown",
-                                                            "aria-haspopup":
-                                                              "true",
-                                                            "aria-expanded":
-                                                              "false",
+                                                            to: {
+                                                              name: "jurnal.detail",
+                                                              params: {
+                                                                token:
+                                                                  journal.token,
+                                                              },
+                                                            },
                                                           },
                                                         },
                                                         [
-                                                          _vm._v("Menu "),
                                                           _c("i", {
                                                             staticClass:
-                                                              "uil-angle-down",
+                                                              "uil-document-layout-left",
                                                           }),
+                                                          _vm._v(" Detail"),
                                                         ]
                                                       ),
                                                       _vm._v(" "),
                                                       _c(
-                                                        "div",
+                                                        "button",
                                                         {
                                                           staticClass:
-                                                            "dropdown-menu",
+                                                            "dropdown-item border border-primary",
+                                                          staticStyle: {
+                                                            width: "50%",
+                                                            "max-width":
+                                                              "100px",
+                                                          },
+                                                          on: {
+                                                            click: function (
+                                                              $event
+                                                            ) {
+                                                              return _vm.ajukanDialog(
+                                                                journal.token
+                                                              )
+                                                            },
+                                                          },
                                                         },
                                                         [
-                                                          _c(
-                                                            "router-link",
-                                                            {
-                                                              staticClass:
-                                                                "dropdown-item",
-                                                              attrs: {
-                                                                to: {
-                                                                  name: "jurnal.detail",
-                                                                  params: {
-                                                                    token:
-                                                                      journal.token,
-                                                                  },
-                                                                },
-                                                              },
-                                                            },
-                                                            [
-                                                              _c("i", {
-                                                                staticClass:
-                                                                  "uil-document-layout-left",
-                                                              }),
-                                                              _vm._v(" Detail"),
-                                                            ]
-                                                          ),
-                                                          _vm._v(" "),
-                                                          _c(
-                                                            "button",
-                                                            {
-                                                              staticClass:
-                                                                "dropdown-item",
-                                                              on: {
-                                                                click:
-                                                                  function (
-                                                                    $event
-                                                                  ) {
-                                                                    return _vm.ajukanDialog(
-                                                                      journal.token
-                                                                    )
-                                                                  },
-                                                              },
-                                                            },
-                                                            [
-                                                              _c("i", {
-                                                                staticClass:
-                                                                  "uil-message",
-                                                              }),
-                                                              _vm._v(" Ajukan"),
-                                                            ]
-                                                          ),
-                                                          _vm._v(" "),
-                                                          _c("div", {
+                                                          _c("i", {
                                                             staticClass:
-                                                              "dropdown-divider",
+                                                              "uil-message",
                                                           }),
-                                                          _vm._v(" "),
-                                                          _c(
-                                                            "router-link",
-                                                            {
-                                                              staticClass:
-                                                                "dropdown-item",
-                                                              attrs: {
-                                                                to: {
-                                                                  name: "jurnal.edit",
-                                                                  params: {
-                                                                    token:
-                                                                      journal.token,
-                                                                  },
-                                                                },
+                                                          _vm._v(" Ajukan"),
+                                                        ]
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "router-link",
+                                                        {
+                                                          staticClass:
+                                                            "dropdown-item border border-primary",
+                                                          staticStyle: {
+                                                            width: "50%",
+                                                            "max-width":
+                                                              "100px",
+                                                          },
+                                                          attrs: {
+                                                            to: {
+                                                              name: "jurnal.edit",
+                                                              params: {
+                                                                token:
+                                                                  journal.token,
                                                               },
                                                             },
-                                                            [
-                                                              _c("i", {
-                                                                staticClass:
-                                                                  "uil-edit-alt",
-                                                              }),
-                                                              _vm._v(" Edit"),
-                                                            ]
-                                                          ),
-                                                          _vm._v(" "),
-                                                          _c("delete-journal", {
-                                                            attrs: {
-                                                              endpoint:
-                                                                journal.token,
-                                                              auth: _vm.auth,
-                                                            },
+                                                          },
+                                                        },
+                                                        [
+                                                          _c("i", {
+                                                            staticClass:
+                                                              "uil-edit-alt",
                                                           }),
-                                                        ],
-                                                        1
+                                                          _vm._v(" Edit"),
+                                                        ]
                                                       ),
-                                                    ]
+                                                      _vm._v(" "),
+                                                      _c("delete-journal", {
+                                                        attrs: {
+                                                          endpoint:
+                                                            journal.token,
+                                                          auth: _vm.auth,
+                                                        },
+                                                      }),
+                                                    ],
+                                                    1
                                                   ),
                                                 ]),
                                               ]
@@ -47819,6 +49087,23 @@ var render = function () {
                       }),
                     ],
                     1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn  border border-primary",
+                      on: {
+                        click: function ($event) {
+                          $event.preventDefault()
+                          return _vm.massiveassign.apply(null, arguments)
+                        },
+                      },
+                    },
+                    [
+                      _c("i", { staticClass: "uil-message" }),
+                      _vm._v(" Ajukan Terpilih"),
+                    ]
                   ),
                   _vm._v(" "),
                   _c("pagination", {
@@ -47899,6 +49184,8 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "table-light" }, [
       _c("tr", [
+        _c("th"),
+        _vm._v(" "),
         _c("th", [_vm._v("Title")]),
         _vm._v(" "),
         _c("th", [_vm._v("Waktu")]),
@@ -48229,49 +49516,55 @@ var render = function () {
                                                 _c("td", [
                                                   _c(
                                                     "div",
-                                                    {
-                                                      staticClass: "btn-group",
-                                                    },
+                                                    { staticClass: "row" },
                                                     [
                                                       _c(
-                                                        "button",
+                                                        "router-link",
                                                         {
                                                           staticClass:
-                                                            "btn btn-primary dropdown-toggle waves-effect waves-light",
+                                                            "dropdown-item border border-primary",
+                                                          staticStyle: {
+                                                            width: "50%",
+                                                            "max-width":
+                                                              "100px",
+                                                          },
                                                           attrs: {
-                                                            type: "button",
-                                                            "data-bs-toggle":
-                                                              "dropdown",
-                                                            "aria-haspopup":
-                                                              "true",
-                                                            "aria-expanded":
-                                                              "false",
+                                                            to: {
+                                                              name: "jurnal.detail",
+                                                              params: {
+                                                                token:
+                                                                  journal.token,
+                                                              },
+                                                              query: {
+                                                                page_phase:
+                                                                  "proses",
+                                                              },
+                                                            },
                                                           },
                                                         },
                                                         [
-                                                          _vm._v("Menu "),
                                                           _c("i", {
                                                             staticClass:
-                                                              "uil-angle-down",
+                                                              "uil-document-layout-left",
                                                           }),
+                                                          _vm._v(" Detail"),
                                                         ]
                                                       ),
                                                       _vm._v(" "),
-                                                      _c(
-                                                        "div",
-                                                        {
-                                                          staticClass:
-                                                            "dropdown-menu",
-                                                        },
-                                                        [
-                                                          _c(
+                                                      _vm.auth.user.type != 2
+                                                        ? _c(
                                                             "router-link",
                                                             {
                                                               staticClass:
-                                                                "dropdown-item",
+                                                                "dropdown-item border border-primary",
+                                                              staticStyle: {
+                                                                width: "50%",
+                                                                "max-width":
+                                                                  "100px",
+                                                              },
                                                               attrs: {
                                                                 to: {
-                                                                  name: "jurnal.detail",
+                                                                  name: "jurnal.verif",
                                                                   params: {
                                                                     token:
                                                                       journal.token,
@@ -48286,103 +49579,61 @@ var render = function () {
                                                             [
                                                               _c("i", {
                                                                 staticClass:
-                                                                  "uil-document-layout-left",
+                                                                  "uil-file-check",
                                                               }),
-                                                              _vm._v(" Detail"),
+                                                              _vm._v(
+                                                                " Verifikasi"
+                                                              ),
                                                             ]
-                                                          ),
-                                                          _vm._v(" "),
-                                                          _vm.auth.user.type !=
-                                                          2
-                                                            ? _c(
-                                                                "router-link",
-                                                                {
-                                                                  staticClass:
-                                                                    "dropdown-item",
-                                                                  attrs: {
-                                                                    to: {
-                                                                      name: "jurnal.verif",
-                                                                      params: {
-                                                                        token:
-                                                                          journal.token,
-                                                                      },
-                                                                      query: {
-                                                                        page_phase:
-                                                                          "proses",
-                                                                      },
-                                                                    },
-                                                                  },
-                                                                },
-                                                                [
-                                                                  _c("i", {
-                                                                    staticClass:
-                                                                      "uil-file-check",
-                                                                  }),
-                                                                  _vm._v(
-                                                                    " Verifikasi"
-                                                                  ),
-                                                                ]
-                                                              )
-                                                            : _vm._e(),
-                                                          _vm._v(" "),
-                                                          _vm.auth.user.type !=
-                                                          2
-                                                            ? _c("div", {
-                                                                staticClass:
-                                                                  "dropdown-divider",
-                                                              })
-                                                            : _vm._e(),
-                                                          _vm._v(" "),
-                                                          _vm.auth.user.type !=
-                                                          2
-                                                            ? _c(
-                                                                "router-link",
-                                                                {
-                                                                  staticClass:
-                                                                    "dropdown-item",
-                                                                  attrs: {
-                                                                    to: {
-                                                                      name: "jurnal.edit",
-                                                                      params: {
-                                                                        token:
-                                                                          journal.token,
-                                                                      },
-                                                                      query: {
-                                                                        page_phase:
-                                                                          "proses",
-                                                                      },
-                                                                    },
-                                                                  },
-                                                                },
-                                                                [
-                                                                  _c("i", {
-                                                                    staticClass:
-                                                                      "uil-edit-alt",
-                                                                  }),
-                                                                  _vm._v(
-                                                                    " Edit"
-                                                                  ),
-                                                                ]
-                                                              )
-                                                            : _vm._e(),
-                                                          _vm._v(" "),
-                                                          _vm.auth.user.type !=
-                                                          2
-                                                            ? _c(
-                                                                "delete-journal",
-                                                                {
-                                                                  attrs: {
-                                                                    endpoint:
+                                                          )
+                                                        : _vm._e(),
+                                                      _vm._v(" "),
+                                                      _vm.auth.user.type != 2
+                                                        ? _c(
+                                                            "router-link",
+                                                            {
+                                                              staticClass:
+                                                                "dropdown-item border border-primary",
+                                                              staticStyle: {
+                                                                width: "50%",
+                                                                "max-width":
+                                                                  "100px",
+                                                              },
+                                                              attrs: {
+                                                                to: {
+                                                                  name: "jurnal.edit",
+                                                                  params: {
+                                                                    token:
                                                                       journal.token,
-                                                                    auth: _vm.auth,
                                                                   },
-                                                                }
-                                                              )
-                                                            : _vm._e(),
-                                                        ],
-                                                        1
-                                                      ),
-                                                    ]
+                                                                  query: {
+                                                                    page_phase:
+                                                                      "proses",
+                                                                  },
+                                                                },
+                                                              },
+                                                            },
+                                                            [
+                                                              _c("i", {
+                                                                staticClass:
+                                                                  "uil-edit-alt",
+                                                              }),
+                                                              _vm._v(" Edit"),
+                                                            ]
+                                                          )
+                                                        : _vm._e(),
+                                                      _vm._v(" "),
+                                                      _vm.auth.user.type != 2
+                                                        ? _c("delete-journal", {
+                                                            attrs: {
+                                                              endpoint:
+                                                                journal.token,
+                                                              auth: _vm.auth,
+                                                            },
+                                                          })
+                                                        : _vm._e(),
+                                                    ],
+                                                    1
                                                   ),
                                                 ]),
                                               ]
@@ -48835,77 +50086,39 @@ var render = function () {
                                                   ),
                                                 ]),
                                                 _vm._v(" "),
-                                                _c("td", [
-                                                  _c(
-                                                    "div",
-                                                    {
-                                                      staticClass: "btn-group",
-                                                    },
-                                                    [
-                                                      _c(
-                                                        "button",
-                                                        {
-                                                          staticClass:
-                                                            "btn btn-primary dropdown-toggle waves-effect waves-light",
-                                                          attrs: {
-                                                            type: "button",
-                                                            "data-bs-toggle":
-                                                              "dropdown",
-                                                            "aria-haspopup":
-                                                              "true",
-                                                            "aria-expanded":
-                                                              "false",
+                                                _c(
+                                                  "td",
+                                                  [
+                                                    _c(
+                                                      "router-link",
+                                                      {
+                                                        staticClass:
+                                                          "dropdown-item border border-primary",
+                                                        attrs: {
+                                                          to: {
+                                                            name: "jurnal.detail",
+                                                            params: {
+                                                              token:
+                                                                journal.token,
+                                                            },
+                                                            query: {
+                                                              page_phase:
+                                                                "verif",
+                                                            },
                                                           },
                                                         },
-                                                        [
-                                                          _vm._v("Menu "),
-                                                          _c("i", {
-                                                            staticClass:
-                                                              "uil-angle-down",
-                                                          }),
-                                                        ]
-                                                      ),
-                                                      _vm._v(" "),
-                                                      _c(
-                                                        "div",
-                                                        {
+                                                      },
+                                                      [
+                                                        _c("i", {
                                                           staticClass:
-                                                            "dropdown-menu",
-                                                        },
-                                                        [
-                                                          _c(
-                                                            "router-link",
-                                                            {
-                                                              staticClass:
-                                                                "dropdown-item",
-                                                              attrs: {
-                                                                to: {
-                                                                  name: "jurnal.detail",
-                                                                  params: {
-                                                                    token:
-                                                                      journal.token,
-                                                                  },
-                                                                  query: {
-                                                                    page_phase:
-                                                                      "verif",
-                                                                  },
-                                                                },
-                                                              },
-                                                            },
-                                                            [
-                                                              _c("i", {
-                                                                staticClass:
-                                                                  "uil-document-layout-left",
-                                                              }),
-                                                              _vm._v(" Detail"),
-                                                            ]
-                                                          ),
-                                                        ],
-                                                        1
-                                                      ),
-                                                    ]
-                                                  ),
-                                                ]),
+                                                            "uil-document-layout-left",
+                                                        }),
+                                                        _vm._v(" Detail"),
+                                                      ]
+                                                    ),
+                                                  ],
+                                                  1
+                                                ),
                                               ]
                                             )
                                           }
@@ -49151,6 +50364,30 @@ var render = function () {
                         [
                           _c("h3", [_vm._v("Verifikasi")]),
                           _vm._v(" "),
+                          _c("p", { staticClass: "fw-bold" }, [
+                            _vm.journal.chartaccount.type == 1
+                              ? _c("span", { staticClass: "text-success" }, [
+                                  _c("i", { staticClass: "uil-import" }),
+                                  _vm._v(" Uang Masuk : "),
+                                ])
+                              : _c("span", { staticClass: "text-danger" }, [
+                                  _c("i", { staticClass: "uil-export" }),
+                                  _vm._v(" Uang Keluar : "),
+                                ]),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              { staticClass: "text-decoration-underline" },
+                              [
+                                _vm._v(
+                                  "\n                                        Rp " +
+                                    _vm._s(_vm.journal.balance) +
+                                    "\n                                    "
+                                ),
+                              ]
+                            ),
+                          ]),
+                          _vm._v(" "),
                           _c(
                             "div",
                             { staticClass: "col md-10 wrapper btn-group mb-3" },
@@ -49280,7 +50517,9 @@ var render = function () {
                             },
                             [
                               _c("i", { staticClass: "uil-message" }),
-                              _vm._v(" Kirim "),
+                              _vm._v(
+                                " Kirim\n                                    "
+                              ),
                               _vm.loadingAcc
                                 ? _c("loading", {
                                     attrs: { size: "22", fill: "#fff" },
@@ -49289,7 +50528,7 @@ var render = function () {
                             ],
                             1
                           ),
-                          _vm._v(".\n                        "),
+                          _vm._v(".\n                            "),
                         ]
                       ),
                     ]),
@@ -50532,6 +51771,64 @@ var render = function () {
               1
             ),
             _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "mb-2" },
+              [
+                _c("label", { staticClass: "form-label" }, [_vm._v("Project")]),
+                _vm._v(" "),
+                _c("v-select", {
+                  attrs: {
+                    options: _vm.projectOptions,
+                    disabled: _vm.projectLoading,
+                  },
+                  on: {
+                    input: function ($event) {
+                      return _vm.updateFilter($event.id, "project")
+                    },
+                  },
+                  model: {
+                    value: _vm.projectSelected,
+                    callback: function ($$v) {
+                      _vm.projectSelected = $$v
+                    },
+                    expression: "projectSelected",
+                  },
+                }),
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "mb-2" },
+              [
+                _c("label", { staticClass: "col-form-label" }, [
+                  _vm._v("Chart Account"),
+                ]),
+                _vm._v(" "),
+                _c("v-select", {
+                  attrs: {
+                    options: _vm.akunOptions,
+                    disabled: _vm.akunLoading,
+                  },
+                  on: {
+                    input: function ($event) {
+                      return _vm.updateFilter($event.id, "chart")
+                    },
+                  },
+                  model: {
+                    value: _vm.akunSelected,
+                    callback: function ($$v) {
+                      _vm.akunSelected = $$v
+                    },
+                    expression: "akunSelected",
+                  },
+                }),
+              ],
+              1
+            ),
+            _vm._v(" "),
             _c("div", { staticClass: "mb-2" }, [
               _c("label", { staticClass: "col-form-label" }, [
                 _vm._v("Date Range (Start - End)"),
@@ -51329,7 +52626,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "table-light" }, [
       _c("tr", [
-        _c("th", [_vm._v("Tgl")]),
+        _c("th", [_vm._v("Waktu")]),
         _vm._v(" "),
         _c("th", [_vm._v("Bank")]),
         _vm._v(" "),
@@ -54016,6 +55313,838 @@ var staticRenderFns = [
     return _c("h4", { staticClass: "mb-0" }, [
       _c("i", { staticClass: "uil-wallet" }),
       _vm._v(" Rekening"),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/remuneration/Index.vue?vue&type=template&id=7af41892&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/remuneration/Index.vue?vue&type=template&id=7af41892& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "main-content" }, [
+    _c("div", { staticClass: "page-content" }, [
+      _c("div", { staticClass: "container-fluid" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-12" }, [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "page-title-box d-flex align-items-center justify-content-between",
+              },
+              [
+                _vm._m(0),
+                _vm._v(" "),
+                _c("div", { staticClass: "page-title-right" }, [
+                  _c(
+                    "ol",
+                    { staticClass: "breadcrumb m-0" },
+                    [
+                      _c(
+                        "li",
+                        { staticClass: "breadcrumb-item m-auto" },
+                        [
+                          _c(
+                            "router-link",
+                            { attrs: { to: { name: "dashboard" } } },
+                            [_vm._v("Dashboard")]
+                          ),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "li",
+                        { staticClass: "breadcrumb-item m-auto active" },
+                        [_vm._v("Karyawan")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "btn btn-primary mx-2",
+                          attrs: { exact: "", to: { name: "karyawan.create" } },
+                        },
+                        [
+                          _c("i", { staticClass: "uil-plus" }),
+                          _vm._v(" Tambah Karyawan Baru"),
+                        ]
+                      ),
+                    ],
+                    1
+                  ),
+                ]),
+              ]
+            ),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-lg-12" }, [
+            _c("div", { staticClass: "card" }, [
+              _c("div", { staticClass: "card-body" }, [
+                _c("h4", { staticClass: "card-title mb-4" }, [
+                  _vm._v("Latest Remuneration"),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "table-responsive" }, [
+                  _c(
+                    "table",
+                    { staticClass: "table table-centered table-nowrap mb-0" },
+                    [
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _vm.loading
+                        ? _c(
+                            "transition",
+                            {
+                              staticClass: "row card p-4 col-md-6 col-xl-3",
+                              attrs: {
+                                tag: "tbody",
+                                mode: "out-in",
+                                "enter-active-class":
+                                  "animate__animated animate__fadeIn animate__faster",
+                                "leave-active-class":
+                                  "animate__animated animate__fadeOut animate__faster",
+                              },
+                            },
+                            [_c("loading")],
+                            1
+                          )
+                        : _c(
+                            "transition",
+                            {
+                              attrs: {
+                                tag: "tbody",
+                                mode: "out-in",
+                                "enter-active-class":
+                                  "animate__animated animate__fadeIn",
+                                "leave-active-class":
+                                  "animate__animated animate__fadeOut",
+                              },
+                            },
+                            [
+                              !_vm.projects.length
+                                ? _c("tr", { staticClass: "row" }, [
+                                    _c(
+                                      "td",
+                                      {
+                                        staticClass: "m-0",
+                                        attrs: { colspan: "5" },
+                                      },
+                                      [_vm._v("No data available")]
+                                    ),
+                                  ])
+                                : _c(
+                                    "transition-group",
+                                    { key: _vm.key, attrs: { tag: "tbody" } },
+                                    _vm._l(_vm.projects, function (project) {
+                                      return _c("tr", { key: project.token }, [
+                                        _c("td", [
+                                          _vm._v(_vm._s(project.name)),
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm._v(_vm._s(project.status)),
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          [
+                                            _c(
+                                              "router-link",
+                                              {
+                                                staticClass: "btn btn-primary",
+                                                attrs: {
+                                                  to: {
+                                                    name: "remuneration.show",
+                                                    params: {
+                                                      token: project.token,
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                              [
+                                                _c("i", {
+                                                  staticClass: "uil-edit-alt",
+                                                }),
+                                                _vm._v(" Detail"),
+                                              ]
+                                            ),
+                                          ],
+                                          1
+                                        ),
+                                      ])
+                                    }),
+                                    0
+                                  ),
+                            ],
+                            1
+                          ),
+                    ],
+                    1
+                  ),
+                ]),
+              ]),
+            ]),
+          ]),
+        ]),
+      ]),
+    ]),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h4", { staticClass: "mb-0" }, [
+      _c("i", { staticClass: "uil-users-alt" }),
+      _vm._v(" Karyawan"),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "table-light" }, [
+      _c("tr", [
+        _c("th", [_vm._v("Nama")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Status")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Action")]),
+      ]),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/remuneration/Show.vue?vue&type=template&id=672e1828&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/remuneration/Show.vue?vue&type=template&id=672e1828& ***!
+  \************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "form",
+    {
+      staticClass: "main-content",
+      on: {
+        submit: function ($event) {
+          $event.preventDefault()
+          return _vm.store.apply(null, arguments)
+        },
+      },
+    },
+    [
+      _c("div", { staticClass: "page-content" }, [
+        _c("div", { staticClass: "container-fluid" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-12" }, [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "page-title-box d-flex align-items-center justify-content-between",
+                },
+                [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "page-title-right" }, [
+                    _c("ol", { staticClass: "breadcrumb m-0" }, [
+                      _c(
+                        "li",
+                        { staticClass: "breadcrumb-item m-auto" },
+                        [
+                          _c(
+                            "router-link",
+                            { attrs: { to: { name: "dashboard" } } },
+                            [_vm._v("Dashboard")]
+                          ),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "li",
+                        { staticClass: "breadcrumb-item m-auto active" },
+                        [_vm._v("Remuneration")]
+                      ),
+                    ]),
+                  ]),
+                ]
+              ),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-6 col-xl-2" }, [
+              _c("div", { staticClass: "card" }, [
+                _c("div", { staticClass: "card-body" }, [
+                  _c("div", [
+                    _c("h4", { staticClass: "mb-1 mt-1" }, [
+                      _c("span", { attrs: { "data-plugin": "counterup" } }, [
+                        _vm._v(
+                          "IDR " +
+                            _vm._s(
+                              new Intl.NumberFormat(["ban", "id"]).format(
+                                _vm.remuneration.nilai_asli
+                              )
+                            )
+                        ),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "text-muted mb-0" }, [
+                      _vm._v("Nilai Asli"),
+                    ]),
+                  ]),
+                ]),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-6 col-xl-2" }, [
+              _c("div", { staticClass: "card" }, [
+                _c("div", { staticClass: "card-body" }, [
+                  _c("div", [
+                    _c("h4", { staticClass: "mb-1 mt-1" }, [
+                      _c("span", { attrs: { "data-plugin": "counterup" } }, [
+                        _vm._v(
+                          "IDR " +
+                            _vm._s(
+                              new Intl.NumberFormat(["ban", "id"]).format(
+                                _vm.remuneration.pph
+                              )
+                            )
+                        ),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "text-muted mb-0" }, [
+                      _vm._v("PPH 23 (2%)"),
+                    ]),
+                  ]),
+                ]),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-6 col-xl-2" }, [
+              _c("div", { staticClass: "card" }, [
+                _c("div", { staticClass: "card-body" }, [
+                  _c("div", [
+                    _c("h4", { staticClass: "mb-1 mt-1" }, [
+                      _c("span", { attrs: { "data-plugin": "counterup" } }, [
+                        _vm._v(
+                          "IDR " +
+                            _vm._s(
+                              new Intl.NumberFormat(["ban", "id"]).format(
+                                _vm.remuneration.ppn
+                              )
+                            )
+                        ),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "text-muted mb-0" }, [
+                      _vm._v("PPN (11%)"),
+                    ]),
+                  ]),
+                ]),
+              ]),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-12" }, [
+              _c("div", { staticClass: "card" }, [
+                _c("div", { staticClass: "card-footer text-end" }, [
+                  _c("h5", [
+                    _c("strong", [_vm._v("Nilai Bersih Selain Pajak : ")]),
+                    _vm._v(
+                      "\n                                    IDR " +
+                        _vm._s(
+                          new Intl.NumberFormat(["ban", "id"]).format(
+                            _vm.remuneration.nilai_bersih
+                          )
+                        ) +
+                        "\n                                "
+                    ),
+                  ]),
+                ]),
+              ]),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-12" }, [
+              _c("div", { staticClass: "card" }, [
+                _c("div", { staticClass: "card-body" }, [
+                  _c("h4", { staticClass: "card-title mb-4" }, [_vm._v("HPP")]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "table-responsive" }, [
+                    _c(
+                      "table",
+                      { staticClass: "table table-centered table-nowrap mb-0" },
+                      [
+                        _vm._m(1),
+                        _vm._v(" "),
+                        _vm.loading
+                          ? _c(
+                              "transition",
+                              {
+                                staticClass: "row card p-4 col-md-6 col-xl-3",
+                                attrs: {
+                                  tag: "tbody",
+                                  mode: "out-in",
+                                  "enter-active-class":
+                                    "animate__animated animate__fadeIn animate__faster",
+                                  "leave-active-class":
+                                    "animate__animated animate__fadeOut animate__faster",
+                                },
+                              },
+                              [_c("loading")],
+                              1
+                            )
+                          : _c(
+                              "transition",
+                              {
+                                attrs: {
+                                  tag: "tbody",
+                                  mode: "out-in",
+                                  "enter-active-class":
+                                    "animate__animated animate__fadeIn",
+                                  "leave-active-class":
+                                    "animate__animated animate__fadeOut",
+                                },
+                              },
+                              [
+                                !_vm.remuneration.journals_keluar.length
+                                  ? _c("tr", { staticClass: "row" }, [
+                                      _c(
+                                        "td",
+                                        {
+                                          staticClass: "m-0",
+                                          attrs: { colspan: "5" },
+                                        },
+                                        [_vm._v("No data available")]
+                                      ),
+                                    ])
+                                  : _c(
+                                      "transition-group",
+                                      { key: _vm.key, attrs: { tag: "tbody" } },
+                                      _vm._l(
+                                        _vm.remuneration.journals_keluar,
+                                        function (journal) {
+                                          return _c("tr", { key: journal.id }, [
+                                            _c("td", [
+                                              _vm._v(_vm._s(journal.title)),
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(
+                                                "IDR " +
+                                                  _vm._s(
+                                                    new Intl.NumberFormat([
+                                                      "ban",
+                                                      "id",
+                                                    ]).format(journal.balance)
+                                                  )
+                                              ),
+                                            ]),
+                                          ])
+                                        }
+                                      ),
+                                      0
+                                    ),
+                              ],
+                              1
+                            ),
+                      ],
+                      1
+                    ),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-footer text-end" }, [
+                  _c("h5", [
+                    _c("strong", [_vm._v("TOTAL HPP : ")]),
+                    _vm._v(
+                      "\n                                    IDR " +
+                        _vm._s(
+                          new Intl.NumberFormat(["ban", "id"]).format(
+                            _vm.remuneration.hpp
+                          )
+                        ) +
+                        "\n                                "
+                    ),
+                  ]),
+                ]),
+              ]),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-12" }, [
+              _c("div", { staticClass: "card" }, [
+                _c("div", { staticClass: "card-body" }, [
+                  _c("h4", { staticClass: "card-title mb-4" }, [
+                    _vm._v("Kas Dll"),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "mb-3 row" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-md-4 col-form-label",
+                        attrs: { for: "example-date-input" },
+                      },
+                      [
+                        _vm._v(
+                          "Kas & Operasional\n                                        Kantor:"
+                        ),
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-2" }, [
+                      _c("div", { staticClass: "input-group" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.operationalRemuneration,
+                              expression: "operationalRemuneration",
+                            },
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "number" },
+                          domProps: { value: _vm.operationalRemuneration },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.operationalRemuneration = $event.target.value
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "input-group-text" }, [
+                          _vm._v("%"),
+                        ]),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c("p", [
+                        _vm._v(
+                          "IDR " +
+                            _vm._s(
+                              new Intl.NumberFormat(["ban", "id"]).format(
+                                _vm.calcRemuneration(
+                                  _vm.operationalRemuneration
+                                )
+                              )
+                            )
+                        ),
+                      ]),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "mb-3 row" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-md-4 col-form-label",
+                        attrs: { for: "example-date-input" },
+                      },
+                      [_vm._v("Pemilik: ")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-2" }, [
+                      _c("div", { staticClass: "input-group" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.ownerRemuneration,
+                              expression: "ownerRemuneration",
+                            },
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "number" },
+                          domProps: { value: _vm.ownerRemuneration },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.ownerRemuneration = $event.target.value
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "input-group-text" }, [
+                          _vm._v("%"),
+                        ]),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c("p", [
+                        _vm._v(
+                          "IDR " +
+                            _vm._s(
+                              new Intl.NumberFormat(["ban", "id"]).format(
+                                _vm.calcRemuneration(_vm.ownerRemuneration)
+                              )
+                            )
+                        ),
+                      ]),
+                    ]),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-footer text-end" }, [
+                  _c("h5", [
+                    _c("strong", [_vm._v("TOTAL Kas Dll : ")]),
+                    _vm._v(
+                      "\n                                    IDR " +
+                        _vm._s(
+                          new Intl.NumberFormat(["ban", "id"]).format(
+                            _vm.calcRemuneration(_vm.kasRemuneration)
+                          )
+                        ) +
+                        "\n                                "
+                    ),
+                  ]),
+                ]),
+              ]),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-12" }, [
+              _c("div", { staticClass: "card" }, [
+                _c("div", { staticClass: "card-footer text-end" }, [
+                  _c("h5", [
+                    _c("strong", [_vm._v("Total HPP + Total Kas Dll : ")]),
+                    _vm._v(
+                      "\n                                    IDR " +
+                        _vm._s(
+                          new Intl.NumberFormat(["ban", "id"]).format(
+                            _vm.calcRemuneration(_vm.kasRemuneration) +
+                              _vm.remuneration.hpp
+                          )
+                        ) +
+                        "\n                                "
+                    ),
+                  ]),
+                ]),
+              ]),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-12" }, [
+              _c("div", { staticClass: "card" }, [
+                _c("div", { staticClass: "card-footer text-end" }, [
+                  _c("h5", [
+                    _c("strong", [_vm._v("Sisa Bersih : ")]),
+                    _vm._v(
+                      "\n                                    IDR " +
+                        _vm._s(
+                          new Intl.NumberFormat(["ban", "id"]).format(
+                            _vm.cleanRemuneration
+                          )
+                        ) +
+                        "\n                                "
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "mb-0" }, [
+                    _vm._v("Total HPP & Total Kas Dll - Nilai Project"),
+                  ]),
+                ]),
+              ]),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-12" }, [
+              _c("div", { staticClass: "card" }, [
+                _c(
+                  "div",
+                  { staticClass: "card-body" },
+                  [
+                    _c("h4", { staticClass: "card-title mb-4" }, [
+                      _vm._v("Pembagian"),
+                    ]),
+                    _vm._v(" "),
+                    _c("v-select", {
+                      staticClass: "mb-3",
+                      attrs: {
+                        options: _vm.users,
+                        disabled: _vm.userLoading,
+                        multiple: "",
+                      },
+                      model: {
+                        value: _vm.selectedUser,
+                        callback: function ($$v) {
+                          _vm.selectedUser = $$v
+                        },
+                        expression: "selectedUser",
+                      },
+                    }),
+                    _vm._v(" "),
+                    _vm._l(_vm.selectedUser, function (user, index) {
+                      return _c("div", { key: index }, [
+                        _c("div", { staticClass: "mb-3 row" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "col-md-4 col-form-label",
+                              attrs: { for: "example-date-input" },
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(user.label) +
+                                  ":\n                                        "
+                              ),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-2" }, [
+                            _c("div", { staticClass: "input-group" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.selectedUser[index].value,
+                                    expression: "selectedUser[index].value",
+                                  },
+                                ],
+                                staticClass: "form-control",
+                                attrs: { type: "number" },
+                                domProps: {
+                                  value: _vm.selectedUser[index].value,
+                                },
+                                on: {
+                                  input: function ($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.selectedUser[index],
+                                      "value",
+                                      $event.target.value
+                                    )
+                                  },
+                                },
+                              }),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "input-group-text" }, [
+                                _vm._v("%"),
+                              ]),
+                            ]),
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-6" }, [
+                            _c("p", [
+                              _vm._v(
+                                "IDR " +
+                                  _vm._s(
+                                    new Intl.NumberFormat(["ban", "id"]).format(
+                                      (_vm.selectedUser[index].value / 100) *
+                                        _vm.cleanRemuneration
+                                    )
+                                  ) +
+                                  "\n                                            "
+                              ),
+                            ]),
+                          ]),
+                        ]),
+                      ])
+                    }),
+                  ],
+                  2
+                ),
+              ]),
+            ]),
+          ]),
+          _vm._v(" "),
+          _vm._m(2),
+        ]),
+      ]),
+    ]
+  )
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h4", { staticClass: "mb-0" }, [
+      _c("i", { staticClass: "uil-users-alt" }),
+      _vm._v(" Remuneration"),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "table-light" }, [
+      _c("tr", [
+        _c("th", [_vm._v("Nama")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Nilai")]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+        [_vm._v("Simpan")]
+      ),
     ])
   },
 ]
@@ -69388,7 +71517,7 @@ Vue.compile = compileToFunctions;
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"_args":[["axios@0.21.4","D:\\\\Magang\\\\clone\\\\Magang-Kodig"]],"_development":true,"_from":"axios@0.21.4","_id":"axios@0.21.4","_inBundle":false,"_integrity":"sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==","_location":"/axios","_phantomChildren":{},"_requested":{"type":"version","registry":true,"raw":"axios@0.21.4","name":"axios","escapedName":"axios","rawSpec":"0.21.4","saveSpec":null,"fetchSpec":"0.21.4"},"_requiredBy":["#DEV:/"],"_resolved":"https://registry.npmjs.org/axios/-/axios-0.21.4.tgz","_spec":"0.21.4","_where":"D:\\\\Magang\\\\clone\\\\Magang-Kodig","author":{"name":"Matt Zabriskie"},"browser":{"./lib/adapters/http.js":"./lib/adapters/xhr.js"},"bugs":{"url":"https://github.com/axios/axios/issues"},"bundlesize":[{"path":"./dist/axios.min.js","threshold":"5kB"}],"dependencies":{"follow-redirects":"^1.14.0"},"description":"Promise based HTTP client for the browser and node.js","devDependencies":{"coveralls":"^3.0.0","es6-promise":"^4.2.4","grunt":"^1.3.0","grunt-banner":"^0.6.0","grunt-cli":"^1.2.0","grunt-contrib-clean":"^1.1.0","grunt-contrib-watch":"^1.0.0","grunt-eslint":"^23.0.0","grunt-karma":"^4.0.0","grunt-mocha-test":"^0.13.3","grunt-ts":"^6.0.0-beta.19","grunt-webpack":"^4.0.2","istanbul-instrumenter-loader":"^1.0.0","jasmine-core":"^2.4.1","karma":"^6.3.2","karma-chrome-launcher":"^3.1.0","karma-firefox-launcher":"^2.1.0","karma-jasmine":"^1.1.1","karma-jasmine-ajax":"^0.1.13","karma-safari-launcher":"^1.0.0","karma-sauce-launcher":"^4.3.6","karma-sinon":"^1.0.5","karma-sourcemap-loader":"^0.3.8","karma-webpack":"^4.0.2","load-grunt-tasks":"^3.5.2","minimist":"^1.2.0","mocha":"^8.2.1","sinon":"^4.5.0","terser-webpack-plugin":"^4.2.3","typescript":"^4.0.5","url-search-params":"^0.10.0","webpack":"^4.44.2","webpack-dev-server":"^3.11.0"},"homepage":"https://axios-http.com","jsdelivr":"dist/axios.min.js","keywords":["xhr","http","ajax","promise","node"],"license":"MIT","main":"index.js","name":"axios","repository":{"type":"git","url":"git+https://github.com/axios/axios.git"},"scripts":{"build":"NODE_ENV=production grunt build","coveralls":"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js","examples":"node ./examples/server.js","fix":"eslint --fix lib/**/*.js","postversion":"git push && git push --tags","preversion":"npm test","start":"node ./sandbox/server.js","test":"grunt test","version":"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json"},"typings":"./index.d.ts","unpkg":"dist/axios.min.js","version":"0.21.4"}');
+module.exports = JSON.parse('{"_args":[["axios@0.21.4","D:\\\\Magang\\\\Magang-Kodig"]],"_development":true,"_from":"axios@0.21.4","_id":"axios@0.21.4","_inBundle":false,"_integrity":"sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==","_location":"/axios","_phantomChildren":{},"_requested":{"type":"version","registry":true,"raw":"axios@0.21.4","name":"axios","escapedName":"axios","rawSpec":"0.21.4","saveSpec":null,"fetchSpec":"0.21.4"},"_requiredBy":["#DEV:/"],"_resolved":"https://registry.npmjs.org/axios/-/axios-0.21.4.tgz","_spec":"0.21.4","_where":"D:\\\\Magang\\\\Magang-Kodig","author":{"name":"Matt Zabriskie"},"browser":{"./lib/adapters/http.js":"./lib/adapters/xhr.js"},"bugs":{"url":"https://github.com/axios/axios/issues"},"bundlesize":[{"path":"./dist/axios.min.js","threshold":"5kB"}],"dependencies":{"follow-redirects":"^1.14.0"},"description":"Promise based HTTP client for the browser and node.js","devDependencies":{"coveralls":"^3.0.0","es6-promise":"^4.2.4","grunt":"^1.3.0","grunt-banner":"^0.6.0","grunt-cli":"^1.2.0","grunt-contrib-clean":"^1.1.0","grunt-contrib-watch":"^1.0.0","grunt-eslint":"^23.0.0","grunt-karma":"^4.0.0","grunt-mocha-test":"^0.13.3","grunt-ts":"^6.0.0-beta.19","grunt-webpack":"^4.0.2","istanbul-instrumenter-loader":"^1.0.0","jasmine-core":"^2.4.1","karma":"^6.3.2","karma-chrome-launcher":"^3.1.0","karma-firefox-launcher":"^2.1.0","karma-jasmine":"^1.1.1","karma-jasmine-ajax":"^0.1.13","karma-safari-launcher":"^1.0.0","karma-sauce-launcher":"^4.3.6","karma-sinon":"^1.0.5","karma-sourcemap-loader":"^0.3.8","karma-webpack":"^4.0.2","load-grunt-tasks":"^3.5.2","minimist":"^1.2.0","mocha":"^8.2.1","sinon":"^4.5.0","terser-webpack-plugin":"^4.2.3","typescript":"^4.0.5","url-search-params":"^0.10.0","webpack":"^4.44.2","webpack-dev-server":"^3.11.0"},"homepage":"https://axios-http.com","jsdelivr":"dist/axios.min.js","keywords":["xhr","http","ajax","promise","node"],"license":"MIT","main":"index.js","name":"axios","repository":{"type":"git","url":"git+https://github.com/axios/axios.git"},"scripts":{"build":"NODE_ENV=production grunt build","coveralls":"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js","examples":"node ./examples/server.js","fix":"eslint --fix lib/**/*.js","postversion":"git push && git push --tags","preversion":"npm test","start":"node ./sandbox/server.js","test":"grunt test","version":"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json"},"typings":"./index.d.ts","unpkg":"dist/axios.min.js","version":"0.21.4"}');
 
 /***/ })
 

@@ -80,6 +80,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('/laporan', [LaporanController::class, 'index']);
         Route::get('/bankhistory', [BankHistoryController::class, 'index']);
 
+        //Pembagian
+        Route::get('/pembagian/{id}', [ProjectController::class, 'pembagian']);
+        Route::post('/pembagian', [ProjectController::class, 'store_remuneration']);
+        Route::post('/update-pembagian', [ProjectController::class, 'update_remuneration']);
+
     });
 
 
@@ -117,11 +122,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::resource('/journal', JournalController::class)->except('update', 'create', 'edit');
     Route::post('/journal/{id}', [JournalController::class, 'update']);
     Route::post('/validjournal/{id}', [JournalController::class, 'draftToProcess']);
+    Route::post('/validjournal', [JournalController::class, 'ajukanBanyak']);
 
     //AdjustingHistory
-    Route::resource('/adjustinghistory', AdjustingHistoryController::class)->except('index', 'update', 'create', 'edit');
     Route::get('/journalhistories/{id}', [AdjustingHistoryController::class, 'index']);
-    Route::post('/adjustinghistory/{id}', [AdjustingHistoryController::class, 'update']);
 
     //Graphic
     Route::get('/balancechart', [DashboardController::class, 'balanceChart']);

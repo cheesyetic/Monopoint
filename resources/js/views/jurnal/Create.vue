@@ -36,7 +36,7 @@
                                 <label for="example-date-input" class="col-md-2 col-form-label">Date</label>
                                 <div class="col-md-10">
                                     <!-- <Datepicker></Datepicker> -->
-                                    <input class="form-control" type="datetime-local" v-model="journalCreate.date">
+                                    <input class="form-control" type="datetime-local" v-model="journalCreate.date" v-on:change="updateDate">
                                     <div v-if="theErrors.date" class="mt-1 text-danger">{{ theErrors.date[0] }}</div>
                                 </div>
                             </div>
@@ -123,7 +123,8 @@
                                     <div v-if="theErrors.project_id" class="mt-1 text-danger">{{ theErrors.project_id[0] }}</div>
                                 </div>
                             </div>
-                            <button class="btn btn-primary" type="submit">Create</button>
+                            <button class="btn btn-primary" type="submit" :disabled="loadingCreate">Create</button>
+                            <loading v-if="loadingCreate"/>
                         </form>
                     </div>
                 </div> <!-- end col -->
@@ -150,6 +151,7 @@ export default {
             projectOptions: [],
             projectLoading: true,
             periodOptions: [],
+            periodTimes: [],
             periodLoading: true,
             periodSelected: '',
             journalCreate: {
@@ -167,7 +169,8 @@ export default {
                 user_id: '',
             },
             // successMessage: [],
-            theErrors: []
+            theErrors: [],
+            loadingCreate: false,
         }
     },
     mounted() {
@@ -186,9 +189,18 @@ export default {
             this.journalCreate[target] = e.id
         },
         pictureUpload: function() {
-            // console.log("ganti gambar")
-            // this.journalCreate.filebukti = this.$refs.filebukti.files[0]
             this.journalCreate.filebukti = event.target.files[0]
+        },
+
+        updateDate() {
+            const selected = new Date(this.journalCreate.date)
+            for (let i = 0; i < this.periodTimes.length; i++) {
+                if (this.periodTimes[i].start <= selected && this.periodTimes[i].end >= selected) {
+                    const label = this.periodOptions[i].label
+                    const id = this.periodOptions[i].id
+                    this.periodSelected = { label, id }
+                }
+            }
         },
 
         async getChart() {
@@ -228,6 +240,10 @@ export default {
                     let label = response.data.data[i].name + ' (' + response.data.data[i].start + ' - ' + response.data.data[i].end + ')'
                     let id = String(response.data.data[i].id)
                     this.periodOptions.push({ label, id })
+
+                    let start = new Date(response.data.data[i].start)
+                    let end = new Date(response.data.data[i].end)
+                    this.periodTimes.push({ start, end })
                     if(response.data.data[i].status == 1) {
                         // this.journalCreate.accounting_period_id = id
                         this.periodSelected = { label, id }
@@ -307,6 +323,7 @@ export default {
                 formdata.append('bank_account_id', this.journalCreate.bank_account_id)
                 formdata.append('project_id', this.journalCreate.project_id)
                 formdata.append('user_id', this.auth.user.id)
+                this.loadingCreate = true
                 await axios.post('/api/journal',  formdata, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
@@ -337,6 +354,7 @@ export default {
                     }
                 )
             } catch (e) {
+                this.loadingCreate = false
                 this.$toasted.show("Something went wrong : " + e, {
                         type: 'error',
                         duration: 3000,

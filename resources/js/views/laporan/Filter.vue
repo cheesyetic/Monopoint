@@ -17,6 +17,14 @@
                     <v-select v-model="periodSelected" :options="periodOptions" @input="updateFilter($event.id, 'date')" :disabled="periodLoading"></v-select>
                 </div>
                 <div class="mb-2">
+                    <label class="form-label">Project</label>
+                    <v-select v-model="projectSelected" :options="projectOptions" @input="updateFilter($event.id, 'project')" :disabled="projectLoading"></v-select>
+                </div>
+                <div class="mb-2">
+                    <label class="col-form-label">Chart Account</label>
+                    <v-select v-model="akunSelected" :options="akunOptions" @input="updateFilter($event.id, 'chart')" :disabled="akunLoading"></v-select>
+                </div>
+                <div class="mb-2">
                     <label class="col-form-label">Date Range (Start - End)</label>
                     <div class="input-daterange input-group">
                         <input @change="updateFilter(filter_start_date, 'start_date')" type="date" class="form-control" name="start" v-model="filter_start_date" placeholder="Start Date">
@@ -74,6 +82,7 @@ export default {
             filter_date: '',
             filter_month: '',
             filter_date: '',
+
             bankSelected: {
                 label: 'Semua',
                 id: '',
@@ -82,6 +91,15 @@ export default {
                 label: 'Semua',
                 id: '',
             },
+            projectSelected: {
+                label: 'Semua',
+                id: '',
+            },
+            akunSelected: {
+                label: 'Semua',
+                id: '',
+            },
+
             bankOptions: [{
                 label: 'Semua',
                 id: '',
@@ -90,8 +108,19 @@ export default {
                 label: 'Semua',
                 id: '',
             }],
+            projectOptions: [{
+                label: 'Semua',
+                id: '',
+            }],
+            akunOptions: [{
+                label: 'Semua',
+                id: '',
+            }],
+
             bankLoading: true,
             periodLoading: true,
+            projectLoading: true,
+            akunLoading: true,
             params: {
                 bank: '',
                 start_date: '',
@@ -105,6 +134,8 @@ export default {
     mounted() {
         this.getPeriod();
         this.getBank();
+        this.getProject();
+        this.getAkun();
     },
     methods: {
         async getPeriod() {
@@ -143,6 +174,48 @@ export default {
                 this.bankLoading = false
             } else {
                 this.$toasted.show("Failed to load Bank", {
+                        type: 'error',
+                        duration: 3000,
+                        position: 'top-center',
+                    })
+            }
+        },
+        async getProject() {
+            let response = await axios.get('/api/project', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
+            if (response.status === 200) {
+                for (var i = 0; i < response.data.data.length; i++) {
+                    let label = response.data.data[i].name
+                    let id = String(response.data.data[i].id)
+                    this.projectOptions.push({ label, id })
+                }
+                this.projectLoading = false
+            } else {
+                this.$toasted.show("Failed to load project", {
+                        type: 'error',
+                        duration: 3000,
+                        position: 'top-center',
+                    })
+            }
+        },
+        async getAkun() {
+            let response = await axios.get('/api/chartaccount', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
+            if (response.status === 200) {
+                for (var i = 0; i < response.data.data.length; i++) {
+                    let label = response.data.data[i].name
+                    let id = String(response.data.data[i].id)
+                    this.akunOptions.push({ label, id })
+                }
+                this.akunLoading = false
+            } else {
+                this.$toasted.show("Failed to load akun", {
                         type: 'error',
                         duration: 3000,
                         position: 'top-center',

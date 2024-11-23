@@ -22,6 +22,30 @@
                 </div>
                 <!-- end page title -->
                 <div class="row">
+                    <div class="col-4">
+                        <div class="card">
+                            <div class="card-body">
+                            <h4>{{ dashboard.jurnaldraft }}</h4>
+                            <p class="m-0">Jurnal Draft</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="card">
+                            <div class="card-body">
+                            <h4>{{ dashboard.jurnalprocess }}</h4>
+                            <p class="m-0">Jurnal Process</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="card">
+                            <div class="card-body">
+                            <h4>{{ dashboard.jurnaldone }}</h4>
+                            <p class="m-0">Jurnal Done</p>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-md-6 col-xl-3">
                         <div class="card">
                             <div class="card-body">

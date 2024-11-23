@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Appointment;
 use App\Models\UserAppointment;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserAppointmentController extends Controller

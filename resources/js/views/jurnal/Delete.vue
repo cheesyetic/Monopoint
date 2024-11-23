@@ -1,5 +1,5 @@
 <template>
-    <button class="dropdown-item" ref="deleteJournal" @click="destroyJournal"><i class="uil-trash"></i> Delete</button>
+    <button class="dropdown-item border border-primary" style="width:50%; max-width: 100px;" ref="deleteJournal" @click="destroyJournal"><i class="uil-trash"></i> Delete</button>
 </template>
 
 <script>

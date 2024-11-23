@@ -21,6 +21,7 @@ use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
@@ -311,6 +312,31 @@ class JournalController extends Controller
 
         $response = [
             'message' => 'A journal has been moved into process phase',
+            'data' => $journal
+        ];
+
+        return response()->json($response, Response::HTTP_OK);
+    }
+
+    public function ajukanBanyak(Request $request){
+        foreach($request->id as $id){
+            $journal = Journal::findOrFail(Crypt::decryptString($id));
+            $user = $journal->user->name;
+
+            $journal->status = 2;
+            $journal->save();
+            $this->sendEmailKeuanganPengajuan($journal->id);
+            $this->sendEmailPengajuan($journal->id);
+
+            $journal->title = 'Pengajuan Jurnal';
+            $journal->remark = $user . ' melakukan pengajuan jurnal pada tanggal ' . $journal->updated_at;
+            $journal = $journal->toArray();
+            $journal['journal_id'] = $journal['id'];
+            AdjustingHistory::create($journal);
+        }
+
+        $response = [
+            'message' => 'Many journal has been moved into process phase',
             'data' => $journal
         ];
 

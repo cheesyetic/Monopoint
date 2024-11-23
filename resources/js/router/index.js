@@ -21,6 +21,9 @@ import TabVerif from '../views/jurnal/TabVerif'
 
 import Laporan from '../views/laporan/Index'
 
+import Remuneration from '../views/remuneration/Index'
+import RemunerationShow from '../views/remuneration/Show'
+
 import Karyawan from '../views/karyawan/Index'
 import KaryawanEdit from '../views/karyawan/Edit'
 import KaryawanCreate from '../views/karyawan/Create'
@@ -45,8 +48,8 @@ import ChartEdit from '../views/chart/Edit'
 import ChartCreate from '../views/chart/Create'
 
 export default {
-    mode : 'history',
-    linkActiveClass : 'active',
+    mode: 'history',
+    linkActiveClass: 'active',
 
     routes: [
         {
@@ -56,15 +59,15 @@ export default {
         },
 
         {
-            path:"/",
-            component:Dashboard,
-            children:[
+            path: "/",
+            component: Dashboard,
+            children: [
                 {
-                    name:"dashboard",
+                    name: "dashboard",
                     path: '/',
                     component: Home,
-                    meta:{
-                        title:`Dashboard`
+                    meta: {
+                        title: `Dashboard`
                     }
                 },
                 {
@@ -104,6 +107,18 @@ export default {
                     path: '/laporan',
                     name: 'laporan',
                     component: Laporan,
+                },
+
+                // REMUNERASI
+                {
+                    path: '/remuneration',
+                    name: 'remuneration',
+                    component: Remuneration,
+                },
+                {
+                    path: '/remuneration/:token',
+                    name: 'remuneration.show',
+                    component: RemunerationShow,
                 },
 
                 // JURNAL

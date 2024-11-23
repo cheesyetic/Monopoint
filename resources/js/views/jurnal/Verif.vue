@@ -41,6 +41,13 @@
                     <div class="card col-sm-4">
                         <form class="card-body" method="pos" @submit.prevent="store">
                             <h3>Verifikasi</h3>
+                            <p class="fw-bold">
+                                <span class="text-success" v-if="journal.status == 1"><i class="uil-import"></i> Uang Masuk : </span>
+                                <span class="text-danger" v-else><i class="uil-export"></i> Uang Keluar : </span>
+                                <span class="text-decoration-underline">
+                                    Rp {{ journal.balance }}
+                                </span>
+                            </p>
                             <div class="col md-10 wrapper btn-group mb-3">
                                 <button class="btn btn-outline-primary" :class="verif ? 'active' : ''" @click.prevent="verif = 1">Terima</button>
                                 <button class="btn btn-outline-primary" :class="!verif ? 'active' : ''" @click.prevent="verif = 0">Tolak</button>
@@ -129,6 +136,7 @@ export default {
                 })
             if (response.status === 200) {
                 this.journal = response.data.data
+                // console.log(this.journal)
                 this.loading = false
             } else {
                 this.$toasted.show("Something went wrong, please try again later", {

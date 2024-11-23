@@ -99,16 +99,15 @@
                                                         {{ journal.chart_account.name }}
                                                     </td>
                                                     <td>
-                                                        <div class="btn-group">
-                                                            <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu <i class="uil-angle-down"></i></button>
-                                                            <div class="dropdown-menu" style="">
-                                                                <router-link :to="{ name: 'jurnal.detail', params: { token: journal.token }, query: { page_phase: 'proses'} }" class="dropdown-item"><i class="uil-document-layout-left"></i> Detail</router-link>
-                                                                <router-link :to="{ name: 'jurnal.verif', params: { token: journal.token }, query: { page_phase: 'proses'} }" v-if="auth.user.type != 2" class="dropdown-item"><i class="uil-file-check"></i> Verifikasi</router-link>
-                                                                <div class="dropdown-divider" v-if="auth.user.type != 2"></div>
-                                                                <router-link :to="{ name: 'jurnal.edit', params: { token: journal.token }, query: { page_phase: 'proses'} }" v-if="auth.user.type != 2" class="dropdown-item"><i class="uil-edit-alt"></i> Edit</router-link>
+                                                        <!-- <div class="btn-group">
+                                                            <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu <i class="uil-angle-down"></i></button> -->
+                                                            <div class="row" style="">
+                                                                <router-link style="width: 50%; max-width: 100px;" :to="{ name: 'jurnal.detail', params: { token: journal.token }, query: { page_phase: 'proses'} }" class="dropdown-item border border-primary"><i class="uil-document-layout-left"></i> Detail</router-link>
+                                                                <router-link style="width: 50%; max-width: 100px;" :to="{ name: 'jurnal.verif', params: { token: journal.token }, query: { page_phase: 'proses'} }" v-if="auth.user.type != 2" class="dropdown-item border border-primary"><i class="uil-file-check"></i> Verifikasi</router-link>
+                                                                <router-link style="width: 50%; max-width: 100px;" :to="{ name: 'jurnal.edit', params: { token: journal.token }, query: { page_phase: 'proses'} }" v-if="auth.user.type != 2" class="dropdown-item border border-primary"><i class="uil-edit-alt"></i> Edit</router-link>
                                                                 <delete-journal :endpoint="journal.token" v-if="auth.user.type != 2" :auth="auth"/>
                                                             </div>
-                                                        </div>
+                                                        <!-- </div> -->
                                                     </td>
                                                 </tr>
                                             </transition-group>

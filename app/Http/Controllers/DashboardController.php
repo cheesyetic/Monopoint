@@ -54,6 +54,9 @@ class DashboardController extends Controller
         $journalcount = Journal::get()->count();
         $bank = BankAccount::get();
         $total = 0;
+        $journaldraft = Journal::where('status', '0')->count();
+        $journalprocess = Journal::where('status', '2')->count();
+        $journaldone = Journal::where('status', '>=', '3')->count();
 
         foreach($bank as $bk){
             $total = $total + $bk->balance;
@@ -61,6 +64,9 @@ class DashboardController extends Controller
 
         $response = [
             'jumlahjurnal' => $journalcount,
+            'jurnaldraft' => $journaldraft,
+            'jurnalprocess' => $journalprocess,
+            'jurnaldone' => $journaldone,
             'bank' => $bank,
             'totaluang' => $total,
         ];

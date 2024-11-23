@@ -51,7 +51,7 @@
                                 <label for="example-date-input" class="col-md-2 col-form-label">Date</label>
                                 <div class="col-md-10">
                                     <!-- <Datepicker></Datepicker> -->
-                                    <input class="form-control" type="datetime-local" v-model="journal.date">
+                                    <input class="form-control" type="datetime-local" v-model="journal.date" v-on:change="updateDate">
                                     <div v-if="theErrors.date" class="mt-1 text-danger">{{ theErrors.date[0] }}</div>
                                 </div>
                             </div>
@@ -173,6 +173,7 @@ export default {
 
             periodOptions: [],
             periodSelected: '',
+            periodTimes: [],
             periodLoading: true,
 
             journal: {},
@@ -199,6 +200,17 @@ export default {
             // console.log("ganti gambar")
             // this.journal.filebukti = this.$refs.filebukti.files[0]
             this.journal.filebukti = event.target.files[0]
+        },
+
+        updateDate() {
+            const selected = new Date(this.journal.date)
+            for (let i = 0; i < this.periodTimes.length; i++) {
+                if (this.periodTimes[i].start <= selected && this.periodTimes[i].end >= selected) {
+                    const label = this.periodOptions[i].label
+                    const id = this.periodOptions[i].id
+                    this.periodSelected = { label, id }
+                }
+            }
         },
 
         async getChart() {
@@ -237,6 +249,10 @@ export default {
                     let label = response.data.data[i].name + ' (' + response.data.data[i].start + ' - ' + response.data.data[i].end + ')'
                     let id = String(response.data.data[i].id)
                     this.periodOptions.push({ label, id })
+
+                    let start = new Date(response.data.data[i].start)
+                    let end = new Date(response.data.data[i].end)
+                    this.periodTimes.push({ start, end })
                     if(id == this.journal.accounting_period_id) {
                         this.periodSelected = { label, id }
                     }

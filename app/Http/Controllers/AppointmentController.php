@@ -196,7 +196,6 @@ class AppointmentController extends Controller
 
     public function mailJob(){
         $appointment = Appointment::get();
-        $user_appointment = $appointment->user_appointment;
         foreach($appointment as $app){
         $user_appointment = $app->user_appointment;
             foreach($user_appointment as $value){
