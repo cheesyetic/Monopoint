@@ -24,6 +24,20 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+<<<<<<< HEAD
         "vue-router": "^3.5.3"
+=======
+        "animate.css": "^4.1.1",
+        "apexcharts": "^3.33.2",
+        "moment": "^2.29.1",
+        "vue-apexcharts": "^1.6.2",
+        "vue-plugin-load-script": "^2.1.0",
+        "vue-router": "^3.5.3",
+        "vue-select": "^3.16.0",
+        "vue-sweetalert2": "^5.0.2",
+        "vue-toasted": "^1.1.28",
+        "vuex": "^4.0.2",
+        "vuex-persistedstate": "^4.1.0"
+>>>>>>> origin/Back-End
     }
 }

@@ -4,15 +4,16 @@
         <div class="container-fluid">
 
             <!-- start page title -->
+            <!-- <h1>Selamat Datang, <strong>{{ user.name }}</strong></h1> -->
+            <!-- <button class="btn-primary" @click="logout">Logout</button> -->
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-flex align-items-center justify-content-between">
-                        <h4 class="mb-0">Horizontal</h4>
+                        <h4 class="mb-0"> Selamat Datang di Aplikasi Monopoint!</h4>
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="javascript: void(0);">Layout</a></li>
-                                <li class="breadcrumb-item active">Horizontal</li>
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
                             </ol>
                         </div>
 
@@ -20,18 +21,18 @@
                 </div>
             </div>
             <!-- end page title -->
-
             <div class="row">
                 <div class="col-md-6 col-xl-3">
                     <div class="card">
                         <div class="card-body">
-                            <div class="float-end mt-2">
-                                <div id="total-revenue-chart"></div>
-                            </div>
+                            <div class="float-end mt-2" style="position: relative;">
+                                <h3 class="uil-wallet mt-3 mb-0"></h3>
+                            <div class="resize-triggers"><div class="expand-trigger"><div style="width: 46px; height: 47px;"></div></div><div class="contract-trigger"></div></div></div>
                             <div>
-                                <h4 class="mb-1 mt-1">$<span data-plugin="counterup">34,152</span></h4>
-                                <p class="text-muted mb-0">Total Revenue</p>
+                                <h4 class="mb-1 mt-1"><span data-plugin="counterup">IDR {{ new Intl.NumberFormat(['ban', 'id']).format(dashboard.totaluang) }}</span></h4>
+                                <p class="text-muted mb-0">Total Uang</p>
                             </div>
+<<<<<<< HEAD
                             <p class="text-muted mt-3 mb-0"><span class="text-success me-1"><i class="mdi mdi-arrow-up-bold me-1"></i>2.65%</span> since last week
                             </p>
                         </div>
@@ -399,302 +400,67 @@
 
                             </ol>
 
+=======
+>>>>>>> origin/Back-End
                         </div>
                     </div>
                 </div>
-
-                <div class="col-xl-4">
+                <div class="col-md-6 col-xl-3">
                     <div class="card">
                         <div class="card-body">
-
-                            <div class="float-end">
-                                <div class="dropdown">
-                                    <a class="dropdown-toggle" href="#" id="dropdownMenuButton4"
-                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="text-muted">Monthly<i class="mdi mdi-chevron-down ms-1"></i></span>
-                                    </a>
-
-                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton4">
-                                        <a class="dropdown-item" href="#">Yearly</a>
-                                        <a class="dropdown-item" href="#">Monthly</a>
-                                        <a class="dropdown-item" href="#">Weekly</a>
-                                    </div>
-                                </div>
+                            <div class="float-end mt-2" style="position: relative;">
+                                <h3 class="uil-file-landscape mt-3 mb-0"></h3>
+                            <div class="resize-triggers"><div class="expand-trigger"><div style="width: 46px; height: 47px;"></div></div><div class="contract-trigger"></div></div></div>
+                            <div>
+                                <h4 class="mb-1 mt-1"><span data-plugin="counterup">{{ dashboard.jumlahjurnal }}</span></h4>
+                                <p class="text-muted mb-0">Total Jurnal</p>
                             </div>
-
-                            <h4 class="card-title">Social Source</h4>
-
-                            <div class="text-center">
-                                <div class="avatar-sm mx-auto mb-4">
-                                    <span class="avatar-title rounded-circle bg-soft-primary font-size-24">
-                                            <i class="mdi mdi-facebook text-primary"></i>
-                                        </span>
-                                </div>
-                                <p class="font-16 text-muted mb-2"></p>
-                                <h5><a href="#" class="text-dark">Facebook - <span class="text-muted font-16">125 sales</span> </a></h5>
-                                <p class="text-muted">Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus tincidunt.</p>
-                                <a href="#" class="text-reset font-16">Learn more <i class="mdi mdi-chevron-right"></i></a>
+                            <!-- <p class="text-muted mt-3 mb-0"><span class="text-danger me-1"><i class="mdi mdi-arrow-down-bold me-1"></i>0.82%</span> since last week
+                            </p> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-3" v-for="bank in dashboard.bank" :key="bank.id">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="float-end mt-2" style="position: relative;">
+                                <h4 class="mt-3 mb-0">{{ bank.name }}</h4>
+                            <div class="resize-triggers"><div class="expand-trigger"><div style="width: 46px; height: 47px;"></div></div><div class="contract-trigger"></div></div></div>
+                            <div>
+                                <h4 class="mb-1 mt-1"><span data-plugin="counterup">IDR {{ new Intl.NumberFormat(['ban', 'id']).format(bank.balance) }}</span></h4>
+                                <p class="text-muted mb-0">Balance</p>
                             </div>
-                            <div class="row mt-4">
-                                <div class="col-4">
-                                    <div class="social-source text-center mt-3">
-                                        <div class="avatar-xs mx-auto mb-3">
-                                            <span class="avatar-title rounded-circle bg-primary font-size-16">
-                                                    <i class="mdi mdi-facebook text-white"></i>
-                                                </span>
-                                        </div>
-                                        <h5 class="font-size-15">Facebook</h5>
-                                        <p class="text-muted mb-0">125 sales</p>
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="social-source text-center mt-3">
-                                        <div class="avatar-xs mx-auto mb-3">
-                                            <span class="avatar-title rounded-circle bg-info font-size-16">
-                                                    <i class="mdi mdi-twitter text-white"></i>
-                                                </span>
-                                        </div>
-                                        <h5 class="font-size-15">Twitter</h5>
-                                        <p class="text-muted mb-0">112 sales</p>
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="social-source text-center mt-3">
-                                        <div class="avatar-xs mx-auto mb-3">
-                                            <span class="avatar-title rounded-circle bg-pink font-size-16">
-                                                    <i class="mdi mdi-instagram text-white"></i>
-                                                </span>
-                                        </div>
-                                        <h5 class="font-size-15">Instagram</h5>
-                                        <p class="text-muted mb-0">104 sales</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="mt-3 text-center">
-                                <a href="#" class="text-primary font-size-14 fw-medium">View All Sources <i class="mdi mdi-chevron-right"></i></a>
-                            </div>
-
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- end row -->
-
-            <div class="row">
-                <div class="col-lg-12">
+            <div id="chart" class="row">
+                <div class="col-md-6 col-xl-6">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title mb-4">Latest Transaction</h4>
-                            <div class="table-responsive">
-                                <table class="table table-centered table-nowrap mb-0">
-                                    <thead class="table-light">
-                                        <tr>
-                                            <th style="width: 20px;">
-                                                <div class="form-check font-size-16">
-                                                    <input type="checkbox" class="form-check-input" id="customCheck1">
-                                                    <label class="form-check-label" for="customCheck1">&nbsp;</label>
-                                                </div>
-                                            </th>
-                                            <th>Order ID</th>
-                                            <th>Billing Name</th>
-                                            <th>Date</th>
-                                            <th>Total</th>
-                                            <th>Payment Status</th>
-                                            <th>Payment Method</th>
-                                            <th>View Details</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <div class="form-check font-size-16">
-                                                    <input type="checkbox" class="form-check-input" id="customCheck2">
-                                                    <label class="form-check-label" for="customCheck2">&nbsp;</label>
-                                                </div>
-                                            </td>
-                                            <td><a href="javascript: void(0);" class="text-body fw-bold">#MB2540</a> </td>
-                                            <td>Neal Matthews</td>
-                                            <td>
-                                                07 Oct, 2019
-                                            </td>
-                                            <td>
-                                                $400
-                                            </td>
-                                            <td>
-                                                <span class="badge rounded-pill bg-soft-success font-size-12">Paid</span>
-                                            </td>
-                                            <td>
-                                                <i class="fab fa-cc-mastercard me-1"></i> Mastercard
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
-                                                    View Details
-                                                </button>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <div class="form-check font-size-16">
-                                                    <input type="checkbox" class="form-check-input" id="customCheck3">
-                                                    <label class="form-check-label" for="customCheck3">&nbsp;</label>
-                                                </div>
-                                            </td>
-                                            <td><a href="javascript: void(0);" class="text-body fw-bold">#MB2541</a> </td>
-                                            <td>Jamal Burnett</td>
-                                            <td>
-                                                07 Oct, 2019
-                                            </td>
-                                            <td>
-                                                $380
-                                            </td>
-                                            <td>
-                                                <span class="badge rounded-pill bg-soft-danger font-size-12">Chargeback</span>
-                                            </td>
-                                            <td>
-                                                <i class="fab fa-cc-visa me-1"></i> Visa
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
-                                                    View Details
-                                                </button>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <div class="form-check font-size-16">
-                                                    <input type="checkbox" class="form-check-input" id="customCheck4">
-                                                    <label class="form-check-label" for="customCheck4">&nbsp;</label>
-                                                </div>
-                                            </td>
-                                            <td><a href="javascript: void(0);" class="text-body fw-bold">#MB2542</a> </td>
-                                            <td>Juan Mitchell</td>
-                                            <td>
-                                                06 Oct, 2019
-                                            </td>
-                                            <td>
-                                                $384
-                                            </td>
-                                            <td>
-                                                <span class="badge rounded-pill bg-soft-success font-size-12">Paid</span>
-                                            </td>
-                                            <td>
-                                                <i class="fab fa-cc-paypal me-1"></i> Paypal
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
-                                                    View Details
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="form-check font-size-16">
-                                                    <input type="checkbox" class="form-check-input" id="customCheck5">
-                                                    <label class="form-check-label" for="customCheck5">&nbsp;</label>
-                                                </div>
-                                            </td>
-                                            <td><a href="javascript: void(0);" class="text-body fw-bold">#MB2543</a> </td>
-                                            <td>Barry Dick</td>
-                                            <td>
-                                                05 Oct, 2019
-                                            </td>
-                                            <td>
-                                                $412
-                                            </td>
-                                            <td>
-                                                <span class="badge rounded-pill bg-soft-success font-size-12">Paid</span>
-                                            </td>
-                                            <td>
-                                                <i class="fab fa-cc-mastercard me-1"></i> Mastercard
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
-                                                    View Details
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="form-check font-size-16">
-                                                    <input type="checkbox" class="form-check-input" id="customCheck6">
-                                                    <label class="form-check-label" for="customCheck6">&nbsp;</label>
-                                                </div>
-                                            </td>
-                                            <td><a href="javascript: void(0);" class="text-body fw-bold">#MB2544</a> </td>
-                                            <td>Ronald Taylor</td>
-                                            <td>
-                                                04 Oct, 2019
-                                            </td>
-                                            <td>
-                                                $404
-                                            </td>
-                                            <td>
-                                                <span class="badge rounded-pill bg-soft-warning font-size-12">Refund</span>
-                                            </td>
-                                            <td>
-                                                <i class="fab fa-cc-visa me-1"></i> Visa
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
-                                                    View Details
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="form-check font-size-16">
-                                                    <input type="checkbox" class="form-check-input" id="customCheck7">
-                                                    <label class="form-check-label" for="customCheck7">&nbsp;</label>
-                                                </div>
-                                            </td>
-                                            <td><a href="javascript: void(0);" class="text-body fw-bold">#MB2545</a> </td>
-                                            <td>Jacob Hunter</td>
-                                            <td>
-                                                04 Oct, 2019
-                                            </td>
-                                            <td>
-                                                $392
-                                            </td>
-                                            <td>
-                                                <span class="badge rounded-pill bg-soft-success font-size-12">Paid</span>
-                                            </td>
-                                            <td>
-                                                <i class="fab fa-cc-paypal me-1"></i> Paypal
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
-                                                    View Details
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- end table-responsive -->
+                            <apexchart v-if="journalSeries.length != 0" type="bar" height="400" :options="journalChartOptions" :series="journalSeries"></apexchart>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <apexchart v-if="balanceSeries.length != 0" type="line" height="400" :options="balanceChartOptions" :series="balanceSeries"></apexchart>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- end row -->
 
         </div> <!-- container-fluid -->
     </div>
     <!-- End Page-content -->
 
 
-    <footer class="footer">
+    <footer class="footer" v-if="0">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6">
-                     © Minible.
-                </div>
-                <div class="col-sm-6">
-                    <div class="text-sm-end d-none d-sm-block">
-                        Crafted with <i class="mdi mdi-heart text-danger"></i> by <a href="https://themesbrand.com/" target="_blank" class="text-reset">Themesbrand</a>
-                    </div>
+                     © Kodig.id.
                 </div>
             </div>
         </div>
@@ -702,12 +468,178 @@
 </div>
 </template>
 
+
 <script>
+import Loading from '../components/loading'
 export default {
-mounted() {
-    console.log('comp home mounted')
+    props: ['auth'],
+    components: {
+        Loading
+    },
+    data() {
+        return {
+            journalSeries: [],
+            journalChartOptions: {
+                chart: {
+                    height: 400,
+                    type: 'bar',
+                },
+                colors: ['#5B73E8', '#545454'],
+                dataLabels: {
+                    enabled: true,
+                },
+                plotOptions: {
+                    bar: {
+                    borderRadius: 4,
+                    dataLabels: {
+                        position: 'bottom', // top, center, bottom
+                    },
+                    }
+                },
+                title: {
+                    text: 'Jumlah Jurnal Dibuat Per-bulan',
+                    align: 'left'
+                },
+                grid: {
+                    borderColor: '#e7e7e7',
+                    row: {
+                        colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                        opacity: 0.5
+                    },
+                },
+                xaxis: {
+                    // categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    labels: {
+                        show: true,
+                    },
+                    // convertedCatToNumeric: false,
+                    title: {
+                        text: 'Month'
+                    },
+                    axisBorder: {
+                        show: false
+                    },
+                    axisTicks: {
+                        show: false
+                    },
+                },
+                yaxis: {
+                    title: {
+                        text: 'Jumlah'
+                    },
+                },
+                legend: {
+                position: 'top',
+                horizontalAlign: 'right',
+                }
+            },
+            balanceSeries: [],
+            balanceChartOptions: {
+                chart: {
+                    height: 400,
+                    type: 'line',
+                },
+                colors: ['#5B73E8', '#545454'],
+                dataLabels: {
+                    enabled: true,
+                },
+                stroke: {
+                    curve: 'smooth'
+                },
+                title: {
+                    text: 'Jumlah Balance Per-bulan',
+                    align: 'left'
+                },
+                grid: {
+                    borderColor: '#e7e7e7',
+                    row: {
+                        colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                        opacity: 0.5
+                    },
+                },
+                xaxis: {
+                    // categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                    convertedCatToNumeric: false,
+                    title: {
+                        text: 'Month'
+                    }
+                },
+                yaxis: {
+                    title: {
+                        text: 'Jumlah (IDR)'
+                    },
+                },
+                legend: {
+                    position: 'top',
+                    horizontalAlign: 'right',
+                }
+            },
+            dashboard: {},
+            loading: true,
+            key: 0
+        };
+    },
+
+    mounted() {
+        this.getDashboard()
+        this.getJournalChart()
+        this.getBalanceChart()
+    },
+
+    methods: {
+        async getDashboard() {
+            let response = await axios.get('/api/dashboard', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
+            if (response.status === 200) {
+                this.dashboard = response.data
+            }
+            // console.log("this.dashboard")
+            // console.log(response.data)
+            this.loading = false
+        },
+        async getJournalChart() {
+            let response = await axios.get('/api/journalchart', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
+            if (response.status === 200) {
+                this.journalChartOptions.xaxis.categories = Object.values(response.data.title)
+                this.journalChartOptions.xaxis.convertedCatToNumeric = false
+                let data = Object.values(response.data.total)
+                let name = "Journal"
+                this.journalSeries.push({ data, name })
+            }
+            this.loading = false
+        },
+        async getBalanceChart() {
+            let response = await axios.get('/api/balancechart', {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.auth.token
+                    }
+                })
+            if (response.status === 200) {
+                this.balanceChartOptions.xaxis.categories = Object.values(response.data.title)
+                let data = Object.values(response.data.pemasukan)
+                let name = "Pemasukan"
+                this.balanceSeries.push({ data, name })
+                data = Object.values(response.data.pengeluaran)
+                name = "Pengeluaran"
+                this.balanceSeries.push({ data, name })
+            }
+            this.loading = false
+        },
+        format_date(value){
+            if (value) {
+                return moment(String(value)).format('Do MMMM YYYY')
+            }
+        },
+    }
 }
-}
+
 </script>
 
 <style>

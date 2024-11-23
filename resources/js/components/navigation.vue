@@ -4,40 +4,34 @@
         <div class="d-flex">
             <!-- LOGO -->
             <div class="navbar-brand-box">
-                <a href="index.html" class="logo logo-dark">
+                <router-link :to="{name: 'dashboard'}" class="logo logo-dark">
                     <span class="logo-sm">
                         <img src="/assets/images/logo-sm.png" alt="" height="22">
                     </span>
                     <span class="logo-lg">
                         <img src="/assets/images/logo-dark.png" alt="" height="20">
                     </span>
-                </a>
+                </router-link>
 
-                <a href="index.html" class="logo logo-light">
+                <router-link :to="{name: 'dashboard'}" class="logo logo-light">
                     <span class="logo-sm">
                         <img src="/assets/images/logo-sm.png" alt="" height="22">
                     </span>
                     <span class="logo-lg">
                         <img src="/assets/images/logo-light.png" alt="" height="20">
                     </span>
-                </a>
+                </router-link>
             </div>
 
             <button type="button" class="btn btn-sm px-3 font-size-16 d-lg-none header-item waves-effect waves-light" data-bs-toggle="collapse" data-bs-target="#topnav-menu-content">
                 <i class="fa fa-fw fa-bars"></i>
             </button>
 
-            <!-- App Search-->
-            <form class="app-search d-none d-lg-block">
-                <div class="position-relative">
-                    <input type="text" class="form-control" placeholder="Search...">
-                    <span class="uil-search"></span>
-                </div>
-            </form>
         </div>
 
         <div class="d-flex">
 
+<<<<<<< HEAD
             <div class="dropdown d-inline-block d-lg-none ms-2">
                 <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-search-dropdown"
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -240,21 +234,27 @@
                 </div>
             </div>
 
+=======
+>>>>>>> origin/Back-End
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img class="rounded-circle header-profile-user" src="/assets/images/users/avatar-4.jpg"
-                        alt="Header Avatar">
-                    <span class="d-none d-xl-inline-block ms-1 fw-medium font-size-15">Marcus</span>
+                    <i class="uil-user"></i>
+                    <span class="d-none d-xl-inline-block ms-1 fw-medium font-size-15">{{ auth.user.name }}</span>
                     <i class="uil-angle-down d-none d-xl-inline-block font-size-15"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
                     <!-- item-->
+<<<<<<< HEAD
                     <a class="dropdown-item" href="#"><i class="uil uil-user-circle font-size-18 align-middle text-muted me-1"></i> <span class="align-middle">View Profile</span></a>
                     <a class="dropdown-item" href="#"><i class="uil uil-wallet font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">My Wallet</span></a>
                     <a class="dropdown-item d-block" href="#"><i class="uil uil-cog font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Settings</span> <span class="badge bg-soft-success rounded-pill mt-1 ms-2">03</span></a>
                     <a class="dropdown-item" href="#"><i class="uil uil-lock-alt font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Lock screen</span></a>
                     <a class="dropdown-item" href="#"><i class="uil uil-sign-out-alt font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Sign out</span></a>
+=======
+                    <router-link class="dropdown-item" :to="{name: 'akun'}"><i class="uil uil-user-circle font-size-18 align-middle text-muted me-1"></i> <span class="align-middle">Akun</span></router-link>
+                    <a class="dropdown-item" href="#" @click.prevent="logout()"><i class="uil uil-sign-out-alt font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Sign out</span></a>
+>>>>>>> origin/Back-End
                 </div>
             </div>
 
@@ -281,17 +281,47 @@
                         </li>
 
                         <li class="nav-item">
+<<<<<<< HEAD
                             <router-link class="nav-link" exact :to="{name: 'dashboard.one'}">
                                 <i class="uil-home-alt me-2"></i> Dashboard
+=======
+                            <router-link class="nav-link" :to="{name: 'appointment'}">
+                                <i class="uil-meeting-board me-2"></i> Appointment
+>>>>>>> origin/Back-End
                             </router-link>
                         </li>
 
                         <li class="nav-item dropdown">
+<<<<<<< HEAD
                             <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-pages" role="button">
                                 <i class="uil-apps me-2"></i>Apps <div class="arrow-down"></div>
+=======
+                            <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-jurnal" role="button" @click.prevent="topnav.jurnal = !topnav.jurnal">
+                                <i class="uil-file-landscape me-2"></i>Jurnal <div :class=" topnav.jurnal ? 'bx bxs-pin' : 'arrow-down'"></div>
+>>>>>>> origin/Back-End
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="topnav-pages">
+                            <div class="dropdown-menu" aria-labelledby="topnav-jurnal" :class=" topnav.jurnal ? 'show' : '' ">
 
+                                <router-link :to="{name: 'jurnal'}" class="dropdown-item">Draft</router-link>
+                                <router-link :to="{name: 'jurnalproses'}" class="dropdown-item">Proses</router-link>
+                                <router-link :to="{name: 'jurnalverif'}" class="dropdown-item">Verif</router-link>
+
+                            </div>
+                        </li>
+
+                        <li class="nav-item" v-if="auth.user.type == 0 || auth.user.type == 1">
+                            <router-link :to="{name: 'asset'}" class="nav-link">
+                                <i class="uil-file-alt me-2"></i> Asset
+                            </router-link>
+                        </li>
+
+                        <li class="nav-item dropdown" v-if="auth.user.type == 0">
+                            <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-admin" role="button" @click.prevent="topnav.admin = !topnav.admin">
+                                <i class="uil-apps me-2"></i>Master Data <div :class=" topnav.admin ? 'bx bxs-pin' : 'arrow-down'"></div>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="topnav-admin" :class=" topnav.admin ? 'show' : '' ">
+
+<<<<<<< HEAD
                                 <a href="calendar.html" class="dropdown-item">Calendar</a>
                                 <a href="chat.html" class="dropdown-item">Chat</a>
                                 <div class="dropdown">
@@ -320,6 +350,13 @@
                                         <a href="ecommerce-add-product.html" class="dropdown-item">Add Product</a>
                                     </div>
                                 </div>
+=======
+                                <router-link :to="{name: 'karyawan'}" class="dropdown-item">Karyawan</router-link>
+                                <router-link :to="{name: 'periode'}" class="dropdown-item">Periode</router-link>
+                                <router-link :to="{name: 'rekening'}" class="dropdown-item">Rekening</router-link>
+                                <router-link :to="{name: 'project'}" class="dropdown-item">Project</router-link>
+                                <router-link :to="{name: 'chart'}" class="dropdown-item">Chart Account</router-link>
+>>>>>>> origin/Back-End
 
                                 <div class="dropdown">
                                     <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-invoice"
@@ -346,6 +383,7 @@
                             </div>
                         </li>
 
+<<<<<<< HEAD
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-components" role="button"
                                 >
@@ -419,6 +457,12 @@
                                     </div>
                                 </div>
                             </div>
+=======
+                        <li class="nav-item" v-if="auth.user.type == 0 || auth.user.type == 1">
+                            <router-link :to="{name: 'laporan'}" class="nav-link">
+                                <i class="uil-book me-2"></i> Laporan
+                            </router-link>
+>>>>>>> origin/Back-End
                         </li>
 
                     </ul>
@@ -431,7 +475,56 @@
 
 <script>
 export default {
+    props: ['auth'],
+    data() {
+        return {
+            topnav_admin: true ,
+            topnav: {
+                jurnal: false,
+                admin: false,
+            }
+        }
+    //     loggedIn: localStorage.getItem('loggedIn'),
+    //     token: localStorage.getItem('token'),
+    //     user: []
+    },
 
+    // created() {
+    //     axios.get('http://localhost:8000/api/user', {headers: {'Authorization': 'Bearer '+this.token}})
+    //     .then(response => {
+    //         console.log(response)
+    //         this.user = response.data // assign response to state user
+    //     })
+    // },
+
+    methods: {
+    //   getLoggedIn() {
+    //     this.loggedIn = localStorage.getItem("loggedIn")
+    //   },
+        logout() {
+                axios.get('/api/logout', {
+                    headers: {
+                        'Authorization': 'Bearer '+this.auth.token
+                    }
+                })
+                .then(() => {
+                    //remove localStorage
+                    localStorage.removeItem("loggedIn")
+                    // console.log("KELUAR")
+                    //redirect
+                    return this.$router.push({ name: 'login' })
+                })
+            }
+    },
+
+    // watch: {
+    //   $route: {
+    //     immediate: true,
+    //     handler() {
+    //       this.getLoggedIn()
+    //     }
+    //   }
+    // },
 }
 </script>
 
