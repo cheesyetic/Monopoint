@@ -31,10 +31,6 @@ import VueApexCharts from 'vue-apexcharts'
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-
-
 Vue.use(Toasted)
 Vue.use(VueRouter)
 Vue.use(moment)
@@ -45,8 +41,6 @@ window.moment = require('moment');
 window.moment.locale('id');
 
 import routes from './router/index'
-// import router from './router'
-// import store from './store'
 
 Vue.component('navigation', require('./components/navigation.vue').default);
 Vue.component('sidebar', require('./components/RightSidebar.vue').default);

@@ -126,23 +126,9 @@ export default {
                 admin: false,
             }
         }
-    //     loggedIn: localStorage.getItem('loggedIn'),
-    //     token: localStorage.getItem('token'),
-    //     user: []
     },
 
-    // created() {
-    //     axios.get('http://localhost:8000/api/user', {headers: {'Authorization': 'Bearer '+this.token}})
-    //     .then(response => {
-    //         console.log(response)
-    //         this.user = response.data // assign response to state user
-    //     })
-    // },
-
     methods: {
-    //   getLoggedIn() {
-    //     this.loggedIn = localStorage.getItem("loggedIn")
-    //   },
         logout() {
                 axios.get('/api/logout', {
                     headers: {
@@ -150,23 +136,11 @@ export default {
                     }
                 })
                 .then(() => {
-                    //remove localStorage
                     localStorage.removeItem("loggedIn")
-                    // console.log("KELUAR")
-                    //redirect
                     return this.$router.push({ name: 'login' })
                 })
             }
     },
-
-    // watch: {
-    //   $route: {
-    //     immediate: true,
-    //     handler() {
-    //       this.getLoggedIn()
-    //     }
-    //   }
-    // },
 }
 </script>
 

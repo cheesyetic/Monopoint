@@ -9,7 +9,6 @@ export default {
 </script>
 
 <style>
-
 .wrapper{
   display: inline-flex;
   align-items: center;
